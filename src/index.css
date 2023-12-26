@@ -1,3 +1,33 @@
+@font-face {
+    font-family: 'HelveticaBold';
+    src: url('./fonts/3.ttf');
+}
+@font-face {
+    font-family: 'HelveticaRoman';
+    src: url('./fonts/2.ttf');
+}
+@font-face {
+    font-family: 'Baskerville';
+    src: url('./fonts/BaskervilleWGL4BTRoman.ttf');
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* button */
+.furniture-button-black-hover {
+    @apply font-HelveticaBold bg-black text-center text-white border-[1px] border-blackPrimary hover:bg-white hover:text-black hover:border-[1px] hover:border-black duration-500 cursor-pointer
+}
+
+.furniture-button-green {
+    @apply bg-black text-center text-white border-[1px] border-black cursor-pointer
+}
+
+.furniture-button-white-hover {
+    @apply bg-white border-black border-[1px] text-black hover:bg-black hover:text-white duration-500 cursor-pointer
+}
+
+.furniture-button-green-shadow {
+    @apply text-[#fff] bg-[#86bb86] shadow-md shadow-[#86bb86] border-2 border-[#E0F7CD] hover:bg-[#49B949] hover:text-[#fff] hover:shadow-md hover:shadow-[#49B949]
+}
