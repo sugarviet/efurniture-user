@@ -58,14 +58,45 @@ export default function CartSideBar({ isOpen, setIsOpen }) {
     });
 
     return (
-        <div className="relative">
-            <div ref={sidebarRef} className={`h-full fixed top-0  bg-white w-[45%] duration-500 overflow-hidden z-[7777] ${isOpen ? 'right-0' : 'right-[-45%]'}`}>
-                <div className='pt-[60px]  h-full overflow-y-scroll px-[70px] pb-[100px]'>
-                    <div >
-                        <div className='text-md font-medium mb-14'>
-                            GIỎ HÀNG
-                        </div>
+        <div className="relative font-HelveticaRoman">
+            <div ref={sidebarRef} className={`h-full fixed top-0  bg-white w-[34%]  overflow-hidden z-[7777] ${isOpen ? 'right-0 duration-700' : 'right-[-34%] duration-300 animate-cartDisappear'}`}>
+                <div className='h-full flex flex-col'>
+                    <div className='text-base font-bold tracking-[0.08rem] mb-14 pt-8 px-12'>
+                        SHOPPING CART
+                        <span className="text-grey3"> (3)</span>
+                    </div>
+                    <div className="h-0 flex-grow">
+                        <div className="pt-0 px-12 h-[calc(100%_-_2rem)] overflow-y-scroll">
 
+                            <div className="text-[0.875rem] my-6">
+                                <div className="flex items-center justify-end">
+                                    <span className="text-[0.75rem] leading-[2] track-[0.05em] text-grey1 pr-[2px]">Remove</span>
+                                    <img className="w-[15px]" src="https://res.cloudinary.com/dc4hafqoa/image/upload/v1702979086/Beana_svg/close_veco12_l3nivu.svg" />
+                                </div>
+                                <figure className="relative pt-[35%] mb-10 pr-[8rem] pl-[7rem]">
+                                    <img className="h-auto max-h-full absolute top-4 left-1/2 -translate-x-1/2" src="https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dw942c4640/images/2070000/2072765.jpg?sw=1000" />
+                                </figure>
+                                <div className="flex flex-rol justify-between">
+                                    <a href="#">
+                                        <h2 className="text-[1.5rem] leading-[1.2] font-HelveticaBold tracking-[0.08em]">SANTIAGO</h2>
+                                    </a>
+                                    <div>
+                                        <button>-</button>
+                                        <div className='border-b-[3px] border-secondary pb-1 mr-3'>
+                                            <input
+                                                type='text'
+                                                placeholder='--'
+                                                className='text-center w-[70px] px-2 h-14 placeholder:text-[40px] text-[40px] font-extralight'
+                                            />
+                                        </div>
+                                        <button>+</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    {/* 
                         {cartData?.map((cart) => (
                             <div key={cart.id} className='mt-3 flex flex-row gap-4 relative items-center pb-3 border-b-2 border-dashed'>
                                 <img className='max-w-[85px] max-h-[85px]' src={cart.img} />
@@ -84,9 +115,8 @@ export default function CartSideBar({ isOpen, setIsOpen }) {
                                     x
                                 </div>
                             </div>
-                        ))}
-                        <div className="border-t-[2px] border-black mt-3"></div>
-                        <div className="flex flex-col gap-5 mt-5">
+                        ))} */}
+                    {/* <div className="flex flex-col gap-5 mt-5">
                             <div className="flex flex-row justify-between gap-4">
                                 <div className='text-[14px] font-normal text-[#272727]'>
                                     TỔNG TIỀN
@@ -108,9 +138,8 @@ export default function CartSideBar({ isOpen, setIsOpen }) {
                                     </div>
                                 </Link>
                             </div>
-                        </div>
+                        </div> */}
 
-                    </div>
                 </div>
                 <div className="absolute top-9 right-4 cursor-pointer"
                     onClick={() => setIsOpen(false)}

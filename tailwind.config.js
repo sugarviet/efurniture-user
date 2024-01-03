@@ -31,6 +31,16 @@ export default {
 
         border: '#c3c2bc'
       },
+      keyframes: {
+        cartDisappear: {
+          '0%': { opacity: '0' },
+          '50%': { opacity: '0.5' },
+          '100%': { opacity: '1' },
+        },
+      },
+      animation: {
+        cartDisappear: 'cartDisappear 0.3s ease-out ',
+      },
     },
   },
   plugins: [],

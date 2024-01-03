@@ -7,7 +7,7 @@ import RootLayout from "@layouts/RootLayout";
 import Home from "@pages/Home";
 import Products from "@pages/Products";
 
-const PATH = {
+const paths = {
   base: "/",
   products: "/products",
   about: "/",
@@ -20,14 +20,14 @@ const PATH = {
  */
 const rootLayoutRouterList = {
   layout: <RootLayout />,
-  path: PATH.base,
+  path: paths.base,
   children: [
     {
-      path: PATH.base,
+      path: paths.base,
       element: <Home />,
     },
     {
-      path: PATH.products,
+      path: paths.products,
       element: <Products />,
     },
   ],
