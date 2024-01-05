@@ -1,4 +1,4 @@
-import Sliders from "../../../../components/Slider";
+import Sliders from "@components/Slider";
 
 const bestsellers = [
   {

@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom"
-import { useState, useEffect, useRef } from "react";
 import SideBar from '../SideBar'
 import CartProduct from "./components/CartProduct";
 const cartData = [
@@ -48,14 +46,18 @@ export default function CartSideBar({ isOpen, setIsOpen }) {
             <section className='h-full flex flex-col'>
                 <header className='text-base font-HelveticaBold tracking-[0.08rem] leading-[1.2142857143] mb-8 pt-8 px-12'>
                     SHOPPING CART
-                    <span className="text-grey3"> (3)</span>
+                    <span className="text-grey3"> ({cartData.length})</span>
                 </header>
 
                 <main className="h-0 flex-grow">
                     <div className="pt-0 pb-9 px-12 h-full overflow-y-scroll">
-                        {cartData?.map((cart) => (
-                            <CartProduct data={cart} />
-                        ))}
+                        {cartData && cartData.length > 0 ? (
+                            cartData.map((cart) => (
+                                <CartProduct key={cart.id} data={cart} />
+                            ))
+                        ) : (
+                            <p>Your shopping cart is empty</p>
+                        )}
                     </div>
                 </main>
 
