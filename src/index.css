@@ -2,10 +2,12 @@
     font-family: 'HelveticaBold';
     src: url('./fonts/3.ttf');
 }
+
 @font-face {
     font-family: 'HelveticaRoman';
     src: url('./fonts/2.ttf');
 }
+
 @font-face {
     font-family: 'Baskerville';
     src: url('./fonts/BaskervilleWGL4BTRoman.ttf');
@@ -17,7 +19,7 @@
 
 /* button */
 .furniture-button-black-hover {
-    @apply font-HelveticaBold bg-black text-center text-white border-[1px] border-blackPrimary hover:bg-white hover:text-black hover:border-[1px] hover:border-black duration-500 cursor-pointer
+    @apply font-HelveticaBold bg-blackPrimary text-center text-white border-[1px] border-blackPrimary hover:bg-white hover:text-black hover:border-[1px] hover:border-black duration-300 cursor-pointer
 }
 
 .furniture-button-green {
@@ -30,4 +32,9 @@
 
 .furniture-button-green-shadow {
     @apply text-[#fff] bg-[#86bb86] shadow-md shadow-[#86bb86] border-2 border-[#E0F7CD] hover:bg-[#49B949] hover:text-[#fff] hover:shadow-md hover:shadow-[#49B949]
+}
+
+/* input number */
+.furniture-input-hide-arrow {
+    @apply [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
 }
