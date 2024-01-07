@@ -39,10 +39,10 @@ const cartData = [
     }
 ]
 
-export default function CartSideBar({ isOpen, setIsOpen }) {
+export default function CartSideBar() {
 
     return (
-        <SideBar isOpen={isOpen} setIsOpen={setIsOpen} >
+        <SideBar >
             <section className='h-full flex flex-col'>
                 <header className='text-base font-HelveticaBold tracking-[0.08rem] leading-[1.2142857143] mb-8 pt-8 px-12'>
                     SHOPPING CART
