@@ -5,7 +5,7 @@ import CartSideBar from "@components/CartSideBar"
 const RootLayout = () => {
   return (
     <div className="font-HelveticaRoman">
-       <CartSideBar />
+      <CartSideBar />
       <Navbar />
       <Outlet />
     </div>

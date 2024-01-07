@@ -1,11 +1,10 @@
 import styles from "./Navbar.module.css";
 import { NavLink } from "react-router-dom";
-import useCartStore from "../../stores/userStore";
+import useCartStore from "@stores/userStore";
 
 const Navbar = () => {
 
   const toggleCart = useCartStore((state) => state.toggleCart)
-  
 
   return (
     <nav id="navbar" className="flex justify-between px-5 py-2 bg-blue-300">
