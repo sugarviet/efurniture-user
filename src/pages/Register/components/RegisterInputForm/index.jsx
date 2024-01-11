@@ -34,6 +34,7 @@ function RegisterInputForm() {
                 <div className="flex flex-row gap-2">
                     <input className="furniture-checkbox border-[0.125rem] border-[#5a7468] checked:bg-[#5a7468]"
                         type="checkbox"
+                        defaultValue=""
                     />
                     <span className='text-[0.875rem] leading-[1.715] tracking-[0.05em]'>Accept the BoConcept privacy policy and agree to BoConcept saving my personal information.<br />
                         <a href='#' className='underline'>See privacy policy</a>

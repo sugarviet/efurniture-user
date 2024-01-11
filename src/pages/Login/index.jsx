@@ -36,11 +36,14 @@ const Login = () => {
           <div className="font-HelveticaRoman">
             <h3 className="font-light mb-[0.7em]">BENEFITS OF CREATING AN ACCOUNT</h3>
             <ul className="list-none font-HelveticaBold pl-[0.9375rem]">
-              {benefitList.map((benefit) => (
+              {benefitList.map((benefit, index) => (
                 <li
+                  key={index}
                   style={{ backgroundImage: `url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNiAzMiI+PHBhdGggZD0iTTMwLjI1NS4wMDZsLTE3LjQ4IDIyLjQtOC43NTEtOC4yLTQuMDIgNC4xMDZMMTMuNDE5IDMxLjUgMzQuOTU2IDMuNjIzeiIvPjwvc3ZnPg==")` }}
                   className="bg-no-repeat bg-[length:1rem] bg-[left_3px] pl-[1.5625rem] mb-[0.625rem]"
-                >{benefit.name}</li>
+                >
+                  {benefit.name}
+                </li>
               ))}
             </ul>
           </div>
