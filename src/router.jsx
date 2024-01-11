@@ -7,6 +7,7 @@ import RootLayout from "@layouts/RootLayout";
 import Home from "@pages/Home";
 import Products from "@pages/Products";
 import Login from "@pages/Login";
+import Register from "@pages/Register";
 
 const paths = {
   base: "/",
@@ -14,6 +15,7 @@ const paths = {
   about: "/",
   cart: "/",
   login: "/login",
+  register: "/register",
 };
 
 /**
@@ -34,6 +36,10 @@ const rootLayoutRouterList = {
     {
       path: paths.login,
       element: <Login />,
+    },
+    {
+      path: paths.register,
+      element: <Register />,
     },
   ],
 };

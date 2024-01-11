@@ -19,13 +19,17 @@
 
 @layer base {
     h1 {
-      @apply text-[3.25rem] tracking-[0.125em] uppercase leading-[1.2];
+        @apply text-[3.25rem] tracking-[0.125em] uppercase leading-[1.2];
     }
+
     h2 {
         @apply text-[2rem] tracking-[0.125em] uppercase leading-[1.34375];
     }
-   
-  }
+    h3{
+        @apply text-[1.5625rem] tracking-[0.18em] uppercase leading-[1.44];
+    }
+
+}
 
 /* button */
 .furniture-button-black-hover {
@@ -39,4 +43,13 @@
 /* input number */
 .furniture-input-hide-arrow {
     @apply [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
+}
+
+/* input  */
+.furniture-input {
+    @apply leading-[3rem] pl-5 pr-10 outline-none border-[0.5px] border-[#191915] focus:shadow-email
+}
+/* checkbox  */
+.furniture-checkbox {
+    @apply relative after:absolute checked:after:top-[2px] checked:after:left-[7px] checked:after:w-[6px] checked:after:h-[12px] checked:after:rotate-45 checked:after:border-r-[2px] checked:after:border-b-[2px] appearance-none w-[1.5625rem] h-[1.5625rem] outline-none
 }
