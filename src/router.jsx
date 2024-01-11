@@ -1,11 +1,20 @@
+/* eslint-disable react-refresh/only-export-components */
+import { lazy } from "react";
+
 import {
   createBrowserRouter,
   Route,
   createRoutesFromElements,
 } from "react-router-dom";
+
 import RootLayout from "@layouts/RootLayout";
+
+// Pages
 import Home from "@pages/Home";
-import Products from "@pages/Products";
+const Products = lazy(() => import("@pages/Products"))
+const Wishlist = lazy(() => import("@pages/Wishlist"))
+const NotFound = lazy(() => import("@pages/NotFound"))
+
 
 const paths = {
   base: "/",
@@ -13,6 +22,7 @@ const paths = {
   about: "/",
   cart: "/",
   login: "/login",
+  wishlist: '/wishlist'
 };
 
 /**
@@ -29,6 +39,14 @@ const rootLayoutRouterList = {
     {
       path: paths.products,
       element: <Products />,
+    },
+    {
+      path: paths.wishlist,
+      element: <Wishlist />,
+    },
+    {
+      path: "*",
+      element: <NotFound />,
     },
   ],
 };
