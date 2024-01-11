@@ -6,6 +6,7 @@ import {
 import RootLayout from "@layouts/RootLayout";
 import Home from "@pages/Home";
 import Products from "@pages/Products";
+import Login from "@pages/Login";
 
 const paths = {
   base: "/",
@@ -29,6 +30,10 @@ const rootLayoutRouterList = {
     {
       path: paths.products,
       element: <Products />,
+    },
+    {
+      path: paths.login,
+      element: <Login />,
     },
   ],
 };
