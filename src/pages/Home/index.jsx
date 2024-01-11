@@ -61,7 +61,7 @@ const Home = () => {
           <img src="https://p3.aprimocdn.net/boconcept/a3a30584-1777-4d81-b00f-afd900805965/AW23%20101_WEB-FeatureLeftOrRightAlign-D-1300x1100.jpg" />
         </figure>
       </section>
-       {/* Best seller slider */}
+      {/* Best seller slider */}
       <section className="pl-[68px] mb-[5.5rem]">
         <div className="mt-[5.5rem] mb-4">
           <h2 className="text-[0.685rem] text-grey2 leading-[1.4] tracking-[0.08em] ">BESTSELLERS</h2>
@@ -70,7 +70,7 @@ const Home = () => {
           <BestSellersSlider />
         </div>
       </section>
-       {/* Room slider */}
+      {/* Room slider */}
       <section className="pl-[68px] mb-[5.5rem]">
         <div className="mt-[5.5rem] mb-4">
           <h2 className="text-[0.685rem] text-grey2 leading-[1.4] tracking-[0.08em] ">SHOP BY ROOM</h2>
@@ -91,7 +91,7 @@ const Home = () => {
         </section>
         <section>
           {details.map((detail, index) => (
-            <div className={`grid grid-cols-[18.1818181818%_81.8181818182%]  ${index === details.length - 1 ? '' : 'mb-10'}`} >
+            <div key={index} className={`grid grid-cols-[18.1818181818%_81.8181818182%]  ${index === details.length - 1 ? '' : 'mb-10'}`} >
               <figure className="">
                 <img src={detail.img} />
               </figure>

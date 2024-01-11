@@ -17,24 +17,39 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    h1 {
+        @apply text-[3.25rem] tracking-[0.125em] uppercase leading-[1.2];
+    }
+
+    h2 {
+        @apply text-[2rem] tracking-[0.125em] uppercase leading-[1.34375];
+    }
+    h3{
+        @apply text-[1.5625rem] tracking-[0.18em] uppercase leading-[1.44];
+    }
+
+}
+
 /* button */
 .furniture-button-black-hover {
     @apply font-HelveticaBold bg-blackPrimary text-center text-white border-[1px] border-blackPrimary hover:bg-white hover:text-black hover:border-[1px] hover:border-black duration-300 cursor-pointer
-}
-
-.furniture-button-green {
-    @apply bg-black text-center text-white border-[1px] border-black cursor-pointer
 }
 
 .furniture-button-white-hover {
     @apply bg-white border-black border-[1px] text-black hover:bg-black hover:text-white duration-500 cursor-pointer
 }
 
-.furniture-button-green-shadow {
-    @apply text-[#fff] bg-[#86bb86] shadow-md shadow-[#86bb86] border-2 border-[#E0F7CD] hover:bg-[#49B949] hover:text-[#fff] hover:shadow-md hover:shadow-[#49B949]
-}
-
 /* input number */
 .furniture-input-hide-arrow {
     @apply [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
+}
+
+/* input  */
+.furniture-input {
+    @apply leading-[3rem] pl-5 pr-10 outline-none border-[0.5px] border-[#191915] focus:shadow-email
+}
+/* checkbox  */
+.furniture-checkbox {
+    @apply relative after:absolute checked:after:top-[2px] checked:after:left-[7px] checked:after:w-[6px] checked:after:h-[12px] checked:after:rotate-45 checked:after:border-r-[2px] checked:after:border-b-[2px] appearance-none w-[1.5625rem] h-[1.5625rem] outline-none
 }

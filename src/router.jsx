@@ -14,6 +14,8 @@ import Home from "@pages/Home";
 const Products = lazy(() => import("@pages/Products"))
 const Wishlist = lazy(() => import("@pages/Wishlist"))
 const NotFound = lazy(() => import("@pages/NotFound"))
+const Login = lazy(() => import("@pages/Login"))
+const Register = lazy(() => import("@pages/Register"))
 
 
 const paths = {
@@ -22,6 +24,7 @@ const paths = {
   about: "/",
   cart: "/",
   login: "/login",
+  register: "/register",
   wishlist: '/wishlist'
 };
 
@@ -39,6 +42,14 @@ const rootLayoutRouterList = {
     {
       path: paths.products,
       element: <Products />,
+    },
+    {
+      path: paths.login,
+      element: <Login />,
+    },
+    {
+      path: paths.register,
+      element: <Register />,
     },
     {
       path: paths.wishlist,
