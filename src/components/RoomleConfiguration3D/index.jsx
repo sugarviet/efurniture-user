@@ -9,22 +9,21 @@ function RoomleConfiguration3D() {
       const options = {
         id: "sitzfeldt:Chuck_L_Sofa_Rechts",
         elements: {
-          bottom_bar: true,
+          bottom_bar: false,
         },
       };
 
       const plan = await RoomleConfiguratorApi.createPlanner(
         "demoConfigurator",
         planer.current,
-        options,
-        
+        options
       );
     };
 
     initRoomle();
   }, []);
 
-  return <div style={{ height: 600, width: 800 }} ref={planer}></div>;
+  return <div className="w-full h-full" ref={planer}></div>;
 }
 
 export default RoomleConfiguration3D;

@@ -1,5 +1,4 @@
-import FilterSection from "../../components/FilterSection";
-import ProductCatalog from "../../components/ProductCatalog";
+import FurnitureCatalog from "../../components/FurnitureCatalog";
 import SectionIntro from "../../components/SectionIntro";
 
 const SECTION_INTRO_OPTION = {
@@ -17,9 +16,9 @@ const Products = () => {
       <section className="w-full text-xs font-semibold h-10 flex items-center justify-center bg-red-600 text-white uppercase">
         sale extraordinary
       </section>
-      <ProductCatalog />
+      <FurnitureCatalog />
     </>
   );
 };
 
-export default Products;
+export default Products;                                      
