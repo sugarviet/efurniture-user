@@ -1,7 +1,10 @@
 import styles from "./Navbar.module.css";
 import { NavLink } from "react-router-dom";
+import useCartStore from "@stores/userStore";
 
 const Navbar = () => {
+
+  const toggleCart = useCartStore((state) => state.toggleCart)
 
   return (
     <nav id="navbar" className="flex justify-between px-5 py-2 bg-blue-300">
@@ -20,6 +23,9 @@ const Navbar = () => {
       <div className="flex gap-4">
         <NavLink to="/login" className={styles.navlink_item}>
           Login
+        </NavLink>
+        <NavLink onClick={() => toggleCart()} className={styles.navlink_item}>
+          Cart
         </NavLink>
         <NavLink to="/sign-up" className={styles.navlink_item}>
           SignUp
