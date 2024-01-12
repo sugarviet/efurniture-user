@@ -18,8 +18,8 @@ function CartProduct({ data }) {
                     <button className="px-[0.9375rem] text-[1.2rem] font-HelveticaBold opacity-[0.2]">-</button>
                     <div className=''>
                         <input
-                            value="1"
                             type='number'
+                            defaultValue="1"
                             className='furniture-input-hide-arrow outline-none focus:border-b-[0.5px] focus:border-[#191915] text-center w-[2.5rem] h-[1.5em] text-[18px] text-[#000] font-medium font-HelveticaBold'
                         />
                     </div>

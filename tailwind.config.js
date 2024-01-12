@@ -41,6 +41,9 @@ export default {
       animation: {
         cartDisappear: 'cartDisappear 0.3s ease-out ',
       },
+      boxShadow: {
+        'email': 'inset 0 -0.0625rem 0 0 #222',
+      }
     },
   },
   plugins: [],

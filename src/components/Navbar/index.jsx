@@ -27,7 +27,7 @@ const Navbar = () => {
         <NavLink onClick={() => toggleCart()} className={styles.navlink_item}>
           Cart
         </NavLink>
-        <NavLink to="/sign-up" className={styles.navlink_item}>
+        <NavLink to="/register" className={styles.navlink_item}>
           SignUp
         </NavLink>
       </div>
