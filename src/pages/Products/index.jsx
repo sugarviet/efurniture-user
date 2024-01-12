@@ -1,5 +1,5 @@
 import FurnitureCatalog from "../../components/FurnitureCatalog";
-import SectionIntro from "../../components/SectionIntro";
+import HeroSection from "../../components/HeroSection";
 
 const SECTION_INTRO_OPTION = {
   img_url:
@@ -12,7 +12,7 @@ const SECTION_INTRO_OPTION = {
 const Products = () => {
   return (
     <>
-      <SectionIntro {...SECTION_INTRO_OPTION} />
+      <HeroSection {...SECTION_INTRO_OPTION} />
       <section className="w-full text-xs font-semibold h-10 flex items-center justify-center bg-sky-950 text-white uppercase">
         sale extraordinary
       </section>

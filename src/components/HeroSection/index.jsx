@@ -1,4 +1,4 @@
-function SectionIntro({ img_url, title, description }) {
+function HeroSection({ img_url, title, description }) {
   return (
     <section className="grid grid-cols-2 mb-16 h-80">
       <img
@@ -14,4 +14,4 @@ function SectionIntro({ img_url, title, description }) {
   );
 }
 
-export default SectionIntro;
+export default HeroSection;
