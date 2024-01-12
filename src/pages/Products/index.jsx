@@ -13,7 +13,7 @@ const Products = () => {
   return (
     <>
       <SectionIntro {...SECTION_INTRO_OPTION} />
-      <section className="w-full text-xs font-semibold h-10 flex items-center justify-center bg-red-600 text-white uppercase">
+      <section className="w-full text-xs font-semibold h-10 flex items-center justify-center bg-sky-950 text-white uppercase">
         sale extraordinary
       </section>
       <FurnitureCatalog />
@@ -21,4 +21,4 @@ const Products = () => {
   );
 };
 
-export default Products;                                      
+export default Products;
