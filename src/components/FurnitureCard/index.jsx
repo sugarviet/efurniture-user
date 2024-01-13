@@ -1,5 +1,5 @@
 import formattedCurrency from "../../utils/formattedCurrency";
-import { FavoriteButton } from "../SymbolButton";
+import StateButton from "../StateButton";
 import useFurnitureCard from "./useFurnitureCard";
 
 function FurnitureCard({ item }) {
@@ -12,7 +12,7 @@ function FurnitureCard({ item }) {
       <div className="relative flex items-center block mb-[0.9375rem] w-full h-60">
         {model_state[dimension].component}
         <div className="absolute top-4 right-4">
-          <FavoriteButton />
+          <StateButton name={"favorite"} />
           {model_state[dimension].change_dimension_button}
         </div>
       </div>

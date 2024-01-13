@@ -1,6 +1,5 @@
 import { useState } from "react";
 import RoomleConfiguration3D from "../RoomleConfiguration3D";
-import { CubeButton, ViewFinderCircleButton } from "../SymbolButton";
 
 function useFurnitureCard(item) {
   const [dimension, setDimension] = useState("two_dimension");
