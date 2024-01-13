@@ -1,4 +1,4 @@
-import FormattedCurrency from "../../utils/FormattedCurrency";
+import formattedCurrency from "../../utils/formattedCurrency";
 import { FavoriteButton } from "../SymbolButton";
 import useFurnitureCard from "./useFurnitureCard";
 
@@ -35,12 +35,12 @@ function FurnitureCard({ item }) {
                 Rec. retail price
               </div>
               <span className="order-2 mr-[0.625rem] text-xs tracking-[0.9px] text-black">
-                {FormattedCurrency(price)}
+                {formattedCurrency(price)}
               </span>
             </div>
             <p className="text-[0.6875rem] tracking-[0.4px] text-grey2 text-right">
               Prices from <br />
-              <span>{FormattedCurrency(price)}</span>
+              <span>{formattedCurrency(price)}</span>
             </p>
           </div>
         </div>
