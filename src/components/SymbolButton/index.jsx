@@ -1,6 +1,5 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { ViewfinderCircleIcon } from "@heroicons/react/20/solid";
 
 function BaseButton(props) {
   const { path, onClick } = props;

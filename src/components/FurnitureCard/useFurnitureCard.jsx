@@ -12,14 +12,24 @@ function useFurnitureCard(item) {
       <img className="relative left-[10%] w-[80%] object-cover " src={url} />
     ),
     change_dimension_button: (
-      <CubeButton onClick={() => setDimension("three_dimension")} />
+      <button
+        onClick={() => setDimension("three_dimension")}
+        className="w-6 h-6 text-sm border-[1px] border-black flex items-center justify-center rounded-full"
+      >
+        3D
+      </button>
     ),
   };
 
   const three_dimension = {
     component: <RoomleConfiguration3D model_id={model_id} />,
     change_dimension_button: (
-      <ViewFinderCircleButton onClick={() => setDimension("two_dimension")} />
+      <button
+        onClick={() => setDimension("two_dimension")}
+        className="w-6 h-6 text-sm border-[1px] border-black flex items-center justify-center rounded-full"
+      >
+        2D
+      </button>
     ),
   };
 
