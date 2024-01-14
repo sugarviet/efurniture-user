@@ -16,6 +16,10 @@ const Wishlist = lazy(() => import("@pages/Wishlist"))
 const NotFound = lazy(() => import("@pages/NotFound"))
 const Login = lazy(() => import("@pages/Login"))
 const Register = lazy(() => import("@pages/Register"))
+const Rooms = lazy(() => import("@pages/Rooms"))
+const RoomDetail = lazy(() => import("@pages/RoomDetail"))
+const RoomsByPlace = lazy(() => import("@pages/RoomsByPlace"))
+
 
 
 const paths = {
@@ -25,7 +29,10 @@ const paths = {
   cart: "/",
   login: "/login",
   register: "/register",
-  wishlist: '/wishlist'
+  wishlist: '/wishlist',
+  rooms: '/rooms',
+  roomDetail: '/room/:id',
+  roomByPlace: '/room/position/:slug',
 };
 
 /**
@@ -54,6 +61,18 @@ const rootLayoutRouterList = {
     {
       path: paths.wishlist,
       element: <Wishlist />,
+    },
+    {
+      path: paths.rooms,
+      element: <Rooms />,
+    },
+    {
+      path: paths.roomByPlace,
+      element: <RoomsByPlace />,
+    },
+    {
+      path: paths.roomDetail,
+      element: <RoomDetail />,
     },
     {
       path: "*",
