@@ -1,20 +1,18 @@
 import { createContext, useState } from "react";
 import PropTypes from "prop-types";
-import useFurnitureModel from "../../hooks/useFurnitureModel";
+import { MODEL_DIMENSION } from "../../constants/enum";
 
 const FurnitureCardContext = createContext();
 
 function FurnitureCardProvider(props) {
   const { children, furniture } = props;
 
-  const { url, model_id } = furniture;
-
-  const { model_state, dimension } = useFurnitureModel(url, model_id);
+  const [dimension, setDimension] = useState(MODEL_DIMENSION.two_dimension);
 
   const value = {
     furniture,
-    model_state,
     dimension,
+    setDimension,
   };
 
   return (

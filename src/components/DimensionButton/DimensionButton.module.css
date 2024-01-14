@@ -1,0 +1,7 @@
+.selected {
+    @apply w-6 h-6 p-3 text-white bg-black text-sm border-[1px] border-black flex items-center justify-center rounded-md
+}
+
+.non_selected {
+    @apply w-6 h-6 p-3 text-sm border-[1px] border-black flex items-center justify-center rounded-md
+}

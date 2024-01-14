@@ -1,12 +1,25 @@
 import { useContext } from "react";
+import DimensionButton from "../../../DimensionButton";
 import { FurnitureCardContext } from "../../FurnitureCardContext";
+import { MODEL_DIMENSION } from "../../../../constants/enum";
+
+import styles from "../../FurnitureCard.module.css";
 
 function FurnitureDimensionOption() {
-  const { model_state } = useContext(FurnitureCardContext);
+  const { dimension, setDimension } = useContext(FurnitureCardContext);
+
   return (
-    <section className="absolute w-full left-0 right-0 bottom-2 flex justify-center gap-4">
-      {model_state["three_dimension"].change_dimension_button}
-      {model_state["two_dimension"].change_dimension_button}
+    <section className={`${styles.dimension_option_wrapper}`}>
+      <DimensionButton
+        selected={dimension === MODEL_DIMENSION.two_dimension}
+        onClick={() => setDimension(MODEL_DIMENSION.two_dimension)}
+        name={MODEL_DIMENSION.two_dimension}
+      />
+      <DimensionButton
+        selected={dimension === MODEL_DIMENSION.three_dimension}
+        onClick={() => setDimension(MODEL_DIMENSION.three_dimension)}
+        name={MODEL_DIMENSION.three_dimension}
+      />
     </section>
   );
 }
