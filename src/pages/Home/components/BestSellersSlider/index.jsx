@@ -112,12 +112,18 @@ const BestSellersSlider = () => {
   return (
     <div>
       <Sliders initialSlide={3} slideToScroll={4} slideToShow={4}>
-        {bestsellers.map((product, index) => (
+        {bestsellers.map((item, index) => (
           <div
             className="w-[345.476px] h-full border border-border border-r-0 bg-white pb-[0.5rem]"
             key={index}
           >
-            <FurnitureCard item={product} />
+            <FurnitureCard item={item} key={`${item.name} + ${index}`}>
+              <FurnitureCard.Model />
+              <div className="px-[18px] flex flex-col justify-between gap-4">
+                <FurnitureCard.Attribute />
+                <FurnitureCard.Price />
+              </div>
+            </FurnitureCard>
           </div>
         ))}
       </Sliders>

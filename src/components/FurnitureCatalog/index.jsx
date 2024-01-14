@@ -1,5 +1,7 @@
 import FilterSectionWrapper from "../FilterSectionWrapper";
 import FurnitureCard from "../FurnitureCard";
+import FurnitureDimensionOption from "../FurnitureCard/FurnitureCardItems/FurnitureDimensionOption";
+import StateButton from "../StateButton";
 
 const COLORS = [
   "#8a4c8a",
@@ -157,9 +159,22 @@ function FurnitureCatalog() {
         ))}
       </section>
       <div className="col-span-9 grid grid-cols-2 gap-2">
-        {PRODUCT_CATALOG.map((item, index) => (
-          <FurnitureCard item={item} key={`${item.name} + ${index}`} />
-        ))}
+        {PRODUCT_CATALOG.map((item, index) => {
+          return (
+            <FurnitureCard item={item} key={`${item.name} + ${index}`}>
+              <FurnitureCard.Model>
+                <div className="absolute top-4 right-4">
+                  <StateButton name="favorite" />
+                </div>
+                <FurnitureCard.DimensionOption />
+              </FurnitureCard.Model>
+              <div className="px-[18px] flex flex-col justify-between gap-4">
+                <FurnitureCard.Attribute />
+                <FurnitureCard.Price />
+              </div>
+            </FurnitureCard>
+          );
+        })}
       </div>
     </div>
   );

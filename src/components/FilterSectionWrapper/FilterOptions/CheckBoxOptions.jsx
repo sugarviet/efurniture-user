@@ -53,7 +53,7 @@ function CheckBoxOptions(props) {
   );
 }
 
-CheckBoxOptions.PropTypes = {
+CheckBoxOptions.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 

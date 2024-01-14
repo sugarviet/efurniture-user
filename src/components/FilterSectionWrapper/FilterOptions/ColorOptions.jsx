@@ -40,7 +40,7 @@ function ColorOptions(props) {
   );
 }
 
-ColorOptions.PropTypes = {
+ColorOptions.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 

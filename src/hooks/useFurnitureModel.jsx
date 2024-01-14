@@ -1,10 +1,8 @@
 import { useState } from "react";
-import RoomleConfiguration3D from "../RoomleConfiguration3D";
+import RoomleConfiguration3D from "../components/RoomleConfiguration3D";
 
-function useFurnitureCard(item) {
+function useFurnitureModel(url, model_id) {
   const [dimension, setDimension] = useState("two_dimension");
-
-  const { url, model_id } = item;
 
   const two_dimension = {
     component: (
@@ -13,7 +11,7 @@ function useFurnitureCard(item) {
     change_dimension_button: (
       <button
         onClick={() => setDimension("three_dimension")}
-        className="w-6 h-6 text-sm border-[1px] border-black flex items-center justify-center rounded-full"
+        className={`w-6 h-6 p-3 text-sm border-[1px] border-black flex items-center justify-center rounded-full`}
       >
         3D
       </button>
@@ -25,7 +23,7 @@ function useFurnitureCard(item) {
     change_dimension_button: (
       <button
         onClick={() => setDimension("two_dimension")}
-        className="w-6 h-6 text-sm border-[1px] border-black flex items-center justify-center rounded-full"
+        className="w-6 h-6 p-3 text-sm border-[1px] border-black flex items-center justify-center rounded-full"
       >
         2D
       </button>
@@ -40,4 +38,4 @@ function useFurnitureCard(item) {
   return { model_state, dimension };
 }
 
-export default useFurnitureCard;
+export default useFurnitureModel;
