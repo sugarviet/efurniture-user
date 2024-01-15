@@ -1,6 +1,6 @@
 import FilterSectionWrapper from "../FilterSectionWrapper";
 import FurnitureCard from "../FurnitureCard";
-import StateButton from "../StateButton";
+import FurnitureFavorite from "../FurnitureCard/FurnitureCardItems/FurnitureFavorite";
 
 const COLORS = [
   "#8a4c8a",
@@ -162,12 +162,7 @@ function FurnitureCatalog() {
           return (
             <FurnitureCard item={item} key={`${item.name} + ${index}`}>
               <FurnitureCard.Model>
-                <div className="absolute top-4 right-4">
-                  <StateButton
-                    className="w-6 h-6 hover:cursor-pointer hover:animate-[pulse_1s_ease-in-out]"
-                    name="favorite"
-                  />
-                </div>
+                <FurnitureFavorite />
                 <FurnitureCard.DimensionOption />
               </FurnitureCard.Model>
               <div className="px-[18px] flex flex-col justify-between gap-4">

@@ -8,11 +8,14 @@ function FurnitureCardProvider(props) {
   const { children, furniture } = props;
 
   const [dimension, setDimension] = useState(MODEL_DIMENSION.two_dimension);
+  const [favored, setFavored] = useState(false);
 
   const value = {
     furniture,
     dimension,
     setDimension,
+    favored,
+    setFavored,
   };
 
   return (
