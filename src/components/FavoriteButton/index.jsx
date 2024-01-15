@@ -1,10 +1,6 @@
 import PropTypes from "prop-types";
 import styles from "./FavoriteButton.module.css";
 
-const FavoriteToolTip = ({ title }) => {
-  return ;
-};
-
 function FavoriteButton(props) {
   const { onClick, favored } = props;
 
