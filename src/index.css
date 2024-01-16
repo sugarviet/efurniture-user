@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body{
     overflow-x: hidden;
 }
@@ -17,9 +21,6 @@ body{
     src: url('./fonts/BaskervilleWGL4BTRoman.ttf');
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @layer base {
     h1 {
@@ -57,3 +58,21 @@ body{
 .furniture-checkbox {
     @apply relative after:absolute checked:after:top-[2px] checked:after:left-[7px] checked:after:w-[6px] checked:after:h-[12px] checked:after:rotate-45 checked:after:border-r-[2px] checked:after:border-b-[2px] appearance-none w-[1.5625rem] h-[1.5625rem] outline-none
 }
+
+
+/* ANIMATIONS */
+.fade-in-from-bottom {
+    opacity: 0;
+    animation: fadeInAndMove 0.7s ease-out forwards; 
+  }
+  
+  @keyframes fadeInAndMove {
+    0% {
+      transform: translateY(10%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }

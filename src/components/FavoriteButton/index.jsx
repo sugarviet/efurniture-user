@@ -5,7 +5,7 @@ function FavoriteButton(props) {
   const { onClick, favored } = props;
 
   return (
-    <a onClick={onClick} className={styles.favorite}>
+    <a onClick={onClick} className={styles.favorite} href="/">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"

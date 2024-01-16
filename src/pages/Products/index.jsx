@@ -13,7 +13,7 @@ const Products = () => {
   return (
     <>
       <HeroSection {...SECTION_INTRO_OPTION} />
-      <section className="w-full text-xs font-semibold h-10 flex items-center justify-center bg-sky-950 text-white uppercase">
+      <section className="w-full text-xs font-semibold h-10 flex items-center justify-center bg-sky-950 text-white uppercase my-4">
         sale extraordinary
       </section>
       <FurnitureCatalog />

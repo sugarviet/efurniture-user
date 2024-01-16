@@ -148,7 +148,7 @@ const PRODUCT_CATALOG = [
 function FurnitureCatalog() {
   return (
     <div className="grid grid-cols-12">
-      <section className="col-span-3 px-4">
+      <section className="hidden md:block md:col-span-3 lg:col-span-3 xl:col-span-3 px-4">
         {PRODUCT_TYPE.attributes.map((attribute, index) => (
           <FilterSectionWrapper
             key={`${attribute.name} + ${index}`}
@@ -157,7 +157,7 @@ function FurnitureCatalog() {
           />
         ))}
       </section>
-      <div className="col-span-9 grid grid-cols-2 gap-2">
+      <div className="lg:col-span-9 md:col-span-9 col-span-12 grid grid-cols-2 gap-2">
         {PRODUCT_CATALOG.map((item, index) => {
           return (
             <FurnitureCard item={item} key={`${item.name} + ${index}`}>
