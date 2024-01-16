@@ -26,18 +26,18 @@
         @apply text-[2rem] tracking-[0.125em] uppercase leading-[1.34375];
     }
     h3{
-        @apply text-[1.5625rem] tracking-[0.18em] uppercase leading-[1.44];
+        @apply text-[1.5625rem] tracking-[0.18em] uppercase leading-[1.2083333333];
     }
 
 }
 
 /* button */
 .furniture-button-black-hover {
-    @apply font-HelveticaBold bg-blackPrimary text-center text-white border-[1px] border-blackPrimary hover:bg-white hover:text-black hover:border-[1px] hover:border-black duration-300 cursor-pointer
+    @apply font-HelveticaBold uppercase tracking-[0.125rem] bg-blackPrimary text-center text-white border-[1px] border-blackPrimary hover:bg-white hover:text-black hover:border-[1px] hover:border-black duration-300 cursor-pointer
 }
 
 .furniture-button-white-hover {
-    @apply bg-white border-black border-[1px] text-black hover:bg-black hover:text-white duration-500 cursor-pointer
+    @apply font-HelveticaBold uppercase tracking-[0.125rem] bg-white text-center text-blackPrimary border-[1px] border-blackPrimary hover:bg-black hover:text-white hover:border-[1px] hover:border-black duration-300 cursor-pointer
 }
 
 /* input number */
@@ -52,4 +52,16 @@
 /* checkbox  */
 .furniture-checkbox {
     @apply relative after:absolute checked:after:top-[2px] checked:after:left-[7px] checked:after:w-[6px] checked:after:h-[12px] checked:after:rotate-45 checked:after:border-r-[2px] checked:after:border-b-[2px] appearance-none w-[1.5625rem] h-[1.5625rem] outline-none
+}
+/* underline link  */
+.furniture-link {
+    @apply hover:text-blackPrimary relative after:absolute after:bottom-0 after:left-0 after:bg-blackPrimary after:h-[0.3px] after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300 cursor-pointer
+}
+
+/* divided line  */
+.furniture-divided-top {
+    @apply border-t-[0.0625rem] border-border 
+}
+.furniture-divided-bottom {
+    @apply border-b-[0.0625rem] border-border 
 }

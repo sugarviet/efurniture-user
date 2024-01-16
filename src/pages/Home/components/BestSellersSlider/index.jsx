@@ -99,37 +99,36 @@ const BestSellersSlider = () => {
 
   return (
     <div>
-      <Sliders initialSlide={3} slideToScroll={4} slideToShow={4}>
+      <Sliders initialSlide={3} slideToSscroll={4} slideToShow={4}>
         {bestsellers.map((product, index) => (
-          <div className="w-[345.476px] h-full border border-border border-r-0 bg-white pb-[0.5rem]" key={index}>
-            <div className="block mb-[0.9375rem] pb-[60%] pt-[13%] h-0">
+          <main className="w-[345.476px] h-full border border-border border-r-0 bg-white pb-[0.5rem]" key={index}>
+            <figure className="block mb-[0.9375rem] pb-[60%] pt-[13%] h-0">
               <img className='relative left-[10%] w-[80%] object-cover ' src={product.url} />
-            </div>
-            <div className="px-[18px] h-full flex flex-col justify-between gap-4">
+            </figure>
+            <section className="px-[18px] h-full flex flex-col justify-between gap-4">
               <div>
-                <div className="pointer-events-none">
+                <figure className="pointer-events-none">
                   <img className="h-[1.625rem]" src={product.color} />
-                </div>
-                <div className="text-xs tracking-[0.9px] text-black mt-[0.75rem]">
+                </figure>
+                <nav className="text-xs tracking-[0.9px] text-black mt-[0.75rem]">
                   <a href="#">{product.name}</a>
-                </div>
+                </nav>
                 <div className="text-[0.6875rem] text-grey2 tracking-[0.5px]">{product.material}</div>
               </div>
-              <div className="flex items-end gap-[0.8em] py-4">
+              <section className="flex items-end gap-[0.8em] py-4">
                 <div className="flex justify-between gap-[0.5rem] w-full text-blackPrimary text-left">
-                  <div className="flex flex-wrap">
+                  <article className="flex flex-wrap">
                     <div className="order-1 w-full flex-shrink-0 text-grey2 text-[0.6875rem] mb-[0.1875rem] tracking-[0.4px]">Rec. retail price</div>
                     <span className="order-2 mr-[0.625rem] text-xs tracking-[0.9px] text-black">{product.price.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</span>
-                  </div>
+                  </article>
                   <p className="text-[0.6875rem] tracking-[0.4px] text-grey2 text-right">
                     Prices from <br />
                     <span>{product.price.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</span>
                   </p>
                 </div>
-              </div>
-            </div>
-
-          </div>
+              </section>
+            </section>
+          </main>
         ))}
       </Sliders>
     </div>
