@@ -2,7 +2,7 @@ import AppRow from "@components/AppRow";
 
 const RoomHero = () => {
   return (
-    <section>
+    <section className="mb-12">
         <AppRow
           gutter={4}
           spans={[
