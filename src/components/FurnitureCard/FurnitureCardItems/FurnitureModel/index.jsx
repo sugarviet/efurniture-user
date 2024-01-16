@@ -4,6 +4,7 @@ import RoomleConfiguration3D from "../../../RoomleConfiguration3D";
 import { MODEL_DIMENSION } from "../../../../constants/enum";
 
 import styles from "../../FurnitureCard.module.css";
+import PropTypes from "prop-types";
 
 function FurnitureModel({ children }) {
   const { furniture, dimension } = useContext(FurnitureCardContext);
@@ -25,6 +26,9 @@ function FurnitureModel({ children }) {
       {children}
     </a>
   );
+}
+FurnitureModel.propTypes = {
+  children: PropTypes.node
 }
 
 export default FurnitureModel;

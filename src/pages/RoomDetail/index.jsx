@@ -1,9 +1,11 @@
-
+import RoomHero from "./components/RoomHero";
 
 const RoomDetail = () => {
   return (
-    <div>RoomDetail</div>
-  )
-}
+    <main className="my-2">
+      <RoomHero />
+    </main>
+  );
+};
 
-export default RoomDetail
+export default RoomDetail;
