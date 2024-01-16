@@ -1,0 +1,28 @@
+.favorite {
+    -webkit-tap-highlight-color: transparent;
+    color: #222;
+    text-decoration: none;
+    transition: color .2s;
+    line-height: 1.2;
+    position: relative;
+}
+
+.favorite:hover .favorite_icon {
+    transition: transform .2s,fill .2s,stroke-dashoffset .4s;
+    stroke: #222;
+    stroke-dasharray: 65;
+    stroke-dashoffset: 0;
+}
+
+.favorite_icon {
+    transition: transform .2s,fill .2s,stroke-dashoffset .4s;
+    stroke-dashoffset: 100;
+    fill: transparent;
+    @apply w-6 h-6
+}
+
+.in_wishlist {
+    transition: fill .4s .1s,stroke-dashoffset .2s;
+    stroke-dashoffset: 0;
+    fill: #222;
+}

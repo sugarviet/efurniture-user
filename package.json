@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
+    "@headlessui/react": "^1.7.17",
+    "@heroicons/react": "^2.1.1",
     "@roomle/embedding-lib": "^4.44.0",
     "@roomle/web-sdk": "^2.66.0",
     "@tanstack/react-query": "^4.29.7",
