@@ -12,7 +12,7 @@ function FurnitureModel({ children }) {
   const { url, model_id, name } = furniture;
 
   return (
-    <a
+    <div
       className={`relative flex items-center mb-[0.9375rem] w-full h-72 hover:cursor-pointer ${styles.dimension_option_parent}`}
       title={name}
     >
@@ -24,11 +24,11 @@ function FurnitureModel({ children }) {
         <RoomleConfiguration3D model_id={model_id} />
       ) : null}
       {children}
-    </a>
+    </div>
   );
 }
 FurnitureModel.propTypes = {
-  children: PropTypes.node
-}
+  children: PropTypes.node,
+};
 
 export default FurnitureModel;

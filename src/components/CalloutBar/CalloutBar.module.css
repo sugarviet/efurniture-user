@@ -1,0 +1,49 @@
+.ticker_container {
+    height: 100%;
+    animation: ticker 10s cubic-bezier(1, 0, .1, 0) infinite;
+    animation-duration: 10s;
+    animation-timing-function: cubic-bezier(1, 0, 0.1, 0);
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-fill-mode: none;
+    animation-play-state: running;
+    animation-name: ticker;
+    animation-timeline: auto;
+    animation-range-start: normal;
+    animation-range-end: normal;
+    -webkit-user-select: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ticker_item {
+    @apply flex items-center h-full overflow-hidden underline
+}
+
+@keyframes ticker {
+    0% {
+        @apply mt-20 opacity-0
+    }
+    4% {
+        @apply mt-0 opacity-100
+    }
+    46% {
+        @apply mt-0 opacity-100
+    }
+    50% {
+        @apply -mt-10 opacity-0
+    }
+    54% {
+        @apply -mt-10 opacity-100
+    }
+    96% {
+        @apply -mt-10 opacity-100
+    }
+    99% {
+        @apply -mt-20 opacity-0
+    }
+    100% {
+        @apply mt-0 opacity-0
+    }
+}
