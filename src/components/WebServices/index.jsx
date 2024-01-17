@@ -29,7 +29,7 @@ const services = [
 
 const WebServices = () => {
   return (
-    <section className="bg-gray-200 w-full px-2 py-4 grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2">
+    <section className="bg-gray-200 w-full px-2 py-4 grid grid-cols-1 lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-2 gap-2">
       {services.map((service) => (
         <div className="p-2 flex flex-col items-center border-t-2 gap-6 sm:border-none" key={service.id}>
           <img src={service.icon} alt={service.alt} className="w-10 lg:w-16" />

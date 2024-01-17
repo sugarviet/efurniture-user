@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar"
 import { Outlet } from "react-router-dom"
 import CartSideBar from "@components/CartSideBar"
 import AppSuspense from "../components/AppSuspense"
+import  Footer  from "@components/Footer"
 
 const RootLayout = () => {
   return (
@@ -11,6 +12,7 @@ const RootLayout = () => {
       <AppSuspense>
         <Outlet />
       </AppSuspense>
+      <Footer/>
     </div>
   )
 }
