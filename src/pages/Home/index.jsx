@@ -80,7 +80,7 @@ const Home = () => {
         </div>
       </section>
       {/* footer section */}
-      <footer className="grid grid-cols-[1fr_1fr] mb-[4.5rem] px-[68px]">
+      {/* <footer className="grid grid-cols-[1fr_1fr] mb-[4.5rem] px-[68px]">
         <section className="flex flex-col items-start justify-end pr-[120px]">
           <h3 className="font-HelveticaBold text-[40px] leading-[1.2] tracking-[0.15em] pb-10 line-clamp-3">DANISH DESIGN FURNITURE BY BOCONCEPT</h3>
           <p className="font-Baskerville text-[1.25rem]">BoConcept was born in Herning in 1952 and has grown from a small firm to Denmark’s most
@@ -104,7 +104,7 @@ const Home = () => {
             </div>
           ))}
         </section>
-      </footer>
+      </footer> */}
     </section>
   )
 }
