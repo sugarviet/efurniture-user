@@ -4,6 +4,7 @@ import AppSuspense from "@components/AppSuspense";
 import useSwitchTab from "./hooks/useSwitchTab";
 import Account from "./components/Account";
 
+const Address = lazy(() => import("./components/Address"));
 const Orders = lazy(() => import("./components/Orders"));
 const Favorites = lazy(() => import("./components/Favorites"));
 const PersonalData = lazy(() => import("./components/PersonalData"));
@@ -29,6 +30,11 @@ const profileLinks = [
     title: "Orders",
     key: "orders",
   },
+  {
+    id: 5,
+    title: "Address",
+    key: "address",
+  },
 ];
 
 const tabsProfile = {
@@ -43,6 +49,10 @@ const tabsProfile = {
   favorites: {
     title: "Favorites",
     component: <Favorites />,
+  },
+  address: {
+    title: "Address",
+    component: <Address />,
   },
   personal: {
     title: "Personal data",

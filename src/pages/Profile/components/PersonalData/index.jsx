@@ -25,7 +25,7 @@ const PersonalData = () => {
             name="firstName"
             rules={[
               {
-                required: false,
+                required: true,
                 message: "Please input your username!",
               },
             ]}
@@ -62,22 +62,30 @@ const PersonalData = () => {
           <p>You can at any time revoke this consent.</p>
 
           <p>
-            Read more in our <a href="#" className="underline hover:text-black">Privacy Policy</a> in which we describe how we treat
-            personal information, legislation and more.
+            Read more in our{" "}
+            <a href="#" className="underline hover:text-black">
+              Privacy Policy
+            </a>{" "}
+            in which we describe how we treat personal information, legislation
+            and more.
           </p>
 
-          <p className=" text-gray-400">I accept the BoConcept privacy policy <a href="#" className="underline">See privacy policy</a></p>
-        <button
-          type="submit"
-          className="furniture-button-black-hover text-sm px-6 py-4 w-48"
-        >
-          Apply
-        </button>
+          <p className=" text-gray-400">
+            I accept the BoConcept privacy policy{" "}
+            <a href="#" className="underline">
+              See privacy policy
+            </a>
+          </p>
+          <button
+            type="submit"
+            className="furniture-button-black-hover text-sm px-6 py-4 w-48"
+          >
+            Apply
+          </button>
         </div>
-
       </section>
     </section>
-  )
-}
+  );
+};
 
-export default PersonalData
+export default PersonalData;
