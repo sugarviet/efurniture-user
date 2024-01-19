@@ -1,20 +1,9 @@
-import { MapPinIcon, PuzzlePieceIcon } from "@heroicons/react/24/outline";
 import styles from "./CalloutBar.module.css";
+import ContactOption from "../ContactOption";
 
 const CALLOUT_MESSAGES = [
   "Shop our favorite furniture at NEW LOWER PRICES",
   "Explore 3D Model with AR IN YOUR HOME NOW!!!",
-];
-
-const CALLOUT_OPTIONS = [
-  {
-    Icon: PuzzlePieceIcon,
-    label: "To be a partner of us",
-  },
-  {
-    Icon: MapPinIcon,
-    label: "Find store",
-  },
 ];
 
 function CalloutBar() {
@@ -29,21 +18,8 @@ function CalloutBar() {
           ))}
         </ul>
       </div>
-      <nav className="flex items-center">
-        <ul className="flex justify-between">
-          {CALLOUT_OPTIONS.map((option, index) => {
-            const { Icon, label } = option;
-
-            return (
-              <li key={`${option} + ${index}`}>
-                <a href="#" className="flex items-center hover:cursor-pointer">
-                  <Icon className="w-4 h-4 mr-1 ml-4" />
-                  <p>{label}</p>
-                </a>
-              </li>
-            );
-          })}
-        </ul>
+      <nav className="hidden items-center md:flex">
+        <ContactOption onMobile={false} />
       </nav>
     </div>
   );

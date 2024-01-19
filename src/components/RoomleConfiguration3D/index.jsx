@@ -11,6 +11,10 @@ function RoomleConfiguration3D({ model_id }) {
         elements: {
           bottom_bar: false,
         },
+        buttons: {
+          addon: false,
+          partlist: false,
+        },
       };
 
       await RoomleConfiguratorApi.createPlanner(

@@ -18,7 +18,7 @@
 }
 
 .ticker_item {
-    @apply flex items-center h-full overflow-hidden underline
+    @apply flex items-center h-full overflow-hidden underline text-center
 }
 
 @keyframes ticker {
