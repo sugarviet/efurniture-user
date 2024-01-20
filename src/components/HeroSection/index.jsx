@@ -1,4 +1,3 @@
-
 function HeroSection({ img_url, title, description }) {
   return (
     <section className="grid grid-cols-2 h-80 2xl:h-full mb-2">
@@ -8,7 +7,9 @@ function HeroSection({ img_url, title, description }) {
         src={img_url}
       />
       <div className="col-span-1 flex justify-end flex-col px-12 pb-12">
-        <span className="text-xl sm:text-3xl lg:text-5xl font-bold mb-8 uppercase">{title}</span>
+        <span className="text-xl sm:text-3xl tracking-widest lg:text-5xl font-bold mb-8 uppercase">
+          {title}
+        </span>
         <span className="text-sm lg:text-md">{description}</span>
       </div>
     </section>

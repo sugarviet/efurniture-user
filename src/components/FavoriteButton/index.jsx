@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import styles from "./FavoriteButton.module.css";
+import { classNames } from "../../utils/classNames";
 
 function FavoriteButton(props) {
   const { onClick, favored } = props;
@@ -10,9 +11,10 @@ function FavoriteButton(props) {
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         stroke="currentColor"
-        className={`${styles.favorite_icon} ${
-          favored ? styles.in_wishlist : null
-        }`}
+        className={classNames(
+          favored ? styles.in_wishlist : null,
+          styles.favorite_icon
+        )}
       >
         <path
           strokeLinecap="round"
