@@ -191,7 +191,12 @@ export default function Example() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:ml-6 w-72">
-                  <SearchInput />
+                  <SearchInput
+                    className="border-b-[1px] border-black pr-6 py-1"
+                    placeholder="Search"
+                  >
+                    <SearchInput.SubmitButton className="absolute right-0" />
+                  </SearchInput>
                 </div>
 
                 <div className="ml-4 flow-root lg:ml-6">
@@ -204,7 +209,12 @@ export default function Example() {
               </div>
             </div>
             <div className="flex-1 mt-2 mb-8 lg:hidden">
-              <SearchInput />
+              <SearchInput
+                className="border-b-[1px] border-black pr-6 py-1"
+                placeholder="Search"
+              >
+                <SearchInput.SubmitButton className="absolute right-0" />
+              </SearchInput>
             </div>
           </div>
         </nav>
