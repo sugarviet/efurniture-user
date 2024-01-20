@@ -64,9 +64,9 @@ const Profile = () => {
   const { activeTab, handleChangeTab } = useSwitchTab();
 
   return (
-    <main>
-      <section className="text-center my-3 flex flex-col gap-5 w-full h-56 justify-end">
-        <div className="-translate-y-1/2">
+    <main className="flex flex-col gap-8">
+      <section className="text-center my-3 flex flex-col gap-5 w-full h-56 justify-end mb-10">
+        <div>
           <h1 className="text-5xl font-black my-4">
             {tabsProfile[activeTab].title}
           </h1>
@@ -76,6 +76,8 @@ const Profile = () => {
           </div>
         </div>
       </section>
+
+      <section className="mt-3">
       <AppRow
         gutter={4}
         spans={[
@@ -101,6 +103,9 @@ const Profile = () => {
           <AppSuspense>{tabsProfile[activeTab].component}</AppSuspense>
         </div>
       </AppRow>
+
+      </section>
+
     </main>
   );
 };

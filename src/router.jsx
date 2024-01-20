@@ -13,19 +13,17 @@ import RootLayout from "@layouts/RootLayout";
 import Home from "@pages/Home";
 
 const Profile = lazy(() => import("@pages/Profile"))
-const Products = lazy(() => import("@pages/Products"))
-const Wishlist = lazy(() => import("@pages/Wishlist"))
-const NotFound = lazy(() => import("@pages/NotFound"))
-const Login = lazy(() => import("@pages/Login"))
-const Register = lazy(() => import("@pages/Register"))
-const Rooms = lazy(() => import("@pages/Rooms"))
-const RoomDetail = lazy(() => import("@pages/RoomDetail"))
-const RoomsByPlace = lazy(() => import("@pages/RoomsByPlace"))
+const Products = lazy(() => import("@pages/Products"));
+const Wishlist = lazy(() => import("@pages/Wishlist"));
+const NotFound = lazy(() => import("@pages/NotFound"));
+const Login = lazy(() => import("@pages/Login"));
+const Register = lazy(() => import("@pages/Register"));
+const Rooms = lazy(() => import("@pages/Rooms"));
+const RoomDetail = lazy(() => import("@pages/RoomDetail"));
+const RoomsByPlace = lazy(() => import("@pages/RoomsByPlace"));
 
-
-
-const paths = {
-  base: "/",
+export const PATH = {
+  home: "/",
   products: "/products",
   about: "/",
   cart: "/",
@@ -35,7 +33,7 @@ const paths = {
   rooms: '/rooms',
   roomDetail: '/room/:id',
   roomByPlace: '/room/position/:slug',
-  profile: "/profile",
+  profile: '/profile',
 };
 
 /**
@@ -43,42 +41,41 @@ const paths = {
  */
 const rootLayoutRouterList = {
   layout: <RootLayout />,
-  path: paths.base,
   children: [
     {
-      path: paths.base,
+      path: PATH.home,
       element: <Home />,
     },
     {
-      path: paths.products,
+      path: PATH.products,
       element: <Products />,
     },
     {
-      path: paths.login,
+      path: PATH.login,
       element: <Login />,
     },
     {
-      path: paths.register,
+      path: PATH.register,
       element: <Register />,
     },
     {
-      path: paths.wishlist,
+      path: PATH.wishlist,
       element: <Wishlist />,
     },
     {
-      path: paths.rooms,
+      path: PATH.rooms,
       element: <Rooms />,
     },
     {
-      path: paths.roomByPlace,
+      path: PATH.roomByPlace,
       element: <RoomsByPlace />,
     },
     {
-      path: paths.roomDetail,
+      path: PATH.roomDetail,
       element: <RoomDetail />,
     },
     {
-      path: paths.profile,
+      path: PATH.profile,
       element: <Profile />,
     },
     {
@@ -93,10 +90,7 @@ const rootLayoutRouterList = {
  */
 export const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route
-      element={rootLayoutRouterList.layout}
-      path={rootLayoutRouterList.path}
-    >
+    <Route element={rootLayoutRouterList.layout}>
       {rootLayoutRouterList.children.map((item) => (
         <Route path={item.path} key={item.path} element={item.element} />
       ))}
