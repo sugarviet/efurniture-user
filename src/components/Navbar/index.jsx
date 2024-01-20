@@ -112,7 +112,7 @@ export default function Example() {
                 </div>
 
                 <div className="absolute bottom-0 left-0 right-0">
-                  <ContactOption onMobile={true} />
+                  <ContactOption />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

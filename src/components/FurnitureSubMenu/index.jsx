@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { PATH } from "../../router";
 
 function FurnitureSubMenu({ category }) {
-  const { name, filter_element } = category;
+  const { name, filterElement } = category;
   return (
     <Fragment>
       <Link
@@ -16,7 +16,7 @@ function FurnitureSubMenu({ category }) {
         <ChevronRightIcon className="w-6 h-6" />
       </Link>
       <ul className="block columns-3">
-        {filter_element.map((filter, index) => {
+        {filterElement.map((filter, index) => {
           const { label, elements } = filter;
           return (
             <li className="break-inside-avoid pb-4" key={`${label} + ${index}`}>

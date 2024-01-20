@@ -12,11 +12,9 @@ const CONTACT_OPTIONS = [
   },
 ];
 
-function ContactOption({ onMobile }) {
+function ContactOption() {
   return (
-    <ul
-      className={classNames(onMobile ? "flex-col" : "justify-between", "flex")}
-    >
+    <ul className="flex flex-col lg:flex-row lg:justify-between">
       {CONTACT_OPTIONS.map((option, index) => {
         const { Icon, label } = option;
 
@@ -24,18 +22,10 @@ function ContactOption({ onMobile }) {
           <li key={`${option} + ${index}`}>
             <a
               href="#"
-              className={classNames(
-                onMobile ? "bg-black py-4 text-white text-md" : "",
-                "flex items-center"
-              )}
+              className="bg-black py-4 text-white text-md lg:py-0 lg:text-sm flex items-center"
             >
               <Icon className="w-4 h-4 mr-1 ml-4" />
-              <p
-                className={classNames(
-                  onMobile ? "uppercase tracking-widest" : "",
-                  "furniture-link-white-text"
-                )}
-              >
+              <p className="uppercase tracking-widest lg:normal-case lg:tracking-normal furniture-link-white-text">
                 {label}
               </p>
             </a>

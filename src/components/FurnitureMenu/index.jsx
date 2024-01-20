@@ -9,7 +9,7 @@ const FURNITURE_CATEGORIES = [
     name: "sofas",
     thumbnail:
       "https://p3.aprimocdn.net/boconcept/4e84672f-cd80-4f16-a319-aff50065d4ab/AW23%20565_WEB-SliderNavigation-660x470.jpg",
-    filter_element: [
+    filterElement: [
       {
         label: "by size",
         elements: [
@@ -33,7 +33,7 @@ const FURNITURE_CATEGORIES = [
   {
     id: "armchairs",
     name: "armchairs",
-    filter_element: [
+    filterElement: [
       {
         label: "by size",
         elements: [

@@ -19,7 +19,7 @@ function CalloutBar() {
         </ul>
       </div>
       <nav className="hidden items-center md:flex">
-        <ContactOption onMobile={false} />
+        <ContactOption />
       </nav>
     </div>
   );
