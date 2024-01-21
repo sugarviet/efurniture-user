@@ -29,13 +29,22 @@ const navigation = {
   pages: [],
 };
 
-export default function Example() {
+export default function Navbar() {
   const [open, setOpen] = useState(false);
 
+  console.log(open)
+
+  const handleCloseNavbar = () => {
+    setOpen(false)
+  }
+  const handleOpenNavbar = () => {
+    setOpen(true)
+  }
+
   return (
-    <div className="bg-white">
+    <div className="bg-white" >
       <Transition.Root show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
+        <Dialog as="div" className="relative lg:hidden" onClose={setOpen}>
           <Transition.Child
             as={Fragment}
             enter="transition-opacity ease-linear duration-300"
@@ -48,7 +57,7 @@ export default function Example() {
             <div className="fixed inset-0 bg-black bg-opacity-25" />
           </Transition.Child>
 
-          <div className="fixed inset-0 z-40 flex">
+          <div className="fixed inset-0 flex">
             <Transition.Child
               as={Fragment}
               enter="transition ease-in-out duration-300 transform"
@@ -60,7 +69,7 @@ export default function Example() {
             >
               <Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
                 <div className="flex px-4 pb-2 pt-5">
-                  <CloseButton onClick={() => setOpen(false)} />
+                  <CloseButton onClick={handleCloseNavbar} />
                 </div>
 
                 <Tab.Group as="div" className="mt-2">
@@ -120,7 +129,7 @@ export default function Example() {
         </Dialog>
       </Transition.Root>
 
-      <header className="relative bg-white">
+      <header className="relative bg-white z-50">
         <CalloutBar />
         <nav
           aria-label="Top"
@@ -129,7 +138,7 @@ export default function Example() {
           <div className="border-b border-gray-200 bg-white">
             <div className="flex h-16 items-center">
               <div className="lg:hidden">
-                <MenuButton onClick={() => setOpen(true)} />
+                <MenuButton onClick={handleOpenNavbar} />
               </div>
 
               <div className="flex flex-1 justify-center lg:justify-start lg:flex-none">
@@ -147,6 +156,7 @@ export default function Example() {
                           <>
                             <div className="relative flex">
                               <Popover.Button
+                                onClick={handleOpenNavbar}
                                 className={classNames(
                                   open
                                     ? "border-black text-black"
