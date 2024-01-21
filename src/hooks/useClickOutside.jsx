@@ -1,6 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
-const useClickOutside = (ref, callback, enabled = true) => {
+const useClickOutside = (ref, callback, isOpen) => {
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
       callback();
@@ -8,20 +8,18 @@ const useClickOutside = (ref, callback, enabled = true) => {
   };
 
   useEffect(() => {
-    if (enabled) {
+    if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [enabled, ref, callback]);
+  }, [isOpen, ref, callback]);
 
   return {
-    handleClickOutside
-  }
+    handleClickOutside,
+  };
 };
 
 export default useClickOutside;

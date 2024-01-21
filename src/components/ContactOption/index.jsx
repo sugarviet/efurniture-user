@@ -19,7 +19,7 @@ function ContactOption() {
         const { Icon, label } = option;
 
         return (
-          <li key={`${option} + ${index}`}>
+          <li key={`${option} + ${index}`} className="hidden lg:block">
             <a
               href="#"
               className="bg-black py-4 text-white text-md lg:py-0 lg:text-sm flex items-center"

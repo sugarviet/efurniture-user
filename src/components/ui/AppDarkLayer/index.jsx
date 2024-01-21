@@ -1,22 +1,22 @@
+import { classNames } from "@utils/classNames";
 import Proptypes from "prop-types";
 
-const AppDarkLayer = ({ isOpen, onClose }) => {
+const AppDarkLayer = ({ isOpen }) => {
 
   return (
     <div
-      className={`${
+      className={classNames(
         isOpen
-          ? "fixed inset-0 bg-black opacity-50 transition-opacity duration-300 z-50"
+          ? "fixed inset-0 bg-black opacity-20 transition-opacity duration-300 -z-30"
           : "hidden"
-      }`}
-      onClick={onClose}
+      )}
     ></div>
   );
 };
 
 AppDarkLayer.propTypes = {
   isOpen: Proptypes.bool.isRequired,
-  onClose: Proptypes.func.isRequired,
+  onClose: Proptypes.func
 };
 
 export default AppDarkLayer;

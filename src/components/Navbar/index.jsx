@@ -11,7 +11,6 @@ import SearchInput from "../SearchInput";
 import Logo from "../Logo";
 import CloseButton from "../CloseButton";
 import ContactOption from "../ContactOption";
-import { PATH } from "../../router";
 
 const navigation = {
   categories: [
@@ -32,17 +31,15 @@ const navigation = {
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
-  console.log(open)
-
   const handleCloseNavbar = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
   const handleOpenNavbar = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
   return (
-    <div className="bg-white" >
+    <div className="bg-white">
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative lg:hidden" onClose={setOpen}>
           <Transition.Child
@@ -129,14 +126,14 @@ export default function Navbar() {
         </Dialog>
       </Transition.Root>
 
-      <header className="relative bg-white z-50">
+      <header className="relative bg-white z-0 lg:z-50">
         <CalloutBar />
         <nav
           aria-label="Top"
-          className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-white"
+          className="mx-auto px-4 sm:px-6 lg:px-8 bg-white"
         >
-          <div className="border-b border-gray-200 bg-white">
-            <div className="flex h-16 items-center">
+          <div className="border-b border-gray-200 bg-white w-full">
+            <div className="flex h-16 items-center z-50">
               <div className="lg:hidden">
                 <MenuButton onClick={handleOpenNavbar} />
               </div>
@@ -154,9 +151,10 @@ export default function Navbar() {
                       <Popover key={name} className="flex">
                         {({ open }) => (
                           <>
+                            {open ? <div className="furniture-navbar-overlay"></div> : null}
+
                             <div className="relative flex">
                               <Popover.Button
-                                onClick={handleOpenNavbar}
                                 className={classNames(
                                   open
                                     ? "border-black text-black"

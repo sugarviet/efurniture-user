@@ -1,34 +1,17 @@
 /* eslint-disable react/no-unknown-property */
-import { useEffect, useRef } from "react";
-import AppDarkLayer from "../AppDarkLayer";
-import PropTypes from 'prop-types';
+import { useRef } from "react";
+import useClickOutside from "@hooks/useClickOutside";
+import PropTypes from "prop-types";
 
 const AppModal = ({ isOpen, onClose, children }) => {
-
   const modalRef = useRef();
-  const handleClickOutside = (event) => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
-      onClose();
-    }
-  };
 
-  useEffect(() => {
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
+  useClickOutside(modalRef, onClose, isOpen);
 
   return (
     <>
-    
-      <AppDarkLayer isOpen={isOpen} onClose={onClose}/>
-
+      {isOpen ?  <div className="furniture-overlay"></div> : null}
+     
       <div
         className={`fixed inset-0 flex items-center justify-center z-50  ${
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -69,9 +52,9 @@ const AppModal = ({ isOpen, onClose, children }) => {
 };
 
 AppModal.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
-    children: PropTypes.node.isRequired
-}
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};
 
 export default AppModal;
