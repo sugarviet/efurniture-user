@@ -1,31 +1,41 @@
-import { Fragment, useEffect, useRef } from "react";
-import { classNames } from "../../utils/classNames";
-import mapboxgl from "mapbox-gl";
+import { useEffect, useState } from "react";
+import { Map, Marker } from "react-map-gl";
 
-mapboxgl.accessToken =
-  "pk.eyJ1Ijoibm9iaXRhODkiLCJhIjoiY2xyajRxMGVnMDVuajJrcW41aGFtYzh5YSJ9.1A258o2oKsYxbYY8Qfx2yQ";
-
-function StoreMap({ className, center }) {
-  const mapContainer = useRef(null);
+function StoreMap({ center, markers }) {
+  const [viewState, setViewState] = useState({});
 
   useEffect(() => {
-    const map = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: "mapbox://styles/nobita89/clrn549cu004j01o3h8f38nmr",
-      center: center,
-      zoom: 9,
-    });
+    const { longitude, latitude } = center;
 
-    return () => map.remove();
-  }, []);
+    const newState = { ...viewState, longitude, latitude, zoom: 16 };
+
+    setViewState(newState);
+  }, [center]);
 
   return (
-    <Fragment>
-      <div
-        className={classNames("w-full h-full", className)}
-        ref={mapContainer}
-      ></div>
-    </Fragment>
+    <Map
+      mapboxAccessToken="pk.eyJ1Ijoibm9iaXRhODkiLCJhIjoiY2xyajRxMGVnMDVuajJrcW41aGFtYzh5YSJ9.1A258o2oKsYxbYY8Qfx2yQ"
+      initialViewState={{
+        longitude: center.longitude,
+        latitude: center.latitude,
+        zoom: 10,
+      }}
+      onMove={(e) => setViewState(e.viewState)}
+      mapStyle="mapbox://styles/nobita89/clrn549cu004j01o3h8f38nmr"
+      {...viewState}
+    >
+      {markers.map((mark) => {
+        const { id, longitude, latitude } = mark;
+        return (
+          <Marker
+            key={id}
+            color="black"
+            longitude={longitude}
+            latitude={latitude}
+          />
+        );
+      })}
+    </Map>
   );
 }
 
