@@ -1,16 +1,30 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import { classNames } from "../../utils/classNames";
+import mapboxgl from "mapbox-gl";
 
-function StoreMap({ className }) {
+mapboxgl.accessToken =
+  "pk.eyJ1Ijoibm9iaXRhODkiLCJhIjoiY2xyajRxMGVnMDVuajJrcW41aGFtYzh5YSJ9.1A258o2oKsYxbYY8Qfx2yQ";
+
+function StoreMap({ className, center }) {
+  const mapContainer = useRef(null);
+
+  useEffect(() => {
+    const map = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: "mapbox://styles/nobita89/clrn549cu004j01o3h8f38nmr",
+      center: center,
+      zoom: 9,
+    });
+
+    return () => map.remove();
+  }, []);
+
   return (
     <Fragment>
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.6099415310487!2d106.80730270936196!3d10.84113285795479!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752731176b07b1%3A0xb752b24b379bae5e!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBGUFQgVFAuIEhDTQ!5e0!3m2!1svi!2s!4v1705773532306!5m2!1svi!2s"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
+      <div
         className={classNames("w-full h-full", className)}
-      ></iframe>
+        ref={mapContainer}
+      ></div>
     </Fragment>
   );
 }

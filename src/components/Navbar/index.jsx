@@ -11,7 +11,6 @@ import SearchInput from "../SearchInput";
 import Logo from "../Logo";
 import CloseButton from "../CloseButton";
 import ContactOption from "../ContactOption";
-import { PATH } from "../../router";
 
 const navigation = {
   categories: [
@@ -29,7 +28,7 @@ const navigation = {
   pages: [],
 };
 
-export default function Example() {
+export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (

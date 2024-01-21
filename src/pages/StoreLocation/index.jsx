@@ -1,7 +1,7 @@
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import SearchInput from "../../components/SearchInput";
 import StoreLocationCard from "../../components/StoreLocationCard";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import StoreMap from "../../components/StoreMap";
 
 const STORE_LOCATIONS = [
@@ -10,12 +10,16 @@ const STORE_LOCATIONS = [
     street: "Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ",
     city: "Thành phố Thủ Đức",
     province: "Thành phố Hồ Chí Minh",
+    longitude: 106.80988299437283,
+    latitude: 10.841243500137622,
   },
   {
     name: "Nhà văn hóa Sinh viên TP.HCM",
     street: "Lưu Hữu Phước, Đông Hoà,",
     city: "Thành phố Dĩ An",
     province: "Tỉnh Bình Dương",
+    longitude: 106.80988299437283,
+    latitude: 10.841243500137622,
   },
 ];
 
@@ -50,7 +54,11 @@ const LOGS = [
   },
 ];
 
+const DEFAULT_CENTER = [106.62069160737796, 10.78917031929763];
+
 function StoreLocation() {
+  const [center, setCenter] = useState(DEFAULT_CENTER);
+
   return (
     <main className="grid grid-cols-10">
       <section className="p-4 col-span-10 lg:col-span-4 lg:p-12">
@@ -64,22 +72,28 @@ function StoreLocation() {
           <MapPinIcon className="w-4 h-4 mr-1" />
           <span className="text-sm">Find stores near me</span>
         </div>
-        <StoreMap className="block h-64 lg:hidden" />
+        <StoreMap center={center} className="block h-64 lg:hidden" />
         <div>
           <p className="uppercase tracking-widest text-sm my-6 lg:my-12">
             {STORE_LOCATIONS.length} stores found
           </p>
           <ul className="overflow-scroll max-h-[300px]">
-            {STORE_LOCATIONS.map((location, index) => (
-              <li key={`${location} + ${index}`}>
-                <StoreLocationCard location={location} />
-              </li>
-            ))}
+            {STORE_LOCATIONS.map((location, index) => {
+              const { latitude, longitude } = location;
+              return (
+                <li
+                  onClick={() => setCenter([longitude, latitude])}
+                  key={`${location} + ${index}`}
+                >
+                  <StoreLocationCard location={location} />
+                </li>
+              );
+            })}
           </ul>
         </div>
       </section>
       <section className="hidden lg:block lg:col-span-6">
-        <StoreMap />
+        <StoreMap center={center} />
       </section>
       <section className="col-span-10 lg:col-span-3">
         <img
