@@ -17,9 +17,7 @@ const useClickOutside = (ref, callback, isOpen) => {
     };
   }, [isOpen, ref, callback]);
 
-  return {
-    handleClickOutside,
-  };
+ 
 };
 
 export default useClickOutside;

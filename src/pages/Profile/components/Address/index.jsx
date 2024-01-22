@@ -5,7 +5,6 @@ import CreatingAddress from '../CreatingAddress';
 
 const Address = () => {
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
-  // const [isModalOpen, setIsModalCreateOpen] = useState(false);
 
   const toggleModalCreate = () => {
     setIsModalCreateOpen(!isModalCreateOpen);

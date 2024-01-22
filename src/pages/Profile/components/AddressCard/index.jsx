@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AppModal from "@components/ui/AppModal";
-import EditingAddress from "../CreatingAddress";
+import EditingAddress from "../EditingAddress";
 import Proptypes from "prop-types";
 
 const AddressCard = ({ isDefault }) => {
