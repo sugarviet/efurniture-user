@@ -91,3 +91,12 @@ body{
 .furniture-divided-bottom {
     @apply border-b-[0.0625rem] border-border 
 }
+
+/* overlay */
+.furniture-overlay {
+    @apply fixed inset-0 bg-black opacity-20 transition-opacity duration-300 z-50
+}
+
+.furniture-navbar-overlay {
+    @apply fixed inset-0 bg-black opacity-20 transition-opacity duration-300 -z-50
+}
