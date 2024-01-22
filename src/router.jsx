@@ -12,6 +12,8 @@ import RootLayout from "@layouts/RootLayout";
 // Pages
 import Home from "@pages/Home";
 import StoreLocation from "./pages/StoreLocation";
+
+const Profile = lazy(() => import("@pages/Profile"));
 const Products = lazy(() => import("@pages/Products"));
 const Wishlist = lazy(() => import("@pages/Wishlist"));
 const NotFound = lazy(() => import("@pages/NotFound"));
@@ -32,6 +34,7 @@ export const PATH = {
   rooms: "/rooms",
   roomDetail: "/room/:id",
   roomByPlace: "/room/position/:slug",
+  profile: "/profile",
   stores: "/stores",
 };
 
@@ -76,6 +79,8 @@ const rootLayoutRouterList = {
     {
       path: PATH.stores,
       element: <StoreLocation />,
+      path: PATH.profile,
+      element: <Profile />,
     },
     {
       path: "*",

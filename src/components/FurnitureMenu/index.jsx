@@ -194,7 +194,7 @@ function FurnitureMenu() {
         <div className="col-span-1">
           <a>
             <img
-              className="w-full h-auto object-cover"
+              className="w-full h-56 object-cover"
               src={selectedCategory.thumbnail}
             />
           </a>
