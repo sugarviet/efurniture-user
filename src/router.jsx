@@ -77,10 +77,12 @@ const rootLayoutRouterList = {
       element: <RoomDetail />,
     },
     {
-      path: PATH.stores,
-      element: <StoreLocation />,
       path: PATH.profile,
       element: <Profile />,
+    },
+    {
+      path: PATH.stores,
+      element: <StoreLocation />,
     },
     {
       path: "*",
