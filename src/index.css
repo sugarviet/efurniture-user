@@ -80,6 +80,10 @@ body{
     @apply hover:text-blackPrimary relative after:absolute after:bottom-0 after:left-0 after:bg-blackPrimary after:h-[0.3px] after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300 cursor-pointer
 }
 
+.furniture-link-white-text {
+    @apply hover:text-white relative after:absolute after:bottom-0 after:left-0 after:bg-white after:h-[0.3px] after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300 cursor-pointer
+}
+
 /* divided line  */
 .furniture-divided-top {
     @apply border-t-[0.0625rem] border-border 
@@ -95,4 +99,12 @@ body{
 /* border bottom active */
 .furniture-border-active {
     @apply relative after:absolute after:bottom-[-1.6px] after:left-0 after:bg-blackPrimary after:h-[2px] after:w-full after:transition-all after:ease-in after:duration-200
+
+/* overlay */
+.furniture-overlay {
+    @apply fixed inset-0 bg-black opacity-20 transition-opacity duration-300 z-50
+}
+
+.furniture-navbar-overlay {
+    @apply fixed inset-0 bg-black opacity-20 transition-opacity duration-300 -z-50
 }
