@@ -3,17 +3,15 @@ import { lazy } from "react";
 
 import {
   createBrowserRouter,
-  Route,
-  createRoutesFromElements,
 } from "react-router-dom";
 
 import RootLayout from "@layouts/RootLayout";
 
 // Pages
 import Home from "@pages/Home";
-import StoreLocation from "./pages/StoreLocation";
 
 const Profile = lazy(() => import("@pages/Profile"));
+const StoreLocation = lazy(() => import("@pages/StoreLocation"));
 const Products = lazy(() => import("@pages/Products"));
 const Wishlist = lazy(() => import("@pages/Wishlist"));
 const NotFound = lazy(() => import("@pages/NotFound"));
@@ -40,72 +38,61 @@ export const PATH = {
   productDetail: '/product-detail'
 };
 
-/**
- * Only edit here
- */
-const rootLayoutRouterList = {
-  layout: <RootLayout />,
-  children: [
-    {
-      path: PATH.home,
-      element: <Home />,
-    },
-    {
-      path: PATH.products,
-      element: <Products />,
-    },
-    {
-      path: PATH.login,
-      element: <Login />,
-    },
-    {
-      path: PATH.register,
-      element: <Register />,
-    },
-    {
-      path: PATH.wishlist,
-      element: <Wishlist />,
-    },
-    {
-      path: PATH.rooms,
-      element: <Rooms />,
-    },
-    {
-      path: PATH.roomByPlace,
-      element: <RoomsByPlace />,
-    },
-    {
-      path: PATH.roomDetail,
-      element: <RoomDetail />,
-    },
-    {
-      path: PATH.profile,
-      element: <Profile />,
-    },
-    {
-      path: PATH.stores,
-      element: <StoreLocation />,
-    },
-    {
-      path: PATH.productDetail,
-      element: <ProductDetail />,
-    },
-    {
-      path: "*",
-      element: <NotFound />,
-    },
-  ],
-};
-
-/**
- * Do not touch this
- */
-export const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route element={rootLayoutRouterList.layout}>
-      {rootLayoutRouterList.children.map((item) => (
-        <Route path={item.path} key={item.path} element={item.element} />
-      ))}
-    </Route>
-  )
-);
+export const routers = createBrowserRouter([
+  {
+    path: PATH.home,
+    element: <RootLayout />,
+    children: [
+      {
+        path: PATH.home,
+        element: <Home />,
+      },
+      {
+        path: PATH.products,
+        element: <Products />,
+      },
+      {
+        path: PATH.login,
+        element: <Login />,
+      },
+      {
+        path: PATH.register,
+        element: <Register />,
+      },
+      {
+        path: PATH.wishlist,
+        element: <Wishlist />,
+      },
+      {
+        path: PATH.rooms,
+        element: <Rooms />,
+      },
+     
+      {
+        path: PATH.roomByPlace,
+        element: <RoomsByPlace />,
+      },
+      {
+        path: PATH.roomDetail,
+        element: <RoomDetail />,
+      },
+      {
+        path: PATH.profile,
+        element: <Profile />,
+      },
+      {
+        path: PATH.productDetail,
+        element: <ProductDetail />,
+      },
+      {
+        path: PATH.stores,
+        element: <StoreLocation />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
+    ]
+  },
+  
+])
