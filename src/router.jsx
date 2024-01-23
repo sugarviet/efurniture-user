@@ -81,7 +81,7 @@ const rootLayoutRouterList = {
       element: <Profile />,
     },
     {
-      path: paths.productDetail,
+      path: PATH.productDetail,
       element: <ProductDetail />,
     },
     {

@@ -23,10 +23,10 @@ function ProductCarousel() {
             <Sliders initialSlide={1} slideToScroll={1} slideToShow={1}>
                 {productImageDetail.map((product, index) => (
                     <div
-                        className="w-[1903px] h-[650px] relative bg-white "
+                        className="w-[639px] h-[494px] sm:w-[1903px] sm:h-[650px] relative bg-white "
                         key={index}
                     >
-                        <img className={` absolute left-1/2 -translate-x-1/2 ${index > 1 ? "w-full" : "w-[50%] top-8"}`} src={product.img}></img>
+                        <img className={`absolute left-1/2 -translate-x-1/2 ${index > 1 ? "w-full h-full object-cover" : "sm:w-[50%] w-[90%] top-8"}`} src={product.img}></img>
                     </div>
                 ))}
             </Sliders>
