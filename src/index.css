@@ -87,3 +87,12 @@ body{
 .furniture-divided-bottom {
     @apply border-b-[0.0625rem] border-border 
 }
+/* promotion banner */
+.furniture-promotion {
+    @apply text-xs tracking-[0.075rem] font-HelveticaBold leading-[18px] h-9 flex items-center justify-center bg-[#dc1016] text-white uppercase
+}
+
+/* border bottom active */
+.furniture-border-active {
+    @apply relative after:absolute after:bottom-[-1.6px] after:left-0 after:bg-blackPrimary after:h-[2px] after:w-full after:transition-all after:ease-in after:duration-200
+}

@@ -11,6 +11,7 @@ import RootLayout from "@layouts/RootLayout";
 
 // Pages
 import Home from "@pages/Home";
+
 const Products = lazy(() => import("@pages/Products"))
 const Wishlist = lazy(() => import("@pages/Wishlist"))
 const NotFound = lazy(() => import("@pages/NotFound"))
@@ -19,6 +20,7 @@ const Register = lazy(() => import("@pages/Register"))
 const Rooms = lazy(() => import("@pages/Rooms"))
 const RoomDetail = lazy(() => import("@pages/RoomDetail"))
 const RoomsByPlace = lazy(() => import("@pages/RoomsByPlace"))
+const ProductDetail = lazy(() => import("@pages/ProductDetail"))
 
 
 
@@ -33,6 +35,7 @@ const paths = {
   rooms: '/rooms',
   roomDetail: '/room/:id',
   roomByPlace: '/room/position/:slug',
+  productDetail: '/product-detail'
 };
 
 /**
@@ -73,6 +76,10 @@ const rootLayoutRouterList = {
     {
       path: paths.roomDetail,
       element: <RoomDetail />,
+    },
+    {
+      path: paths.productDetail,
+      element: <ProductDetail />,
     },
     {
       path: "*",
