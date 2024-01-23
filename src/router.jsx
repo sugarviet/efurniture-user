@@ -21,6 +21,7 @@ const Register = lazy(() => import("@pages/Register"));
 const Rooms = lazy(() => import("@pages/Rooms"));
 const RoomDetail = lazy(() => import("@pages/RoomDetail"));
 const RoomsByPlace = lazy(() => import("@pages/RoomsByPlace"));
+const Checkout = lazy(() => import("@pages/Checkout"));
 
 export const PATH = {
   home: "/",
@@ -34,6 +35,7 @@ export const PATH = {
   roomDetail: '/room/:id',
   roomByPlace: '/room/position/:slug',
   profile: '/profile',
+  checkout: '/checkout',
 };
 
 /**
@@ -77,6 +79,10 @@ const rootLayoutRouterList = {
     {
       path: PATH.profile,
       element: <Profile />,
+    },
+    {
+      path: PATH.checkout,
+      element: <Checkout />,
     },
     {
       path: "*",
