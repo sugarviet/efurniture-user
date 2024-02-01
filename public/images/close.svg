@@ -1,0 +1,3 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" class="svg-icon" viewBox="0 0 20 20" width="20"  height="20" ><defs><symbol viewBox="0 0 19 19" id="svg-close"><title>close</title><g stroke="#222" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="square"><path d="M17.164 1.836L1.765 17.235M2 2l15 15"></path></g></symbol></defs>
+<use xlink:href="#svg-close" fill="#AAAAAA"></use>
+</svg>

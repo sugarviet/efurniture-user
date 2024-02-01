@@ -1,9 +1,9 @@
 import SideBar from '../SideBar'
-import CartProduct from "./components/CartProduct";
+import CartProduct from "@components/CartProduct";
 const cartData = [
     {
         id: 1,
-        img: 'https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dw942c4640/images/2070000/2072765.jpg?sw=1000',
+        url: 'https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dw942c4640/images/2070000/2072765.jpg?sw=1000',
         name: 'SANTIAGO',
         description: 'Santiago side table',
         size: 'H51xØ46cm',
@@ -15,7 +15,7 @@ const cartData = [
     },
     {
         id: 2,
-        img: 'https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dw5f7ec034/images/2000000/2000028.jpg?sw=1000',
+        url: 'https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dw5f7ec034/images/2000000/2000028.jpg?sw=1000',
         name: 'KINGSTON',
         description: 'Kingston office desk',
         size: 'H74½xW62xL125cm',
@@ -27,7 +27,7 @@ const cartData = [
     },
     {
         id: 3,
-        img: 'https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dw05567dbf/images/2010000/2014249.jpg?sw=1000',
+        url: 'https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dw05567dbf/images/2010000/2014249.jpg?sw=1000',
         name: 'MADRID',
         description: 'Madrid side table',
         size: 'H51xØ46cm',
