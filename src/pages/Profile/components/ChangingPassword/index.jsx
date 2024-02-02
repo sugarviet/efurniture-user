@@ -1,4 +1,5 @@
 import { Form } from "antd";
+import FormInput from "@components/ui/FormInput";
 
 const ChangingPassword = () => {
   const onFinish = (values) => {
@@ -11,7 +12,7 @@ const ChangingPassword = () => {
     <section className="mt-4 border-t-2 py-4">
       <p className="font-bold mb-3">Change password</p>
       <Form
-        name="basic"
+        name="changePassword"
         labelCol={{
           span: 24,
         }}
@@ -19,44 +20,12 @@ const ChangingPassword = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item
-          label="Current password"
-          name="newEmail"
-          rules={[
-            {
-              required: false,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <input type="password" className="furniture-input w-1/2 h-10" />
-        </Form.Item>
-
-        <Form.Item
-          label="Confirm New Password"
-          name="emailConfirm"
-          rules={[
-            {
-              required: false,
-              message: "Please input your last name!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-1/2 h-10" />
-        </Form.Item>
-
-        <Form.Item
-          label="Confirm new password"
-          name="password"
-          rules={[
-            {
-              required: false,
-              message: "Please input your last name!",
-            },
-          ]}
-        >
-          <input type="password" className="furniture-input w-1/2 h-10" />
-        </Form.Item>
+        <FormInput label="Password"
+          name="password" className="furniture-input w-1/2 h-10" type="password"/>
+          <FormInput label="New Password"
+          name="newPassword" className="furniture-input w-1/2 h-10" type="newPassword"/>
+          <FormInput label="Confirm New Password"
+          name="confirmNewPassword" className="furniture-input w-1/2 h-10" type="confirmNewPassword"/>
       </Form>
 
       <div className="flex flex-col gap-5 text-base w-[40rem]">
