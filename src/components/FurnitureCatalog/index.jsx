@@ -161,7 +161,7 @@ function FurnitureCatalog() {
         {PRODUCT_CATALOG.map((item, index) => {
           return (
             <FurnitureCard item={item} key={`${item.name} + ${index}`}>
-              <FurnitureCard.Model>
+              <FurnitureCard.Model className="w-[60%]">
                 <FurnitureFavorite />
                 <FurnitureCard.DimensionOption />
               </FurnitureCard.Model>

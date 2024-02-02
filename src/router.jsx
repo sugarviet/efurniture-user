@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 
 import RootLayout from "@layouts/RootLayout";
+import CheckoutLayout from "@layouts/CheckoutLayout";
 
 // Pages
 import Home from "@pages/Home";
@@ -21,6 +22,7 @@ const Rooms = lazy(() => import("@pages/Rooms"));
 const RoomDetail = lazy(() => import("@pages/RoomDetail"));
 const RoomsByPlace = lazy(() => import("@pages/RoomsByPlace"));
 const ProductDetail = lazy(() => import("@pages/ProductDetail"));
+const Checkout = lazy(() => import("@pages/Checkout"));
 
 export const PATH = {
   home: "/",
@@ -35,7 +37,8 @@ export const PATH = {
   roomByPlace: "/room/position/:slug",
   profile: "/profile",
   stores: "/stores",
-  productDetail: '/product-detail'
+  productDetail: '/product-detail',
+  checkout:'/checkout'
 };
 
 export const routers = createBrowserRouter([
@@ -67,7 +70,7 @@ export const routers = createBrowserRouter([
         path: PATH.rooms,
         element: <Rooms />,
       },
-     
+
       {
         path: PATH.roomByPlace,
         element: <RoomsByPlace />,
@@ -94,5 +97,15 @@ export const routers = createBrowserRouter([
       },
     ]
   },
-  
+  {
+    path: PATH.checkout,
+    element: <CheckoutLayout />,
+    children: [
+      {
+        path: PATH.checkout,
+        element: <Checkout />,
+      },
+    ]
+  },
+
 ])
