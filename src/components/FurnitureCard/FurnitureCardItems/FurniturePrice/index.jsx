@@ -3,7 +3,7 @@ import formattedCurrency from "../../../../utils/formattedCurrency";
 import { FurnitureCardContext } from "../../FurnitureCardContext";
 
 function FurniturePrice() {
-  const { furniture } = useContext(FurnitureCardContext);
+  const { furniture, onSale } = useContext(FurnitureCardContext);
 
   const { price } = furniture;
 
@@ -15,13 +15,13 @@ function FurniturePrice() {
             Rec. retail price
           </div>
           <span className="order-2 mr-[0.625rem] text-xs tracking-[0.9px] text-black">
-            {formattedCurrency(price)}
+            <span>{formattedCurrency(price)}</span>
+
+            {onSale ? (
+              <span className="line-through">{formattedCurrency(price)}</span>
+            ) : null}
           </span>
         </div>
-        <p className="text-[0.6875rem] tracking-[0.4px] text-grey2 text-right">
-          Prices from <br />
-          <span>{formattedCurrency(price)}</span>
-        </p>
       </div>
     </div>
   );

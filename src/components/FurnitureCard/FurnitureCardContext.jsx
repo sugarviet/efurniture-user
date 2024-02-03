@@ -10,12 +10,15 @@ function FurnitureCardProvider(props) {
   const [dimension, setDimension] = useState(MODEL_DIMENSION.two_dimension);
   const [favored, setFavored] = useState(false);
 
+  const onSale = Math.floor(Math.random() * 10) % 2 == 0;
+
   const value = {
     furniture,
     dimension,
     setDimension,
     favored,
     setFavored,
+    onSale,
   };
 
   return (
