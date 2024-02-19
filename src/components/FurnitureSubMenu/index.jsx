@@ -1,14 +1,16 @@
 import { Fragment } from "react";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import { PATH } from "../../router";
+
+const formatStringCaseToDashCase = (str) =>
+  str.toLowerCase().replace(/\s+/g, "-");
 
 function FurnitureSubMenu({ category }) {
-  const { name, filterElement } = category;
+  const { name, filter_element } = category;
   return (
     <Fragment>
       <Link
-        to={PATH.products}
+        to={`/products/${name}`}
         className="pb-6 uppercase text-2xl font-extrabold text-black tracking-widest flex items-center hover:cursor-pointer"
         title={name}
       >
@@ -16,7 +18,7 @@ function FurnitureSubMenu({ category }) {
         <ChevronRightIcon className="w-6 h-6" />
       </Link>
       <ul className="block columns-3">
-        {filterElement.map((filter, index) => {
+        {filter_element.map((filter, index) => {
           const { label, elements } = filter;
           return (
             <li className="break-inside-avoid pb-4" key={`${label} + ${index}`}>
@@ -27,7 +29,12 @@ function FurnitureSubMenu({ category }) {
                     key={`${element} + ${index}`}
                     className="text-black text-[.75rem] tracking-wider py-1"
                   >
-                    <Link to={PATH.products} className="w-fit relative">
+                    <Link
+                      to={`/products/${name}/${formatStringCaseToDashCase(
+                        element
+                      )}`}
+                      className="w-fit relative"
+                    >
                       {element}
                     </Link>
                   </li>

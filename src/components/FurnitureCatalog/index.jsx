@@ -145,7 +145,7 @@ const PRODUCT_CATALOG = [
   },
 ];
 
-function FurnitureCatalog() {
+function FurnitureCatalog({ catalog }) {
   return (
     <div className="grid grid-cols-12">
       <section className="hidden md:block md:col-span-3 lg:col-span-3 xl:col-span-3 px-4">
@@ -158,9 +158,12 @@ function FurnitureCatalog() {
         ))}
       </section>
       <div className="lg:col-span-9 md:col-span-9 col-span-12 grid grid-cols-2 gap-2">
-        {PRODUCT_CATALOG.map((item, index) => {
+        {catalog.map((item, index) => {
           return (
-            <FurnitureCard item={item} key={`${item.name} + ${index}`}>
+            <FurnitureCard
+              item={item.productId}
+              key={`${item.name} + ${index}`}
+            >
               <FurnitureCard.Model className="w-[60%]">
                 <FurnitureFavorite />
                 <FurnitureCard.DimensionOption />

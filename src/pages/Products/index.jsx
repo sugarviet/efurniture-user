@@ -1,5 +1,11 @@
+import { useParams } from "react-router-dom";
 import FurnitureCatalog from "../../components/FurnitureCatalog";
 import HeroSection from "../../components/HeroSection";
+import { useQuery } from "@tanstack/react-query";
+import { Spin } from "antd";
+import { furniture_type } from "../../shared/querry-key";
+import { get_data } from "../../services/callers";
+import { furniture_by_type_api } from "../../shared/api";
 
 const SECTION_INTRO_OPTION = {
   img_url:
@@ -10,13 +16,23 @@ const SECTION_INTRO_OPTION = {
 };
 
 const Products = () => {
+  const { type, subtype } = useParams();
+
+  console.log(type, subtype);
+
+  const { data, isLoading } = useQuery([furniture_type(type)], () =>
+    get_data(furniture_by_type_api(type, subtype, 1))
+  );
+
+  if (isLoading) return <Spin />;
+
   return (
     <>
       <HeroSection {...SECTION_INTRO_OPTION} />
       <section className="w-full text-xs tracking-widest font-semibold h-10 flex items-center justify-center bg-sky-950 text-white uppercase my-4">
         sale extraordinary
       </section>
-      <FurnitureCatalog />
+      <FurnitureCatalog catalog={data} />
     </>
   );
 };

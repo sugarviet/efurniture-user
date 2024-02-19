@@ -5,11 +5,11 @@ import FurnitureSubMenu from "../FurnitureSubMenu";
 
 const FURNITURE_CATEGORIES = [
   {
-    id: "sofas",
-    name: "sofas",
+    id: "sofa",
+    name: "sofa",
     thumbnail:
       "https://p3.aprimocdn.net/boconcept/4e84672f-cd80-4f16-a319-aff50065d4ab/AW23%20565_WEB-SliderNavigation-660x470.jpg",
-    filterElement: [
+    filter_element: [
       {
         label: "by size",
         elements: [
@@ -33,7 +33,7 @@ const FURNITURE_CATEGORIES = [
   {
     id: "armchairs",
     name: "armchairs",
-    filterElement: [
+    filter_element: [
       {
         label: "by size",
         elements: [
@@ -147,6 +147,32 @@ const FURNITURE_CATEGORIES = [
       {
         label: "by type",
         elements: [
+          "Corner sofa",
+          "Sofas beds",
+          "Chaise Longue sofas",
+          "Modular sofas",
+        ],
+      },
+    ],
+  },
+  {
+    id: "beds",
+    name: "beds",
+    thumbnail:
+      "https://p3.aprimocdn.net/boconcept/a82662c3-b4a5-463f-b725-ae6d00c32ca5/AW22%20074_WEB-SliderNavigation-660x470.jpg",
+    filter_element: [
+      {
+        label: "by size",
+        elements: [
+          "Small and 2 seater sofas",
+          "2.5 seater sofas",
+          "3 seater sofas",
+          "Large and 4 seater sofas",
+        ],
+      },
+      {
+        label: "by type",
+        elements: [
           "Corner sofas",
           "Sofas beds",
           "Chaise Longue sofas",
@@ -163,7 +189,7 @@ function FurnitureMenu() {
   );
 
   return (
-    <div className="grid grid-cols-10 h-auto lg:py-10 bg-white">
+    <div className="grid grid-cols-10 h-fit lg:py-10 bg-white">
       <div className="col-span-10 lg:col-span-2">
         <ul>
           {FURNITURE_CATEGORIES.map((category, index) => {
