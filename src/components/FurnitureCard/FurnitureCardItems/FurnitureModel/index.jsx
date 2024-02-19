@@ -8,7 +8,7 @@ import { classNames } from "@utils/classNames";
 import PropTypes from "prop-types";
 
 function FurnitureModel({ children, className }) {
-  const { furniture, dimension } = useContext(FurnitureCardContext);
+  const { furniture, dimension, onSale } = useContext(FurnitureCardContext);
 
   const { url, model_id, name } = furniture;
 
@@ -18,13 +18,26 @@ function FurnitureModel({ children, className }) {
       title={name}
     >
       {dimension === MODEL_DIMENSION.two_dimension ? (
-        <img className={classNames("relative left-1/2 -translate-x-1/2 object-cover ", className)} src={url} />
+        <img
+          className={classNames(
+            "relative left-1/2 -translate-x-1/2 object-cover ",
+            className
+          )}
+          src={url}
+        />
       ) : null}
 
       {dimension === MODEL_DIMENSION.three_dimension ? (
         <RoomleConfiguration3D model_id={model_id} />
       ) : null}
       {children}
+
+      {onSale ? (
+        <img
+          className="w-10 h-10 absolute bottom-0 right-0"
+          src="https://www.boconcept.com/on/demandware.static/-/Library-Sites-BoConceptSharedLibrary/default/dwe05ddb62/images/promotionicons/One%20time%20offer%20icon%20pct-0111.svg"
+        />
+      ) : null}
     </div>
   );
 }

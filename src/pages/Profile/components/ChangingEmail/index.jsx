@@ -1,4 +1,5 @@
 import { Form } from "antd";
+import FormInput from "@components/ui/FormInput";
 
 const ChangingEmail = () => {
   const onFinish = (values) => {
@@ -11,7 +12,7 @@ const ChangingEmail = () => {
     <section className="mt-4 border-t-2 py-4">
       <p className="font-bold mb-3">Change email</p>
       <Form
-        name="basic"
+        name="changeEmail"
         labelCol={{
           span: 24,
         }}
@@ -19,44 +20,25 @@ const ChangingEmail = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item
+        <FormInput
           label="New Email"
           name="newEmail"
-          rules={[
-            {
-              required: false,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-1/2 h-10" />
-        </Form.Item>
-
-        <Form.Item
+          className="furniture-input w-1/2 h-10"
+          type="email"
+        />
+        <FormInput
           label="Confirm New Email"
           name="emailConfirm"
-          rules={[
-            {
-              required: false,
-              message: "Please input your last name!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-1/2 h-10" />
-        </Form.Item>
+          className="furniture-input w-1/2 h-10"
+          type="confirmEmail"
+        />
 
-        <Form.Item
+        <FormInput
           label="Password"
           name="password"
-          rules={[
-            {
-              required: false,
-              message: "Please input your last name!",
-            },
-          ]}
-        >
-          <input type="password" className="furniture-input w-1/2 h-10" />
-        </Form.Item>
+          className="furniture-input w-1/2 h-10"
+          type="password"
+        />
       </Form>
 
       <div className="flex flex-col gap-5 text-base w-[40rem]">

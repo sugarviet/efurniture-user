@@ -1,5 +1,5 @@
 import { Form } from "antd";
-import AppInput from "@components/ui/AppInput";
+import FormInput from "@components/ui/FormInput";
 
 const ChangingName = () => {
   const onFinish = (values) => {
@@ -12,7 +12,7 @@ const ChangingName = () => {
     <section className="my-4">
       <p className="font-bold mb-3">Change personal info</p>
       <Form
-        name="basic"
+        name="changeName"
         labelCol={{
           span: 24,
         }}
@@ -20,7 +20,7 @@ const ChangingName = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item
+        {/* <Form.Item
           label="First Name"
           name="firstName"
           rules={[
@@ -44,7 +44,12 @@ const ChangingName = () => {
           ]}
         >
           <AppInput className="w-1/2 h-10" />
-        </Form.Item>
+        </Form.Item> */}
+
+        <FormInput label="First Name"
+          name="firstName" className="w-1/2 h-10"/>
+           <FormInput label="Last Name"
+          name="lastName" className="w-1/2 h-10"/>
 
       <div className="flex flex-col gap-5 text-base w-[40rem]">
         <p>
