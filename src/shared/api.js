@@ -6,3 +6,4 @@ export const furniture_by_type_api = (type, subtype, page = 1) => {
 
     return `${FURNITURE_URL}/${type}/${subtype}?page=${page}&limit=10`
 }
+

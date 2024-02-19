@@ -1,1 +1,0 @@
-export const furniture_type = (type) => 'furniture' + '-' + type;
