@@ -118,7 +118,7 @@ const BestSellersSlider = () => {
             key={index}
           >
             <FurnitureCard item={item} key={`${item.name} + ${index}`}>
-              <FurnitureCard.Model />
+              <FurnitureCard.Model className="w-[80%] top-6"/>
               <div className="px-[18px] flex flex-col justify-between gap-4">
                 <FurnitureCard.Attribute />
                 <FurnitureCard.Price />

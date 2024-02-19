@@ -37,12 +37,22 @@ export default {
           '50%': { opacity: '0.5' },
           '100%': { opacity: '1' },
         },
+        messageDisappear: {
+          '0%': {transform: 'scale(1,1)', transformOrigin: 'bottom' },
+          '50%': { transform: 'scale(1.03, 1.03)', transformOrigin: 'bottom' },
+          '75%': {  transform: 'scale(0,0)', transformOrigin: 'bottom' },
+          '100%': { transform: 'scale(0, 0)', transformOrigin: 'bottom' },
+        },
       },
+      
       animation: {
         cartDisappear: 'cartDisappear 0.3s ease-out ',
+        messageDisappear: 'messageDisappear 1s ease-in-out ',
       },
       boxShadow: {
         'email': 'inset 0 -0.0625rem 0 0 #222',
+        'bottomBar': '0 0 5.625rem rgba(0,0,0,.15)',
+        'deliveryCard': '0 0.0625rem 0 0 #5a7468',
       }
     },
   },

@@ -4,9 +4,10 @@ import RoomleConfiguration3D from "../../../RoomleConfiguration3D";
 import { MODEL_DIMENSION } from "../../../../constants/enum";
 
 import styles from "../../FurnitureCard.module.css";
+import { classNames } from "@utils/classNames";
 import PropTypes from "prop-types";
 
-function FurnitureModel({ children }) {
+function FurnitureModel({ children, className }) {
   const { furniture, dimension, onSale } = useContext(FurnitureCardContext);
 
   const { url, model_id, name } = furniture;
@@ -17,7 +18,13 @@ function FurnitureModel({ children }) {
       title={name}
     >
       {dimension === MODEL_DIMENSION.two_dimension ? (
-        <img className="relative left-[10%] w-[80%] object-cover" src={url} />
+        <img
+          className={classNames(
+            "relative left-1/2 -translate-x-1/2 object-cover ",
+            className
+          )}
+          src={url}
+        />
       ) : null}
 
       {dimension === MODEL_DIMENSION.three_dimension ? (
@@ -36,6 +43,7 @@ function FurnitureModel({ children }) {
 }
 FurnitureModel.propTypes = {
   children: PropTypes.node,
+  className: PropTypes.node,
 };
 
 export default FurnitureModel;
