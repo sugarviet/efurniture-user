@@ -1,4 +1,4 @@
-
+import PropTypes from "prop-types";
 
 function MenuSection({ title, content, index, openMenu, toggleMenu }) {
     return (
@@ -14,5 +14,14 @@ function MenuSection({ title, content, index, openMenu, toggleMenu }) {
         </li>
     );
 }
+
+MenuSection.propTypes = {
+    title: PropTypes.string,
+    content: PropTypes.string,
+    index: PropTypes.number,
+    openMenu: PropTypes.func,
+    toggleMenu: PropTypes.func,
+};
+
 
 export default MenuSection

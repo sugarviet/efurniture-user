@@ -1,4 +1,5 @@
 import FurnitureCard from "../FurnitureCard"
+import PropTypes from "prop-types";
 
 const cartData = [
     {
@@ -94,4 +95,8 @@ function CheckoutProduct({activeTab}) {
     )
 }
 
+CheckoutProduct.propTypes = {
+    activeTab: PropTypes.string,
+    
+};
 export default CheckoutProduct
