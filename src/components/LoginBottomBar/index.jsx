@@ -1,7 +1,7 @@
 import BottomBar from '@components/BottomBar'
 import { useToggleLoginBottomBar } from '@hooks/useToggleBottomBar';
 import { Form } from "antd";
-import AppInput from "@components/ui/AppInput"
+import FormInput from "@components/ui/FormInput";
 
 function LoginBottomBar() {
 
@@ -33,32 +33,19 @@ function LoginBottomBar() {
                         <div className='mx-[1.5625rem] mt-[60px]'>
                             <h3 className='text-[1.5625rem] leading-[1.4] tracking-[0.18em] font-HelveticaBold mb-[1.5625rem]'>RETURNING CUSTOMERS</h3>
 
-                            <Form.Item
+                            <FormInput
                                 label="Email"
                                 name="Email"
-                                className="w-auto text-[0.875rem] leading-[1.715] tracking-[0.05em]"
-                                rules={[
-                                    {
-                                        required: false,
-                                        message: "Please input your email!",
-                                    },
-                                ]}
-                            >
-                                <AppInput type="email" className="furniture-input w-full h-[3rem]" />
-                            </Form.Item>
-                            <Form.Item
+                                className="furniture-input w-full h-[3rem]"
+                                type="email"
+                            />
+                            <FormInput
                                 label="Password"
                                 name="password"
-                                className="w-auto text-[0.875rem] leading-[1.715] tracking-[0.05em]"
-                                rules={[
-                                    {
-                                        required: false,
-                                        message: "Please input your password!",
-                                    },
-                                ]}
-                            >
-                                <AppInput type="password" className="furniture-input w-full h-[3rem]" />
-                            </Form.Item>
+                                className="furniture-input w-full h-[3rem]"
+                                type="password"
+                            />
+
 
                             <div className="flex flex-row gap-3 pb-6">
                                 <input className="furniture-checkbox border-[0.125rem] border-[#5a7468] checked:bg-[#5a7468]"
