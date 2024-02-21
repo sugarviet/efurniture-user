@@ -2,14 +2,17 @@ import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { classNames } from "../../utils/classNames";
 import { useState } from "react";
 import FurnitureSubMenu from "../FurnitureSubMenu";
+import QueryFurnitureTypeMap from "../../shared/api/FurnitureType";
+import { useFetch } from "../../hooks/api-hooks";
+import LoadingSpinner from "../LoadingSpinner";
 
 const FURNITURE_CATEGORIES = [
   {
-    id: "sofas",
-    name: "sofas",
+    id: "sofa",
+    name: "sofa",
     thumbnail:
       "https://p3.aprimocdn.net/boconcept/4e84672f-cd80-4f16-a319-aff50065d4ab/AW23%20565_WEB-SliderNavigation-660x470.jpg",
-    filterElement: [
+    filter_element: [
       {
         label: "by size",
         elements: [
@@ -33,7 +36,7 @@ const FURNITURE_CATEGORIES = [
   {
     id: "armchairs",
     name: "armchairs",
-    filterElement: [
+    filter_element: [
       {
         label: "by size",
         elements: [
@@ -147,6 +150,32 @@ const FURNITURE_CATEGORIES = [
       {
         label: "by type",
         elements: [
+          "Corner sofa",
+          "Sofas beds",
+          "Chaise Longue sofas",
+          "Modular sofas",
+        ],
+      },
+    ],
+  },
+  {
+    id: "beds",
+    name: "beds",
+    thumbnail:
+      "https://p3.aprimocdn.net/boconcept/a82662c3-b4a5-463f-b725-ae6d00c32ca5/AW22%20074_WEB-SliderNavigation-660x470.jpg",
+    filter_element: [
+      {
+        label: "by size",
+        elements: [
+          "Small and 2 seater sofas",
+          "2.5 seater sofas",
+          "3 seater sofas",
+          "Large and 4 seater sofas",
+        ],
+      },
+      {
+        label: "by type",
+        elements: [
           "Corner sofas",
           "Sofas beds",
           "Chaise Longue sofas",
@@ -158,20 +187,23 @@ const FURNITURE_CATEGORIES = [
 ];
 
 function FurnitureMenu() {
-  const [selectedCategory, setSelectedCategory] = useState(
-    FURNITURE_CATEGORIES[0]
-  );
+  const [selectedCategory, setSelectedCategory] = useState({});
+
+  const { get_api } = QueryFurnitureTypeMap.get("furniture_type");
+  const { data: categories, isLoading } = useFetch(get_api());
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="grid grid-cols-10 h-auto lg:py-10 bg-white">
+    <div className="grid grid-cols-10 min-h-[384px] lg:py-10 bg-white">
       <div className="col-span-10 lg:col-span-2">
         <ul>
-          {FURNITURE_CATEGORIES.map((category, index) => {
-            const { id, name } = category;
-            const selected = selectedCategory?.id === id;
+          {categories.map((category) => {
+            const { _id, name } = category;
+            const selected = selectedCategory._id === _id;
 
             return (
-              <li key={`${name} + ${index}`}>
+              <li key={_id}>
                 <button
                   onClick={() => setSelectedCategory(category)}
                   className={classNames(
@@ -195,7 +227,7 @@ function FurnitureMenu() {
           <a>
             <img
               className="w-full h-56 object-cover"
-              src={selectedCategory.thumbnail}
+              src={selectedCategory.thumb}
             />
           </a>
           <a

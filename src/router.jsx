@@ -1,9 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from "react";
 
-import {
-  createBrowserRouter,
-} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
 import RootLayout from "@layouts/RootLayout";
 import CheckoutLayout from "@layouts/CheckoutLayout";
@@ -26,7 +24,7 @@ const Checkout = lazy(() => import("@pages/Checkout"));
 
 export const PATH = {
   home: "/",
-  products: "/products",
+  productByType: "/products/:type",
   about: "/",
   cart: "/",
   login: "/login",
@@ -37,8 +35,9 @@ export const PATH = {
   roomByPlace: "/room/position/:slug",
   profile: "/profile",
   stores: "/stores",
-  productDetail: '/product-detail',
-  checkout:'/checkout'
+  productDetail: "/product-detail",
+  checkout: "/checkout",
+  productBySubType: "/products/:type/:subtype",
 };
 
 export const routers = createBrowserRouter([
@@ -51,7 +50,11 @@ export const routers = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: PATH.products,
+        path: PATH.productByType,
+        element: <Products />,
+      },
+      {
+        path: PATH.productBySubType,
         element: <Products />,
       },
       {
@@ -95,7 +98,7 @@ export const routers = createBrowserRouter([
         path: "*",
         element: <NotFound />,
       },
-    ]
+    ],
   },
   {
     path: PATH.checkout,
@@ -105,7 +108,6 @@ export const routers = createBrowserRouter([
         path: PATH.checkout,
         element: <Checkout />,
       },
-    ]
+    ],
   },
-
-])
+]);
