@@ -1,11 +1,9 @@
 import { useParams } from "react-router-dom";
 import FurnitureCatalog from "../../components/FurnitureCatalog";
 import HeroSection from "../../components/HeroSection";
-import { useQuery } from "@tanstack/react-query";
-import { furniture_type } from "../../shared/query-key";
-import { get_data } from "../../services/callers";
-import { furniture_by_type_api } from "../../shared/api";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import QueryFurnitureMap from "../../shared/API/Furniture";
+import { useFetch } from "../../hooks/api-hooks";
 
 const SECTION_INTRO_OPTION = {
   img_url:
@@ -18,9 +16,9 @@ const SECTION_INTRO_OPTION = {
 const Products = () => {
   const { type, subtype } = useParams();
 
-  const { data, isLoading } = useQuery([furniture_type(type, subtype)], () =>
-    get_data(furniture_by_type_api(type, subtype, 1))
-  );
+  const { get_api } = QueryFurnitureMap.get("furniture_by_type");
+
+  const { data, isLoading } = useFetch(get_api(type, subtype));
 
   if (isLoading) return <LoadingSpinner />;
 

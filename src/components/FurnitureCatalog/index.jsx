@@ -158,12 +158,10 @@ function FurnitureCatalog({ catalog }) {
         ))}
       </section>
       <div className="lg:col-span-9 md:col-span-9 col-span-12 grid grid-cols-2 gap-2">
-        {catalog.map((item, index) => {
+        {catalog.map((item) => {
+          const { _id } = item;
           return (
-            <FurnitureCard
-              item={item.productId}
-              key={`${item.name} + ${index}`}
-            >
+            <FurnitureCard item={item} key={_id}>
               <FurnitureCard.Model className="w-[60%]">
                 <FurnitureFavorite />
                 <FurnitureCard.DimensionOption />

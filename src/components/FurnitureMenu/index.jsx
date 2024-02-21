@@ -2,6 +2,9 @@ import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { classNames } from "../../utils/classNames";
 import { useState } from "react";
 import FurnitureSubMenu from "../FurnitureSubMenu";
+import QueryFurnitureTypeMap from "../../shared/api/FurnitureType";
+import { useFetch } from "../../hooks/api-hooks";
+import LoadingSpinner from "../LoadingSpinner";
 
 const FURNITURE_CATEGORIES = [
   {
@@ -184,20 +187,23 @@ const FURNITURE_CATEGORIES = [
 ];
 
 function FurnitureMenu() {
-  const [selectedCategory, setSelectedCategory] = useState(
-    FURNITURE_CATEGORIES[0]
-  );
+  const [selectedCategory, setSelectedCategory] = useState({});
+
+  const { get_api } = QueryFurnitureTypeMap.get("furniture_type");
+  const { data: categories, isLoading } = useFetch(get_api());
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="grid grid-cols-10 h-fit lg:py-10 bg-white">
+    <div className="grid grid-cols-10 min-h-[384px] lg:py-10 bg-white">
       <div className="col-span-10 lg:col-span-2">
         <ul>
-          {FURNITURE_CATEGORIES.map((category, index) => {
-            const { id, name } = category;
-            const selected = selectedCategory?.id === id;
+          {categories.map((category) => {
+            const { _id, name } = category;
+            const selected = selectedCategory._id === _id;
 
             return (
-              <li key={`${name} + ${index}`}>
+              <li key={_id}>
                 <button
                   onClick={() => setSelectedCategory(category)}
                   className={classNames(
@@ -221,7 +227,7 @@ function FurnitureMenu() {
           <a>
             <img
               className="w-full h-56 object-cover"
-              src={selectedCategory.thumbnail}
+              src={selectedCategory.thumb}
             />
           </a>
           <a
