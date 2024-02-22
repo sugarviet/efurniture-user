@@ -1,22 +1,11 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import { useFetch } from "../../hooks/api-hooks";
 import QueryFurnitureTypeMap from "../../shared/api/FurnitureType";
-import LoadingSpinner from "../LoadingSpinner";
+import { withFetchData } from "../../hocs/withFetchData";
 
-const formatStringCaseToDashCase = (str) =>
-  str.toLowerCase().replace(/\s+/g, "-");
-
-function FurnitureSubMenu({ category }) {
-  const { slug, name } = category;
-  const { get_api } = QueryFurnitureTypeMap.get("furniture_subtype");
-
-  const { data, isLoading } = useFetch(get_api(slug));
-
+function FurnitureSubMenu({ slug, name, data }) {
   const filter_element = data ? Object.keys(data) : [];
-
-  if (isLoading) return <LoadingSpinner />;
 
   return (
     <Fragment>
@@ -38,7 +27,7 @@ function FurnitureSubMenu({ category }) {
             >
               <h5 className="uppercase tracking-widest pb-4">{filter}</h5>
               <ul>
-                {elements.map((element, index) => {
+                {elements.map((element) => {
                   const { _id, type, slug: subtype } = element;
                   return (
                     <li
@@ -63,4 +52,8 @@ function FurnitureSubMenu({ category }) {
   );
 }
 
-export default FurnitureSubMenu;
+export default withFetchData(
+  FurnitureSubMenu,
+  QueryFurnitureTypeMap,
+  "furniture_subtype"
+);

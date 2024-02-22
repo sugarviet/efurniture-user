@@ -3,8 +3,7 @@ import { classNames } from "../../utils/classNames";
 import { useState } from "react";
 import FurnitureSubMenu from "../FurnitureSubMenu";
 import QueryFurnitureTypeMap from "../../shared/api/FurnitureType";
-import { useFetch } from "../../hooks/api-hooks";
-import LoadingSpinner from "../LoadingSpinner";
+import { withFetchData } from "../../hocs/withFetchData";
 
 const FURNITURE_CATEGORIES = [
   {
@@ -186,13 +185,9 @@ const FURNITURE_CATEGORIES = [
   },
 ];
 
-function FurnitureMenu() {
-  const [selectedCategory, setSelectedCategory] = useState({});
-
-  const { get_api } = QueryFurnitureTypeMap.get("furniture_type");
-  const { data: categories, isLoading } = useFetch(get_api());
-
-  if (isLoading) return <LoadingSpinner />;
+function FurnitureMenu({ data }) {
+  const [categories] = useState(data);
+  const [selectedCategory, setSelectedCategory] = useState(data[0]);
 
   return (
     <div className="grid grid-cols-10 min-h-[384px] lg:py-10 bg-white">
@@ -221,7 +216,10 @@ function FurnitureMenu() {
       </div>
       <div className="hidden col-span-8 h-40 px-8 lg:grid lg:grid-cols-3">
         <div className="col-span-2">
-          <FurnitureSubMenu category={selectedCategory} />
+          <FurnitureSubMenu
+            slug={selectedCategory.slug}
+            name={selectedCategory.name}
+          />
         </div>
         <div className="col-span-1">
           <a>
@@ -243,4 +241,8 @@ function FurnitureMenu() {
   );
 }
 
-export default FurnitureMenu;
+export default withFetchData(
+  FurnitureMenu,
+  QueryFurnitureTypeMap,
+  "furniture_type"
+);

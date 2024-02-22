@@ -1,9 +1,7 @@
-import { useParams } from "react-router-dom";
 import FurnitureCatalog from "../../components/FurnitureCatalog";
 import HeroSection from "../../components/HeroSection";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import { withFetchData } from "../../hocs/withFetchData";
 import QueryFurnitureMap from "../../shared/API/Furniture";
-import { useFetch } from "../../hooks/api-hooks";
 
 const SECTION_INTRO_OPTION = {
   img_url:
@@ -13,15 +11,7 @@ const SECTION_INTRO_OPTION = {
     "Shop designer sofas, crafted with quality materials and designed to enhance any living space to experience luxury and comfort. Pick your style to customise.",
 };
 
-const Products = () => {
-  const { type, subtype } = useParams();
-
-  const { get_api } = QueryFurnitureMap.get("furniture_by_type");
-
-  const { data, isLoading } = useFetch(get_api(type, subtype));
-
-  if (isLoading) return <LoadingSpinner />;
-
+const Products = ({ data }) => {
   return (
     <>
       <HeroSection {...SECTION_INTRO_OPTION} />
@@ -33,4 +23,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default withFetchData(Products, QueryFurnitureMap, "furniture_by_type");
