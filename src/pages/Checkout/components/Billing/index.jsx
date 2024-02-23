@@ -2,10 +2,13 @@ import { Form } from "antd";
 import FormInput from "@components/ui/FormInput";
 import BillingAddress from "../BillingAddress";
 import { useToggleLoginBottomBar } from '@hooks/UseToggleBottomBar';
+import { useState } from 'react';
 
 function Billing() {
 
   const { toggleLoginBottomBar } = useToggleLoginBottomBar();
+
+  const [isInputEmail, setIsInputEmail] = useState(false);
 
   const onFinish = (values) => {
     console.log("Success:", values);
@@ -13,6 +16,13 @@ function Billing() {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
+  const handleEmailChange = (e) => {
+    if (e.target.value && /\S+@\S+\.\S+/.test(e.target.value)) {
+      setIsInputEmail(true);
+    }
+  };
+
   return (
     <section>
       <div className='max-w-[43.75rem] text-[0.875rem] leading-[1.5] pb-[45px] tracking-[0.5px] pt-6 lg:pt-0'>
@@ -33,36 +43,39 @@ function Billing() {
               name="email"
               className="furniture-input w-full h-[3rem]"
               type="newLetterEmail"
+              onChange={handleEmailChange}
             />
 
-            <section className="pb-4">
-              <div className="flex flex-row gap-3 pb-4">
-                <input className="furniture-checkbox border-[0.125rem] border-[#5a7468] checked:bg-[#5a7468]"
-                  type="checkbox"
-                />
-                <p>Sign me up for the Efurniture newsletter.</p>
-              </div>
-              <section className="mb-6">
-                <p>
-                  When you sign up for Efurniture newsletters, you agree to receive news and information regarding events via email
-                  from Efurniture A/S and your preferred/closest Efurniture store.
-                </p>
-                <br />
-                <p>
-                  You can at any time revoke this consent.
-                </p>
-                <br />
-                <p>
-                  Read more in our <a href='#' className='underline'>Privacy Policy</a> in which we describe how we treat personal information, legislation and more.
-                </p>
+            <div className={`ease-slow-to-fast duration-1000 overflow-hidden max-h-0 ${isInputEmail ? "max-h-[1500px]" : ""}`}>
+              <section className="pb-4">
+                <div className="flex flex-row gap-3 pb-4">
+                  <input className="furniture-checkbox border-[0.125rem] border-[#5a7468] checked:bg-[#5a7468]"
+                    type="checkbox"
+                  />
+                  <p>Sign me up for the Efurniture newsletter.</p>
+                </div>
+                <section className="mb-6">
+                  <p>
+                    When you sign up for Efurniture newsletters, you agree to receive news and information regarding events via email
+                    from Efurniture A/S and your preferred/closest Efurniture store.
+                  </p>
+                  <br />
+                  <p>
+                    You can at any time revoke this consent.
+                  </p>
+                  <br />
+                  <p>
+                    Read more in our <a href='#' className='underline'>Privacy Policy</a> in which we describe how we treat personal information, legislation and more.
+                  </p>
+                </section>
               </section>
-            </section>
-            <BillingAddress
 
-            />
+              <BillingAddress />
+            </div>
+
             <button
               type="submit"
-              className="furniture-button-black-hover w-full px-[55px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-6"
+              className={`furniture-button-black-hover w-full px-[55px] py-[14px] text-[0.6875rem] tracking-[0.125rem] ${!isInputEmail ? 'mt-0' : 'mt-6'} `}
             >
               CONTINUE TO DELIVERY
             </button>
