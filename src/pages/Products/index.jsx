@@ -1,5 +1,9 @@
+import { useParams } from "react-router-dom";
 import FurnitureCatalog from "../../components/FurnitureCatalog";
 import HeroSection from "../../components/HeroSection";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import QueryFurnitureMap from "../../shared/API/Furniture";
+import { useFetch } from "../../hooks/api-hooks";
 
 const SECTION_INTRO_OPTION = {
   img_url:
@@ -10,13 +14,21 @@ const SECTION_INTRO_OPTION = {
 };
 
 const Products = () => {
+  const { type, subtype } = useParams();
+
+  const { get_api } = QueryFurnitureMap.get("furniture_by_type");
+
+  const { data, isLoading } = useFetch(get_api(type, subtype));
+
+  if (isLoading) return <LoadingSpinner />;
+
   return (
     <>
       <HeroSection {...SECTION_INTRO_OPTION} />
       <section className="w-full text-xs tracking-widest font-semibold h-10 flex items-center justify-center bg-sky-950 text-white uppercase my-4">
         sale extraordinary
       </section>
-      <FurnitureCatalog />
+      <FurnitureCatalog catalog={data} />
     </>
   );
 };
