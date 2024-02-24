@@ -2,8 +2,8 @@ import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { classNames } from "../../utils/classNames";
 import { useState } from "react";
 import FurnitureSubMenu from "../FurnitureSubMenu";
-import QueryFurnitureTypeMap from "../../shared/api/FurnitureType";
 import { withFetchData } from "../../hocs/withFetchData";
+import { get_furniture_type_api } from "../../api/furnitureTypeApi";
 
 const FURNITURE_CATEGORIES = [
   {
@@ -241,8 +241,4 @@ function FurnitureMenu({ data }) {
   );
 }
 
-export default withFetchData(
-  FurnitureMenu,
-  QueryFurnitureTypeMap,
-  "furniture_type"
-);
+export default withFetchData(FurnitureMenu, get_furniture_type_api);

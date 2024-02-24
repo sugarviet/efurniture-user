@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import QueryFurnitureTypeMap from "../../shared/api/FurnitureType";
 import { withFetchData } from "../../hocs/withFetchData";
+import { get_furniture_subtype_api } from "../../api/furnitureTypeApi";
 
 function FurnitureSubMenu({ slug, name, data }) {
   const filter_element = data ? Object.keys(data) : [];
@@ -52,8 +52,4 @@ function FurnitureSubMenu({ slug, name, data }) {
   );
 }
 
-export default withFetchData(
-  FurnitureSubMenu,
-  QueryFurnitureTypeMap,
-  "furniture_subtype"
-);
+export default withFetchData(FurnitureSubMenu, get_furniture_subtype_api);

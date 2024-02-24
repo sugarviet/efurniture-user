@@ -1,7 +1,7 @@
+import { get_furniture_by_type_api } from "../../api/furnitureApi";
 import FurnitureCatalog from "../../components/FurnitureCatalog";
 import HeroSection from "../../components/HeroSection";
 import { withFetchData } from "../../hocs/withFetchData";
-import QueryFurnitureMap from "../../shared/API/Furniture";
 
 const SECTION_INTRO_OPTION = {
   img_url:
@@ -23,4 +23,4 @@ const Products = ({ data }) => {
   );
 };
 
-export default withFetchData(Products, QueryFurnitureMap, "furniture_by_type");
+export default withFetchData(Products, get_furniture_by_type_api);
