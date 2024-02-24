@@ -1,7 +1,5 @@
-import { get_furniture_by_type_api } from "../../api/furnitureApi";
 import FurnitureCatalog from "../../components/FurnitureCatalog";
 import HeroSection from "../../components/HeroSection";
-import { withFetchData } from "../../hocs/withFetchData";
 
 const SECTION_INTRO_OPTION = {
   img_url:
@@ -11,16 +9,16 @@ const SECTION_INTRO_OPTION = {
     "Shop designer sofas, crafted with quality materials and designed to enhance any living space to experience luxury and comfort. Pick your style to customise.",
 };
 
-const Products = ({ data }) => {
+const Products = () => {
   return (
     <>
       <HeroSection {...SECTION_INTRO_OPTION} />
       <section className="w-full text-xs tracking-widest font-semibold h-10 flex items-center justify-center bg-sky-950 text-white uppercase my-4">
         sale extraordinary
       </section>
-      <FurnitureCatalog catalog={data} />
+      <FurnitureCatalog />
     </>
   );
 };
 
-export default withFetchData(Products, get_furniture_by_type_api);
+export default Products;
