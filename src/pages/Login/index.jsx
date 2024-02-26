@@ -1,4 +1,4 @@
-import LoginInputForm from "./components/LoginInputForm"
+import LoginForm from "./components/LoginForm"
 
 const benefitList = [
   {
@@ -25,7 +25,7 @@ const Login = () => {
             <h2>RETURNING CUSTOMERS</h2>
           </article>
           <div className="font-HelveticaRoman">
-            <LoginInputForm />
+            <LoginForm />
           </div>
         </div>
 
