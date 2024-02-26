@@ -3,10 +3,9 @@ import { classNames } from "../../utils/classNames";
 import SearchButton from "../SearchButton";
 import PropTypes from 'prop-types';
 
-function SearchInput({children, placeholder, className, handleSearch }) {
+function SearchInput({children, placeholder, className }) {
   const [searchValue, setSearchValue] = useState("");
 
-  console.log(handleSearch);
   const handleInputChange = (event) => {
     setSearchValue(event.target.value);
   };
