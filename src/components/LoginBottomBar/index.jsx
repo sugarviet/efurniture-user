@@ -1,7 +1,7 @@
 import BottomBar from '@components/BottomBar'
 import { useToggleLoginBottomBar } from '@hooks/useToggleBottomBar';
 import { Form } from "antd";
-import FormInput from "@components/ui/FormInput";
+import FormInput from "@components/FormInput";
 
 function LoginBottomBar() {
 

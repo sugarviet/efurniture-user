@@ -1,6 +1,6 @@
 import AppInput from "@components/ui/AppInput";
 
-import FormItem from "../../FormItem";
+import FormItem from "../FormItem";
 import PropTypes from "prop-types";
 
 const FormInput = ({ label, name, initialValue, placeholder, type, required, message, inputType, className, disabled, value, onChange }) => {

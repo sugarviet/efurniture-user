@@ -1,6 +1,6 @@
 import React from 'react'
 
-function CheckboxModal({ children, name, value, onChange, checked }) {
+function RadioModal({ children, name, value, onChange, checked }) {
 
     return (
 
@@ -24,4 +24,4 @@ function CheckboxModal({ children, name, value, onChange, checked }) {
     )
 }
 
-export default CheckboxModal
+export default RadioModal

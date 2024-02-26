@@ -1,5 +1,5 @@
 import { Form } from "antd";
-import CheckboxModal from "@components/CheckboxModal";
+import RadioModal from "@components/RadioModal";
 import { useState } from "react";
 import useSwitchTab from "../../hooks/useSwitchTab";
 import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
@@ -44,7 +44,7 @@ function Shipping() {
       <section className='py-10 font-HelveticaRoman'>
         <h3 className='text-[14px] lg:text-[1rem] leading-[1.1875] tracking-[0.08em] font-HelveticaBold pb-2'>DELIVERY METHOD </h3>
         <div className="pb-20">
-          <CheckboxModal
+          <RadioModal
             name="delivery"
             value="warehouse"
             onChange={() => handleChangeMethod(DELIVERY_METHOD.warehouse)}
@@ -59,11 +59,11 @@ function Shipping() {
                 Come to us to collect your order Read more
               </p>
             </article>
-          </CheckboxModal>
+          </RadioModal>
         </div>
 
         <div>
-          <CheckboxModal
+          <RadioModal
             name="delivery"
             value="contact"
             onChange={() => handleChangeMethod(DELIVERY_METHOD.contact)}
@@ -75,7 +75,7 @@ function Shipping() {
                 Your product selection will be send to the BoConcept store nearest your geographical location. You will receive a quotation, including applicable discounts, sales tax and shipping cost
               </p>
             </article>
-          </CheckboxModal>
+          </RadioModal>
         </div>
 
       </section>

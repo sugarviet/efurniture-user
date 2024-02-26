@@ -11,6 +11,7 @@ import SearchInput from "../SearchInput";
 import Logo from "../Logo";
 import CloseButton from "../CloseButton";
 import ContactOption from "../ContactOption";
+import { Link } from "react-router-dom";
 
 const navigation = {
   categories: [
@@ -37,6 +38,11 @@ export default function Navbar() {
   const handleOpenNavbar = () => {
     setOpen(true);
   };
+
+  const handleSearch = () => {
+    console.log('handleSearch');
+  }
+
 
   return (
     <div className="bg-white">
@@ -128,10 +134,7 @@ export default function Navbar() {
 
       <header className="relative bg-white z-0 lg:z-50">
         <CalloutBar />
-        <nav
-          aria-label="Top"
-          className="mx-auto px-4 sm:px-6 lg:px-8 bg-white"
-        >
+        <nav aria-label="Top" className="mx-auto px-4 sm:px-6 lg:px-8 bg-white">
           <div className="border-b border-gray-200 bg-white w-full">
             <div className="flex h-16 items-center z-50">
               <div className="lg:hidden">
@@ -151,7 +154,9 @@ export default function Navbar() {
                       <Popover key={name} className="flex">
                         {({ open }) => (
                           <>
-                            {open ? <div className="furniture-navbar-overlay"></div> : null}
+                            {open ? (
+                              <div className="furniture-navbar-overlay"></div>
+                            ) : null}
 
                             <div className="relative flex">
                               <Popover.Button
@@ -200,16 +205,18 @@ export default function Navbar() {
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:ml-6 w-72">
                   <SearchInput
+                    handleSearch={handleSearch}
                     className="border-b-[1px] border-black pr-6 py-1"
                     placeholder="Search"
+                    
                   >
                     <SearchInput.SubmitButton className="absolute right-0" />
                   </SearchInput>
                 </div>
 
-                <div className="ml-4 flow-root lg:ml-6">
+                <Link to={"/wishlist"} className="ml-4 flow-root lg:ml-6">
                   <FavoriteButton favored />
-                </div>
+                </Link>
 
                 <div className="ml-4 flow-root lg:ml-6">
                   <ShoppingBagButton />

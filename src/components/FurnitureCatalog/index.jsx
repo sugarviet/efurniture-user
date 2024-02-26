@@ -1,6 +1,8 @@
+import { useState } from "react";
 import FilterSectionWrapper from "../FilterSectionWrapper";
 import FurnitureCard from "../FurnitureCard";
-import FurnitureFavorite from "../FurnitureCard/FurnitureCardItems/FurnitureFavorite";
+import { withFetchData } from "../../hocs/withFetchData";
+import { get_furniture_by_type_api } from "../../api/furnitureApi";
 
 const COLORS = [
   "#8a4c8a",
@@ -145,7 +147,8 @@ const PRODUCT_CATALOG = [
   },
 ];
 
-function FurnitureCatalog({ catalog }) {
+function FurnitureCatalog({ data }) {
+  const [catalog] = useState(data || []);
   return (
     <div className="grid grid-cols-12">
       <section className="hidden md:block md:col-span-3 lg:col-span-3 xl:col-span-3 px-4">
@@ -163,7 +166,7 @@ function FurnitureCatalog({ catalog }) {
           return (
             <FurnitureCard item={item} key={_id}>
               <FurnitureCard.Model className="w-[60%]">
-                <FurnitureFavorite />
+                <FurnitureCard.Favorite />
                 <FurnitureCard.DimensionOption />
               </FurnitureCard.Model>
               <div className="px-[18px] flex flex-col justify-between gap-4">
@@ -178,4 +181,4 @@ function FurnitureCatalog({ catalog }) {
   );
 }
 
-export default FurnitureCatalog;
+export default withFetchData(FurnitureCatalog, get_furniture_by_type_api);

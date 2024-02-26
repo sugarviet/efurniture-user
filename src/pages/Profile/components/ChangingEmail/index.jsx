@@ -1,5 +1,5 @@
 import { Form } from "antd";
-import FormInput from "@components/ui/FormInput";
+import FormInput from "@components/FormInput";
 
 const ChangingEmail = () => {
   const onFinish = (values) => {
@@ -30,7 +30,7 @@ const ChangingEmail = () => {
           label="Confirm New Email"
           name="emailConfirm"
           className="furniture-input w-1/2 h-10"
-          type="confirmEmail"
+          type="email"
         />
 
         <FormInput

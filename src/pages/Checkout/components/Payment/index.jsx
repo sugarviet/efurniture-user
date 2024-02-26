@@ -1,4 +1,4 @@
-import CheckboxModal from "@components/CheckboxModal";
+import RadioModal from "@components/RadioModal";
 import { useState } from "react";
 import useSwitchTab from "../../hooks/useSwitchTab";
 import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
@@ -27,7 +27,7 @@ function Payment() {
       <section className='font-HelveticaRoman'>
         <p className='text-[14px] lg:text-[14px] leading-[1.1875] tracking-[0.5px] pb-1'>Payment total: <strong>₫ 489.000.000</strong></p>
         <div className="pb-16">
-          <CheckboxModal
+          <RadioModal
             name="payment"
             value="banking"
             onChange={() => handleChangeMethod(PAYMENT_METHOD.banking)}
@@ -37,11 +37,11 @@ function Payment() {
               <h4 className='font-HelveticaBold uppercase'>credit card</h4>
               <img className="pt-2" src="https://www.boconcept.com/on/demandware.static/-/Sites/default/dw33bdd143/images/checkout/payment_uk_ie.png"></img>
             </article>
-          </CheckboxModal>
+          </RadioModal>
         </div>
 
         <div>
-          <CheckboxModal
+          <RadioModal
             name="payment"
             value="cod"
             onChange={() => handleChangeMethod(PAYMENT_METHOD.cod)}
@@ -52,7 +52,7 @@ function Payment() {
               <p className='text-[11px] lg:text-[0.875rem] leading-[1.4] tracking-[0.04em] mt-[0.5rem]'>
                 You will pay for your order once it is delivered to your home. The amount to be paid will be stated in the invoice.              </p>
             </article>
-          </CheckboxModal>
+          </RadioModal>
         </div>
 
       </section>

@@ -1,4 +1,4 @@
-import RegisterInputForm from "./components/RegisterInputForm"
+import RegisterForm from "./components/RegisterForm"
 
 
 const Register = () => {
@@ -8,7 +8,7 @@ const Register = () => {
         <h1 className="px-[2.5rem] text-center ">CREATE ACCOUNT</h1>
       </section>
       <section className="font-HelveticaRoman float-right w-[75%] ">
-        <RegisterInputForm />
+        <RegisterForm />
         <p>Please be advised that we are gathering your personal information. For more information, see our <a href='#' className='underline'>Privacy Policy </a></p>
       </section>
     </main>

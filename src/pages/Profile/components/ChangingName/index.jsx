@@ -1,5 +1,5 @@
 import { Form } from "antd";
-import FormInput from "@components/ui/FormInput";
+import FormInput from "@components/FormInput";
 
 const ChangingName = () => {
   const onFinish = (values) => {

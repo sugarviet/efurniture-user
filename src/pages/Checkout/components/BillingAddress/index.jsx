@@ -1,4 +1,4 @@
-import FormInput from "@components/ui/FormInput";
+import FormInput from "@components/FormInput";
 
 function BillingAddress() {
     return (
