@@ -1,7 +1,6 @@
 import { useState } from "react";
 import FilterSectionWrapper from "../FilterSectionWrapper";
 import FurnitureCard from "../FurnitureCard";
-import FurnitureFavorite from "../FurnitureCard/FurnitureCardItems/FurnitureFavorite";
 import { withFetchData } from "../../hocs/withFetchData";
 import { get_furniture_by_type_api } from "../../api/furnitureApi";
 
@@ -167,7 +166,7 @@ function FurnitureCatalog({ data }) {
           return (
             <FurnitureCard item={item} key={_id}>
               <FurnitureCard.Model className="w-[60%]">
-                <FurnitureFavorite />
+                <FurnitureCard.Favorite />
                 <FurnitureCard.DimensionOption />
               </FurnitureCard.Model>
               <div className="px-[18px] flex flex-col justify-between gap-4">
