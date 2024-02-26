@@ -2,7 +2,7 @@ import {create} from 'zustand';
 import Cookies from 'js-cookie';
 
 const useAuth = create((set) => ({
-  accessToken: null,
+  accessToken: Cookies.get('access_token'),
   refreshToken: null,
   setTokens: (accessToken, refreshToken) => {
     set({ accessToken, refreshToken });
@@ -17,3 +17,4 @@ const useAuth = create((set) => ({
 }));
 
 export default useAuth;
+
