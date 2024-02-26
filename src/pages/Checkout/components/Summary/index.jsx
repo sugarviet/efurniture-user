@@ -1,7 +1,46 @@
 import CheckoutEdit from "@components/CheckoutEdit";
 import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
 
+import { usePost } from "../../../../hooks/api-hooks";
+import { message } from "antd";
+import { checkout_with_guest } from "../../../../api/checkoutApi";
+import { useOrderStore } from "../../../../stores/useGuestOrderStore";
+
 function Summary() {
+
+  const {
+    selectedPayment,
+    orderProducts,
+    orderShipping,
+    total,
+    guestEmail,
+  } = useOrderStore();
+
+  const { mutate } = usePost(
+    checkout_with_guest(),
+    undefined,
+    (data) => {
+      console.log(data)
+    },
+    (error) => {
+      message.error(error.response.data.error.message);
+    }
+  );
+ 
+  const checkoutForGuest = () => {
+    mutate(
+      {
+        order_products: orderProducts,
+        payment: selectedPayment,
+        order_shipping: orderShipping,
+        order_checkout: {
+          email: guestEmail,
+          final_total: total
+        }
+      }
+    );
+  };
+
   return (
     <section className='w-full lg:max-w-[43.75rem] text-[0.875rem] leading-[1.5] pb-[45px] tracking-[0.5px] pt-6 lg:pt-0'>
 
@@ -85,6 +124,7 @@ function Summary() {
 
       <button
         type="submit"
+        onClick={() => checkoutForGuest()}
         className="furniture-button-black-hover w-full px-[55px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-6"
       >
         purchase now

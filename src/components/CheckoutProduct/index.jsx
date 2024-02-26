@@ -1,5 +1,7 @@
 import FurnitureCard from "../FurnitureCard"
 import PropTypes from "prop-types";
+import { useEffect } from "react";
+import { useOrderStore } from "../../stores/useGuestOrderStore";
 
 const cartData = [
     {
@@ -13,18 +15,32 @@ const cartData = [
         leg: 'dark oak veneer',
         itemNo: '3700AD400715702',
         price: 23390000,
-        location:'quận 2'
+        location: 'quận 2'
     },
 ]
 
-function CheckoutProduct({activeTab}) {
+function CheckoutProduct({ activeTab }) {
+
+    const {
+        setOrderProducts,
+        total,
+        setTotal
+    } = useOrderStore();
 
     const order_products = cartData?.map((item) => ({
         productId: item.id,
         quantity: item.quantity,
         price: item.price,
         location: item.location
-      }));
+    }));
+
+    const totalPrice = cartData.reduce((total, item) => total + item.price, total);
+
+
+    useEffect(() => {
+        setOrderProducts(order_products)
+        setTotal(totalPrice);
+    }, [])
 
     return (
         <section className="px-5 pb-6 lg:pl-[112px] lg:pr-[128px] lg:pb-0">
@@ -81,6 +97,6 @@ function CheckoutProduct({activeTab}) {
 
 CheckoutProduct.propTypes = {
     activeTab: PropTypes.string,
-    
+
 };
 export default CheckoutProduct

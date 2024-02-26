@@ -14,14 +14,14 @@ function BillingAddress() {
 
             <FormInput
                 label="First Name"
-                name="firstName"
+                name="firs_tName"
                 className="furniture-input w-full h-[3rem]"
                 type="firstName"
             />
 
             <FormInput
                 label="Last Name"
-                name="lastName"
+                name="last_name"
                 className="furniture-input w-full h-[3rem]"
                 type="lastName"
             />
@@ -43,7 +43,7 @@ function BillingAddress() {
                 label="Province"
                 name="province"
                 className="furniture-input w-full h-[3rem]"
-                initialValue="Ho Chi Minh"
+                initialValue="Thành Phố Hồ Chí Minh"
                 disabled
             />
             <FormInput

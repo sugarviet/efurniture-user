@@ -2,20 +2,21 @@ import RadioModal from "@components/RadioModal";
 import { useState } from "react";
 import useSwitchTab from "../../hooks/useSwitchTab";
 import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
+import { useOrderStore } from "../../../../stores/useGuestOrderStore";
 
 const PAYMENT_METHOD = {
-  banking: "banking",
-  cod: "cod",
+  banking: "Online Payment",
+  cod: "COD",
 }
 
 function Payment() {
 
+  const { setSelectedPayment, selectedPayment } = useOrderStore();
+
   const { handleChangeTab } = useSwitchTab();
 
-  const [selectedDelivery, setSelectedDelivery] = useState(PAYMENT_METHOD.banking);
-
-  const handleChangeMethod = (delivery) => {
-    setSelectedDelivery(delivery);
+  const handleChangeMethod = (payment) => {
+    setSelectedPayment(payment)
   };
 
   return (
@@ -29,9 +30,9 @@ function Payment() {
         <div className="pb-16">
           <RadioModal
             name="payment"
-            value="banking"
+            value="Online Payment"
             onChange={() => handleChangeMethod(PAYMENT_METHOD.banking)}
-            checked={selectedDelivery === PAYMENT_METHOD.banking}
+            checked={selectedPayment === PAYMENT_METHOD.banking}
           >
             <article className='text-[14px] lg:text-[1rem] leading-[1.1875] tracking-[0.08em] '>
               <h4 className='font-HelveticaBold uppercase'>credit card</h4>
@@ -43,9 +44,9 @@ function Payment() {
         <div>
           <RadioModal
             name="payment"
-            value="cod"
+            value="COD"
             onChange={() => handleChangeMethod(PAYMENT_METHOD.cod)}
-            checked={selectedDelivery === PAYMENT_METHOD.cod}
+            checked={selectedPayment === PAYMENT_METHOD.cod}
           >
             <article className='text-[14px] lg:text-[1rem] leading-[1.1875] tracking-[0.08em]'>
               <h4 className='font-HelveticaBold uppercase'>cash on delivery</h4>
@@ -61,7 +62,7 @@ function Payment() {
 
         <button
           type="submit"
-          onClick={()=>handleChangeTab(CHECKOUT_TABS.summary)}
+          onClick={() => handleChangeTab(CHECKOUT_TABS.summary)}
           className="furniture-button-black-hover w-full px-[55px] py-[14px] text-[0.6875rem] tracking-[0.125rem]"
         >
           continue to summary

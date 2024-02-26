@@ -43,7 +43,7 @@ function Shipping() {
       </article>
       <section className='py-10 font-HelveticaRoman'>
         <h3 className='text-[14px] lg:text-[1rem] leading-[1.1875] tracking-[0.08em] font-HelveticaBold pb-2'>DELIVERY METHOD </h3>
-        <div className="pb-20">
+        <div className="lg:pb-24">
           <RadioModal
             name="delivery"
             value="warehouse"
@@ -52,7 +52,7 @@ function Shipping() {
           >
             <article className='text-[14px] lg:text-[1rem] leading-[1.1875] tracking-[0.08em] '>
               <div className="flex flex-row justify-between">
-                <h4 className='font-HelveticaBold uppercase'>PICK UP AT WAREHOUSE</h4>
+                <h4 className='font-HelveticaBold uppercase text-[14px] xl:text-base'>PICK UP AT WAREHOUSE</h4>
                 <p className='text-[0.75rem] font-HelveticaBold'>Free</p>
               </div>
               <p className='pb-4 text-[11px] lg:text-[0.875rem] leading-[1.4] tracking-[0.04em] mt-[0.5rem]'>
@@ -70,7 +70,7 @@ function Shipping() {
             checked={selectedDelivery === DELIVERY_METHOD.contact}
           >
             <article className='text-[14px] lg:text-[1rem] leading-[1.1875] tracking-[0.08em]'>
-              <h4 className='font-HelveticaBold uppercase'>STORE CONTACT</h4>
+              <h4 className='font-HelveticaBold uppercase text-[14px] xl:text-base'>STORE CONTACT</h4>
               <p className='text-[11px] lg:text-[0.875rem] leading-[1.4] tracking-[0.04em] mt-[0.5rem]'>
                 Your product selection will be send to the BoConcept store nearest your geographical location. You will receive a quotation, including applicable discounts, sales tax and shipping cost
               </p>

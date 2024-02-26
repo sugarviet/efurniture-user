@@ -5,7 +5,7 @@ import { useToggleLoginBottomBar } from '@hooks/UseToggleBottomBar';
 import { useState } from 'react';
 import useSwitchTab from "../../hooks/useSwitchTab";
 import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
-
+import { useOrderStore } from "../../../../stores/useGuestOrderStore";
 
 function Billing() {
 
@@ -13,19 +13,19 @@ function Billing() {
 
   const { handleChangeTab } = useSwitchTab();
 
+  const { setOrderShipping, setGuestEmail } = useOrderStore();
+
   const [isInputEmail, setIsInputEmail] = useState(false);
 
   const onFinish = (values) => {
-    console.log("Success:", values);
+    setOrderShipping(values);
     handleChangeTab(CHECKOUT_TABS.delivery)
-  };
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
   };
 
   const handleEmailChange = (e) => {
     if (e.target.value && /\S+@\S+\.\S+/.test(e.target.value)) {
       setIsInputEmail(true);
+      setGuestEmail(e.target.value)
     }
   };
 
@@ -41,7 +41,6 @@ function Billing() {
               span: 24,
             }}
             onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
             <FormInput
