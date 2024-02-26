@@ -61,7 +61,7 @@ body{
 
 /* input  */
 .furniture-input {
-    @apply leading-[3rem] pl-5 pr-10 outline-none border-[0.5px] border-[#191915] focus:shadow-email
+    @apply font-HelveticaRoman leading-[3rem] pl-5 pr-10 outline-none border-[0.5px] border-[#191915] focus:shadow-email
 }
 /* checkbox  */
 .furniture-checkbox {

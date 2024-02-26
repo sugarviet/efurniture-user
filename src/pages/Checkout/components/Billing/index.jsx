@@ -1,5 +1,5 @@
 import { Form } from "antd";
-import AppInput from "@components/ui/AppInput"
+import FormInput from "@components/ui/FormInput";
 import BillingAddress from "../BillingAddress";
 import { useToggleLoginBottomBar } from '@hooks/UseToggleBottomBar';
 
@@ -28,19 +28,12 @@ function Billing() {
             onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
-            <Form.Item
+            <FormInput
               label="Email"
-              name="Email"
-              className="w-auto text-[0.875rem] leading-[1.715] tracking-[0.05em]"
-              rules={[
-                {
-                  required: false,
-                  message: "Please input your username!",
-                },
-              ]}
-            >
-              <AppInput type="email" className="furniture-input w-full h-[3rem]" />
-            </Form.Item>
+              name="email"
+              className="furniture-input w-full h-[3rem]"
+              type="newLetterEmail"
+            />
 
             <section className="pb-4">
               <div className="flex flex-row gap-3 pb-4">

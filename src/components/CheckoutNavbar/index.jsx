@@ -1,5 +1,4 @@
-import useSwitchTab from "@hooks/useSwitchTab"
-
+import useSwitchTab from "../../pages/Checkout/hooks/useSwitchTab";
 const checkoutLinks = [
     {
         id: 1,

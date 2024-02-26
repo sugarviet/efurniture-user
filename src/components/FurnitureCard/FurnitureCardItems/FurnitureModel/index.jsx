@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 function FurnitureModel({ children, className }) {
   const { furniture, dimension, onSale } = useContext(FurnitureCardContext);
 
-  const { url, model_id, name } = furniture;
+  const { model_id, name, thumb } = furniture;
 
   return (
     <div
@@ -23,7 +23,7 @@ function FurnitureModel({ children, className }) {
             "relative left-1/2 -translate-x-1/2 object-cover ",
             className
           )}
-          src={url}
+          src={thumb}
         />
       ) : null}
 

@@ -1,11 +1,11 @@
 import Proptypes from "prop-types";
 
 const inputTypes = {
-    primary: 'furniture-input'
+    primary: 'furniture-input text-[16px] '
 }
 
-const AppInput = ({ onClick, onChange, className, type, inputType, ...others }) => {
-  return <input type={inputType} className={`${inputTypes[type]} ${className}`} onClick={onClick} onChange={onChange} {...others}/>;
+const AppInput = ({ onClick, onChange, className, type, inputType, disabled, ...others }) => {
+  return <input type={inputType} className={`${inputTypes[type]} ${className}`} onClick={onClick} onChange={onChange} disabled={disabled} {...others}/>;
 };
 
 AppInput.propTypes = {
@@ -15,6 +15,7 @@ AppInput.propTypes = {
   type: Proptypes.string,
   inputType: Proptypes.string,
   placeholder: Proptypes.string,
+  disabled: Proptypes.bool,
 
 };
 
@@ -23,7 +24,8 @@ AppInput.defaultProps = {
     onChange: null,
     className: "",
     type: "primary",
-    inputType: "text"
+    inputType: "text",
+    disabled: false,
   };
 
 export default AppInput;

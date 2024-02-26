@@ -86,6 +86,41 @@ const FORM_TYPES = {
   default: {
     rules: [{ required: false, message: "" }],
   },
+  newLetterEmail: {
+    rules: [
+      { type: 'email', required: true, message: "Please enter a valid email" },
+    ]
+  },
+  firstName: {
+    rules: [
+      { required: true, message: "Please enter a valid first name" },
+    ]
+  },
+  lastName: {
+    rules: [
+      { required: true, message: "Please enter a valid last name" },
+    ]
+  },
+  ward: {
+    rules: [
+      { required: true, message: "Please enter a valid ward" },
+    ]
+  },
+  district: {
+    rules: [
+      { required: true, message: "Please enter a valid district" },
+    ]
+  },
+  detailAddress: {
+    rules: [
+      { required: true, message: "Please enter a valid address details" },
+    ]
+  },
+  phone: {
+    rules: [
+      { required: true, message: "Please enter a valid phone" },
+    ]
+  },
 };
 
 const FormItem = ({ children, label, name, type, message, required, ...others }) => {
@@ -95,7 +130,7 @@ const FormItem = ({ children, label, name, type, message, required, ...others })
   ];
   return (
     <Form.Item
-      label={label ? <span className="text-base text-gray-800 font-semibold">{label}</span> : label}
+      label={label ? <span className="text-base text-gray-800 font-semibold mb-[-5px]">{label}</span> : label}
       name={name}
       rules={required ? customRules : FORM_TYPES[type].rules}
       {...others}
