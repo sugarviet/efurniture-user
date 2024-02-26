@@ -148,7 +148,7 @@ const PRODUCT_CATALOG = [
 ];
 
 function FurnitureCatalog({ data }) {
-  const [catalog] = useState(data);
+  const [catalog] = useState(data || []);
   return (
     <div className="grid grid-cols-12">
       <section className="hidden md:block md:col-span-3 lg:col-span-3 xl:col-span-3 px-4">

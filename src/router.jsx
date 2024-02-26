@@ -21,6 +21,7 @@ const RoomDetail = lazy(() => import("@pages/RoomDetail"));
 const RoomsByPlace = lazy(() => import("@pages/RoomsByPlace"));
 const ProductDetail = lazy(() => import("@pages/ProductDetail"));
 const Checkout = lazy(() => import("@pages/Checkout"));
+const Search = lazy(() => import("@pages/Search"));
 
 export const PATH = {
   home: "/",
@@ -38,6 +39,7 @@ export const PATH = {
   productDetail: "/product-detail",
   checkout: "/checkout",
   productBySubType: "/products/:type/:subtype",
+  search: "/search",
 };
 
 export const routers = createBrowserRouter([
@@ -93,6 +95,10 @@ export const routers = createBrowserRouter([
       {
         path: PATH.stores,
         element: <StoreLocation />,
+      },
+      {
+        path: PATH.search,
+        element: <Search />,
       },
       {
         path: "*",
