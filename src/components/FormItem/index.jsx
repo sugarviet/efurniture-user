@@ -75,6 +75,14 @@ const FORM_TYPES = {
       validateNewEmail,
     ],
   },
+  checkbox: {
+    rules: [
+      {
+        validator: (_, value) =>
+          value ? Promise.resolve() : Promise.reject(new Error('Please accept agreement')),
+      },
+    ],
+  },
   default: {
     rules: [{ required: false, message: "" }],
   },
