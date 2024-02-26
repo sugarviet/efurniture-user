@@ -3,15 +3,21 @@ import FormInput from "@components/ui/FormInput";
 import BillingAddress from "../BillingAddress";
 import { useToggleLoginBottomBar } from '@hooks/UseToggleBottomBar';
 import { useState } from 'react';
+import useSwitchTab from "../../hooks/useSwitchTab";
+import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
+
 
 function Billing() {
 
   const { toggleLoginBottomBar } = useToggleLoginBottomBar();
 
+  const { handleChangeTab } = useSwitchTab();
+
   const [isInputEmail, setIsInputEmail] = useState(false);
 
   const onFinish = (values) => {
     console.log("Success:", values);
+    handleChangeTab(CHECKOUT_TABS.delivery)
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);

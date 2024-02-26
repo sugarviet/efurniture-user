@@ -123,3 +123,10 @@ body{
 .furniture-navbar-overlay {
     @apply fixed inset-0 bg-black opacity-20 transition-opacity duration-300 -z-50
 }
+/* radio modal  */
+.furniture-radio-header{
+    
+}
+.furniture-radio-description{
+
+}

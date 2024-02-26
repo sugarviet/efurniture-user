@@ -1,12 +1,12 @@
 import CheckoutEdit from "@components/CheckoutEdit";
-
+import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
 
 function Summary() {
   return (
     <section className='w-full lg:max-w-[43.75rem] text-[0.875rem] leading-[1.5] pb-[45px] tracking-[0.5px] pt-6 lg:pt-0'>
 
       <section className='pb-10'>
-        <CheckoutEdit title="BILLING ADDRESS" activeTab="billing" />
+        <CheckoutEdit title="BILLING ADDRESS" activeTab={CHECKOUT_TABS.billing} />
         <p className='text-[13px] leading-[23.3px] tracking-[0.5px]'>Vu Truong Giang</p>
         <p className='text-[14px] leading-[23.3px] tracking-[0.5px]'>Phường Hiệp Phú, Quận 9</p>
         <p className='text-[14px] leading-[23.3px] tracking-[0.5px]'>Hem 58/21, Tan Lap 1</p>
@@ -15,12 +15,12 @@ function Summary() {
       </section>
 
       <section className="pb-6">
-        <CheckoutEdit title="DELIVERY METHOD" activeTab="shipping" />
+        <CheckoutEdit title="DELIVERY METHOD" activeTab={CHECKOUT_TABS.delivery} />
         <p className='text-[13px] leading-[23.3px] tracking-[0.5px]'>Store Contact</p>
       </section>
 
       <section className="pb-20">
-        <CheckoutEdit title="PAYMENT METHOD" activeTab="payment" />
+        <CheckoutEdit title="PAYMENT METHOD" activeTab={CHECKOUT_TABS.payment} />
         <p className='text-[13px] leading-[23.3px] tracking-[0.5px] font-HelveticaBold'>Banking</p>
         <p className='text-[13px] leading-[23.3px] tracking-[0.5px] '>Pay 50% of the order total when placing the final order and the rest of the amount (50%) upon delivery. (you will receive an email when it is time to make the rest payment.
           Terms & Conditions and applicable sales tax will be attached when you receive your order from the store. The request for a quotation does not constitute any legally binding contract between you and the applicable store.</p>

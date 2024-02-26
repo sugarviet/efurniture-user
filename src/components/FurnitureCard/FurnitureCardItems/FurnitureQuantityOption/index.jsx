@@ -19,7 +19,6 @@ function FurnitureQuantityOption() {
             <div className=''>
                 <input
                     min={1}
-                    defaultValue={1}
                     value={quantity}
                     className='furniture-input-hide-arrow outline-none focus:border-b-[0.5px] focus:border-[#191915] text-center w-[2.5rem] h-[1.5em] text-[18px] text-[#000] font-medium font-HelveticaBold'
                     onChange={value => setQuantity(value)} />
