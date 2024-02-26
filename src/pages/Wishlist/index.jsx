@@ -1,9 +1,9 @@
 import WebServices from "@components/WebServices";
-import { useWishlist } from "../../stores/useWishList";
+import { useGuestStore } from "../../stores/useGuestStore";
 import FurnitureCard from "../../components/FurnitureCard";
 
 const Wishlist = () => {
-  const items = useWishlist((store) => store.wishlist);
+  const items = useGuestStore((store) => store.wishlist);
 
   const HAVE_ITEM = items.length > 0;
   return (

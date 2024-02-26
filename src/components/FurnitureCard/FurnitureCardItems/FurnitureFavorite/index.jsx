@@ -5,11 +5,11 @@ import FavoriteButton from "../../../FavoriteButton";
 import styles from "./FurnitureFavorite.module.css";
 
 function FurnitureFavorite() {
-  const { favored, onFavored } = useContext(FurnitureCardContext);
+  const { favored, handleFavored } = useContext(FurnitureCardContext);
 
   return (
     <div className={styles.favorite_wrapper}>
-      <FavoriteButton onClick={onFavored} favored={favored} />
+      <FavoriteButton onClick={handleFavored} favored={favored} />
       <div className={styles.tool_tip}>
         {favored ? "Remove from Favorites" : "Add to Favorites"}
       </div>
