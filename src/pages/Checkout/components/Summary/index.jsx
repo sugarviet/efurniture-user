@@ -13,7 +13,6 @@ function Summary() {
     orderProducts,
     orderShipping,
     total,
-    guestEmail,
   } = useOrderStore();
 
   const { mutate } = usePost(
@@ -26,7 +25,7 @@ function Summary() {
       message.error(error.response.data.error.message);
     }
   );
- 
+
   const checkoutForGuest = () => {
     mutate(
       {
@@ -34,8 +33,7 @@ function Summary() {
         payment: selectedPayment,
         order_shipping: orderShipping,
         order_checkout: {
-          email: guestEmail,
-          final_total: total
+          final_total: total,
         }
       }
     );

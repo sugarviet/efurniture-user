@@ -13,7 +13,7 @@ function Billing() {
 
   const { handleChangeTab } = useSwitchTab();
 
-  const { setOrderShipping, setGuestEmail } = useOrderStore();
+  const { setOrderShipping } = useOrderStore();
 
   const [isInputEmail, setIsInputEmail] = useState(false);
 
@@ -25,7 +25,6 @@ function Billing() {
   const handleEmailChange = (e) => {
     if (e.target.value && /\S+@\S+\.\S+/.test(e.target.value)) {
       setIsInputEmail(true);
-      setGuestEmail(e.target.value)
     }
   };
 
