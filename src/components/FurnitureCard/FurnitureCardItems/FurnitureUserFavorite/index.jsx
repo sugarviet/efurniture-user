@@ -3,21 +3,34 @@ import { FurnitureCardContext } from "../../FurnitureCardContext";
 import FavoriteButton from "../../../FavoriteButton";
 
 import styles from "./FurnitureFavorite.module.css";
-import { useGuestStore } from "../../../../stores/useGuestStore";
+import {
+  useDeleteAuth,
+  useFetchWithAuth,
+  usePostAuth,
+} from "../../../../hooks/api-hooks";
+import {
+  get_update_wishlist_api,
+  get_wishlist_api,
+} from "../../../../api/wishlistApi";
 
-function FurnitureFavorite() {
+function FurnitureUserFavorite() {
   const { furniture } = useContext(FurnitureCardContext);
-  const { wishlist, onFavored, onUnFavored } = useGuestStore();
 
-  const [favored, setFavored] = useState(
-    wishlist.some((item) => item._id === furniture._id)
+  const [favored, setFavored] = useState(false);
+
+  const { mutate: onFavored } = usePostAuth(
+    get_update_wishlist_api(furniture._id)
+  );
+
+  const { mutate: onUnFavored } = useDeleteAuth(
+    get_update_wishlist_api(furniture._id)
   );
 
   const handleFavored = () => {
     setFavored(!favored);
 
-    if (!favored) onFavored(furniture);
-    if (favored) onUnFavored(furniture._id);
+    if (!favored) onFavored();
+    if (favored) onUnFavored();
   };
 
   return (
@@ -30,4 +43,4 @@ function FurnitureFavorite() {
   );
 }
 
-export default FurnitureFavorite;
+export default FurnitureUserFavorite;
