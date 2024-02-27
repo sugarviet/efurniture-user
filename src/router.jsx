@@ -42,6 +42,8 @@ export const PATH = {
   search: "/search",
 };
 
+
+
 export const routers = createBrowserRouter([
   {
     path: PATH.home,
