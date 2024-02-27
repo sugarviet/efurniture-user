@@ -41,3 +41,29 @@ USER_API.interceptors.request.use(
         return Promise.reject(error);
     }
 );
+
+USER_API.interceptors.response.use(
+    (response) => {
+        return response
+    },
+    async (error) => {
+        const originalRequest = error.config;
+        if (error.response && error.response.status === 401 && !originalRequest._retry) {
+            try {
+                const refreshResponse = await axios.post(`${BASE_URL}/refresh`);
+                const accessTokenRes = refreshResponse.data.accessToken;
+                const refreshTokenRes = refreshResponse.data.refreshToken;
+
+                originalRequest.headers[cookies['accessToken'].key] = Cookies.set("access_token", accessTokenRes);
+                originalRequest.headers[cookies['refreshToken'].key] = Cookies.set("refresh_token", refreshTokenRes);
+                originalRequest.headers[cookies['accountId'].key] = accountId;
+
+                return axios(originalRequest);
+            } catch (error) {
+                return Promise.reject(error);
+            }
+        }
+
+        return Promise.reject(error);
+    }
+);
