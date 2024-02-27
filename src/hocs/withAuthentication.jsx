@@ -9,7 +9,7 @@ export const withAuthentication = (WrappedComponent) => {
     const { accessToken } = useAuth();
     useEffect(() => {
       if (!accessToken) return navigate("/login");
-    }, []);
+    }, [accessToken]);
     return <WrappedComponent />;
   };
 };

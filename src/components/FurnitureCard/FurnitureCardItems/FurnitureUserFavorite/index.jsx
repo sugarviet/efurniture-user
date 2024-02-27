@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FurnitureCardContext } from "../../FurnitureCardContext";
 import FavoriteButton from "../../../FavoriteButton";
 
@@ -18,6 +18,8 @@ function FurnitureUserFavorite() {
 
   const [favored, setFavored] = useState(false);
 
+  const { data, isLoading } = useFetchWithAuth(get_wishlist_api());
+
   const { mutate: onFavored } = usePostAuth(
     get_update_wishlist_api(furniture._id)
   );
@@ -32,6 +34,15 @@ function FurnitureUserFavorite() {
     if (!favored) onFavored();
     if (favored) onUnFavored();
   };
+
+  useEffect(() => {
+    if (isLoading || !data) return;
+
+    const isFavored = data.some((item) => item._id === furniture._id);
+    setFavored(isFavored);
+  }, [data, isLoading]);
+
+  if (isLoading) return null;
 
   return (
     <div className={styles.favorite_wrapper}>

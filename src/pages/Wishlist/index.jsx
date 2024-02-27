@@ -5,20 +5,21 @@ import { useEffect, useState } from "react";
 import { useFetchWithAuth } from "../../hooks/api-hooks";
 import { get_wishlist_api } from "../../api/wishlistApi";
 import { useGuestStore } from "../../stores/useGuestStore";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const Wishlist = () => {
-  const [items, setItems] = useState([]);
   const { wishlist } = useGuestStore();
+  const [items, setItems] = useState(wishlist);
   const { accessToken } = useAuth();
   const { data } = useFetchWithAuth(get_wishlist_api(), undefined, {
-    enabled: accessToken,
+    enabled: accessToken !== null,
   });
 
   useEffect(() => {
-    const list = accessToken ? data : wishlist;
+    if (!accessToken || !data) return;
 
-    setItems(list);
-  }, [accessToken]);
+    setItems(data);
+  }, [accessToken, data]);
 
   const HAVE_ITEM = items.length > 0;
 
@@ -47,7 +48,11 @@ const Wishlist = () => {
           return (
             <FurnitureCard item={item} key={_id}>
               <FurnitureCard.Model className="w-[60%]">
-                <FurnitureCard.Favorite />
+                {accessToken ? (
+                  <FurnitureCard.UserFavorite />
+                ) : (
+                  <FurnitureCard.Favorite />
+                )}
                 <FurnitureCard.DimensionOption />
               </FurnitureCard.Model>
               <div className="px-[18px] flex flex-col justify-between gap-4">
