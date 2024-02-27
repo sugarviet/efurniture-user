@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { message } from "antd";
 import useAuth from "../../../../stores/useAuth";
 import { get_auth_login } from "../../../../api/authApi";
-
+import { jwtDecode } from "jwt-decode";
 function LoginForm() {
   const navigate = useNavigate();
   const { setTokens } = useAuth();
@@ -15,7 +15,8 @@ function LoginForm() {
     undefined,
     (data) => {
       const { access_token, refresh_token } = data.data.metaData;
-      setTokens(access_token, refresh_token);
+      const {account_id} = jwtDecode(access_token); 
+      setTokens(access_token, refresh_token, account_id);
       navigate("/");
     },
     (error) => {

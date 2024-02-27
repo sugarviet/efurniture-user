@@ -5,6 +5,7 @@ import useSwitchTab from "./hooks/useSwitchTab";
 import Account from "./components/Account";
 import { withAuthentication } from "../../hocs/withAuthentication";
 
+
 const Address = lazy(() => import("./components/Address"));
 const Orders = lazy(() => import("./components/Orders"));
 const Favorites = lazy(() => import("./components/Favorites"));
