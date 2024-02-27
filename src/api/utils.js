@@ -11,6 +11,14 @@ const accessToken = Cookies.get(ACCESS_TOKEN);
 const refreshToken = Cookies.get(REFRESH_TOKEN);
 const client_id = Cookies.get(CLIENT_ID);
 
+export const API = axios.create({
+    baseURL: BASE_URL,
+})
+
+export const USER_API = axios.create({
+    baseURL: BASE_URL,
+});
+
 const cookies = {
     accessToken: {
         key: "x-client-accesstoken",
@@ -26,14 +34,6 @@ const cookies = {
     },
 }
 
-export const API = axios.create({
-    baseURL: BASE_URL,
-})
-
-export const USER_API = axios.create({
-    baseURL: BASE_URL,
-});
-
 USER_API.interceptors.request.use(
     (config) => {
         config.headers[cookies['accessToken'].key] = cookies['accessToken'].value;
@@ -45,16 +45,30 @@ USER_API.interceptors.request.use(
     (error) => {
         return Promise.reject(error);
     }
-)
+);
 
 USER_API.interceptors.response.use(
     (response) => {
         return response
     },
-    (error) => {
-        // if (error.response && error.response.status === 401) {
-        //     alert("Logout")
-        // }
+    async (error) => {
+        const originalRequest = error.config;
+        if (error.response && error.response.status === 401 && !originalRequest._retry) {
+            try {
+                const refreshResponse = await axios.post(`${BASE_URL}/refresh`);
+                const accessTokenRes = refreshResponse.data.accessToken;
+                const refreshTokenRes = refreshResponse.data.refreshToken;
+
+                originalRequest.headers[cookies['accessToken'].key] = Cookies.set("access_token", accessTokenRes);
+                originalRequest.headers[cookies['refreshToken'].key] = Cookies.set("refresh_token", refreshTokenRes);
+                originalRequest.headers[cookies['accountId'].key] = client_id;
+
+                return axios(originalRequest);
+            } catch (error) {
+                return Promise.reject(error);
+            }
+        }
+
         return Promise.reject(error);
     }
 );

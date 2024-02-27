@@ -3,6 +3,7 @@ import FilterSectionWrapper from "../FilterSectionWrapper";
 import FurnitureCard from "../FurnitureCard";
 import { withFetchData } from "../../hocs/withFetchData";
 import { get_furniture_by_type_api } from "../../api/furnitureApi";
+import useAuth from "../../stores/useAuth";
 
 const COLORS = [
   "#8a4c8a",
@@ -149,6 +150,9 @@ const PRODUCT_CATALOG = [
 
 function FurnitureCatalog({ data }) {
   const [catalog] = useState(data || []);
+
+  const { accessToken } = useAuth();
+
   return (
     <div className="grid grid-cols-12">
       <section className="hidden md:block md:col-span-3 lg:col-span-3 xl:col-span-3 px-4">
@@ -166,7 +170,12 @@ function FurnitureCatalog({ data }) {
           return (
             <FurnitureCard item={item} key={_id}>
               <FurnitureCard.Model className="w-[60%]">
-                <FurnitureCard.Favorite />
+                {accessToken ? (
+                  <FurnitureCard.UserFavorite />
+                ) : (
+                  <FurnitureCard.Favorite />
+                )}
+
                 <FurnitureCard.DimensionOption />
               </FurnitureCard.Model>
               <div className="px-[18px] flex flex-col justify-between gap-4">

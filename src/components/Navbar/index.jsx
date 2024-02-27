@@ -40,9 +40,8 @@ export default function Navbar() {
   };
 
   const handleSearch = () => {
-    console.log('handleSearch');
-  }
-
+    console.log("handleSearch");
+  };
 
   return (
     <div className="bg-white">
@@ -208,13 +207,15 @@ export default function Navbar() {
                     handleSearch={handleSearch}
                     className="border-b-[1px] border-black pr-6 py-1"
                     placeholder="Search"
-                    
                   >
                     <SearchInput.SubmitButton className="absolute right-0" />
                   </SearchInput>
                 </div>
 
-                <Link to={"/wishlist"} className="ml-4 flow-root lg:ml-6">
+                <Link
+                  to={"/wishlist"}
+                  className="ml-4 lg:ml-6 flex items-center justify-center"
+                >
                   <FavoriteButton favored />
                 </Link>
 

@@ -1,11 +1,27 @@
 import WebServices from "@components/WebServices";
-import { useWishlist } from "../../stores/useWishList";
 import FurnitureCard from "../../components/FurnitureCard";
+import useAuth from "../../stores/useAuth";
+import { useEffect, useState } from "react";
+import { useFetchWithAuth } from "../../hooks/api-hooks";
+import { get_wishlist_api } from "../../api/wishlistApi";
+import { useGuestStore } from "../../stores/useGuestStore";
 
 const Wishlist = () => {
-  const items = useWishlist((store) => store.wishlist);
+  const [items, setItems] = useState([]);
+  const { wishlist } = useGuestStore();
+  const { accessToken } = useAuth();
+  const { data } = useFetchWithAuth(get_wishlist_api(), undefined, {
+    enabled: accessToken,
+  });
+
+  useEffect(() => {
+    const list = accessToken ? data : wishlist;
+
+    setItems(list);
+  }, [accessToken]);
 
   const HAVE_ITEM = items.length > 0;
+
   return (
     <main className="flex flex-col items-center">
       <section className="block p-28">
@@ -25,7 +41,6 @@ const Wishlist = () => {
         </section>
       )}
 
-      {/* Wishlist items */}
       <div className="grid grid-cols-3">
         {items.map((item) => {
           const { _id } = item;
