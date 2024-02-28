@@ -1,50 +1,17 @@
-import { lazy } from "react";
+import { lazy, useState } from "react";
 import AppRow from "@components/AppRow";
 import AppSuspense from "@components/AppSuspense";
-import useSwitchTab from "./hooks/useSwitchTab";
-import Account from "./components/Account";
 import { withAuthentication } from "../../hocs/withAuthentication";
 import useAuth from "../../stores/useAuth";
-
+import { useParams } from "react-router";
+import { classNames } from "../../utils/classNames";
 
 const Address = lazy(() => import("./components/Address"));
 const Orders = lazy(() => import("./components/Orders"));
 const Favorites = lazy(() => import("./components/Favorites"));
 const PersonalData = lazy(() => import("./components/PersonalData"));
 
-const profileLinks = [
-  {
-    id: 1,
-    title: "My account",
-    key: "account",
-  },
-  {
-    id: 2,
-    title: "Personal data",
-    key: "personal",
-  },
-  {
-    id: 3,
-    title: "Favorites",
-    key: "favorites",
-  },
-  {
-    id: 4,
-    title: "Orders",
-    key: "orders",
-  },
-  {
-    id: 5,
-    title: "Address",
-    key: "address",
-  },
-];
-
-const tabsProfile = {
-  account: {
-    title: "My account",
-    component: <Account />,
-  },
+const TAB_PROFILE = {
   orders: {
     title: "Orders",
     component: <Orders />,
@@ -64,7 +31,10 @@ const tabsProfile = {
 };
 
 const Profile = () => {
-  const { activeTab, handleChangeTab } = useSwitchTab();
+  const tabKeys = Object.keys(TAB_PROFILE);
+  const { tab } = useParams();
+
+  const [currentTab, setCurrentTab] = useState(tab || tabKeys[0]);
   const { clearTokens } = useAuth();
 
   return (
@@ -72,7 +42,7 @@ const Profile = () => {
       <section className="text-center my-3 flex flex-col gap-5 w-full h-56 justify-end mb-10">
         <div>
           <h1 className="text-5xl font-black my-4">
-            {tabsProfile[activeTab].title}
+            {TAB_PROFILE[currentTab].title}
           </h1>
           <div>
             <h2 className="text-lg normal-case">Viet Dang</h2>
@@ -93,20 +63,27 @@ const Profile = () => {
         >
           <div className="flex flex-col mx-auto py-2 px-4 uppercase">
             <div className="flex flex-col mx-auto py-2 px-3 gap-2 font-[22px] tracking-widest">
-              {profileLinks.map((links) => (
-                <p
-                  key={links.id}
-                  className="furniture-link"
-                  onClick={() => handleChangeTab(links.key)}
-                >
-                  {links.title}
-                </p>
-              ))}
+              {tabKeys.map((key) => {
+                const { title } = TAB_PROFILE[key];
+
+                return (
+                  <p
+                    key={key}
+                    className={classNames(
+                      "furniture-link",
+                      currentTab === key ? "underline" : ""
+                    )}
+                    onClick={() => setCurrentTab(key)}
+                  >
+                    {title}
+                  </p>
+                );
+              })}
             </div>
           </div>
 
           <div>
-            <AppSuspense>{tabsProfile[activeTab].component}</AppSuspense>
+            <AppSuspense>{TAB_PROFILE[currentTab].component}</AppSuspense>
           </div>
         </AppRow>
       </section>
