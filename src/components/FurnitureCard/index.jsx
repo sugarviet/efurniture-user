@@ -9,6 +9,7 @@ import FurnitureDimensionOption from "./FurnitureCardItems/FurnitureDimensionOpt
 import FurnitureFavorite from "./FurnitureCardItems/FurnitureFavorite";
 import FurnitureQuantityOption from "./FurnitureCardItems/FurnitureQuantityOption";
 import FurnitureUserFavorite from "./FurnitureCardItems/FurnitureUserFavorite";
+import FurnitureShoppingButton from "./FurnitureCardItems/FurnitureShoppingButton";
 
 function FurnitureCard({ item, children }) {
   return (
@@ -26,5 +27,6 @@ FurnitureCard.Favorite = FurnitureFavorite;
 FurnitureCard.UserFavorite = FurnitureUserFavorite;
 FurnitureCard.Detail = FurnitureDetail;
 FurnitureCard.QuantityOption = FurnitureQuantityOption;
+FurnitureCard.ShoppingButton = FurnitureShoppingButton;
 
 export default FurnitureCard;
