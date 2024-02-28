@@ -1,12 +1,8 @@
+import useScroll from "../../../../hooks/useScroll";
 import Logo from "../../../Logo";
 
 function FooterTop() {
-  const handleScrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+  const { handleScrollToTop } = useScroll();
 
   return (
     <section className="furniture-divided-bottom flex flex-col gap-8 sm:flex-row sm:justify-between items-center pb-8">
