@@ -57,4 +57,4 @@ const Login = () => {
   );
 };
 
-export default withNonAuthentication(Login);
+export default Login;

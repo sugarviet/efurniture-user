@@ -1,31 +1,52 @@
-import Proptypes from "prop-types";
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const inputTypes = {
-    primary: 'furniture-input text-[16px] '
-}
+  primary: 'furniture-input text-[16px]',
+};
 
-const AppInput = ({ onClick, onChange, className, type, inputType, disabled, ...others }) => {
-  return <input type={inputType} className={`${inputTypes[type]} ${className}`} onClick={onClick} onChange={onChange} disabled={disabled} {...others}/>;
+const AppInput = ({ value, onChange, className, type, inputType, placeholder, disabled, ...others }) => {
+  const [inputValue, setInputValue] = useState(value || '');
+
+  const handleChange = (e) => {
+    const newValue = e.target.value;
+    setInputValue(newValue);
+    if (onChange) {
+      onChange(newValue);
+    }
+  };
+
+  return (
+    <input
+      type={inputType}
+      className={`${inputTypes[type]} ${className}`}
+      value={value !== undefined ? value : inputValue}
+      onChange={handleChange}
+      placeholder={placeholder}
+      disabled={disabled}
+      {...others}
+    />
+  );
 };
 
 AppInput.propTypes = {
-  onClick: Proptypes.func,
-  onChange: Proptypes.func,
-  className: Proptypes.string,
-  type: Proptypes.string,
-  inputType: Proptypes.string,
-  placeholder: Proptypes.string,
-  disabled: Proptypes.bool,
-
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  className: PropTypes.string,
+  type: PropTypes.string,
+  inputType: PropTypes.string,
+  placeholder: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 AppInput.defaultProps = {
-    onClick: null,
-    onChange: null,
-    className: "",
-    type: "primary",
-    inputType: "text",
-    disabled: false,
-  };
+  value: '',
+  onChange: null,
+  className: '',
+  type: 'primary',
+  inputType: 'text',
+  placeholder: '',
+  disabled: false,
+};
 
 export default AppInput;
