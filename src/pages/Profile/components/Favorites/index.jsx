@@ -14,9 +14,10 @@ const Favorites = ({ data }) => {
                 <FurnitureCard.UserFavorite />
                 <FurnitureCard.DimensionOption />
               </FurnitureCard.Model>
-              <div className="px-[18px] flex flex-col justify-between gap-4">
+              <div className="px-[18px] relative flex flex-col justify-between">
                 <FurnitureCard.Attribute />
                 <FurnitureCard.Price />
+                <FurnitureCard.ShoppingButton />
               </div>
             </FurnitureCard>
           );
