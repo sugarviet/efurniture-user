@@ -34,15 +34,13 @@ export const PATH = {
   rooms: "/rooms",
   roomDetail: "/room/:id",
   roomByPlace: "/room/position/:slug",
-  profile: "/profile",
+  profile: "/profile/:tab",
   stores: "/stores",
   productDetail: "/product-detail",
   checkout: "/checkout",
   productBySubType: "/products/:type/:subtype",
   search: "/search",
 };
-
-
 
 export const routers = createBrowserRouter([
   {

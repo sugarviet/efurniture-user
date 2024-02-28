@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/display-name */
 import { useParams } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { useFetchWithAuth } from "../hooks/api-hooks";
