@@ -17,9 +17,9 @@ function MenuSection({ title, content, index, openMenu, toggleMenu }) {
 
 MenuSection.propTypes = {
     title: PropTypes.string,
-    content: PropTypes.string,
+    content: PropTypes.object,
     index: PropTypes.number,
-    openMenu: PropTypes.func,
+    openMenu: PropTypes.array,
     toggleMenu: PropTypes.func,
 };
 

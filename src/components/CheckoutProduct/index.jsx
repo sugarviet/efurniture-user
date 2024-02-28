@@ -1,9 +1,11 @@
 import FurnitureCard from "../FurnitureCard"
 import PropTypes from "prop-types";
+import { useEffect } from "react";
+import { useOrderStore } from "../../stores/useGuestOrderStore";
 
 const cartData = [
     {
-        id: 1,
+        id: '65d5b8972f22974386122e64',
         url: 'https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dw942c4640/images/2070000/2072765.jpg?sw=1000',
         name: 'SANTIAGO',
         quantity: 1,
@@ -12,35 +14,31 @@ const cartData = [
         tableTop: 'brown ceramic',
         leg: 'dark oak veneer',
         itemNo: '3700AD400715702',
-        price: 23390000
+        price: 132,
+        location: 'Quận 9'
     },
-    {
-        id: 2,
-        url: 'https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dw5f7ec034/images/2000000/2000028.jpg?sw=1000',
-        name: 'KINGSTON',
-        quantity: 2,
-        description: 'Kingston office desk',
-        size: 'H74½xW62xL125cm',
-        tableTop: 'matt ash grey lacquered',
-        leg: 'matt ash grey structure lacquered',
-        itemNo: '370057000008128',
-        price: 20690000
-    },
-    {
-        id: 3,
-        url: 'https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dw05567dbf/images/2010000/2014249.jpg?sw=1000',
-        name: 'MADRID',
-        quantity: 3,
-        description: 'Madrid side table',
-        size: 'H51xØ46cm',
-        tableTop: 'ash ceramic',
-        leg: 'matt white structure lacquered',
-        itemNo: '3700AD3801670322',
-        price: 20690000
-    }
 ]
 
-function CheckoutProduct({activeTab}) {
+function CheckoutProduct({ activeTab }) {
+
+    const {
+        setOrderProducts,
+        setTotal
+    } = useOrderStore();
+
+    const order_products = cartData?.map((item) => ({
+        product_id: item.id,
+        quantity: item.quantity,
+        price: item.price,
+        location: item.location
+    }));
+
+    useEffect(() => {
+        const totalPrice = cartData.reduce((total, item) => total + item.price, 0);
+        setOrderProducts(order_products);
+        setTotal(totalPrice);
+    }, []);
+
 
     return (
         <section className="px-5 pb-6 lg:pl-[112px] lg:pr-[128px] lg:pb-0">
@@ -97,6 +95,6 @@ function CheckoutProduct({activeTab}) {
 
 CheckoutProduct.propTypes = {
     activeTab: PropTypes.string,
-    
+
 };
 export default CheckoutProduct
