@@ -12,6 +12,7 @@ import Logo from "../Logo";
 import CloseButton from "../CloseButton";
 import ContactOption from "../ContactOption";
 import { Link } from "react-router-dom";
+import useAuth from "../../stores/useAuth";
 
 const navigation = {
   categories: [
@@ -31,6 +32,8 @@ const navigation = {
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+
+  const { accessToken } = useAuth();
 
   const handleCloseNavbar = () => {
     setOpen(false);
@@ -213,7 +216,7 @@ export default function Navbar() {
                 </div>
 
                 <Link
-                  to={"/wishlist"}
+                  to={accessToken ? "profile/favorites" : "/wishlist"}
                   className="ml-4 lg:ml-6 flex items-center justify-center"
                 >
                   <FavoriteButton favored />

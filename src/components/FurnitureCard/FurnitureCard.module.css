@@ -1,9 +1,0 @@
-.dimension_option_parent:hover .dimension_option_wrapper
-{
-    @apply transition ease-in-out -translate-y-2 z-0 duration-300 opacity-100
-}
-
-.dimension_option_wrapper
-{
-    @apply transition ease-in-out duration-300 absolute w-full left-0 right-0 bottom-0 justify-center gap-4 flex opacity-0;
-}

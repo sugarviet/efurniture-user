@@ -1,27 +1,12 @@
 import WebServices from "@components/WebServices";
 import FurnitureCard from "../../components/FurnitureCard";
-import useAuth from "../../stores/useAuth";
-import { useEffect, useState } from "react";
-import { useFetchWithAuth } from "../../hooks/api-hooks";
-import { get_wishlist_api } from "../../api/wishlistApi";
 import { useGuestStore } from "../../stores/useGuestStore";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import withNonAuthentication from "../../hocs/withNonAuthentication";
 
 const Wishlist = () => {
   const { wishlist } = useGuestStore();
-  const [items, setItems] = useState(wishlist);
-  const { accessToken } = useAuth();
-  const { data } = useFetchWithAuth(get_wishlist_api(), undefined, {
-    enabled: accessToken !== null,
-  });
 
-  useEffect(() => {
-    if (!accessToken || !data) return;
-
-    setItems(data);
-  }, [accessToken, data]);
-
-  const HAVE_ITEM = items.length > 0;
+  const HAVE_ITEM = wishlist.length > 0;
 
   return (
     <main className="flex flex-col items-center">
@@ -43,21 +28,18 @@ const Wishlist = () => {
       )}
 
       <div className="grid grid-cols-3">
-        {items.map((item) => {
+        {wishlist.map((item) => {
           const { _id } = item;
           return (
             <FurnitureCard item={item} key={_id}>
               <FurnitureCard.Model className="w-[60%]">
-                {accessToken ? (
-                  <FurnitureCard.UserFavorite />
-                ) : (
-                  <FurnitureCard.Favorite />
-                )}
+                <FurnitureCard.Favorite />
                 <FurnitureCard.DimensionOption />
               </FurnitureCard.Model>
-              <div className="px-[18px] flex flex-col justify-between gap-4">
+              <div className="px-[18px] relative flex flex-col justify-between">
                 <FurnitureCard.Attribute />
                 <FurnitureCard.Price />
+                <FurnitureCard.ShoppingButton />
               </div>
             </FurnitureCard>
           );
@@ -69,4 +51,4 @@ const Wishlist = () => {
   );
 };
 
-export default Wishlist;
+export default withNonAuthentication(Wishlist);
