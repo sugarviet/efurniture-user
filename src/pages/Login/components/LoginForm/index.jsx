@@ -1,32 +1,38 @@
 import { Form } from "antd";
 import FormInput from "@components/FormInput";
-import { usePost } from "../../../../hooks/api-hooks";
-import { useNavigate } from "react-router-dom";
+import { usePost, usePostAuth } from "../../../../hooks/api-hooks";
 import { message } from "antd";
 import useAuth from "../../../../stores/useAuth";
 import { get_auth_login } from "../../../../api/authApi";
+import jwtDecode from "jwt-decode";
+import { get_add_all_wishlist_api } from "../../../../api/wishlistApi";
+import { useGuestStore } from "../../../../stores/useGuestStore";
 
 function LoginForm() {
-  const navigate = useNavigate();
   const { setTokens } = useAuth();
+
+  const { wishlist } = useGuestStore();
+
+  const { mutate: addToWishlist } = usePostAuth(get_add_all_wishlist_api());
 
   const { mutate } = usePost(
     get_auth_login(),
     undefined,
     (data) => {
       const { access_token, refresh_token } = data.data.metaData;
-      setTokens(access_token, refresh_token);
-      navigate("/");
+      const decode = jwtDecode(access_token);
+      setTokens(access_token, refresh_token, decode.account_id);
+
+      addToWishlist(wishlist.map((item) => item._id));
     },
     (error) => {
       message.error(error.response.data.error.message);
     }
   );
   const onFinish = (values) => {
-    console.log(values);
-
     mutate(values);
   };
+
   return (
     <>
       <Form
@@ -56,7 +62,6 @@ function LoginForm() {
           </button>
         </section>
       </Form>
-    
     </>
   );
 }
