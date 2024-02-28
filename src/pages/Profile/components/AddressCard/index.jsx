@@ -1,11 +1,43 @@
-import { useState } from "react";
+import { useState, lazy } from "react";
+import PropTypes from "prop-types";
 import AppModal from "@components/ui/AppModal";
-import EditingAddress from "../EditingAddress";
-import Proptypes from "prop-types";
+import { useDeleteWithAuth, useUpdateWithAuth } from "@hooks/api-hooks";
+import { set_address_default_by_user,delete_single_address } from "@api/addressApi";
+import { message } from "antd";
+import { useQueryClient } from "@tanstack/react-query";
+import { get_addresses } from "@api/profileApi";
 
-const AddressCard = ({ isDefault }) => {
+const EditingAddress = lazy(() => import('../EditingAddress'));
+
+const AddressCard = ({ data }) => {
+const queryClient = useQueryClient();
+  const { is_default, province, ward, district, address, _id } = data;
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+
+  const { mutate: set_address_default } = useUpdateWithAuth(
+    set_address_default_by_user(_id),
+    undefined,
+    () => {
+      queryClient.invalidateQueries(get_addresses());
+      message.success("Set default address successfully");
+    },
+    () => {
+      message.error("Set default address failed");
+    }
+  );
+
+  const { mutate: delete_address } = useDeleteWithAuth(
+    delete_single_address(_id),
+    undefined,
+    () => {
+      queryClient.invalidateQueries(get_addresses());
+      message.success("Set default address successfully");
+    },
+    () => {
+      message.error("Delete address failed");
+    }
+  );
 
   const toggleModalEdit = () => {
     setIsModalEditOpen(!isModalEditOpen);
@@ -18,36 +50,48 @@ const AddressCard = ({ isDefault }) => {
     <>
       <article className="flex flex-col gap-3 border-b-2 border-b-gray-200 py-2">
         <div className="flex gap-4 items-end uppercase">
-          <p className="text-2xl font-bold">Nguyen Dinh Chieu</p>
+          <p className="text-2xl font-bold">{address}</p>
 
-          {isDefault && <p className="text-gray-400">Default address</p>}
+          {is_default && <p className="text-gray-400">Default address</p>}
         </div>
 
         <div>
-          <p>283</p>
-          <p>Ho Chi Minh</p>
-          <p>VietNam</p>
+          <p>{district}</p>
+          <p>{province}</p>
+          <p>{ward}</p>
         </div>
 
         <div className="flex gap-4">
-          {!isDefault && <button className="underline">Make default</button>}
+          {!is_default && (
+            <button onClick={() => set_address_default({})} className="underline">
+              Make default
+            </button>
+          )}
           <button className="underline" onClick={toggleModalEdit}>
             Edit
           </button>
-          <button className="underline" onClick={toggleModalDelete}>Delete</button>
+          <button className="underline" onClick={toggleModalDelete}>
+            Delete
+          </button>
         </div>
       </article>
 
       <AppModal isOpen={isModalEditOpen} onClose={toggleModalEdit}>
-        <EditingAddress />
+        <EditingAddress data={data}/>
       </AppModal>
 
       <AppModal isOpen={isModalDeleteOpen} onClose={toggleModalDelete}>
         <div className="flex flex-col gap-6">
-          <p className="text-xl font-bold text-center">Are you sure that you want to delete this address?</p>
+          <p className="text-xl font-bold text-center">
+            Are you sure that you want to delete this address?
+          </p>
           <div className="flex gap-2 ml-auto">
-            <button className="furniture-button-black-hover px-6 py-2.5">Delete</button>
-            <button className="furniture-button-black-hover px-6 py-2.5">Cancel</button>
+            <button className="furniture-button-black-hover px-6 py-2.5" onClick={() => delete_address({})}>
+              Delete
+            </button>
+            <button className="furniture-button-black-hover px-6 py-2.5">
+              Cancel
+            </button>
           </div>
         </div>
       </AppModal>
@@ -56,7 +100,7 @@ const AddressCard = ({ isDefault }) => {
 };
 
 AddressCard.propTypes = {
-  isDefault: Proptypes.bool,
+  data: PropTypes.object,
 };
 
 export default AddressCard;

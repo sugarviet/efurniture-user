@@ -35,7 +35,7 @@ const validateNewEmail = ({ getFieldValue }) => ({
 
 const validateConfirmNewPassword = ({ getFieldValue }) => ({
   validator(_, value) {
-    if (!value || getFieldValue("newPassword") === value) {
+    if (!value || getFieldValue("password") === value) {
       return Promise.resolve();
     }
     return Promise.reject(

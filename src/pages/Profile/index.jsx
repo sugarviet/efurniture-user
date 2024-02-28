@@ -6,6 +6,7 @@ import Account from "./components/Account";
 import { withAuthentication } from "../../hocs/withAuthentication";
 import useAuth from "../../stores/useAuth";
 
+
 const Address = lazy(() => import("./components/Address"));
 const Orders = lazy(() => import("./components/Orders"));
 const Favorites = lazy(() => import("./components/Favorites"));

@@ -3,10 +3,10 @@ import AppInput from "@components/ui/AppInput";
 import FormItem from "../FormItem";
 import PropTypes from "prop-types";
 
-const FormInput = ({ label, name, initialValue, placeholder, type, required, message, inputType, className, disabled, value, onChange }) => {
+const FormInput = ({ label, name, placeholder, type, required, message, inputType, className, disabled }) => {
   return (
-    <FormItem value={value} onChange={onChange} label={label} name={name} type={type} required={required} message={message} >
-      <AppInput  placeholder={placeholder} disabled={disabled} className={className} inputType={inputType} />
+    <FormItem label={label} name={name} type={type} required={required} message={message}>
+      <AppInput placeholder={placeholder} disabled={disabled} className={className} inputType={inputType} />
     </FormItem>
   );
 };

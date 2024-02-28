@@ -1,85 +1,54 @@
-import { Form } from "antd";
+import { Form, message } from "antd";
 import { Link } from "react-router-dom";
+import FormInput from "@components/FormInput";
+import { usePostAuth } from "@hooks/api-hooks";
+import { add_address } from "@api/addressApi";
+import { useFetchOutsideSystem } from "@hooks/api-hooks";
+import FormSelect from "@components/FormSelect";
+import { get_provice_in_saigon } from "@api/addressApi";
 
-const EditingAddress = () => {
+const CreatingAddress = () => {
+  const { data: data_address, isLoading } = useFetchOutsideSystem(
+    get_provice_in_saigon()
+  );
+
+  const { mutate } = usePostAuth(
+    add_address(),
+    undefined,
+    () => {
+      message.success("Create address successfully");
+    },
+    () => {
+      message.error("Something went wrong");
+    }
+  );
+
+  if (isLoading) return;
   const onFinish = (values) => {
     console.log("Success:", values);
-  };
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    mutate(values);
   };
   return (
     <div className="w-3/4">
       <p className="font-bold mb-3 text-xl">Add adress</p>
       <Form
-        name="basic"
+        name="create-address"
         labelCol={{
           span: 24,
         }}
+        initialValues={{ 
+          province: "TP HCM",
+          district: "Quận 9",
+         }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item
-          label="Address name"
-          name="newEmail"
-          rules={[
-            {
-              required: false,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-full" />
-        </Form.Item>
-        <Form.Item
-          label="First Name"
-          name="newEmail"
-          rules={[
-            {
-              required: false,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-full" />
-        </Form.Item>
-        <Form.Item
-          label="Last Name"
-          name="newEmail"
-          rules={[
-            {
-              required: false,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-full" />
-        </Form.Item>
-        <Form.Item
-          label="Address (Please remember floor and apartment)"
-          name="newEmail"
-          rules={[
-            {
-              required: false,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-full" />
-        </Form.Item>
-        <Form.Item
-          label="Phone"
-          name="newEmail"
-          rules={[
-            {
-              required: false,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-full" />
-        </Form.Item>
+        <FormInput label="Address name" name="address" className="w-full" />
+        <FormInput label="Province" name="province" className="w-full" />
+        <FormInput label="Phone" name="phone" className="w-full" />
+        <FormInput label="Ward" name="ward" className="w-full" />
+
+        <FormSelect label="District" name="district" data={data_address} value={"Quận 9"}/>
 
         <div className="flex flex-col gap-5 text-base w-[40rem]">
           <button
@@ -103,4 +72,4 @@ const EditingAddress = () => {
   );
 };
 
-export default EditingAddress;
+export default CreatingAddress;

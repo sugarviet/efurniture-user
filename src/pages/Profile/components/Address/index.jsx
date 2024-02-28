@@ -2,13 +2,17 @@ import { useState } from 'react';
 import AppModal from '@components/ui/AppModal'
 import AddressCard from '../AddressCard'
 import CreatingAddress from '../CreatingAddress';
+import { withFetchDataWithHeaders } from '@hocs/withFetchDataWithHeaders';
+import { get_addresses } from '@api/profileApi';
+import Proptypes from 'prop-types';
 
-const Address = () => {
+const Address = ({data}) => {
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
 
   const toggleModalCreate = () => {
     setIsModalCreateOpen(!isModalCreateOpen);
   }
+
 
   return (
     <section>
@@ -16,9 +20,11 @@ const Address = () => {
       
 
       <section className='mt-4 w-3/4 flex flex-col gap-5'>
-        <AddressCard isDefault/>
-        <AddressCard />
-        <AddressCard />
+        {data.map(address => (
+          <AddressCard key={address._id} data={address} />
+        ))}
+        {/* <AddressCard isDefault/>
+        <AddressCard /> */}
 
       </section>
 
@@ -29,5 +35,8 @@ const Address = () => {
     </section>
   )
 }
+Address.propTypes = {
+  data: Proptypes.array,
+};
 
-export default Address
+export default withFetchDataWithHeaders(Address, get_addresses)
