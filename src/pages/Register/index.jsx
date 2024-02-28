@@ -1,5 +1,5 @@
-import RegisterForm from "./components/RegisterForm"
-
+import withNonAuthentication from "../../hocs/withNonAuthentication";
+import RegisterForm from "./components/RegisterForm";
 
 const Register = () => {
   return (
@@ -9,10 +9,16 @@ const Register = () => {
       </section>
       <section className="font-HelveticaRoman float-right w-[75%] ">
         <RegisterForm />
-        <p>Please be advised that we are gathering your personal information. For more information, see our <a href='#' className='underline'>Privacy Policy </a></p>
+        <p>
+          Please be advised that we are gathering your personal information. For
+          more information, see our{" "}
+          <a href="#" className="underline">
+            Privacy Policy{" "}
+          </a>
+        </p>
       </section>
     </main>
-  )
-}
+  );
+};
 
-export default Register
+export default withNonAuthentication(Register);

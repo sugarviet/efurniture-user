@@ -4,6 +4,7 @@ import AppSuspense from "@components/AppSuspense";
 import useSwitchTab from "./hooks/useSwitchTab";
 import Account from "./components/Account";
 import { withAuthentication } from "../../hocs/withAuthentication";
+import useAuth from "../../stores/useAuth";
 
 
 const Address = lazy(() => import("./components/Address"));
@@ -64,6 +65,7 @@ const tabsProfile = {
 
 const Profile = () => {
   const { activeTab, handleChangeTab } = useSwitchTab();
+  const { clearTokens } = useAuth();
 
   return (
     <main className="flex flex-col gap-8">
@@ -74,40 +76,40 @@ const Profile = () => {
           </h1>
           <div>
             <h2 className="text-lg normal-case">Viet Dang</h2>
-            <p className="underline">Logout</p>
+            <button onClick={clearTokens} className="underline">
+              Logout
+            </button>
           </div>
         </div>
       </section>
 
       <section className="mt-3">
-      <AppRow
-        gutter={4}
-        spans={[
-          { xs: 0, sm: 6, md: 7, lg: 6, xl: 7 },
-          { xs: 24, sm: 18, md: 17, lg: 18, xl: 17 },
-        ]}
-      >
-        <div className="flex flex-col mx-auto py-2 px-4 uppercase">
-          <div className="flex flex-col mx-auto py-2 px-3 gap-2 font-[22px] tracking-widest">
-            {profileLinks.map((links) => (
-              <p
-                key={links.id}
-                className="furniture-link"
-                onClick={() => handleChangeTab(links.key)}
-              >
-                {links.title}
-              </p>
-            ))}
+        <AppRow
+          gutter={4}
+          spans={[
+            { xs: 0, sm: 6, md: 7, lg: 6, xl: 7 },
+            { xs: 24, sm: 18, md: 17, lg: 18, xl: 17 },
+          ]}
+        >
+          <div className="flex flex-col mx-auto py-2 px-4 uppercase">
+            <div className="flex flex-col mx-auto py-2 px-3 gap-2 font-[22px] tracking-widest">
+              {profileLinks.map((links) => (
+                <p
+                  key={links.id}
+                  className="furniture-link"
+                  onClick={() => handleChangeTab(links.key)}
+                >
+                  {links.title}
+                </p>
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div>
-          <AppSuspense>{tabsProfile[activeTab].component}</AppSuspense>
-        </div>
-      </AppRow>
-
+          <div>
+            <AppSuspense>{tabsProfile[activeTab].component}</AppSuspense>
+          </div>
+        </AppRow>
       </section>
-
     </main>
   );
 };

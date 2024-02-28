@@ -9,7 +9,7 @@ const BASE_URL = API_URL_PRODUCTION;
 
 const accessToken = Cookies.get(ACCESS_TOKEN);
 const refreshToken = Cookies.get(REFRESH_TOKEN);
-const client_id = Cookies.get(CLIENT_ID);
+const accountId = Cookies.get(CLIENT_ID);
 
 export const API = axios.create({
     baseURL: BASE_URL,
@@ -61,7 +61,7 @@ USER_API.interceptors.response.use(
 
                 originalRequest.headers[cookies()['accessToken'].key] = Cookies.set("access_token", accessTokenRes);
                 originalRequest.headers[cookies()['refreshToken'].key] = Cookies.set("refresh_token", refreshTokenRes);
-                originalRequest.headers[cookies()['accountId'].key] = client_id;
+                originalRequest.headers[cookies()['accountId'].key] = accountId;
 
                 return axios(originalRequest);
             } catch (error) {

@@ -1,16 +1,17 @@
-import LoginForm from "./components/LoginForm"
+import withNonAuthentication from "../../hocs/withNonAuthentication";
+import LoginForm from "./components/LoginForm";
 
 const benefitList = [
   {
-    name: "News and exclusive offers!"
+    name: "News and exclusive offers!",
   },
   {
-    name: "Order History"
+    name: "Order History",
   },
   {
-    name: "Faster Checkout"
-  }
-]
+    name: "Faster Checkout",
+  },
+];
 
 const Login = () => {
   return (
@@ -19,7 +20,6 @@ const Login = () => {
         <h1 className="px-[2.5rem] text-center ">My account</h1>
       </section>
       <section className="flex flex-row">
-
         <div className="basis-1/2 pr-[144px]">
           <article className="mb-[2.8125rem]">
             <h2>RETURNING CUSTOMERS</h2>
@@ -34,12 +34,16 @@ const Login = () => {
             <h2>REGISTER</h2>
           </article>
           <div className="font-HelveticaRoman">
-            <h3 className="font-light mb-[0.7em]">BENEFITS OF CREATING AN ACCOUNT</h3>
+            <h3 className="font-light mb-[0.7em]">
+              BENEFITS OF CREATING AN ACCOUNT
+            </h3>
             <ul className="list-none font-HelveticaBold pl-[0.9375rem]">
               {benefitList.map((benefit, index) => (
                 <li
                   key={index}
-                  style={{ backgroundImage: `url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNiAzMiI+PHBhdGggZD0iTTMwLjI1NS4wMDZsLTE3LjQ4IDIyLjQtOC43NTEtOC4yLTQuMDIgNC4xMDZMMTMuNDE5IDMxLjUgMzQuOTU2IDMuNjIzeiIvPjwvc3ZnPg==")` }}
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNiAzMiI+PHBhdGggZD0iTTMwLjI1NS4wMDZsLTE3LjQ4IDIyLjQtOC43NTEtOC4yLTQuMDIgNC4xMDZMMTMuNDE5IDMxLjUgMzQuOTU2IDMuNjIzeiIvPjwvc3ZnPg==")`,
+                  }}
                   className="bg-no-repeat bg-[length:1rem] bg-[left_3px] pl-[1.5625rem] mb-[0.625rem]"
                 >
                   {benefit.name}
@@ -48,10 +52,9 @@ const Login = () => {
             </ul>
           </div>
         </div>
-
       </section>
     </main>
-  )
-}
+  );
+};
 
-export default Login
+export default withNonAuthentication(Login);

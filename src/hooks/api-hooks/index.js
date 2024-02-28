@@ -1,5 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API, USER_API } from "../../api/utils";
+import axios from 'axios';
+
+const fetch_outside_system = async (url) => {
+  const data = await axios.get(url)
+  .then((response) => response.data)
+  .then((data) => data.results);
+
+  return data;
+};
 
 const fetcher = async (url, params) => {
   const data = await API.get(url, { params: params })
@@ -19,6 +28,10 @@ const fetcher_with_auth = async (url, params) => {
 
 export const useFetch = (url, params) => {
   return useQuery([url, params], () => fetcher(url, params));
+};
+
+export const useFetchOutsideSystem = (url, params) => {
+  return useQuery([url, params], () => fetch_outside_system(url, params));
 };
 
 export const useFetchWithAuth = (url, params, options) => {
@@ -92,7 +105,7 @@ export const useUpdate = (url, params, onSuccessAPI, onErrorAPI) => {
 
 export const useDeleteWithAuth = (url, params, onSuccessAPI, onErrorAPI) => {
   return useGenericMutation(
-    (id) => USER_API.delete(`${url}/${id}`),
+    () => USER_API.delete(url),
     url,
     params,
     onSuccessAPI,
