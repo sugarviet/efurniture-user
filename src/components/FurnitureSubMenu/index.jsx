@@ -1,14 +1,16 @@
 import { Fragment } from "react";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import { PATH } from "../../router";
+import { withFetchData } from "../../hocs/withFetchData";
+import { get_furniture_subtype_api } from "../../api/furnitureTypeApi";
 
-function FurnitureSubMenu({ category }) {
-  const { name, filterElement } = category;
+function FurnitureSubMenu({ slug, name, data }) {
+  const filter_element = data ? Object.keys(data) : [];
+
   return (
     <Fragment>
       <Link
-        to={PATH.products}
+        to={`/products/${slug}`}
         className="pb-6 uppercase text-2xl font-extrabold text-black tracking-widest flex items-center hover:cursor-pointer"
         title={name}
       >
@@ -16,22 +18,31 @@ function FurnitureSubMenu({ category }) {
         <ChevronRightIcon className="w-6 h-6" />
       </Link>
       <ul className="block columns-3">
-        {filterElement.map((filter, index) => {
-          const { label, elements } = filter;
+        {filter_element.map((filter, index) => {
+          const elements = data[filter];
           return (
-            <li className="break-inside-avoid pb-4" key={`${label} + ${index}`}>
-              <h5 className="uppercase tracking-widest pb-4">{label}</h5>
+            <li
+              className="break-inside-avoid pb-4"
+              key={`${filter} + ${index}`}
+            >
+              <h5 className="uppercase tracking-widest pb-4">{filter}</h5>
               <ul>
-                {elements.map((element, index) => (
-                  <li
-                    key={`${element} + ${index}`}
-                    className="text-black text-[.75rem] tracking-wider py-1"
-                  >
-                    <Link to={PATH.products} className="w-fit relative">
-                      {element}
-                    </Link>
-                  </li>
-                ))}
+                {elements.map((element) => {
+                  const { _id, type, slug: subtype } = element;
+                  return (
+                    <li
+                      key={_id}
+                      className="text-black text-[.75rem] tracking-wider py-1"
+                    >
+                      <Link
+                        to={`/products/${slug}/${subtype}`}
+                        className="w-fit relative"
+                      >
+                        {type}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </li>
           );
@@ -41,4 +52,4 @@ function FurnitureSubMenu({ category }) {
   );
 }
 
-export default FurnitureSubMenu;
+export default withFetchData(FurnitureSubMenu, get_furniture_subtype_api);

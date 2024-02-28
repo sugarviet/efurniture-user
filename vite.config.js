@@ -14,6 +14,8 @@ export default defineConfig({
       '@services': '/src/services',
       '@constants': '/src/constants',
       '@hooks': '/src/hooks',
+      '@hocs': '/src/hocs',
+      '@api': '/src/api',
     },
   },
 })

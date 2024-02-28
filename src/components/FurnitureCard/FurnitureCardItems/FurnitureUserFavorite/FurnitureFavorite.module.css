@@ -1,0 +1,26 @@
+.favorite_wrapper {
+    @apply absolute top-4 right-4
+}
+
+.favorite_wrapper:hover .tool_tip {
+    @apply opacity-100 transition-[opacity_0.2]
+}
+
+.tool_tip {
+    @apply opacity-0 text-[0.5rem] left-auto right-[50%] absolute bottom-[125%] flex items-center justify-center w-max h-6 p-2 bg-[#222] text-white pointer-events-none transition-[opacity_0.2]
+}
+
+.tool_tip::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 100%;
+    width: 0;
+    height: 0;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: solid .5rem #222;
+    border-left: solid .5rem transparent;
+    right: 0;
+    left: auto;
+}

@@ -61,7 +61,7 @@ body{
 
 /* input  */
 .furniture-input {
-    @apply leading-[3rem] pl-5 pr-10 outline-none border-[0.5px] border-[#191915] focus:shadow-email
+    @apply font-HelveticaRoman leading-[3rem] pl-5 pr-10 outline-none border-[0.5px] border-[#191915] focus:shadow-email
 }
 /* checkbox  */
 .furniture-checkbox {
@@ -122,4 +122,8 @@ body{
 
 .furniture-navbar-overlay {
     @apply fixed inset-0 bg-black opacity-20 transition-opacity duration-300 -z-50
+}
+
+.antd-checkbox-input {
+    @apply furniture-checkbox border-[0.125rem] border-[#5a7468] checked:bg-[#5a7468]
 }

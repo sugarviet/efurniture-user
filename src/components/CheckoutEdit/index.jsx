@@ -1,5 +1,6 @@
 import React from 'react'
-import useSwitchTab from "@hooks/useSwitchTab"
+import useSwitchTab from '../../pages/Checkout/hooks/useSwitchTab';
+import PropTypes from "prop-types";
 
 function CheckoutEdit({ title, activeTab }) {
 
@@ -18,5 +19,10 @@ function CheckoutEdit({ title, activeTab }) {
         </div>
     )
 }
+
+CheckoutEdit.propTypes = {
+    title: PropTypes.string,
+    activeTab: PropTypes.string,
+};
 
 export default CheckoutEdit

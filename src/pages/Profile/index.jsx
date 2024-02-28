@@ -3,6 +3,8 @@ import AppRow from "@components/AppRow";
 import AppSuspense from "@components/AppSuspense";
 import useSwitchTab from "./hooks/useSwitchTab";
 import Account from "./components/Account";
+import { withAuthentication } from "../../hocs/withAuthentication";
+
 
 const Address = lazy(() => import("./components/Address"));
 const Orders = lazy(() => import("./components/Orders"));
@@ -110,4 +112,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default withAuthentication(Profile);

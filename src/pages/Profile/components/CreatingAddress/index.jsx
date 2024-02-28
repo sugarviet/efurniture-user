@@ -1,5 +1,6 @@
 import { Form } from "antd";
 import { Link } from "react-router-dom";
+import FormInput from "@components/FormInput";
 
 const EditingAddress = () => {
   const onFinish = (values) => {
@@ -12,7 +13,7 @@ const EditingAddress = () => {
     <div className="w-3/4">
       <p className="font-bold mb-3 text-xl">Add adress</p>
       <Form
-        name="basic"
+        name="create-address"
         labelCol={{
           span: 24,
         }}
@@ -20,66 +21,11 @@ const EditingAddress = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item
-          label="Address name"
-          name="newEmail"
-          rules={[
-            {
-              required: false,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-full" />
-        </Form.Item>
-        <Form.Item
-          label="First Name"
-          name="newEmail"
-          rules={[
-            {
-              required: false,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-full" />
-        </Form.Item>
-        <Form.Item
-          label="Last Name"
-          name="newEmail"
-          rules={[
-            {
-              required: false,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-full" />
-        </Form.Item>
-        <Form.Item
-          label="Address (Please remember floor and apartment)"
-          name="newEmail"
-          rules={[
-            {
-              required: false,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-full" />
-        </Form.Item>
-        <Form.Item
-          label="Phone"
-          name="newEmail"
-          rules={[
-            {
-              required: false,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-full" />
-        </Form.Item>
+        <FormInput label="Address name" name="newEmail" className="w-full" />
+        <FormInput label="Province" name="province" className="w-full" />
+        <FormInput label="Phone" name="phone" className="w-full" />
+        <FormInput label="Ward" name="ward" className="w-full" />
+        <FormInput label="Address" name="address" className="w-full" />
 
         <div className="flex flex-col gap-5 text-base w-[40rem]">
           <button

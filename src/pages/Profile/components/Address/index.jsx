@@ -2,8 +2,12 @@ import { useState } from 'react';
 import AppModal from '@components/ui/AppModal'
 import AddressCard from '../AddressCard'
 import CreatingAddress from '../CreatingAddress';
+import { withFetchDataWithHeaders } from '@hocs/withFetchDataWithHeaders';
+import { get_addresses } from '@api/profileApi';
+import Proptypes from 'prop-types';
 
-const Address = () => {
+const Address = ({data}) => {
+  console.log(data)
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
 
   const toggleModalCreate = () => {
@@ -29,5 +33,8 @@ const Address = () => {
     </section>
   )
 }
+Address.propTypes = {
+  data: Proptypes.array,
+};
 
-export default Address
+export default withFetchDataWithHeaders(Address, get_addresses)

@@ -1,7 +1,7 @@
 import { useState } from "react";
+import PropTypes from "prop-types"; // Fixed import
 import AppModal from "@components/ui/AppModal";
 import EditingAddress from "../EditingAddress";
-import Proptypes from "prop-types";
 
 const AddressCard = ({ isDefault }) => {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
@@ -56,7 +56,7 @@ const AddressCard = ({ isDefault }) => {
 };
 
 AddressCard.propTypes = {
-  isDefault: Proptypes.bool,
+  isDefault: PropTypes.bool, // Fixed PropTypes import
 };
 
 export default AddressCard;
