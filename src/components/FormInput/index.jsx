@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 const FormInput = ({ label, name, initialValue, placeholder, type, required, message, inputType, className, disabled, value, onChange }) => {
   return (
-    <FormItem value={value} onChange={onChange} initialValue={initialValue} label={label} name={name} type={type} required={required} message={message} >
+    <FormItem value={value} onChange={onChange} label={label} name={name} type={type} required={required} message={message} >
       <AppInput  placeholder={placeholder} disabled={disabled} className={className} inputType={inputType} />
     </FormItem>
   );
@@ -29,7 +29,6 @@ FormInput.defaultProps = {
   required: false,
   message: "Please fill in this field",
   type: "default",
-  initialValue: "",
   disabled: false,
 };
 

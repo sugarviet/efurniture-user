@@ -2,7 +2,7 @@ import { Form } from "antd";
 import FormInput from "@components/FormInput";
 import BillingAddress from "../BillingAddress";
 import { useToggleLoginBottomBar } from '@hooks/UseToggleBottomBar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useSwitchTab from "../../hooks/useSwitchTab";
 import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
 import { useOrderStore } from "../../../../stores/useGuestOrderStore";
@@ -13,7 +13,7 @@ function Billing() {
 
   const { handleChangeTab } = useSwitchTab();
 
-  const { setOrderShipping } = useOrderStore();
+  const { setOrderShipping, orderShipping } = useOrderStore();
 
   const [isInputEmail, setIsInputEmail] = useState(false);
 
@@ -23,10 +23,16 @@ function Billing() {
   };
 
   const handleEmailChange = (e) => {
-    if (e.target.value && /\S+@\S+\.\S+/.test(e.target.value)) {
+    if (e.target.value) {
       setIsInputEmail(true);
     }
   };
+
+  useEffect(() => {
+    if (orderShipping.email) {
+      setIsInputEmail(true);
+    }
+  }, [orderShipping]);
 
   return (
     <section>
@@ -41,6 +47,7 @@ function Billing() {
             }}
             onFinish={onFinish}
             autoComplete="off"
+            initialValues={{ province: "Thành Phố Hồ Chí Minh", ...orderShipping }}
           >
             <FormInput
               label="Email"
