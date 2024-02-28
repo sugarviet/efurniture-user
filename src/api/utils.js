@@ -14,7 +14,7 @@ export const USER_API = axios.create({
     baseURL: BASE_URL,
 });
 
-const cookies = {
+const cookies = () => ({
     accessToken: {
         key: "x-client-accesstoken",
         value: Cookies.get('access_token')
@@ -27,13 +27,14 @@ const cookies = {
         key: "x-client-id",
         value: Cookies.get('account_id')
     },
-}
+})
 
 USER_API.interceptors.request.use(
     (config) => {
-        config.headers[cookies['accessToken'].key] = cookies['accessToken'].value;
-        config.headers[cookies['refreshToken'].key] = cookies['refreshToken'].value;
-        config.headers[cookies['accountId'].key] = cookies['accountId'].value;
+
+        config.headers[cookies()['accessToken'].key] = cookies()['accessToken'].value;
+        config.headers[cookies()['refreshToken'].key] = cookies()['refreshToken'].value;
+        config.headers[cookies()['accountId'].key] = cookies()['accountId'].value;
 
         return config;
     },
@@ -54,9 +55,9 @@ USER_API.interceptors.response.use(
                 const accessTokenRes = refreshResponse.data.accessToken;
                 const refreshTokenRes = refreshResponse.data.refreshToken;
 
-                originalRequest.headers[cookies['accessToken'].key] = Cookies.set("access_token", accessTokenRes);
-                originalRequest.headers[cookies['refreshToken'].key] = Cookies.set("refresh_token", refreshTokenRes);
-                originalRequest.headers[cookies['accountId'].key] = accountId;
+                originalRequest.headers[cookies()['accessToken'].key] = Cookies.set("access_token", accessTokenRes);
+                originalRequest.headers[cookies()['refreshToken'].key] = Cookies.set("refresh_token", refreshTokenRes);
+                originalRequest.headers[cookies()['accountId'].key] = accountId;
 
                 return axios(originalRequest);
             } catch (error) {

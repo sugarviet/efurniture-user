@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import SocialList from "../SocialList";
+import useScroll from "../../../../../../hooks/useScroll";
 
 function MenuSection({ title, items, index, openMenu, toggleMenu }) {
+  const { handleScrollToTop } = useScroll();
+
   return (
     <li className="furniture-divided-bottom sm:border-none">
       <p
@@ -24,7 +27,11 @@ function MenuSection({ title, items, index, openMenu, toggleMenu }) {
             className="text-[11px] sm:text-sm pb-[8px] tracking-[0.56px]"
             key={itemIndex}
           >
-            <Link to={data.to} className="furniture-link">
+            <Link
+              onClick={handleScrollToTop}
+              to={data.to}
+              className="furniture-link"
+            >
               {data.name}
             </Link>
           </li>
