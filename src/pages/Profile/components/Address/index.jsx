@@ -7,12 +7,12 @@ import { get_addresses } from '@api/profileApi';
 import Proptypes from 'prop-types';
 
 const Address = ({data}) => {
-  console.log(data)
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
 
   const toggleModalCreate = () => {
     setIsModalCreateOpen(!isModalCreateOpen);
   }
+
 
   return (
     <section>
@@ -20,9 +20,11 @@ const Address = ({data}) => {
       
 
       <section className='mt-4 w-3/4 flex flex-col gap-5'>
-        <AddressCard isDefault/>
-        <AddressCard />
-        <AddressCard />
+        {data.map(address => (
+          <AddressCard key={address._id} data={address} />
+        ))}
+        {/* <AddressCard isDefault/>
+        <AddressCard /> */}
 
       </section>
 

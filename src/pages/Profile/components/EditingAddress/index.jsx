@@ -1,9 +1,29 @@
-import { Form } from "antd";
+import { Form, message } from "antd";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import FormInput from "@components/FormInput";
+import { useUpdateWithAuth } from "@hooks/api-hooks";
+import { edit_address } from "@api/addressApi";
+import { useQueryClient } from "@tanstack/react-query";
+import { get_addresses } from "../../../../api/profileApi";
 
-const EditingAddress = () => {
+const EditingAddress = ({ data }) => {
+  const queryClient = useQueryClient();
+
+  const { mutate } = useUpdateWithAuth(
+    edit_address(data._id),
+    undefined,
+    () => {
+      queryClient.invalidateQueries(get_addresses());
+      message.success("Successfully updated");
+    },
+    () => {
+      message.success("updated failed");
+    }
+  );
   const onFinish = (values) => {
     console.log("Success:", values);
+    mutate(values);
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -12,7 +32,8 @@ const EditingAddress = () => {
     <div className="w-3/4">
       <p className="font-bold mb-3 text-xl">Edit adress</p>
       <Form
-        name="basic"
+        name="editing_address"
+        initialValues={data}
         labelCol={{
           span: 24,
         }}
@@ -20,66 +41,11 @@ const EditingAddress = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item
-          label="Address name"
-          name="newEmail"
-          rules={[
-            {
-              required: false,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-full" />
-        </Form.Item>
-        <Form.Item
-          label="First Name"
-          name="newEmail"
-          rules={[
-            {
-              required: false,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-full" />
-        </Form.Item>
-        <Form.Item
-          label="Last Name"
-          name="newEmail"
-          rules={[
-            {
-              required: false,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-full" />
-        </Form.Item>
-        <Form.Item
-          label="Address (Please remember floor and apartment)"
-          name="newEmail"
-          rules={[
-            {
-              required: false,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-full" />
-        </Form.Item>
-        <Form.Item
-          label="Phone"
-          name="newEmail"
-          rules={[
-            {
-              required: false,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <input type="text" className="furniture-input w-full" />
-        </Form.Item>
+        <FormInput label="Address name" name="address" className="w-full" />
+        <FormInput label="Province" name="province" className="w-full" />
+        <FormInput label="Phone" name="phone" className="w-full" />
+        <FormInput label="Ward" name="ward" className="w-full" />
+        <FormInput label="District" name="district" className="w-full" />
 
         <div className="flex flex-col gap-5 text-base w-[40rem]">
           <button
@@ -100,7 +66,11 @@ const EditingAddress = () => {
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default EditingAddress
+EditingAddress.propTypes = {
+  data: PropTypes.object,
+};
+
+export default EditingAddress;
