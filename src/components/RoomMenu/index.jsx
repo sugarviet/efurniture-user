@@ -41,7 +41,7 @@ function RoomMenu() {
       {ROOMS.map((room, index) => {
         const { url, name, slug } = room;
         return (
-          <Link to={`rooms/${slug}`} className="pb-6" key={`${name} + ${index}`}>
+          <Link to={`room/${slug}`} className="pb-6" key={`${name} + ${index}`}>
             <CategoryTitle url={url} name={name} />
           </Link>
         );

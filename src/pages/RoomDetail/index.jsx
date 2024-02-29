@@ -10,67 +10,9 @@ import useAuth from "@stores/useAuth";
 import { withFetchData } from "../../hocs/withFetchData";
 import { get_furniture_by_room_api } from "../../api/furnitureApi";
 
-const PRODUCT_CATALOG = [
-  {
-    url: "https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dwce7ff147/images/2070000/2072649.jpg?sw=1200",
-    name: "Santiago dining table",
-    color:
-      "https://www.boconcept.com/on/demandware.static/-/Sites-master-catalog/default/dwb27f4b3c/coloricons/color-dots-board-75x26.png",
-    material: "White, Grey, Ceramic",
-    price: 105900000,
-    model_id: "sitzfeldt:Kombielement",
-  },
-
-  {
-    url: "https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dwf6fe67af/images/1680000/1683339.jpg?sw=1200",
-    name: "Hamilton chair",
-    color:
-      "https://www.boconcept.com/on/demandware.static/-/Sites-master-catalog/default/dwb27f4b3c/coloricons/color-dots-board-75x26.png",
-    material: "White, Grey, Ceramic",
-    price: 105900000,
-    model_id: "sitzfeldt:Match",
-  },
-  {
-    url: "https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dwa9f2b67a/images/640000/643130.jpg?sw=1200",
-    name: "Hamilton chair",
-    color:
-      "https://www.boconcept.com/on/demandware.static/-/Sites-master-catalog/default/dwb27f4b3c/coloricons/color-dots-board-75x26.png",
-    material: "White, Grey, Ceramic",
-    price: 105900000,
-    model_id: "sitzfeldt:SetHocker",
-  },
-  {
-    url: "https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dwe151cf35/images/1500000/1504516.jpg?sw=1200",
-    name: "Hamilton chair",
-    color:
-      "https://www.boconcept.com/on/demandware.static/-/Sites-master-catalog/default/dwb27f4b3c/coloricons/color-dots-board-75x26.png",
-    material: "White, Grey, Ceramic",
-    price: 105900000,
-    model_id: "sitzfeldt:Longchair_armrest_left_LP",
-  },
-  {
-    url: "https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dwbc0ac763/images/1550000/1558154.jpg?sw=1200",
-    name: "Hamilton chair",
-    color:
-      "https://www.boconcept.com/on/demandware.static/-/Sites-master-catalog/default/dwb27f4b3c/coloricons/color-dots-board-75x26.png",
-    material: "White, Grey, Ceramic",
-    price: 105900000,
-    model_id: "sitzfeldt:Chuck_Sofa_2_SeaterST2",
-  },
-  {
-    url: "https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dwf1d9d3db/images/1530000/1531445.jpg?sw=1200",
-    name: "Hamilton chair",
-    color:
-      "https://www.boconcept.com/on/demandware.static/-/Sites-master-catalog/default/dwb27f4b3c/coloricons/color-dots-board-75x26.png",
-    material: "White, Grey, Ceramic",
-    price: 105900000,
-    model_id: "sitzfeldt:Panama_Recamiere_links",
-  },
-];
-
-const RoomDetail = ({data}) => {
+const RoomDetail = ({ data }) => {
   const [catalog] = useState(data || []);
-  console.log(catalog)
+  console.log(catalog);
   const { accessToken } = useAuth();
 
   const [isFavored, setIsFavored] = useState(false);
@@ -104,7 +46,7 @@ const RoomDetail = ({data}) => {
         </div>
       </section> */}
 
-<div className="lg:col-span-9 md:col-span-9 col-span-12 grid grid-cols-2 gap-2">
+      <div className="lg:col-span-9 md:col-span-9 col-span-12 grid grid-cols-2 gap-2">
         {catalog.map((item) => {
           const { _id } = item;
           return (
@@ -148,8 +90,8 @@ const RoomDetail = ({data}) => {
             </button>
           </div>
           <button className="uppercase bg-white text-black font-semibold px-36 py-3 text-xs border border-black">
-              Find nearest store
-            </button>
+            Find nearest store
+          </button>
         </div>
       </section>
     </main>
@@ -160,5 +102,4 @@ RoomDetail.propTypes = {
   data: PropTypes.array,
 };
 
-
-export default withFetchData(RoomDetail, get_furniture_by_room_api)
+export default withFetchData(RoomDetail, get_furniture_by_room_api);
