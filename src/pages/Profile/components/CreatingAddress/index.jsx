@@ -5,7 +5,7 @@ import { usePostAuth } from "@hooks/api-hooks";
 import { add_address } from "@api/addressApi";
 import { useFetchOutsideSystem } from "@hooks/api-hooks";
 import FormSelect from "@components/FormSelect";
-import { get_provice_in_saigon } from "@api/addressApi";
+import { get_district_in_saigon } from "@api/addressApi";
 import useNotification from "@hooks/useNotification";
 
 import PropTypes from "prop-types";
@@ -14,7 +14,7 @@ const CreatingAddress = ({setIsModalCreateOpen}) => {
   const [form] = Form.useForm();
   const {success_message, error_message} = useNotification();
   const { data: data_address, isLoading } = useFetchOutsideSystem(
-    get_provice_in_saigon()
+    get_district_in_saigon()
   );
 
   const { mutate } = usePostAuth(

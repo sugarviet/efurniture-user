@@ -7,13 +7,13 @@ function FurnitureDetail() {
 
   const { attributes, price } = furniture;
 
-  const attributeKeys = Object.keys(attributes.attributeType);
+  const attributeKeys = null;
 
   return (
     <main className="flex flex-row justify-between pb-[2rem] text-[0.875rem] leading-[1.6] border-b-[0.0625rem] border-border">
       <div>
         <ul className="list-none">
-          {attributeKeys.map((key) => (
+          {attributeKeys?.map((key) => (
             <li key={key}>
               <span className="capitalize">{key}: </span>
               <span>{attributes.attributeType[key]}</span>

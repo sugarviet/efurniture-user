@@ -33,7 +33,7 @@ function Checkout() {
       <div className="lg:furniture-divided-bottom pt-0">
         <article className="lg:grid lg:grid-cols-[54.17%_45.83%]">
           <div className="pt-[2.5rem] pb-[8.75rem] hidden lg:block">
-            <CheckoutProduct activeTab={activeTab} />
+            {/* <CheckoutProduct activeTab={activeTab} /> */}
           </div>
           <div className="furniture-divided-left pt-8 px-5 lg:pt-10 lg:px-16 ">
             <AppSuspense>{tabsCheckout[activeTab].component}</AppSuspense>
