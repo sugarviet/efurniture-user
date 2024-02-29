@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { FurnitureDetailContext } from "../../ProductDetailContext";
 
 const details = [
   {
@@ -33,7 +34,11 @@ const details = [
   {
     section: "assembly instructions",
     attribute: [
-      { label: "Instructions", value: "This product is easy to assemble. Just follow the instructions and we’re sure you can do it without any extra help from us." },
+      {
+        label: "Instructions",
+        value:
+          "This product is easy to assemble. Just follow the instructions and we’re sure you can do it without any extra help from us.",
+      },
     ],
   },
   {
@@ -46,48 +51,44 @@ const details = [
   },
   {
     section: "item number",
-    attribute: [
-      { label: "Item number", value: "370054800714008" },
-    ],
+    attribute: [{ label: "Item number", value: "370054800714008" }],
   },
   {
     section: "designer",
-    attribute: [
-      { label: "Designer", value: "Morten Georgsen" },
-    ],
+    attribute: [{ label: "Designer", value: "Morten Georgsen" }],
   },
 ];
 
 function ProductDetails() {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const { furniture } = useContext(FurnitureDetailContext);
+  const { attributes } = furniture;
 
-  const handleExpand = () => {
-    setIsExpanded(!isExpanded);
-  }
+  const attributeKeys = Object.keys(attributes.attributeType);
+
   return (
     <section className="h-full">
-      <div className={`overflow-hidden transition-[height] duration-300 ${isExpanded ? "h-[50rem]" : "h-[265px]"}`}>
-        {details.map((section) => (
-          <div key={section.section}>
-            <p className="text-base text-blackPrimary font-HelveticaBold leading-[1.1875] tracking-[0.08em] uppercase pb-2">{section.section}</p>
-            {section.attribute && section.attribute.length > 0 ? (
-              <ul className="columns-2 pb-8">
-                {section.attribute.map((detail) => (
-                  <li key={detail.label} className="text-sm text-blackPrimary leading-[2] tracking-[0.2px]">
-                    <span className="text-grey1">{detail.label}:</span> {detail.value}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No details available.</p>
-            )}
-          </div>
-        ))}
+      <div className={`overflow-hidden transition-[height] duration-300`}>
+        <div>
+          <p className="text-base text-blackPrimary font-HelveticaBold leading-[1.1875] tracking-[0.08em] uppercase pb-2">
+            DIMENSIONS AND WEIGHT
+          </p>
+          <ul className="columns-2 pb-8">
+            {attributeKeys.map((key) => {
+              return (
+                <li
+                  key={key}
+                  className="text-sm text-blackPrimary leading-[2] tracking-[0.2px]"
+                >
+                  <span className="text-grey1">{key}:</span>{" "}
+                  {attributes.attributeType[key]}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
-
-      <p className="text-[0.8125rem] text-grey1 underline mt-4 cursor-pointer" onClick={handleExpand}>{isExpanded ? "View less details" : "View all details"}</p>
     </section>
-  )
+  );
 }
 
-export default ProductDetails
+export default ProductDetails;

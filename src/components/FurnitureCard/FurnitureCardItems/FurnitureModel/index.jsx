@@ -5,14 +5,16 @@ import { MODEL_DIMENSION } from "../../../../constants/enum";
 
 import { classNames } from "@utils/classNames";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 function FurnitureModel({ children, className }) {
   const { furniture, dimension, onSale } = useContext(FurnitureCardContext);
 
-  const { model_id, name, thumb } = furniture;
+  const { model_id, name, thumb, slug } = furniture;
 
   return (
-    <div
+    <Link
+      to={`/product-detail/${slug}`}
       className={`relative flex items-center mb-[0.9375rem] w-full h-72 hover:cursor-pointer`}
       title={name}
     >
@@ -38,7 +40,7 @@ function FurnitureModel({ children, className }) {
           src="https://www.boconcept.com/on/demandware.static/-/Library-Sites-BoConceptSharedLibrary/default/dwe05ddb62/images/promotionicons/One%20time%20offer%20icon%20pct-0111.svg"
         />
       )}
-    </div>
+    </Link>
   );
 }
 FurnitureModel.propTypes = {
