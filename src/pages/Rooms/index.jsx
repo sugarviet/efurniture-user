@@ -8,7 +8,7 @@ import FurnitureCatalog from "../../components/FurnitureCatalog";
 import { get_furniture_by_room_api } from "@api/furnitureApi";
 import { withFetchData } from "@hocs/withFetchData";
 
-const FurnitureCatalogWithFetchData = withFetchData(FurnitureCatalog, () => get_furniture_by_room_api(1, '65af88bcb1638e0eb172d62e'));
+const FurnitureCatalogWithFetchData = withFetchData(FurnitureCatalog, get_furniture_by_room_api);
 
 const SECTION_INTRO_OPTION = {
   img_url:
@@ -25,35 +25,6 @@ const Rooms = () => {
       <section className="w-full text-xs font-semibold h-10 flex items-center justify-center bg-sky-950 text-white uppercase my-4">
         sale extraordinary
       </section>
-      {/* <AppRow
-        gutter={4}
-        spans={[
-          { xs: 0, sm: 0, md: 5, lg: 6, xl: 6 },
-          { xs: 24, sm: 24, md: 19, lg: 18, xl: 18 },
-        ]}
-      >
-        <div className="h-full hidden md:block w-44 overflow-hidden xl:w-full px-3">
-          {PRODUCT_TYPE.attributes.map((attribute, index) => (
-            <FilterSectionWrapper
-              key={`${attribute.name} + ${index}`}
-              name={attribute.name}
-              options={attribute.value}
-            />
-          ))}
-        </div>
-
-        <HorizontalList
-          gutters={10}
-          data={[1, 2, 3, 4, 5, 6, 7]}
-          dataItem={RoomCard}
-          xxl={3}
-          xl={2}
-          lg={2}
-          md={2}
-          sm={1}
-          xs={1}
-        />
-      </AppRow> */}
       <FurnitureCatalogWithFetchData />
     </main>
   );

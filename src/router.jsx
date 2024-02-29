@@ -32,7 +32,7 @@ export const PATH = {
   register: "/register",
   wishlist: "/wishlist",
   // rooms: "/rooms",
-  rooms: "/rooms/:place",
+  rooms: "/rooms/:slug",
   roomDetail: "/room/:id",
   roomByPlace: "/rooms/:place",
   profile: "/profile/:tab",
