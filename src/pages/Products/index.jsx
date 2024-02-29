@@ -1,5 +1,11 @@
 import FurnitureCatalog from "../../components/FurnitureCatalog";
 import HeroSection from "../../components/HeroSection";
+import { get_furniture_by_type_api } from "@api/furnitureApi";
+import { withFetchData } from "@hocs/withFetchData";
+
+
+const FurnitureCatalogWithFetchData = withFetchData(FurnitureCatalog, get_furniture_by_type_api);
+
 
 const SECTION_INTRO_OPTION = {
   img_url:
@@ -16,7 +22,8 @@ const Products = () => {
       <section className="w-full text-xs tracking-widest font-semibold h-10 flex items-center justify-center bg-sky-950 text-white uppercase my-4">
         sale extraordinary
       </section>
-      <FurnitureCatalog />
+      <FurnitureCatalogWithFetchData/>
+      {/* <FurnitureCatalog /> */}
     </>
   );
 };

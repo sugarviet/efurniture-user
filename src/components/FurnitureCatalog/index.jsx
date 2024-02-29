@@ -69,4 +69,6 @@ function FurnitureCatalog({ data }) {
   );
 }
 
-export default withFetchData(FurnitureCatalog, get_furniture_by_type_api);
+// export default withFetchData(FurnitureCatalog, get_furniture_by_type_api);
+
+export default FurnitureCatalog;

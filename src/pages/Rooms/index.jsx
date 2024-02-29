@@ -4,6 +4,11 @@ import AppRow from "@components/AppRow";
 import FilterSectionWrapper from "@components/FilterSectionWrapper";
 import HeroSection from "@components/HeroSection";
 import { PRODUCT_TYPE } from "@constants/filterConstants";
+import FurnitureCatalog from "../../components/FurnitureCatalog";
+import { get_furniture_by_room_api } from "@api/furnitureApi";
+import { withFetchData } from "@hocs/withFetchData";
+
+const FurnitureCatalogWithFetchData = withFetchData(FurnitureCatalog, () => get_furniture_by_room_api(1, '65af88bcb1638e0eb172d62e'));
 
 const SECTION_INTRO_OPTION = {
   img_url:
@@ -20,7 +25,7 @@ const Rooms = () => {
       <section className="w-full text-xs font-semibold h-10 flex items-center justify-center bg-sky-950 text-white uppercase my-4">
         sale extraordinary
       </section>
-      <AppRow
+      {/* <AppRow
         gutter={4}
         spans={[
           { xs: 0, sm: 0, md: 5, lg: 6, xl: 6 },
@@ -48,7 +53,8 @@ const Rooms = () => {
           sm={1}
           xs={1}
         />
-      </AppRow>
+      </AppRow> */}
+      <FurnitureCatalogWithFetchData />
     </main>
   );
 };
