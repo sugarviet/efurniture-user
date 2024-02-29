@@ -1,4 +1,4 @@
-import { Form, message } from "antd";
+import { Form } from "antd";
 import { Link } from "react-router-dom";
 import FormInput from "@components/FormInput";
 import { usePostAuth } from "@hooks/api-hooks";
@@ -6,8 +6,13 @@ import { add_address } from "@api/addressApi";
 import { useFetchOutsideSystem } from "@hooks/api-hooks";
 import FormSelect from "@components/FormSelect";
 import { get_provice_in_saigon } from "@api/addressApi";
+import useNotification from "@hooks/useNotification";
 
-const CreatingAddress = () => {
+import PropTypes from "prop-types";
+
+const CreatingAddress = ({setIsModalCreateOpen}) => {
+  const [form] = Form.useForm();
+  const {success_message, error_message} = useNotification();
   const { data: data_address, isLoading } = useFetchOutsideSystem(
     get_provice_in_saigon()
   );
@@ -16,10 +21,10 @@ const CreatingAddress = () => {
     add_address(),
     undefined,
     () => {
-      message.success("Create address successfully");
+    success_message('address', 'add')
     },
-    () => {
-      message.error("Something went wrong");
+    () => { 
+      error_message('address', 'add')
     }
   );
 
@@ -27,11 +32,14 @@ const CreatingAddress = () => {
   const onFinish = (values) => {
     console.log("Success:", values);
     mutate(values);
+    form.resetFields();
+    setIsModalCreateOpen(false)
   };
   return (
     <div className="w-3/4">
       <p className="font-bold mb-3 text-xl">Add adress</p>
       <Form
+        form={form}
         name="create-address"
         labelCol={{
           span: 24,
@@ -70,6 +78,11 @@ const CreatingAddress = () => {
       </div>
     </div>
   );
+};
+
+
+CreatingAddress.propTypes = {
+  setIsModalCreateOpen: PropTypes.func,
 };
 
 export default CreatingAddress;

@@ -5,25 +5,36 @@ import FormInput from "@components/FormInput";
 import { useUpdateWithAuth } from "@hooks/api-hooks";
 import { edit_address } from "@api/addressApi";
 import { useQueryClient } from "@tanstack/react-query";
-import { get_addresses } from "../../../../api/profileApi";
+import { get_addresses } from "@api/profileApi";
+import { get_provice_in_saigon } from "@api/addressApi";
+import FormSelect from "@components/FormSelect";
+import { useFetchOutsideSystem } from "@hooks/api-hooks";
+import useNotification from "@hooks/useNotification";
 
-const EditingAddress = ({ data }) => {
+const EditingAddress = ({ data, setIsModalEditOpen }) => {
+  const {success_message, error_message} = useNotification();
   const queryClient = useQueryClient();
-
+  const { data: data_address, isLoading } = useFetchOutsideSystem(
+    get_provice_in_saigon()
+  );
   const { mutate } = useUpdateWithAuth(
     edit_address(data._id),
     undefined,
     () => {
       queryClient.invalidateQueries(get_addresses());
-      message.success("Successfully updated");
+      success_message('address', 'edit')
+
     },
     () => {
-      message.success("updated failed");
+      error_message('address', 'edit')
     }
   );
+  if (isLoading) return;
+
   const onFinish = (values) => {
     console.log("Success:", values);
     mutate(values);
+    setIsModalEditOpen(false);
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -45,7 +56,7 @@ const EditingAddress = ({ data }) => {
         <FormInput label="Province" name="province" className="w-full" />
         <FormInput label="Phone" name="phone" className="w-full" />
         <FormInput label="Ward" name="ward" className="w-full" />
-        <FormInput label="District" name="district" className="w-full" />
+        <FormSelect label="District" name="district" data={data_address} value={data.district}/>
 
         <div className="flex flex-col gap-5 text-base w-[40rem]">
           <button
@@ -71,6 +82,7 @@ const EditingAddress = ({ data }) => {
 
 EditingAddress.propTypes = {
   data: PropTypes.object,
+  setIsModalEditOpen: PropTypes.func,
 };
 
 export default EditingAddress;

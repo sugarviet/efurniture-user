@@ -26,7 +26,7 @@ const Address = ({ data }) => {
       </section>
 
       <AppModal isOpen={isModalCreateOpen} onClose={toggleModalCreate}>
-        <CreatingAddress />
+        <CreatingAddress setIsModalCreateOpen={setIsModalCreateOpen} />
       </AppModal>
     </section>
   );
