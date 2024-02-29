@@ -1,10 +1,14 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 import RoomHero from "./components/RoomHero";
 import FurnitureCard from "@components/FurnitureCard";
 import FurnitureFavorite from "@components/FurnitureCard/FurnitureCardItems/FurnitureFavorite";
 
 import FavoriteButton from "@components/FavoriteButton";
+import useAuth from "@stores/useAuth";
+import { withFetchData } from "../../hocs/withFetchData";
+import { get_furniture_by_room_api } from "../../api/furnitureApi";
 
 const PRODUCT_CATALOG = [
   {
@@ -64,7 +68,11 @@ const PRODUCT_CATALOG = [
   },
 ];
 
-const RoomDetail = () => {
+const RoomDetail = ({data}) => {
+  const [catalog] = useState(data || []);
+  console.log(catalog)
+  const { accessToken } = useAuth();
+
   const [isFavored, setIsFavored] = useState(false);
   const handleOnClick = () => {
     setIsFavored(!isFavored);
@@ -77,7 +85,7 @@ const RoomDetail = () => {
         PRODUCTS IN THE ROOM
       </h2>
 
-      <section className="mt-10">
+      {/* <section className="mt-10">
         <div className="grid grid-cols-3 gap-2">
           {PRODUCT_CATALOG.map((item, index) => {
             return (
@@ -94,7 +102,29 @@ const RoomDetail = () => {
             );
           })}
         </div>
-      </section>
+      </section> */}
+
+<div className="lg:col-span-9 md:col-span-9 col-span-12 grid grid-cols-2 gap-2">
+        {catalog.map((item) => {
+          const { _id } = item;
+          return (
+            <FurnitureCard item={item} key={_id}>
+              <FurnitureCard.Model className="w-[60%]">
+                {accessToken ? (
+                  <FurnitureCard.UserFavorite />
+                ) : (
+                  <FurnitureCard.Favorite />
+                )}
+              </FurnitureCard.Model>
+              <div className="px-[18px] relative flex flex-col justify-between">
+                <FurnitureCard.Attribute />
+                <FurnitureCard.Price />
+                <FurnitureCard.ShoppingButton />
+              </div>
+            </FurnitureCard>
+          );
+        })}
+      </div>
 
       <hr className="w-1/2 mx-auto" />
 
@@ -126,4 +156,9 @@ const RoomDetail = () => {
   );
 };
 
-export default RoomDetail;
+RoomDetail.propTypes = {
+  data: PropTypes.array,
+};
+
+
+export default withFetchData(RoomDetail, get_furniture_by_room_api)

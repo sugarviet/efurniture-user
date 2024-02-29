@@ -189,7 +189,6 @@ function FurnitureMenu({ data }) {
  
   const [categories] = useState(data);
   const [selectedCategory, setSelectedCategory] = useState(data[0]);
-  console.log(selectedCategory);
 
   return (
     <div className="grid grid-cols-10 min-h-[384px] lg:py-10 bg-white">

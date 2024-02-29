@@ -2,7 +2,6 @@ import Proptypes from 'prop-types';
 import FavoriteButton from '../FavoriteButton';
 
 const RoomCard = (props) => {
-  console.log(props);
   return (
     <a href="#">
       <article className="flex flex-col bg-white cursor-pointer">

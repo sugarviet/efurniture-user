@@ -9,6 +9,5 @@ export const get_furniture_by_type_api = (params, page = 1) => {
 
 export const get_furniture_by_room_api = (params, page = 1) => {
    const id = '65af88bcb1638e0eb172d62e'
-console.log(params)
     return `${FURNITURE_URL}/room/${id}?page=${page}&limit=10`
 }
