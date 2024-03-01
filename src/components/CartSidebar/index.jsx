@@ -5,6 +5,8 @@ import CartProduct from "@components/CartProduct";
 
 export default function CartSideBar() {
   const { cart, getTotalPrice } = useCart();
+
+  const isCartEmpty = !cart.length;
   return (
     <SideBar>
       <section className="h-full flex flex-col">
@@ -25,29 +27,38 @@ export default function CartSideBar() {
 
         <footer className="bg-[#f1f1f1] px-12 pt-4">
           <section className="m-auto max-w-[34.375rem]">
-            <div className="grid grid-cols-[1fr_1fr]">
-              <span className="text-center">Subtotal</span>
-              <span className="text-center">
-                {formattedCurrency(getTotalPrice())}
-              </span>
-            </div>
-            <div className="grid grid-cols-[1fr_1fr]">
-              <span className="text-center">Order total</span>
-              <span className="text-center">
-                {formattedCurrency(getTotalPrice())}
-              </span>
-            </div>
+            {isCartEmpty ? null : (
+              <div>
+                <div className="grid grid-cols-[1fr_1fr]">
+                  <span className="text-center">Subtotal</span>
+                  <span className="text-center">
+                    {formattedCurrency(getTotalPrice())}
+                  </span>
+                </div>
+                <div className="grid grid-cols-[1fr_1fr]">
+                  <span className="text-center">Order total</span>
+                  <span className="text-center">
+                    {formattedCurrency(getTotalPrice())}
+                  </span>
+                </div>
+              </div>
+            )}
 
             <nav className="flex flex-col items-center gap-7 border-t-[0.0625rem] border-border my-4 pt-4 text-center">
               <a
                 className="underline text-[0.8125rem] hover:no-underline"
-                href="#"
+                href="/cart"
               >
                 View Cart
               </a>
-              <a className="font-HelveticaBold furniture-button-black-hover text-[11px] max-w-[17.1875rem] py-[18px] px-[55px] tracking-[0.125rem]">
+              <a
+                className="font-HelveticaBold furniture-button-black-hover text-[11px] max-w-[17.1875rem] py-[18px] px-[55px] tracking-[0.125rem]"
+                href="/checkout"
+                
+              >
                 CHECKOUT
               </a>
+             
             </nav>
           </section>
         </footer>
