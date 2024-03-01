@@ -186,6 +186,7 @@ const FURNITURE_CATEGORIES = [
 ];
 
 function FurnitureMenu({ data }) {
+ 
   const [categories] = useState(data);
   const [selectedCategory, setSelectedCategory] = useState(data[0]);
 
