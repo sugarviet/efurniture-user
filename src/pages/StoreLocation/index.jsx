@@ -43,17 +43,17 @@ const LOGS = [
   },
   {
     title: "YOUR LOCAL INTERIOR DESIGNER",
-    content: `A visit to your local BoConcept design store is also a chance to meet your local interior designer. Together you can create the perfect home expression and configure the designer furniture to your taste, your home and your lifestyle. Bring ideas to your local interior designer and get valuable and competent feedback and ensure that your vision comes to life in the most beautiful and practical manner. In the store you will find great examples on integrating classic designs with modern trends and get valuable insights into care and styling to ensure that your designs stay forever beautiful.`,
+    content: `A visit to your local E-Furniture design store is also a chance to meet your local interior designer. Together you can create the perfect home expression and configure the designer furniture to your taste, your home and your lifestyle. Bring ideas to your local interior designer and get valuable and competent feedback and ensure that your vision comes to life in the most beautiful and practical manner. In the store you will find great examples on integrating classic designs with modern trends and get valuable insights into care and styling to ensure that your designs stay forever beautiful.`,
   },
   {
     title: "DESIGN FURNITURE NEAR YOU",
-    content: `Furniture shopping after design furniture by renowned Danish and global designers starts in your local BoConcept furniture store. Here you can see award winning designer furniture customized to fit local and global trends. We offer a wide range of sofas, chairs, tables, beds, storage solutions and accessories. If you’re a looking for a living room upgrade, new patio furniture, a dining set, or new art on your walls, the BoConcept store is the place to go for home upgrades.`,
+    content: `Furniture shopping after design furniture by renowned Danish and global designers starts in your local E-Furniture furniture store. Here you can see award winning designer furniture customized to fit local and global trends. We offer a wide range of sofas, chairs, tables, beds, storage solutions and accessories. If you’re a looking for a living room upgrade, new patio furniture, a dining set, or new art on your walls, the E-Furniture store is the place to go for home upgrades.`,
   },
   {
     title: "MORE THAN FURNITURE",
-    content: `The BoConcept store presents a great selection of designer furniture. But it’s also the place to go to shop a hostess gift, buy care products, get styling tips and much more. It’s the place to drink a cup of coffee with a stylist, design your home in 3D and touch more than a 100 different fabrics and leathers. No matter your purpose, a visit to a BoConcept store is always an inspirational trip that allows you to walk out with your mind buzzing with new ideas.
+    content: `The E-Furniture store presents a great selection of designer furniture. But it’s also the place to go to shop a hostess gift, buy care products, get styling tips and much more. It’s the place to drink a cup of coffee with a stylist, design your home in 3D and touch more than a 100 different fabrics and leathers. No matter your purpose, a visit to a E-Furniture store is always an inspirational trip that allows you to walk out with your mind buzzing with new ideas.
 
-    So, whether you’re looking for a new sofa, are looking at complete home make-over or just need a small advice on upgrading your colour scheme, the journey towards an upgraded home décor starts in one of the BoConcept furniture stores.`,
+    So, whether you’re looking for a new sofa, are looking at complete home make-over or just need a small advice on upgrading your colour scheme, the journey towards an upgraded home décor starts in one of the E-Furniture furniture stores.`,
   },
 ];
 
@@ -105,7 +105,7 @@ function StoreLocation() {
       <section className="col-span-10 lg:col-span-3">
         <img
           className="w-full h-full object-cover object-center"
-          src="https://p3.aprimocdn.net/boconcept/c19b2d08-e811-4503-b5e1-ad4300b8a36e/1112750__WEB-ImageCollageSmall-D-723x950.jpg"
+          src="https://p3.aprimocdn.net/E-Furniture/c19b2d08-e811-4503-b5e1-ad4300b8a36e/1112750__WEB-ImageCollageSmall-D-723x950.jpg"
         />
       </section>
       <section className="col-span-10 p-4 lg:col-span-7 lg:p-16">

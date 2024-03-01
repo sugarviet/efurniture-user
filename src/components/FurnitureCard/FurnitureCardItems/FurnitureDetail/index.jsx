@@ -3,17 +3,17 @@ import { FurnitureCardContext } from "../../FurnitureCardContext";
 import formattedCurrency from "../../../../utils/formattedCurrency";
 
 function FurnitureDetail() {
-  const { furniture } = useContext(FurnitureCardContext);
+  const { furniture, onSale } = useContext(FurnitureCardContext);
 
-  const { attributes, price } = furniture;
+  const { attributes, sale_price, regular_price } = furniture;
 
-  const attributeKeys = null;
+  const attributeKeys = Object.keys(attributes.attributeType);
 
   return (
     <main className="flex flex-row justify-between pb-[2rem] text-[0.875rem] leading-[1.6] border-b-[0.0625rem] border-border">
       <div>
         <ul className="list-none">
-          {attributeKeys?.map((key) => (
+          {attributeKeys.map((key) => (
             <li key={key}>
               <span className="capitalize">{key}: </span>
               <span>{attributes.attributeType[key]}</span>
@@ -27,7 +27,12 @@ function FurnitureDetail() {
         </nav>
       </div>
       <div className="text-right self-end">
-        <span>{formattedCurrency(price)}</span>
+        {onSale && (
+          <span className="line-through">
+            {formattedCurrency(regular_price)}
+          </span>
+        )}
+        <span className="ml-2">{formattedCurrency(sale_price)}</span>
       </div>
     </main>
   );

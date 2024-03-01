@@ -1,16 +1,14 @@
 import { useState } from "react";
 import { classNames } from "../../utils/classNames";
 import SearchButton from "../SearchButton";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-function SearchInput({children, placeholder, className }) {
+function SearchInput({ children, placeholder, className }) {
   const [searchValue, setSearchValue] = useState("");
 
   const handleInputChange = (event) => {
     setSearchValue(event.target.value);
   };
-
-
 
   return (
     <div className="flex w-full items-center justify-between relative">
@@ -21,7 +19,6 @@ function SearchInput({children, placeholder, className }) {
         onChange={handleInputChange}
       />
       {children}
-      <SearchInput.SubmitButton>Search</SearchInput.SubmitButton>
     </div>
   );
 }
@@ -32,7 +29,6 @@ SearchInput.propTypes = {
   children: PropTypes.node,
   onSearch: PropTypes.func,
 };
-
 
 SearchInput.SubmitButton = SearchButton;
 

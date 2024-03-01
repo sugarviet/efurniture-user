@@ -2,10 +2,14 @@ import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import useCart from "../../../../hooks/useCart";
 import { useContext } from "react";
 import { FurnitureCardContext } from "../../FurnitureCardContext";
+import useAuth from "../../../../stores/useAuth";
+import useUserCart from "../../../../hooks/useUserCart";
+import LoadingSpinner from "../../../LoadingSpinner";
 
 function FurnitureShoppingButton() {
   const { furniture } = useContext(FurnitureCardContext);
-  const { addToCart } = useCart();
+  const { accessToken } = useAuth();
+  const { addToCart } = accessToken ? useUserCart() : useCart();
 
   return (
     <ShoppingBagIcon

@@ -1,10 +1,14 @@
 import useCart from "../../hooks/useCart";
+import useUserCart from "../../hooks/useUserCart";
+import useAuth from "../../stores/useAuth";
 import FurnitureCard from "../FurnitureCard";
 import QuantityOption from "../QuantityOption";
 
 function CartProduct({ data }) {
-  const { name, _id, quantity } = data;
-  const { increaseQuantity, decreaseQuantity, removeFromCart } = useCart();
+  const { name, _id, quantity_in_cart } = data;
+  const { accessToken } = useAuth();
+  const { increaseQuantity, decreaseQuantity, removeFromCart, updateQuantity } =
+    accessToken ? useUserCart() : useCart();
   return (
     <section className="text-[0.875rem] my-6">
       <div
@@ -28,9 +32,10 @@ function CartProduct({ data }) {
             </h2>
           </a>
           <QuantityOption
-            handleIncrease={(quantity) => increaseQuantity(_id, quantity)}
-            handleDecrease={(quantity) => decreaseQuantity(_id, quantity)}
-            quantity={quantity}
+            handleIncrease={() => increaseQuantity(_id)}
+            handleDecrease={() => decreaseQuantity(_id)}
+            handleUpdate={(quantity) => updateQuantity(_id, quantity)}
+            quantity={quantity_in_cart}
           />
         </section>
         <div className="flex flex-col justify-between gap-4">
