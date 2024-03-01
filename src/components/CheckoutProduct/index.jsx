@@ -2,11 +2,14 @@ import FurnitureCard from "../FurnitureCard";
 import PropTypes from "prop-types";
 import useCart from "../../hooks/useCart";
 import formattedCurrency from "../../utils/formattedCurrency";
+import useAuth from "../../stores/useAuth";
+import useUserCart from "../../hooks/useUserCart";
 
 function CheckoutProduct({ activeTab }) {
   const discount = 0;
 
-  const { cart, getTotalPrice } = useCart();
+  const { accessToken } = useAuth();
+  const { cart, getTotalPrice } = accessToken ? useUserCart() : useCart();
 
   return (
     <section className="px-5 pb-6 lg:pl-[112px] lg:pr-[128px] lg:pb-0">

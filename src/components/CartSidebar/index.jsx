@@ -3,9 +3,18 @@ import useCart from "../../hooks/useCart";
 import formattedCurrency from "../../utils/formattedCurrency";
 import SideBar from "../SideBar";
 import CartProduct from "@components/CartProduct";
+import useAuth from "../../stores/useAuth";
+import useUserCart from "../../hooks/useUserCart";
+import LoadingSpinner from "../LoadingSpinner";
 
 export default function CartSideBar() {
-  const { cart, getTotalPrice } = useCart();
+  const { accessToken } = useAuth();
+  const { cart, getTotalPrice, isLoading } = accessToken
+    ? useUserCart()
+    : useCart();
+
+  if (isLoading) return <LoadingSpinner />;
+
   return (
     <SideBar>
       <section className="h-full flex flex-col">
@@ -16,7 +25,7 @@ export default function CartSideBar() {
 
         <main className="h-0 flex-grow">
           <div className="pt-0 pb-9 px-12 h-full overflow-y-scroll">
-            {cart && cart.length > 0 ? (
+            {cart && cart?.length > 0 ? (
               cart.map((item) => <CartProduct key={item._id} data={item} />)
             ) : (
               <p>Your shopping cart is empty</p>

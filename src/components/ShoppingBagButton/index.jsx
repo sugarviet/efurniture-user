@@ -1,9 +1,12 @@
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import useCartStore from "../../stores/useCartStore";
 import useCart from "../../hooks/useCart";
+import useAuth from "../../stores/useAuth";
+import useUserCart from "../../hooks/useUserCart";
 
 function ShoppingBagButton() {
-  const { cart } = useCart();
+  const { accessToken } = useAuth();
+  const { cart } = accessToken ? useUserCart() : useCart();
   const { toggleCart } = useCartStore();
   return (
     <div className="relative">

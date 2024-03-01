@@ -4,8 +4,8 @@ import axios from 'axios';
 
 const fetch_outside_system = async (url) => {
   const data = await axios.get(url)
-  .then((response) => response.data)
-  .then((data) => data.results);
+    .then((response) => response.data)
+    .then((data) => data.results);
 
   return data;
 };
@@ -38,7 +38,7 @@ export const useFetchWithAuth = (url, params, options) => {
   return useQuery([url, params], () => fetcher_with_auth(url, params), options);
 }
 
-const useGenericMutation = (func, url, params, onSuccessAPI, onErrorAPI) => {
+const useGenericMutation = (func, key, params, onSuccessAPI, onErrorAPI) => {
   const queryClient = useQueryClient();
   return useMutation(func, {
     onSuccess: (data) => {
@@ -48,65 +48,55 @@ const useGenericMutation = (func, url, params, onSuccessAPI, onErrorAPI) => {
       onErrorAPI(error);
     },
     onSettled: () => {
-      queryClient.invalidateQueries([url, params]);
+      queryClient.invalidateQueries([key, params]);
     },
   });
 };
 
-export const useDelete = (url, params, onSuccessAPI, onErrorAPI) => {
+export const useDeleteAuth = (url, params, onSuccessAPI = () => { }, onErrorAPI = () => { }, key) => {
   return useGenericMutation(
-    (id) => API.delete(`${url}/${id}`),
-    url,
+    (data) => USER_API.delete(url, { data }),
+    key,
     params,
     onSuccessAPI,
     onErrorAPI
   );
 };
 
-export const useDeleteAuth = (url, params, onSuccessAPI = () => { }, onErrorAPI = () => { }) => {
-  return useGenericMutation(
-    () => USER_API.delete(url),
-    url,
-    params,
-    onSuccessAPI,
-    onErrorAPI
-  );
-};
-
-export const usePost = (url, params, onSuccessAPI, onErrorAPI) => {
+export const usePost = (url, params, onSuccessAPI, onErrorAPI, key) => {
   return useGenericMutation(
     (data) => API.post(url, data),
-    url,
+    key,
     params,
     onSuccessAPI,
     onErrorAPI
   );
 };
 
-export const usePostAuth = (url, params, onSuccessAPI = () => { }, onErrorAPI = () => { }) => {
+export const usePostAuth = (url, params, onSuccessAPI = () => { }, onErrorAPI = () => { }, key) => {
   return useGenericMutation(
     (data) => USER_API.post(url, data),
-    url,
+    key,
     params,
     onSuccessAPI,
     onErrorAPI
   );
 };
 
-export const useUpdate = (url, params, onSuccessAPI, onErrorAPI) => {
+export const useUpdate = (url, params, onSuccessAPI, onErrorAPI, key) => {
   return useGenericMutation(
     (data) => API.put(url, data),
-    url,
+    key,
     params,
     onSuccessAPI,
     onErrorAPI
   );
 };
 
-export const useDeleteWithAuth = (url, params, onSuccessAPI, onErrorAPI) => {
+export const useDeleteWithAuth = (url, params, onSuccessAPI, onErrorAPI, key) => {
   return useGenericMutation(
     () => USER_API.delete(url),
-    url,
+    key,
     params,
     onSuccessAPI,
     onErrorAPI
@@ -123,10 +113,10 @@ export const usePostWithAuth = (url, params, onSuccessAPI, onErrorAPI) => {
   );
 };
 
-export const useUpdateWithAuth = (url, params, onSuccessAPI, onErrorAPI) => {
+export const useUpdateWithAuth = (url, params, onSuccessAPI = () => { }, onErrorAPI = () => { }, key) => {
   return useGenericMutation(
     (data) => USER_API.put(url, data),
-    url,
+    key,
     params,
     onSuccessAPI,
     onErrorAPI
