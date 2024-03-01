@@ -13,7 +13,8 @@ function FurnitureFavorite() {
     wishlist.some((item) => item._id === furniture._id)
   );
 
-  const handleFavored = () => {
+  const handleFavored = (event) => {
+    event.stopPropagation();
     setFavored(!favored);
 
     if (!favored) onFavored(furniture);

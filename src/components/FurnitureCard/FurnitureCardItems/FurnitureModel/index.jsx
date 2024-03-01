@@ -5,13 +5,18 @@ import { MODEL_DIMENSION } from "../../../../constants/enum";
 
 import { classNames } from "@utils/classNames";
 import PropTypes from "prop-types";
+import { Link, useNavigate } from "react-router-dom";
 
 function FurnitureModel({ children, className }) {
   const { furniture, dimension, onSale } = useContext(FurnitureCardContext);
 
-  const { model_id, name, thumb } = furniture;
+  const { model_id, name, thumbs, slug } = furniture;
+
+  const navigate = useNavigate();
+
   return (
     <div
+      onClick={() => navigate(`/product-detail/${slug}`)}
       className={`relative flex items-center mb-[0.9375rem] w-full h-72 hover:cursor-pointer`}
       title={name}
     >
@@ -21,7 +26,7 @@ function FurnitureModel({ children, className }) {
             "relative left-1/2 -translate-x-1/2 object-cover ",
             className
           )}
-          src={thumb}
+          src={thumbs[0]}
         />
       )}
 
@@ -40,6 +45,7 @@ function FurnitureModel({ children, className }) {
     </div>
   );
 }
+
 FurnitureModel.propTypes = {
   children: PropTypes.node,
   className: PropTypes.node,

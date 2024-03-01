@@ -6,7 +6,7 @@ import useAuth from "../../../../stores/useAuth";
 import { get_auth_login } from "../../../../api/authApi";
 import { get_add_all_wishlist_api } from "../../../../api/wishlistApi";
 import { useGuestStore } from "../../../../stores/useGuestStore";
-import jwtDecode from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 
 function LoginForm() {
   const { setTokens } = useAuth();

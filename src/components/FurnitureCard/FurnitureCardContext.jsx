@@ -5,10 +5,11 @@ import { MODEL_DIMENSION } from "../../constants/enum";
 const FurnitureCardContext = createContext();
 function FurnitureCardProvider(props) {
   const { children, furniture } = props;
+  const { regular_price, sale_price } = furniture;
 
   const [dimension, setDimension] = useState(MODEL_DIMENSION.two_dimension);
 
-  const onSale = Math.floor(Math.random() * 10) % 2 == 0;
+  const onSale = regular_price - sale_price > 0;
 
   const value = {
     furniture,

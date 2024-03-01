@@ -37,7 +37,7 @@ export const PATH = {
   roomByPlace: "/rooms/:place",
   profile: "/profile/:tab",
   stores: "/stores",
-  productDetail: "/product-detail",
+  productDetail: "/product-detail/:slug",
   checkout: "/checkout",
   productBySubType: "/products/:type/:subtype",
   search: "/search",
