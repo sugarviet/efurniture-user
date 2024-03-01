@@ -4,13 +4,17 @@ import useCart from "../../hooks/useCart";
 import formattedCurrency from "../../utils/formattedCurrency";
 import useAuth from "../../stores/useAuth";
 import useUserCart from "../../hooks/useUserCart";
+import LoadingSpinner from "../LoadingSpinner";
 
 function CheckoutProduct({ activeTab }) {
   const discount = 0;
 
   const { accessToken } = useAuth();
-  const { cart, getTotalPrice } = accessToken ? useUserCart() : useCart();
+  const { cart, getTotalPrice, isLoading } = accessToken
+    ? useUserCart()
+    : useCart();
 
+  if (isLoading) return <LoadingSpinner />;
   return (
     <section className="px-5 pb-6 lg:pl-[112px] lg:pr-[128px] lg:pb-0">
       {activeTab === "summary" && (
