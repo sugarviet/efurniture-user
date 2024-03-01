@@ -1,10 +1,11 @@
 import AppRow from "@components/AppRow";
-import { withFetchData } from "@hocs/withFetchData";
+import { withFetchData } from "../../../../hocs/withFetchData";
 import { get_room_detail } from "../../../../api/roomApi";
 import PropTypes from "prop-types";
 
 const RoomHero = ({data}) => {
   const {thumb, description, name} = data;
+ 
   return (
     <section className="mb-12">
         <AppRow
@@ -18,7 +19,7 @@ const RoomHero = ({data}) => {
             <img
               src={thumb}
               alt={name}
-              className="h-[32rem] w-[55rem] fade-in-from-bottom"
+              className="h-[30rem] w-[55rem] fade-in-from-bottom"
             />
             <div className="block bg-[#f4f4f4] absolute top-0 w-[1100px] h-[530px] text-transparent -z-10"></div>
           </div>
@@ -36,7 +37,8 @@ const RoomHero = ({data}) => {
 }
 
 RoomHero.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.array,
 };
+
 
 export default withFetchData(RoomHero, get_room_detail);
