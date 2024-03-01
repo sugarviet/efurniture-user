@@ -34,8 +34,14 @@ function Billing() {
     }
   }, [orderShipping]);
 
+  const goToNext = () => {
+    handleChangeTab(CHECKOUT_TABS.delivery)
+
+  }
+
   return (
     <section>
+      <button className="bg-red text-white px-2 py-3 rounded-lg" onClick={goToNext}>go to delivery</button>
       <div className='max-w-[43.75rem] text-[0.875rem] leading-[1.5] pb-[45px] tracking-[0.5px] pt-6 lg:pt-0'>
         <h2 className='font-HelveticaBold text-[1.5rem] leading-[1.20833] tracking-[0.08em] pb-6'>checkout as guest</h2>
         <p className='pb-[25px]'>You can check out without creating an account. You'll have a chance to create an account later.</p>

@@ -22,9 +22,23 @@ const checkoutLinks = [
     },
 ];
 
+const tabCanGoTo = {
+    billing: [],
+    shipping: ['billing'],
+    payment: ['shipping','billing'],
+    summary: ['shipping','billing', 'payment'],
+}
+
 
 function CheckoutNavbar() {
     const { activeTab, handleChangeTab } = useSwitchTab();
+
+    const handleClickCheckoutTab = (linkKey) => {
+        if (tabCanGoTo[activeTab].includes(linkKey)) {
+            handleChangeTab(linkKey);
+        }
+    };
+
 
     return (
         <header className='flex flex-col md:grid md:grid-cols-[30%_70%] lg:grid lg:grid-cols-[54.167%_45.83%] bg-[#070628] pb-[1.25rem]'>
@@ -35,7 +49,7 @@ function CheckoutNavbar() {
                 {checkoutLinks.map((link) => (
                     <div key={link.id} className='text-[0.875rem] leading-[1.714] tracking-[0.05em] cursor-pointer'>
                         <div
-                            onClick={() => handleChangeTab(link.key)}
+                            onClick={() => handleClickCheckoutTab(link.key)}
                             className={`text-white inline-block pb-[0.2em]  ${activeTab === link.key ? "border-b border-white font-HelveticaBold " : ""}`}
                         >
                             {link.title}
