@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useCart from "../../hooks/useCart";
 import formattedCurrency from "../../utils/formattedCurrency";
 import SideBar from "../SideBar";
@@ -45,9 +46,12 @@ export default function CartSideBar() {
               >
                 View Cart
               </a>
-              <a className="font-HelveticaBold furniture-button-black-hover text-[11px] max-w-[17.1875rem] py-[18px] px-[55px] tracking-[0.125rem]">
+              <Link
+                to={"/checkout"}
+                className="font-HelveticaBold furniture-button-black-hover text-[11px] max-w-[17.1875rem] py-[18px] px-[55px] tracking-[0.125rem]"
+              >
                 CHECKOUT
-              </a>
+              </Link>
             </nav>
           </section>
         </footer>

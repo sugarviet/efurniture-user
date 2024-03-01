@@ -10,12 +10,10 @@ import { withFetchData } from "../../hocs/withFetchData";
 import { get_furniture_by_room_api } from "../../api/roomApi";
 import { useGuestStore } from "../../stores/useGuestStore";
 
-
 const RoomDetail = ({ data }) => {
   const [catalog] = useState(data || []);
-  console.log(catalog)
   const { accessToken } = useAuth();
-  const {onFavoredListProduct} = useGuestStore();
+  const { onFavoredListProduct } = useGuestStore();
 
   const [isFavored, setIsFavored] = useState(false);
   const handleOnClick = () => {
