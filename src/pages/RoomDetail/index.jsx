@@ -8,7 +8,7 @@ import FurnitureFavorite from "@components/FurnitureCard/FurnitureCardItems/Furn
 import FavoriteButton from "@components/FavoriteButton";
 import useAuth from "@stores/useAuth";
 import { withFetchData } from "../../hocs/withFetchData";
-import { get_furniture_by_room_api } from "../../api/furnitureApi";
+import { get_furniture_by_room_api } from "../../api/roomApi";
 
 const PRODUCT_CATALOG = [
   {
@@ -68,9 +68,8 @@ const PRODUCT_CATALOG = [
   },
 ];
 
-const RoomDetail = ({data}) => {
+const RoomDetail = ({ data }) => {
   const [catalog] = useState(data || []);
-  console.log(catalog)
   const { accessToken } = useAuth();
 
   const [isFavored, setIsFavored] = useState(false);
@@ -104,7 +103,7 @@ const RoomDetail = ({data}) => {
         </div>
       </section> */}
 
-<div className="lg:col-span-9 md:col-span-9 col-span-12 grid grid-cols-2 gap-2">
+      <div className="lg:col-span-9 md:col-span-9 col-span-12 grid grid-cols-2 gap-2">
         {catalog.map((item) => {
           const { _id } = item;
           return (
@@ -148,8 +147,8 @@ const RoomDetail = ({data}) => {
             </button>
           </div>
           <button className="uppercase bg-white text-black font-semibold px-36 py-3 text-xs border border-black">
-              Find nearest store
-            </button>
+            Find nearest store
+          </button>
         </div>
       </section>
     </main>
@@ -160,5 +159,4 @@ RoomDetail.propTypes = {
   data: PropTypes.array,
 };
 
-
-export default withFetchData(RoomDetail, get_furniture_by_room_api)
+export default withFetchData(RoomDetail, get_furniture_by_room_api);

@@ -10,7 +10,6 @@ function FurnitureModel({ children, className }) {
   const { furniture, dimension, onSale } = useContext(FurnitureCardContext);
 
   const { model_id, name, thumb } = furniture;
-
   return (
     <div
       className={`relative flex items-center mb-[0.9375rem] w-full h-72 hover:cursor-pointer`}
