@@ -36,7 +36,7 @@ function useCart() {
     }
 
     const getTotalPrice = () => {
-        return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+        return cart.reduce((total, item) => total + item.sale_price * item.quantity, 0);
     }
 
     return { cart, addToCart, decreaseQuantity, increaseQuantity, removeFromCart, getTotalPrice };

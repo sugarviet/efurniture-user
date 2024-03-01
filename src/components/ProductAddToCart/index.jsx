@@ -1,10 +1,8 @@
 import FavoriteButton from "@components/FavoriteButton";
-import { useContext, useState } from "react";
-import { FurnitureDetailContext } from "../../pages/ProductDetail/ProductDetailContext";
+import { useState } from "react";
 import { useGuestStore } from "../../stores/useGuestStore";
 import useCart from "../../hooks/useCart";
-function ProductAddToCart() {
-  const { furniture } = useContext(FurnitureDetailContext);
+function ProductAddToCart({ furniture }) {
   const { wishlist, onFavored, onUnFavored } = useGuestStore();
   const { addToCart } = useCart();
   const [isFavored, setIsFavored] = useState(

@@ -4,12 +4,11 @@ import ProductInfo from "./components/ProductInfo";
 import { get_furniture_detail_api } from "../../api/furnitureApi";
 import { withFetchData } from "../../hocs/withFetchData";
 import formattedCurrency from "../../utils/formattedCurrency";
-import { FurnitureDetailProvider } from "./ProductDetailContext";
 
 function ProductDetail({ data }) {
   const { name, price } = data;
   return (
-    <FurnitureDetailProvider furniture={data}>
+    <section>
       <article className="furniture-promotion mt-7">
         <div>SALE EKSTRAORDINÆR</div>
       </article>
@@ -30,7 +29,7 @@ function ProductDetail({ data }) {
                   {name}
                 </p>
               </article>
-              <ProductInfo />
+              <ProductInfo data={data} />
             </div>
             <div className="lg:pr-6 xl:pr-24 max-w-[36.25rem] w-[100%] lg:w-[40%] 2xl:w-[100%] pt-8 sm:pt-0">
               <article className="text-left sm:text-right">
@@ -44,7 +43,7 @@ function ProductDetail({ data }) {
                   </div>
                 </span>
               </article>
-              <ProductAddToCart />
+              <ProductAddToCart furniture={data} />
               <div className="mt-2 flex flex-col justify-center items-center gap-[0.5rem] text-grey3 flex-wrap text-[0.8125rem] leading-[1.77] tracking-[0.0384]">
                 <span className="">
                   Expected delivery: 2-3 days in Ho Chi Minh city
@@ -56,7 +55,7 @@ function ProductDetail({ data }) {
           <div className="furniture-divided-bottom w-full py-4 sm:py-8"></div>
         </section>
       </section>
-    </FurnitureDetailProvider>
+    </section>
   );
 }
 
