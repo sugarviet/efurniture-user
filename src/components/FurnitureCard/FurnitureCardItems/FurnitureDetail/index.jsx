@@ -3,9 +3,9 @@ import { FurnitureCardContext } from "../../FurnitureCardContext";
 import formattedCurrency from "../../../../utils/formattedCurrency";
 
 function FurnitureDetail() {
-  const { furniture } = useContext(FurnitureCardContext);
+  const { furniture, onSale } = useContext(FurnitureCardContext);
 
-  const { attributes, price } = furniture;
+  const { attributes, sale_price, regular_price } = furniture;
 
   const attributeKeys = Object.keys(attributes.attributeType);
 
@@ -27,7 +27,12 @@ function FurnitureDetail() {
         </nav>
       </div>
       <div className="text-right self-end">
-        <span>{formattedCurrency(price)}</span>
+        {onSale && (
+          <span className="line-through">
+            {formattedCurrency(regular_price)}
+          </span>
+        )}
+        <span className="ml-2">{formattedCurrency(sale_price)}</span>
       </div>
     </main>
   );
