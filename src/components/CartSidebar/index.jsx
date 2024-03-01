@@ -14,6 +14,7 @@ export default function CartSideBar() {
     : useCart();
 
   if (isLoading) return <LoadingSpinner />;
+  const isCartEmpty = !cart.length;
 
   return (
     <SideBar>
@@ -35,23 +36,27 @@ export default function CartSideBar() {
 
         <footer className="bg-[#f1f1f1] px-12 pt-4">
           <section className="m-auto max-w-[34.375rem]">
-            <div className="grid grid-cols-[1fr_1fr]">
-              <span className="text-center">Subtotal</span>
-              <span className="text-center">
-                {formattedCurrency(getTotalPrice())}
-              </span>
-            </div>
-            <div className="grid grid-cols-[1fr_1fr]">
-              <span className="text-center">Order total</span>
-              <span className="text-center">
-                {formattedCurrency(getTotalPrice())}
-              </span>
-            </div>
+            {isCartEmpty ? null : (
+              <div>
+                <div className="grid grid-cols-[1fr_1fr]">
+                  <span className="text-center">Subtotal</span>
+                  <span className="text-center">
+                    {formattedCurrency(getTotalPrice())}
+                  </span>
+                </div>
+                <div className="grid grid-cols-[1fr_1fr]">
+                  <span className="text-center">Order total</span>
+                  <span className="text-center">
+                    {formattedCurrency(getTotalPrice())}
+                  </span>
+                </div>
+              </div>
+            )}
 
             <nav className="flex flex-col items-center gap-7 border-t-[0.0625rem] border-border my-4 pt-4 text-center">
               <a
                 className="underline text-[0.8125rem] hover:no-underline"
-                href="#"
+                href="/cart"
               >
                 View Cart
               </a>
