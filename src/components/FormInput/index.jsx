@@ -3,9 +3,9 @@ import AppInput from "@components/ui/AppInput";
 import FormItem from "../FormItem";
 import PropTypes from "prop-types";
 
-const FormInput = ({ label, name, placeholder, type, required, message, inputType, className, disabled }) => {
+const FormInput = ({ label, name, placeholder, type, required, message, inputType, className, disabled, onChange }) => {
   return (
-    <FormItem label={label} name={name} type={type} required={required} message={message}>
+    <FormItem label={label} name={name} type={type} required={required} message={message} onChange={onChange}>
       <AppInput placeholder={placeholder} disabled={disabled} className={className} inputType={inputType} />
     </FormItem>
   );
