@@ -9,7 +9,7 @@ function DimensionButton(props) {
     <button
       onClick={() => {
         onClick();
-        console.log("haha");
+
       }}
       className={classNames(
         "hover:-translate-y-1 hover:cursor-pointer duration-200",

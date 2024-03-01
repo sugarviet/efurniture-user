@@ -11,7 +11,6 @@ function FurnitureDimensionOption() {
       <DimensionButton
         selected={dimension === MODEL_DIMENSION.two_dimension}
         onClick={() => {
-          console.log("haha");
           setDimension(MODEL_DIMENSION.two_dimension);
         }}
         name={MODEL_DIMENSION.two_dimension}

@@ -1,72 +1,25 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 import RoomHero from "./components/RoomHero";
 import FurnitureCard from "@components/FurnitureCard";
-import FurnitureFavorite from "@components/FurnitureCard/FurnitureCardItems/FurnitureFavorite";
 
 import FavoriteButton from "@components/FavoriteButton";
+import useAuth from "@stores/useAuth";
+import { withFetchData } from "../../hocs/withFetchData";
+import { get_furniture_by_room_api } from "../../api/roomApi";
+import { useGuestStore } from "../../stores/useGuestStore";
 
-const PRODUCT_CATALOG = [
-  {
-    url: "https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dwce7ff147/images/2070000/2072649.jpg?sw=1200",
-    name: "Santiago dining table",
-    color:
-      "https://www.boconcept.com/on/demandware.static/-/Sites-master-catalog/default/dwb27f4b3c/coloricons/color-dots-board-75x26.png",
-    material: "White, Grey, Ceramic",
-    price: 105900000,
-    model_id: "sitzfeldt:Kombielement",
-  },
 
-  {
-    url: "https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dwf6fe67af/images/1680000/1683339.jpg?sw=1200",
-    name: "Hamilton chair",
-    color:
-      "https://www.boconcept.com/on/demandware.static/-/Sites-master-catalog/default/dwb27f4b3c/coloricons/color-dots-board-75x26.png",
-    material: "White, Grey, Ceramic",
-    price: 105900000,
-    model_id: "sitzfeldt:Match",
-  },
-  {
-    url: "https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dwa9f2b67a/images/640000/643130.jpg?sw=1200",
-    name: "Hamilton chair",
-    color:
-      "https://www.boconcept.com/on/demandware.static/-/Sites-master-catalog/default/dwb27f4b3c/coloricons/color-dots-board-75x26.png",
-    material: "White, Grey, Ceramic",
-    price: 105900000,
-    model_id: "sitzfeldt:SetHocker",
-  },
-  {
-    url: "https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dwe151cf35/images/1500000/1504516.jpg?sw=1200",
-    name: "Hamilton chair",
-    color:
-      "https://www.boconcept.com/on/demandware.static/-/Sites-master-catalog/default/dwb27f4b3c/coloricons/color-dots-board-75x26.png",
-    material: "White, Grey, Ceramic",
-    price: 105900000,
-    model_id: "sitzfeldt:Longchair_armrest_left_LP",
-  },
-  {
-    url: "https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dwbc0ac763/images/1550000/1558154.jpg?sw=1200",
-    name: "Hamilton chair",
-    color:
-      "https://www.boconcept.com/on/demandware.static/-/Sites-master-catalog/default/dwb27f4b3c/coloricons/color-dots-board-75x26.png",
-    material: "White, Grey, Ceramic",
-    price: 105900000,
-    model_id: "sitzfeldt:Chuck_Sofa_2_SeaterST2",
-  },
-  {
-    url: "https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dwf1d9d3db/images/1530000/1531445.jpg?sw=1200",
-    name: "Hamilton chair",
-    color:
-      "https://www.boconcept.com/on/demandware.static/-/Sites-master-catalog/default/dwb27f4b3c/coloricons/color-dots-board-75x26.png",
-    material: "White, Grey, Ceramic",
-    price: 105900000,
-    model_id: "sitzfeldt:Panama_Recamiere_links",
-  },
-];
+const RoomDetail = ({ data }) => {
+  const [catalog] = useState(data || []);
+  console.log(catalog)
+  const { accessToken } = useAuth();
+  const {onFavoredListProduct} = useGuestStore();
 
-const RoomDetail = () => {
   const [isFavored, setIsFavored] = useState(false);
   const handleOnClick = () => {
+    onFavoredListProduct(data);
     setIsFavored(!isFavored);
   };
 
@@ -77,24 +30,27 @@ const RoomDetail = () => {
         PRODUCTS IN THE ROOM
       </h2>
 
-      <section className="mt-10">
-        <div className="grid grid-cols-3 gap-2">
-          {PRODUCT_CATALOG.map((item, index) => {
-            return (
-              <FurnitureCard item={item} key={`${item.name} + ${index}`}>
-                <FurnitureCard.Model>
-                  <FurnitureFavorite />
-                  <FurnitureCard.DimensionOption />
-                </FurnitureCard.Model>
-                <div className="px-[18px] flex flex-col justify-between gap-4">
-                  <FurnitureCard.Attribute />
-                  <FurnitureCard.Price />
-                </div>
-              </FurnitureCard>
-            );
-          })}
-        </div>
-      </section>
+      <div className="lg:col-span-9 md:col-span-9 col-span-12 grid grid-cols-2 gap-2">
+        {catalog.map((item) => {
+          const { _id } = item;
+          return (
+            <FurnitureCard item={item} key={_id}>
+              <FurnitureCard.Model className="w-[60%]">
+                {accessToken ? (
+                  <FurnitureCard.UserFavorite />
+                ) : (
+                  <FurnitureCard.Favorite />
+                )}
+              </FurnitureCard.Model>
+              <div className="px-[18px] relative flex flex-col justify-between">
+                <FurnitureCard.Attribute />
+                <FurnitureCard.Price />
+                <FurnitureCard.ShoppingButton />
+              </div>
+            </FurnitureCard>
+          );
+        })}
+      </div>
 
       <hr className="w-1/2 mx-auto" />
 
@@ -118,12 +74,16 @@ const RoomDetail = () => {
             </button>
           </div>
           <button className="uppercase bg-white text-black font-semibold px-36 py-3 text-xs border border-black">
-              Find nearest store
-            </button>
+            Find nearest store
+          </button>
         </div>
       </section>
     </main>
   );
 };
 
-export default RoomDetail;
+RoomDetail.propTypes = {
+  data: PropTypes.array,
+};
+
+export default withFetchData(RoomDetail, get_furniture_by_room_api);

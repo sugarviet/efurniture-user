@@ -22,18 +22,21 @@ const RoomsByPlace = lazy(() => import("@pages/RoomsByPlace"));
 const ProductDetail = lazy(() => import("@pages/ProductDetail"));
 const Checkout = lazy(() => import("@pages/Checkout"));
 const Search = lazy(() => import("@pages/Search"));
+const Cart = lazy(() => import("@pages/Cart"));
+
 
 export const PATH = {
   home: "/",
   productByType: "/products/:type",
   about: "/",
-  cart: "/",
+  cart: "/cart",
   login: "/login",
   register: "/register",
   wishlist: "/wishlist",
   rooms: "/rooms",
+  // rooms: "/rooms/:slug",
   roomDetail: "/room/:id",
-  roomByPlace: "/room/position/:slug",
+  roomByPlace: "/rooms/:place",
   profile: "/profile/:tab",
   stores: "/stores",
   productDetail: "/product-detail/:slug",
@@ -99,6 +102,10 @@ export const routers = createBrowserRouter([
       {
         path: PATH.search,
         element: <Search />,
+      },
+      {
+        path: PATH.cart,
+        element: <Cart />,
       },
       {
         path: "*",

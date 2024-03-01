@@ -7,8 +7,6 @@ function RoomleModel3D() {
   const [configuratorApi, setConfiguratorApi] = useState(null);
   const scene = useRef();
 
-  console.log(params);
-
   const updateParam = () => {
     configuratorApi.setParameter(
       params[0],
