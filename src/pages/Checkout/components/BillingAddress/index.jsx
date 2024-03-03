@@ -52,7 +52,7 @@ function BillingAddress() {
 
             <FormInput
                 label="First Name"
-                name="firs_tName"
+                name="first_name"
                 className="furniture-input w-full h-[3rem]"
                 type="firstName"
             />
@@ -86,7 +86,6 @@ function BillingAddress() {
                 label="Province"
                 name="province"
                 className="furniture-input w-full h-[3rem]"
-                initialValue="Thành Phố Hồ Chí Minh"
                 disabled
             />
             <FormInput

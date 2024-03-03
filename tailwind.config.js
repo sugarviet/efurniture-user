@@ -53,6 +53,7 @@ export default {
         'email': 'inset 0 -0.0625rem 0 0 #222',
         'bottomBar': '0 0 5.625rem rgba(0,0,0,.15)',
         'deliveryCard': '0 0.0625rem 0 0 #5a7468',
+        'couponCard': '0.125rem 0.125rem 0.3125rem rgba(0,0,0,.07);'
       },
       transitionTimingFunction: {
         'slow-to-fast': 'cubic-bezier(0.4, 0, 0.2, 1)',

@@ -3,6 +3,10 @@ import { useState } from "react";
 import useSwitchTab from "../../hooks/useSwitchTab";
 import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
 import { useOrderStore } from "../../../../stores/useGuestOrderStore";
+import formattedCurrency from "@utils/formattedCurrency";
+import useUserCart from "@hooks/useUserCart";
+import useCart from "@hooks/useCart";
+import useAuth from "@stores/useAuth";
 
 const PAYMENT_METHOD = {
   banking: "Online Payment",
@@ -10,6 +14,10 @@ const PAYMENT_METHOD = {
 }
 
 function Payment() {
+
+  const { accessToken } = useAuth();
+
+  const { getTotalPrice } = accessToken ? useUserCart() : useCart();
 
   const { setSelectedPayment, selectedPayment } = useOrderStore();
 
@@ -26,7 +34,7 @@ function Payment() {
       </article>
 
       <section className='font-HelveticaRoman'>
-        <p className='text-[14px] lg:text-[14px] leading-[1.1875] tracking-[0.5px] pb-1'>Payment total: <strong>₫ 489.000.000</strong></p>
+        <p className='text-[14px] lg:text-[14px] leading-[1.1875] tracking-[0.5px] pb-1'>Payment total: <strong>{formattedCurrency(getTotalPrice())}</strong></p>
         <div className="pb-16">
           <RadioModal
             name="payment"

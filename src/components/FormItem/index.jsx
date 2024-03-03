@@ -66,7 +66,7 @@ const FORM_TYPES = {
   },
   email: {
     rules: [
-      {type: 'email', required: true, message: "Please enter a valid email" },
+      { type: 'email', required: true, message: "Please enter a valid email" },
     ]
   },
   confirmNewEmail: {
@@ -119,6 +119,11 @@ const FORM_TYPES = {
   phone: {
     rules: [
       { required: true, message: "Please enter a valid phone" },
+    ]
+  },
+  voucher: {
+    rules: [
+      { required: false, message: "" },
     ]
   },
 };

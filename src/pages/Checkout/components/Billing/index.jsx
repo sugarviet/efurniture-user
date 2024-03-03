@@ -7,10 +7,14 @@ import useSwitchTab from "../../hooks/useSwitchTab";
 import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
 import { useOrderStore } from "../../../../stores/useGuestOrderStore";
 import useAuth from "@stores/useAuth";
+import useUserProfile from "@hooks/useUserProfile";
+
 
 function Billing() {
 
   const { accessToken } = useAuth();
+
+  const { userData } = useUserProfile();
 
   const { toggleLoginBottomBar } = useToggleLoginBottomBar();
 
@@ -32,10 +36,11 @@ function Billing() {
   };
 
   useEffect(() => {
-    if (orderShipping.email) {
+    if (orderShipping.email || userData?.email) {
+      setOrderShipping({ ...orderShipping, email: userData?.email });
       setIsInputEmail(true);
     }
-  }, [orderShipping]);
+  }, [userData]);
 
   return (
     <section>
@@ -50,13 +55,14 @@ function Billing() {
             }}
             onFinish={onFinish}
             autoComplete="off"
-            initialValues={{ province: "Thành Phố Hồ Chí Minh", ...orderShipping }}
+            initialValues={{ province: "Thành Phố Hồ Chí Minh", email: userData?.email, ...orderShipping }}
           >
             <FormInput
               label="Email"
               name="email"
               className="furniture-input w-full h-[3rem]"
               type="newLetterEmail"
+              disabled={userData ? true : false}
               onChange={handleEmailChange}
             />
 
@@ -96,7 +102,7 @@ function Billing() {
           </Form>
         </section>
       </div>
-      
+
       {!accessToken &&
         <div className="furniture-divided-top pt-10 pb-6">
           <h2 className='font-HelveticaBold text-[1.5rem] leading-[1.20833] tracking-[0.08em] pb-6'>OR, SIGN IN WITH ACCOUNT</h2>
@@ -112,4 +118,4 @@ function Billing() {
   )
 }
 
-export default Billing
+export default Billing;
