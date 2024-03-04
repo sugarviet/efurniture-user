@@ -1,10 +1,10 @@
 import FavoriteButton from "@components/FavoriteButton";
 import { useState } from "react";
 import { useGuestStore } from "../../stores/useGuestStore";
-import useCart from "../../hooks/useCart";
+import useGuestCart from "../../hooks/useGuestCart";
 function ProductAddToCart({ furniture }) {
   const { wishlist, onFavored, onUnFavored } = useGuestStore();
-  const { addToCart } = useCart();
+  const { addToCart } = useGuestCart();
   const [isFavored, setIsFavored] = useState(
     wishlist.some((item) => item._id === furniture._id)
   );

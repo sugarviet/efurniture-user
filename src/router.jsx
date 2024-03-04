@@ -16,14 +16,12 @@ const Wishlist = lazy(() => import("@pages/Wishlist"));
 const NotFound = lazy(() => import("@pages/NotFound"));
 const Login = lazy(() => import("@pages/Login"));
 const Register = lazy(() => import("@pages/Register"));
-const Rooms = lazy(() => import("@pages/Rooms"));
 const RoomDetail = lazy(() => import("@pages/RoomDetail"));
 const RoomsByPlace = lazy(() => import("@pages/RoomsByPlace"));
 const ProductDetail = lazy(() => import("@pages/ProductDetail"));
 const Checkout = lazy(() => import("@pages/Checkout"));
 const Search = lazy(() => import("@pages/Search"));
 const Cart = lazy(() => import("@pages/Cart"));
-
 
 export const PATH = {
   home: "/",
@@ -33,9 +31,7 @@ export const PATH = {
   login: "/login",
   register: "/register",
   wishlist: "/wishlist",
-  rooms: "/rooms",
-  // rooms: "/rooms/:slug",
-  roomDetail: "/room/:id",
+  roomDetail: "/room/:slug",
   roomByPlace: "/rooms/:place",
   profile: "/profile/:tab",
   stores: "/stores",
@@ -74,11 +70,6 @@ export const routers = createBrowserRouter([
         path: PATH.wishlist,
         element: <Wishlist />,
       },
-      {
-        path: PATH.rooms,
-        element: <Rooms />,
-      },
-
       {
         path: PATH.roomByPlace,
         element: <RoomsByPlace />,

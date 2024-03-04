@@ -143,7 +143,11 @@ const BestSellersSlider = () => {
               <div className="mx-[18px] relative flex flex-col justify-between">
                 <FurnitureCard.Attribute />
                 <FurnitureCard.Price />
-                <FurnitureCard.ShoppingButton />
+                {accessToken ? (
+                  <FurnitureCard.UserShoppingButton />
+                ) : (
+                  <FurnitureCard.GuestShoppingButton />
+                )}
               </div>
             </FurnitureCard>
           </div>

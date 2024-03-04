@@ -5,8 +5,7 @@ import CartProduct from "@components/CartProduct";
 import LoadingSpinner from "../LoadingSpinner";
 import Proptypes from "prop-types";
 
-
-export default function CartSideBar({cartData}) {
+export default function CartSideBar({ cartData }) {
   const { cart, getTotalPrice, isLoading } = cartData;
 
   if (isLoading) return <LoadingSpinner />;
@@ -23,7 +22,9 @@ export default function CartSideBar({cartData}) {
         <main className="h-0 flex-grow">
           <div className="pt-0 pb-9 px-12 h-full overflow-y-scroll">
             {cart && cart?.length > 0 ? (
-              cart.map((item) => <CartProduct key={item._id} data={item} />)
+              cart.map((item) => (
+                <CartProduct cartData={cartData} key={item._id} data={item} />
+              ))
             ) : (
               <p>Your shopping cart is empty</p>
             )}

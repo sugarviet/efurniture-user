@@ -1,14 +1,13 @@
-import useCart from "../../hooks/useCart";
+import useGuestCart from "../../hooks/useGuestCart";
 import useUserCart from "../../hooks/useUserCart";
 import useAuth from "../../stores/useAuth";
 import FurnitureCard from "../FurnitureCard";
 import QuantityOption from "../QuantityOption";
 
-function CartProduct({ data }) {
+function CartProduct({ data, cartData }) {
   const { name, _id, quantity_in_cart } = data;
-  const { accessToken } = useAuth();
   const { increaseQuantity, decreaseQuantity, removeFromCart, updateQuantity } =
-    accessToken ? useUserCart() : useCart();
+    cartData;
   return (
     <section className="text-[0.875rem] my-6">
       <div

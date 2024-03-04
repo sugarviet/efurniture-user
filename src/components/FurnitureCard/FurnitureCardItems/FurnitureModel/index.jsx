@@ -5,7 +5,7 @@ import { MODEL_DIMENSION } from "../../../../constants/enum";
 
 import { classNames } from "@utils/classNames";
 import PropTypes from "prop-types";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function FurnitureModel({ children, className }) {
   const { furniture, dimension, onSale } = useContext(FurnitureCardContext);
