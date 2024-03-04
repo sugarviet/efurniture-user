@@ -50,7 +50,7 @@ function useCart() {
         return cart.reduce((total, item) => total + item.sale_price * item.quantity_in_cart, 0);
     }
 
-    return { cart, addToCart, decreaseQuantity, increaseQuantity, removeFromCart, updateQuantity, getTotalPrice };
+    return { cart, addToCart, decreaseQuantity, increaseQuantity, removeFromCart, updateQuantity, getTotalPrice, isLoading: false };
 }
 
 export default useCart;

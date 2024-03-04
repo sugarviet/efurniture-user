@@ -13,6 +13,12 @@ import CloseButton from "../CloseButton";
 import ContactOption from "../ContactOption";
 import { Link } from "react-router-dom";
 import useAuth from "../../stores/useAuth";
+import { withGuestCart } from "@hocs/withGuestCart"
+import { withUserCart } from "@hocs/withUserCart"
+
+const ShoppingBagButtonGuest = withGuestCart(ShoppingBagButton)
+const ShoppingBagButtonUser = withUserCart(ShoppingBagButton)
+
 
 const navigation = {
   categories: [
@@ -223,7 +229,8 @@ export default function Navbar() {
                 </Link>
 
                 <div className="ml-4 flow-root lg:ml-6">
-                  <ShoppingBagButton />
+                  {accessToken ? <ShoppingBagButtonUser /> : <ShoppingBagButtonGuest />}
+                  {/* <ShoppingBagButton /> */}
                 </div>
               </div>
             </div>
