@@ -1,6 +1,6 @@
 import FurnitureCard from "../FurnitureCard";
 import PropTypes from "prop-types";
-import useCart from "../../hooks/useCart";
+import useGuestCart from "../../hooks/useGuestCart";
 import formattedCurrency from "../../utils/formattedCurrency";
 import useAuth from "../../stores/useAuth";
 import useUserCart from "../../hooks/useUserCart";
@@ -12,7 +12,7 @@ function CheckoutProduct({ activeTab }) {
   const { accessToken } = useAuth();
   const { cart, getTotalPrice, isLoading } = accessToken
     ? useUserCart()
-    : useCart();
+    : useGuestCart();
 
   if (isLoading) return <LoadingSpinner />;
   return (

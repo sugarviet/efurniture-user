@@ -17,7 +17,7 @@ const Favorites = ({ data }) => {
               <div className="px-[18px] relative flex flex-col justify-between">
                 <FurnitureCard.Attribute />
                 <FurnitureCard.Price />
-                <FurnitureCard.ShoppingButton />
+                <FurnitureCard.UserShoppingButton />
               </div>
             </FurnitureCard>
           );

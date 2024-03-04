@@ -6,20 +6,15 @@ import FurnitureCard from "@components/FurnitureCard";
 
 import FavoriteButton from "@components/FavoriteButton";
 import useAuth from "@stores/useAuth";
+import formattedCurrency from "../../utils/FormattedCurrency";
 import { withFetchData } from "../../hocs/withFetchData";
-import { get_furniture_by_room_api } from "../../api/roomApi";
-import { useGuestStore } from "../../stores/useGuestStore";
+import { get_room_detail } from "../../api/roomApi";
+import useCart from "../../hooks/useGuestCart";
 
 const RoomDetail = ({ data }) => {
-  const [catalog] = useState(data || []);
+  const [catalog] = useState(data.products);
+  const { addManyToCart } = useCart();
   const { accessToken } = useAuth();
-  const { onFavoredListProduct } = useGuestStore();
-
-  const [isFavored, setIsFavored] = useState(false);
-  const handleOnClick = () => {
-    onFavoredListProduct(data);
-    setIsFavored(!isFavored);
-  };
 
   return (
     <main className="my-2">
@@ -30,9 +25,9 @@ const RoomDetail = ({ data }) => {
 
       <div className="lg:col-span-9 md:col-span-9 col-span-12 grid grid-cols-2 gap-2">
         {catalog.map((item) => {
-          const { _id } = item;
+          const { _id } = item.product;
           return (
-            <FurnitureCard item={item} key={_id}>
+            <FurnitureCard item={item.product} key={_id}>
               <FurnitureCard.Model className="w-[60%]">
                 {accessToken ? (
                   <FurnitureCard.UserFavorite />
@@ -54,20 +49,31 @@ const RoomDetail = ({ data }) => {
 
       <section className="flex flex-col justify-center items-center mt-8">
         <p className="w-96 text-sm text-center text-slate-500">
-          Products in the room: 1 x Kingston, 4 x Princeton, 1 x Calgary, 1 x
-          Calgary, 1 x Luna, 1 x Form
+          Products in the room:{" "}
+          {catalog
+            .map((item) => `${item.quantity} x ${item.product.name}`)
+            .join(", ")}
         </p>
         <p className="text-lg font-semibold mt-6 mb-2">
-          Buy all for ₫ 190.037.500,00
+          Buy all for{" "}
+          {formattedCurrency(
+            catalog.reduce(
+              (total, item) => total + item.quantity * item.product.sale_price,
+              0
+            )
+          )}
         </p>
 
         <div className="flex gap-2 flex-col">
           <div className="flex gap-2">
             <div className="border p-2 border-black">
-              <FavoriteButton onClick={handleOnClick} favored={isFavored} />
+              <FavoriteButton />
             </div>
 
-            <button className="uppercase bg-black text-white font-semibold px-36 py-3 text-xs">
+            <button
+              onClick={() => addManyToCart(catalog)}
+              className="uppercase bg-black text-white font-semibold px-36 py-3 text-xs"
+            >
               Add to cart
             </button>
           </div>
@@ -81,7 +87,7 @@ const RoomDetail = ({ data }) => {
 };
 
 RoomDetail.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
 };
 
-export default withFetchData(RoomDetail, get_furniture_by_room_api);
+export default withFetchData(RoomDetail, get_room_detail);

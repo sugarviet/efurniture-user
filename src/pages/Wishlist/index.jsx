@@ -39,7 +39,7 @@ const Wishlist = () => {
               <div className="px-[18px] relative flex flex-col justify-between">
                 <FurnitureCard.Attribute />
                 <FurnitureCard.Price />
-                <FurnitureCard.ShoppingButton />
+                <FurnitureCard.GuestShoppingButton />
               </div>
             </FurnitureCard>
           );
