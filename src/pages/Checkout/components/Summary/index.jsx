@@ -9,14 +9,15 @@ import AppModal from "@components/ui/AppModal";
 import CouponListModal from "../CouponListModal";
 import useAuth from "@stores/useAuth";
 import useUserCart from "@hooks/useUserCart";
-import useCart from "@hooks/useCart";
+import useGuestCart from "@hooks/useGuestCart";
+import formattedCurrency from "@utils/formattedCurrency";
 
 
 function Summary() {
 
   const { accessToken } = useAuth();
 
-  const { cart, getTotalPrice } = accessToken ? useUserCart() : useCart();
+  const { cart, getTotalPrice } = accessToken ? useUserCart() : useGuestCart();
 
   const {
     selectedPayment,
@@ -137,15 +138,15 @@ function Summary() {
       <ul className="pt-8 list-none">
         <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
           <span className="">Subtotal </span>
-          <span>₫ 64.770.000,00</span>
+          <span>{formattedCurrency(getTotalPrice())}</span>
         </li>
         <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
-          <span className="">Store Contact </span>
+          <span className="">Discount </span>
           <span>₫ 0,00</span>
         </li>
         <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
           <span className="">QUOTATION TOTAL </span>
-          <span>₫ 64.770.000,00</span>
+          <span>{formattedCurrency(getTotalPrice())}</span>
         </li>
         <li className="flex flex-row justify-between items-center mt-[-0.3125rem] pb-[0.25rem] text-[0.75rem] leading-[2] tracking-[0.05em] text-grey2">
           <span className="">VAT part of total </span>
@@ -161,7 +162,7 @@ function Summary() {
               THIS IS EVERYTHING YOU NEED TO PAY RIGHT NOW
             </span>
           </span>
-          <span className="">₫ 64.770.000,00</span>
+          <span className="">{formattedCurrency(getTotalPrice())}</span>
         </li>
       </ul>
 
@@ -174,7 +175,7 @@ function Summary() {
         </div>
         <div className="text-[13px] leading-[24.7px] tracking-[0.5px] pb-4">
           <p className="pt-4">
-            At BoConcept we do not have all our products in stock, as most of our furniture is made just for you and your home.
+            At eFurniture we do not have all our products in stock, as most of our furniture is made just for you and your home.
           </p>
           <p className="pt-4">
             Our normal delivery time is

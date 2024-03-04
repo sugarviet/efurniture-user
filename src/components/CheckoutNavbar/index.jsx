@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useSwitchTab from "../../pages/Checkout/hooks/useSwitchTab";
 const checkoutLinks = [
   {
@@ -41,7 +42,9 @@ function CheckoutNavbar() {
   return (
     <header className="flex flex-col md:grid md:grid-cols-[30%_70%] lg:grid lg:grid-cols-[54.167%_45.83%] bg-[#070628] pb-[1.25rem]">
       <div className="h-[90px] flex items-end pb-[1.25rem] md:pb-0">
-        <img src="./images/logo.png" className="ml-[30px] w-[140px]"></img>
+        <Link to="/">
+          <img src="./images/logo.png" className="ml-[30px] w-[140px]"></img>
+        </Link>
       </div>
       <nav className="md:h-[90px] items-end flex flex-row justify-between text-center px-[30px]">
         {checkoutLinks.map((link) => (
@@ -51,11 +54,10 @@ function CheckoutNavbar() {
           >
             <div
               onClick={() => handleClickCheckoutTab(link.key)}
-              className={`text-white inline-block pb-[0.2em]  ${
-                activeTab === link.key
+              className={`text-white inline-block pb-[0.2em]  ${activeTab === link.key
                   ? "border-b border-white font-HelveticaBold "
                   : ""
-              }`}
+                }`}
             >
               {link.title}
             </div>

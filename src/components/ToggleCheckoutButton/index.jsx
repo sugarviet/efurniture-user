@@ -12,7 +12,7 @@ function ToggleCheckoutButton() {
     };
 
     return (
-        <button onClick={() => handleClick()} className='bg-white furniture-divided-bottom w-full flex flex-row justify-between text-[0.75rem] px-[1.25rem] py-[1rem]'>
+        <button onClick={() => handleClick()} className='bg-white furniture-divided-bottom w-full flex flex-row justify-between text-[0.75rem] px-[1.25rem] py-[1rem] mb-16'>
             <span className='font-HelveticaBold'>Order Summary</span>
             <div className='flex flex-row gap-2 items-center'>
                 <span>{isOpen ? "Close" : "View"}</span>

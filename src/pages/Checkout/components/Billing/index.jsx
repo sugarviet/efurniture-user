@@ -8,6 +8,7 @@ import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
 import { useOrderStore } from "../../../../stores/useGuestOrderStore";
 import useAuth from "@stores/useAuth";
 import useUserProfile from "@hooks/useUserProfile";
+import useScroll from "@hooks/useScroll";
 
 
 function Billing() {
@@ -18,6 +19,8 @@ function Billing() {
 
   const { toggleLoginBottomBar } = useToggleLoginBottomBar();
 
+  const { handleScrollToTop } = useScroll();
+
   const { handleChangeTab } = useSwitchTab();
 
   const { setOrderShipping, orderShipping, selectedDistrict, selectedWard } = useOrderStore();
@@ -27,6 +30,7 @@ function Billing() {
   const onFinish = (values) => {
     setOrderShipping({ ...values, district: selectedDistrict, ward: selectedWard });
     handleChangeTab(CHECKOUT_TABS.delivery)
+    handleScrollToTop();
   };
 
   const handleEmailChange = (e) => {
@@ -40,16 +44,10 @@ function Billing() {
       setOrderShipping({ ...orderShipping, email: userData?.email });
       setIsInputEmail(true);
     }
-  }, [userData]);
-
-  const goToNext = () => {
-    handleChangeTab(CHECKOUT_TABS.delivery)
-
-  }
+  }, [userData, accessToken]);
 
   return (
     <section>
-      <button className="bg-red text-white px-2 py-3 rounded-lg" onClick={goToNext}>go to delivery</button>
       <div className='max-w-[43.75rem] text-[0.875rem] leading-[1.5] pb-[45px] tracking-[0.5px] pt-6 lg:pt-0'>
         <h2 className='font-HelveticaBold text-[1.5rem] leading-[1.20833] tracking-[0.08em] pb-6'>checkout as guest</h2>
         {!accessToken && <p className='pb-[25px]'>You can check out without creating an account. You'll have a chance to create an account later.</p>}

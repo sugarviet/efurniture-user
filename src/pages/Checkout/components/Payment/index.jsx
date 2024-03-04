@@ -5,8 +5,9 @@ import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
 import { useOrderStore } from "../../../../stores/useGuestOrderStore";
 import formattedCurrency from "@utils/formattedCurrency";
 import useUserCart from "@hooks/useUserCart";
-import useCart from "@hooks/useCart";
+import useGuestCart from "@hooks/useGuestCart";
 import useAuth from "@stores/useAuth";
+import useScroll from "@hooks/useScroll";
 
 const PAYMENT_METHOD = {
   banking: "Online Payment",
@@ -17,15 +18,22 @@ function Payment() {
 
   const { accessToken } = useAuth();
 
-  const { getTotalPrice } = accessToken ? useUserCart() : useCart();
+  const { getTotalPrice } = accessToken ? useUserCart() : useGuestCart();
 
   const { setSelectedPayment, selectedPayment } = useOrderStore();
 
   const { handleChangeTab } = useSwitchTab();
 
+  const { handleScrollToTop } = useScroll();
+
   const handleChangeMethod = (payment) => {
     setSelectedPayment(payment)
   };
+
+  const handleNextStep = () => {
+    handleChangeTab(CHECKOUT_TABS.summary)
+    handleScrollToTop()
+  }
 
   return (
     <div>
@@ -70,7 +78,7 @@ function Payment() {
 
         <button
           type="submit"
-          onClick={() => handleChangeTab(CHECKOUT_TABS.summary)}
+          onClick={() => handleNextStep()}
           className="furniture-button-black-hover w-full px-[55px] py-[14px] text-[0.6875rem] tracking-[0.125rem]"
         >
           continue to summary
