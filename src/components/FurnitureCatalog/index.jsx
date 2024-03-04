@@ -1,8 +1,6 @@
 import { useState } from "react";
 import FilterSectionWrapper from "../FilterSectionWrapper";
 import FurnitureCard from "../FurnitureCard";
-import { withFetchData } from "../../hocs/withFetchData";
-import { get_furniture_by_type_api } from "../../api/furnitureApi";
 import useAuth from "../../stores/useAuth";
 
 const COLORS = [
@@ -59,7 +57,11 @@ function FurnitureCatalog({ data }) {
               <div className="px-[18px] relative flex flex-col justify-between">
                 <FurnitureCard.Attribute />
                 <FurnitureCard.Price />
-                <FurnitureCard.ShoppingButton />
+                {accessToken ? (
+                  <FurnitureCard.UserShoppingButton />
+                ) : (
+                  <FurnitureCard.GuestShoppingButton />
+                )}
               </div>
             </FurnitureCard>
           );

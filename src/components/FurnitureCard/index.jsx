@@ -10,6 +10,8 @@ import FurnitureFavorite from "./FurnitureCardItems/FurnitureFavorite";
 import FurnitureQuantityOption from "./FurnitureCardItems/FurnitureQuantityOption";
 import FurnitureUserFavorite from "./FurnitureCardItems/FurnitureUserFavorite";
 import FurnitureShoppingButton from "./FurnitureCardItems/FurnitureShoppingButton";
+import { withGuestCart } from "../../hocs/withGuestCart";
+import { withUserCart } from "../../hocs/withUserCart";
 
 function FurnitureCard({ item, children }) {
   return (
@@ -27,6 +29,7 @@ FurnitureCard.Favorite = FurnitureFavorite;
 FurnitureCard.UserFavorite = FurnitureUserFavorite;
 FurnitureCard.Detail = FurnitureDetail;
 FurnitureCard.QuantityOption = FurnitureQuantityOption;
-FurnitureCard.ShoppingButton = FurnitureShoppingButton;
+FurnitureCard.GuestShoppingButton = withGuestCart(FurnitureShoppingButton);
+FurnitureCard.UserShoppingButton = withUserCart(FurnitureShoppingButton);
 
 export default FurnitureCard;

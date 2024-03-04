@@ -1,6 +1,6 @@
 import { useGuestStore } from "../stores/useGuestStore";
 
-function useCart() {
+function useGuestCart() {
     const { cart, setCart } = useGuestStore();
 
     const addToCart = (item) => {
@@ -53,4 +53,4 @@ function useCart() {
     return { cart, addToCart, decreaseQuantity, increaseQuantity, removeFromCart, updateQuantity, getTotalPrice, isLoading: false };
 }
 
-export default useCart;
+export default useGuestCart;

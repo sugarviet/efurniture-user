@@ -1,13 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import useAuth from "../stores/useAuth";
 import { useEffect } from "react";
-import useCart from "../hooks/useCart";
+import useGuestCart from "../hooks/useGuestCart";
 
 export const withGuestCart = (WrappedComponent) => {
   return () => {
-    const cart = useCart();
-    
+    const cart = useGuestCart();
 
-    return <WrappedComponent cartData={cart}/>;
+    return <WrappedComponent cartData={cart} />;
   };
 };
