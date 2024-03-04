@@ -10,7 +10,7 @@ export const get_all_room = () => {
 }
 
 export const get_room_detail = (params) => {
-    const { id } = params;
+    const { slug } = params;
 
-    return `/room/${id}`
+    return `/room/${slug}`
 }
