@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const SELECTION_TYPE = {
   furniture_sorting: {
     options: [
@@ -39,3 +41,8 @@ function SelectionInput({ type, onChange }) {
 }
 
 export default SelectionInput;
+
+SelectionInput.propTypes = {
+  type: PropTypes.string,
+  onChange: PropTypes.func,
+};

@@ -1,5 +1,5 @@
 import { Slider } from "antd";
-import { useState } from "react";
+import PropTypes from "prop-types";
 
 function SliderOptions({ options, value, setValue }) {
   const { onChange, max, min, unit } = options;
@@ -25,3 +25,9 @@ function SliderOptions({ options, value, setValue }) {
 }
 
 export default SliderOptions;
+
+SliderOptions.propTypes = {
+  options: PropTypes.object,
+  value: PropTypes.array,
+  setValue: PropTypes.func,
+};
