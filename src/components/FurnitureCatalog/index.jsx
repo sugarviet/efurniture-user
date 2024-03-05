@@ -3,6 +3,7 @@ import FilterSectionWrapper from "../FilterSectionWrapper";
 import FurnitureCard from "../FurnitureCard";
 import useAuth from "../../stores/useAuth";
 import findAttributeRange from "../../utils/findAttributeRange";
+import SelectionInput from "../SelectionInput";
 
 function FurnitureCatalog({ data }) {
   const [catalog, setCatalog] = useState(data.data || []);
@@ -15,13 +16,26 @@ function FurnitureCatalog({ data }) {
   );
   const ATTRIBUTES = Object.keys(ATTRIBUTE_OBJ);
 
-  const handleSort = (attribute, range) => {
+  const handleFilter = (attribute, range) => {
     const dataClone = [...data.data];
 
-    const sortedCatalog = dataClone.filter((item) => {
-      const value = item.attributes.attributeType[attribute].match(/\d+/)[0];
+    const filterCatalog = dataClone.filter((item) => {
+      const value = (item.attributes.attributeType[attribute] + "").match(
+        /\d+/
+      )[0];
 
       return value <= range[1] && value >= range[0];
+    });
+
+    setCatalog(filterCatalog);
+  };
+
+  const handleSort = (value) => {
+    const catalogClone = [...catalog];
+
+    const sortedCatalog = catalogClone.sort((a, b) => {
+      if (value === "price_asc") return a.sale_price - b.sale_price;
+      if (value === "price_desc") return b.sale_price - a.sale_price;
     });
 
     setCatalog(sortedCatalog);
@@ -29,11 +43,17 @@ function FurnitureCatalog({ data }) {
 
   return (
     <div className="grid grid-cols-12">
+      <section className="hidden md:flex md:col-span-12 md:flex-row-reverse px-4">
+        <div>
+          <span className="text-sm">Sort by: </span>
+          <SelectionInput onChange={handleSort} type="furniture_sorting" />
+        </div>
+      </section>
       <section className="hidden md:block md:col-span-3 lg:col-span-3 xl:col-span-3 px-4">
         {ATTRIBUTES.map((attribute, index) => {
           const options = {
             onChange: (value) => {
-              handleSort(attribute, value);
+              handleFilter(attribute, value);
             },
             max: ATTRIBUTES_RANGE[1][attribute].val,
             min: 0,
