@@ -2,45 +2,52 @@ import { useState } from "react";
 import FilterSectionWrapper from "../FilterSectionWrapper";
 import FurnitureCard from "../FurnitureCard";
 import useAuth from "../../stores/useAuth";
-
-const COLORS = [
-  "#8a4c8a",
-  "#4d7d9d",
-  "#b36b24",
-  "#2d866d",
-  "#a94659",
-  "#6e5e1a",
-  "#356ca2",
-  "#8e2d25",
-  "#635288",
-  "#41875c",
-];
-
-const MATERIALS = ["Aluminium", "Silver", "Fabric", "Lacquered"];
-
-const PRODUCT_TYPE = {
-  name: "SOFAS",
-  attributes: [
-    { name: "color", value: COLORS },
-    { name: "material", value: MATERIALS },
-  ],
-};
+import findAttributeRange from "../../utils/findAttributeRange";
 
 function FurnitureCatalog({ data }) {
-  const [catalog] = useState(data || []);
-
+  const [catalog, setCatalog] = useState(data.data || []);
   const { accessToken } = useAuth();
+
+  const ATTRIBUTE_OBJ = data.data[0].attributes.attributeType;
+
+  const ATTRIBUTES_RANGE = findAttributeRange(
+    Object.entries(ATTRIBUTE_OBJ).map(([key, value]) => ({ [key]: value }))
+  );
+  const ATTRIBUTES = Object.keys(ATTRIBUTE_OBJ);
+
+  const handleSort = (attribute, range) => {
+    const dataClone = [...data.data];
+
+    const sortedCatalog = dataClone.filter((item) => {
+      const value = item.attributes.attributeType[attribute].match(/\d+/)[0];
+
+      return value <= range[1] && value >= range[0];
+    });
+
+    setCatalog(sortedCatalog);
+  };
 
   return (
     <div className="grid grid-cols-12">
       <section className="hidden md:block md:col-span-3 lg:col-span-3 xl:col-span-3 px-4">
-        {PRODUCT_TYPE.attributes.map((attribute, index) => (
-          <FilterSectionWrapper
-            key={`${attribute.name} + ${index}`}
-            name={attribute.name}
-            options={attribute.value}
-          />
-        ))}
+        {ATTRIBUTES.map((attribute, index) => {
+          const options = {
+            onChange: (value) => {
+              handleSort(attribute, value);
+            },
+            max: ATTRIBUTES_RANGE[1][attribute].val,
+            min: 0,
+            unit: ATTRIBUTES_RANGE[0][attribute].unit || attribute,
+          };
+
+          return (
+            <FilterSectionWrapper
+              key={`${attribute} + ${index}`}
+              name={attribute}
+              options={options}
+            />
+          );
+        })}
       </section>
       <div className="lg:col-span-9 md:col-span-9 col-span-12 grid grid-cols-2 gap-2">
         {catalog.map((item) => {
