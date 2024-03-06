@@ -16,12 +16,12 @@ function ProductDetail({ data }) {
 
       <section className="relative">
         <div className="z-10 absolute top-[1.25rem] left-[2.5rem]">
-          <a className="text-[0.75rem] font-HelveticaBold flex flex-row gap-2 cursor-pointer">
+          <div className="text-[0.75rem] font-HelveticaBold flex flex-row gap-2 cursor-pointer">
             <img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB3aWR0aD0nOCcgaGVpZ2h0PScxMycgdmlld0JveD0nMCAwIDggMTMnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZycgZmlsbD0nIzIyMic+IDxwYXRoIGQ9J003LjA5MyAxMS41NzlsLS43MDcuNzA3LTUuNzQtNS43NCA1LjktNS45LjcwNy43MDgtNS4xOTIgNS4xOTJ6Jy8+IDwvc3ZnPg==" />
             <Link to={`/products}`}>
-            <span className="text-blackPrimary">{type.name}</span>
+              <span className="text-blackPrimary">{type.name}</span>
             </Link>
-          </a>
+          </div>
         </div>
         <ProductCarousel thumbs={data.thumbs} />
         <section className="px-4 py-6  md:px-8 md:pt-16">

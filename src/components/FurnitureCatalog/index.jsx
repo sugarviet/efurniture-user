@@ -9,6 +9,8 @@ function FurnitureCatalog({ data }) {
   const [catalog, setCatalog] = useState(data.data || []);
   const { accessToken } = useAuth();
 
+  if (!data.data.length) return <span>Không có sản phẩm hehehe </span>;
+
   const ATTRIBUTE_OBJ = data.data[0].attributes.attributeType;
 
   const ATTRIBUTES_RANGE = findAttributeRange(
