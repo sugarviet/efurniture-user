@@ -8,27 +8,48 @@ import {
 import { get_voucher_by_specified } from "@api/voucherApi";
 import useUserCart from "@hooks/useUserCart";
 import LoadingSpinner from "@components/LoadingSpinner";
+import {
+    usePostAuth,
+} from "@hooks/api-hooks";
+import {
+    apply_voucher
+} from "@api/voucherApi";
 
+function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
 
-function CouponListModal({ setIsModalCreateOpen, handleChooseVoucher }) {
+    const [chooseVoucher, setChooseVoucher] = useState();
 
     const { cart } = useUserCart();
 
     const voucherInfo = cart?.map((item) => ({
         product_id: item._id,
-        price: item.regular_price
+        price: item.sale_price ? item.sale_price : item.regular_price,
+    }));
+
+    const productForVoucher = cart?.map((item) => ({
+        product_id: item._id,
+        price: item.sale_price ? item.sale_price : item.regular_price,
+        quantity: item.quantity_in_cart
     }));
 
     const { data, isLoading } = useFetchWithAuth(get_voucher_by_specified(), undefined, { voucherInfo });
 
+    const { mutate: applyVoucher } = usePostAuth(
+        apply_voucher(chooseVoucher),
+        undefined,
+        (data) => {
+            setDataAfterVoucher(data.data.metaData);
+        },
+        (error) => {
+            message.error(error.response.data.error.message);
+        }
+    );
+
     const emptyVoucher = !data?.length;
 
-    const [chooseVoucher, setChooseVoucher] = useState();
-
     const handleSaveChoosenVoucher = () => {
-        handleChooseVoucher(chooseVoucher)
+        applyVoucher(productForVoucher)
         setIsModalCreateOpen(false);
-
     }
 
     if (isLoading) return <LoadingSpinner />;

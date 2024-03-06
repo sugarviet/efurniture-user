@@ -6,7 +6,7 @@ const API_URL_DEVELOPMENT = "https://jsonplaceholder.typicode.com";
 const API_URL_PRODUCTION = "http://34.126.181.161:4646/api/v1";
 
 const BANKING_URL_TEST = "https://oauth.casso.vn/v2";
-const BANKING_APIKEY = "AK_CS.48c554e0dae211ee9fc1351b243e3c9a.ccul1F28EeCEkr0AMc09OSoOA3t4YVsIVaVZtd0XlQy6HiDlTcDVulp1UavyE0C2Ss4pwuM4"
+const BANKING_API_KEY = "AK_CS.95b71330db9411ee9d58e1c7c53ac48c.MArA1NZa4mZraplE6qGueWgQgaX9VTNVwOYTCz0ZWAwYZHnJiJcP2RVkkskLhWzEYin6qhWt"
 
 const BASE_URL = API_URL_PRODUCTION;
 const BANKING_URL = BANKING_URL_TEST;
@@ -83,7 +83,7 @@ USER_API.interceptors.response.use(
 
 BANKING_API.interceptors.request.use(
     (config) => {
-        config.headers["Authorization"] = `Apikey ${BANKING_APIKEY}`;
+        config.headers["Authorization"] = `Apikey ${BANKING_API_KEY}`;
         return config;
     },
     (error) => {

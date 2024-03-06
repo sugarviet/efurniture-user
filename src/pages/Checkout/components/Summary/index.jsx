@@ -27,13 +27,11 @@ function Summary() {
     note,
   } = useOrderStore();
 
+  const [dataAfterVoucher, setDataAfterVoucher] = useState();
+
+  console.log(dataAfterVoucher)
+
   const [isCouponOpen, setIsCouponOpen] = useState(false);
-
-  const [voucherId, setVoucherId] = useState("");
-
-  const handleChooseVoucher = (id) => {
-    setVoucherId(id)
-  }
 
   const orderProducts = cart.map((cart) => ({
     product_id: cart._id,
@@ -70,8 +68,9 @@ function Summary() {
           payment_method: selectedPayment,
           order_shipping: orderShipping,
           order_checkout: {
-            final_total: getTotalPrice(),
-            voucher: null,
+            final_total: dataAfterVoucher ? dataAfterVoucher.order_total_after_voucher :  getTotalPrice(),
+            voucher: dataAfterVoucher ? dataAfterVoucher.voucher : "",
+            total: getTotalPrice(),
           },
           note: note,
         }
@@ -124,16 +123,16 @@ function Summary() {
 
       {accessToken &&
         <>
-          <div className="flex flex-row justify-between mt-3">
+          <div className="flex flex-row justify-between items-center mt-3">
             <div onClick={handleOpenCoupon} className="text-sm font-medium flex flex-row justify-between cursor-pointer hover:no-underline underline hover:text-secondary">
               Apply coupon code
             </div>
-            {voucherId &&
-              <p className="text-sm font-medium">Your coupon: <span className="text-[13px] font-normal">{voucherId}</span></p>
+            {dataAfterVoucher &&
+              <p className="text-[13px] font-HelveticaBold">{dataAfterVoucher.voucher.code}</p>
             }
           </div>
           <AppModal isOpen={isCouponOpen} onClose={handleOpenCoupon} className="max-w-[700px]">
-            <CouponListModal handleChooseVoucher={handleChooseVoucher} setIsModalCreateOpen={handleOpenCoupon} />
+            <CouponListModal setIsModalCreateOpen={handleOpenCoupon} setDataAfterVoucher={setDataAfterVoucher} />
           </AppModal>
         </>
       }
@@ -145,15 +144,27 @@ function Summary() {
         </li>
         <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
           <span className="">Discount </span>
-          <span>₫ 0,00</span>
+          <span>
+            {dataAfterVoucher ?
+              formattedCurrency(dataAfterVoucher.voucher.value / 100 * getTotalPrice())
+              :
+              "0,00đ"
+            }
+          </span>
         </li>
         <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
           <span className="">QUOTATION TOTAL </span>
-          <span>{formattedCurrency(getTotalPrice())}</span>
+          <span>
+            {dataAfterVoucher ?
+              formattedCurrency(dataAfterVoucher.order_total_after_voucher)
+              :
+              formattedCurrency(getTotalPrice())
+            }
+          </span>
         </li>
         <li className="flex flex-row justify-between items-center mt-[-0.3125rem] pb-[0.25rem] text-[0.75rem] leading-[2] tracking-[0.05em] text-grey2">
           <span className="">VAT part of total </span>
-          <span>₫ 5.888.182,00</span>
+          <span>0,00 ₫</span>
         </li>
       </ul>
 
@@ -165,7 +176,13 @@ function Summary() {
               THIS IS EVERYTHING YOU NEED TO PAY RIGHT NOW
             </span>
           </span>
-          <span className="">{formattedCurrency(getTotalPrice())}</span>
+          <span className="">
+            {dataAfterVoucher ?
+              formattedCurrency(dataAfterVoucher.order_total_after_voucher)
+              :
+              formattedCurrency(getTotalPrice())
+            }
+          </span>
         </li>
       </ul>
 

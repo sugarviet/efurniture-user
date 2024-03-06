@@ -1,4 +1,4 @@
-const TRANSACTION = '/transactions';
+const TRANSACTION = '/transactions?pageSize=2&sort=DESC';
 
 const ASYNC_TRANSACTION = '/sync'
 

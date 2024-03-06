@@ -6,25 +6,23 @@ import { useFetchBanking } from '../../hooks/api-hooks';
 import { get_banking_transaction, async_banking_transaction } from '../../api/bankingTransactionApi';
 import { usePostWithBankingTransaction } from '../../hooks/api-hooks';
 import { useQueryClient } from "@tanstack/react-query";
-import { message } from "antd";
-import useNotification from "@hooks/useNotification";
+import useNavigation from '../../utils/useNavigation';
 
 export default function BankingPayment() {
 
     const queryClient = useQueryClient();
-    const { success_message } = useNotification();
+
+    const { go_to_home } = useNavigation();
 
     const { data: dataTransaction } = useFetchBanking(
         get_banking_transaction()
     );
 
-
-
     const location = useLocation();
     const orderDetail = location.state || { orderDetail: null };
 
     const orderId = orderDetail._id;
-    const totalPrice = 100;
+    const totalPrice = 2000;
 
     const QR = `https://img.vietqr.io/image/${BANK_INFO.BANK_ID}-${BANK_INFO.ACCOUNT_NO}-${BANK_INFO.TEMPLATE}.png?amount=${totalPrice}&addInfo=${orderId}&accountName=${BANK_INFO.ACCOUNT_NAME}`
 
@@ -43,27 +41,20 @@ export default function BankingPayment() {
             console.log(data);
         },
         (error) => {
-            message.error(error.response.data.error.message);
+            console.log(error);
         }
     );
 
     useEffect(() => {
         const interval = setInterval(() => {
-            if (dataTransaction) {
-                 asyncTransaction({ bank_acc_id: BANK_INFO.ACCOUNT_NO });
-                const lastTransaction = dataTransaction.reduce((prev, current) => {
-                    return (prev.id > current.id) ? prev : current;
-                });
-    
-                if (lastTransaction && lastTransaction.amount >= totalPrice && lastTransaction.description.includes(orderId)) {
-                    success_message('payment', 'pay_success');
-                }
+            asyncTransaction({ bank_acc_id: BANK_INFO.ACCOUNT_NO });
+            if (dataTransaction && dataTransaction[0].amount >= totalPrice && dataTransaction[0].description.includes(orderId)) {
+                go_to_home();
             }
         }, 1000 * 60);
-    
         return () => clearInterval(interval);
     }, [dataTransaction]);
-    
+
     return (
         <section className='bg-[#fffcff] min-h-screen font-HelveticaRoman'>
             <article className='fixed top-0 z-50 w-full px-12 flex flex-row justify-between lg:justify-normal items-center gap-6 py-8 bg-white shadow-lg'>
