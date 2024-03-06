@@ -1,7 +1,7 @@
 import { Disclosure } from "@headlessui/react";
 import { PlusIcon } from "@heroicons/react/20/solid";
-import { Fragment } from "react";
-import { CheckBoxOptions, ColorOptions } from "./FilterOptions";
+import { Fragment, useState } from "react";
+import SliderOptions from "./FilterOptions/SliderOptions";
 
 const FilterSection = ({ name, children }) => {
   return (
@@ -30,21 +30,13 @@ const FilterSection = ({ name, children }) => {
   );
 };
 
-const SECTION_TYPE = {
-  color: {
-    Component: ColorOptions,
-  },
-  material: {
-    Component: CheckBoxOptions,
-  },
-};
-
 export default function FilterSectionWrapper({ name, options }) {
-  const OptionComponent = SECTION_TYPE[name].Component;
+  const { min, max } = options;
+  const [value, setValue] = useState([min, max]);
 
   return (
     <FilterSection name={name}>
-      <OptionComponent options={options} />
+      <SliderOptions value={value} setValue={setValue} options={options} />
     </FilterSection>
   );
 }
