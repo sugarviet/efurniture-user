@@ -4,12 +4,13 @@ import FurnitureCard from "../FurnitureCard";
 import useAuth from "../../stores/useAuth";
 import findAttributeRange from "../../utils/findAttributeRange";
 import SelectionInput from "../SelectionInput";
+import EmptyProductResult from "../EmptyProductResult";
 
 function FurnitureCatalog({ data }) {
   const [catalog, setCatalog] = useState(data.data || []);
   const { accessToken } = useAuth();
 
-  if (!data.data.length) return <span>Không có sản phẩm hehehe </span>;
+  if (!data.data.length) return <EmptyProductResult />;
 
   const ATTRIBUTE_OBJ = data.data[0].attributes.attributeType;
 
