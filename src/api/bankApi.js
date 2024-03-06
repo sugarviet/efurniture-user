@@ -1,0 +1,1 @@
+export const get_banks_api = () => "https://api.vietqr.io/v2/banks";

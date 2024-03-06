@@ -5,6 +5,7 @@ import { withAuthentication } from "../../hocs/withAuthentication";
 import useAuth from "../../stores/useAuth";
 import { useParams } from "react-router";
 import { classNames } from "../../utils/classNames";
+import BankAccount from "./components/BankAccount";
 
 const Address = lazy(() => import("./components/Address"));
 const Orders = lazy(() => import("./components/Orders"));
@@ -23,6 +24,10 @@ const TAB_PROFILE = {
   address: {
     title: "Address",
     component: <Address />,
+  },
+  bankAccount: {
+    title: "Bank Account",
+    component: <BankAccount />,
   },
   personal: {
     title: "Personal data",

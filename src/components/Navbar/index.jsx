@@ -11,7 +11,7 @@ import SearchInput from "../SearchInput";
 import Logo from "../Logo";
 import CloseButton from "../CloseButton";
 import ContactOption from "../ContactOption";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import useAuth from "../../stores/useAuth";
 import { withGuestCart } from "@hocs/withGuestCart";
 import { withUserCart } from "@hocs/withUserCart";
@@ -37,6 +37,8 @@ const navigation = {
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [params, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const { accessToken } = useAuth();
 
@@ -47,8 +49,9 @@ export default function Navbar() {
     setOpen(true);
   };
 
-  const handleSearch = () => {
-    console.log("handleSearch");
+  const handleSearch = (searchValue) => {
+    navigate(`/search`);
+    setSearchParams({ q: searchValue });
   };
 
   return (
@@ -212,11 +215,13 @@ export default function Navbar() {
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:ml-6 w-72">
                   <SearchInput
-                    handleSearch={handleSearch}
                     className="border-b-[1px] border-black pr-6 py-1"
                     placeholder="Search"
                   >
-                    <SearchInput.SubmitButton className="absolute right-0" />
+                    <SearchInput.SubmitButton
+                      handleSearch={handleSearch}
+                      className="absolute right-0"
+                    />
                   </SearchInput>
                 </div>
 
@@ -241,7 +246,10 @@ export default function Navbar() {
                 className="border-b-[1px] border-black pr-6 py-1"
                 placeholder="Search"
               >
-                <SearchInput.SubmitButton className="absolute right-0" />
+                <SearchInput.SubmitButton
+                  handleSearch={handleSearch}
+                  className="absolute right-0"
+                />
               </SearchInput>
             </div>
           </div>
