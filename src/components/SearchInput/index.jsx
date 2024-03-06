@@ -1,25 +1,30 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { classNames } from "../../utils/classNames";
 import SearchButton from "../SearchButton";
 import PropTypes from "prop-types";
+import { SearchInputContext, SearchInputProvider } from "./SearchInnputContext";
 
-function SearchInput({ children, placeholder, className }) {
-  const [searchValue, setSearchValue] = useState("");
-
-  const handleInputChange = (event) => {
-    setSearchValue(event.target.value);
-  };
+const Input = ({ placeholder, className }) => {
+  const { searchValue, setSearchValue } = useContext(SearchInputContext);
 
   return (
-    <div className="flex w-full items-center justify-between relative">
-      <input
-        className={classNames("w-full bg-transparent outline-none ", className)}
-        placeholder={placeholder}
-        value={searchValue}
-        onChange={handleInputChange}
-      />
-      {children}
-    </div>
+    <input
+      className={classNames("w-full bg-transparent outline-none ", className)}
+      placeholder={placeholder}
+      value={searchValue}
+      onChange={(e) => setSearchValue(e.target.value)}
+    />
+  );
+};
+
+function SearchInput({ children, placeholder, className }) {
+  return (
+    <SearchInputProvider>
+      <form className="flex w-full items-center justify-between relative">
+        <Input placeholder={placeholder} className={className} />
+        {children}
+      </form>
+    </SearchInputProvider>
   );
 }
 
