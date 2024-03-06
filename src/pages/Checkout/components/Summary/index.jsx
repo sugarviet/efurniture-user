@@ -11,11 +11,13 @@ import useAuth from "@stores/useAuth";
 import useUserCart from "@hooks/useUserCart";
 import useGuestCart from "@hooks/useGuestCart";
 import formattedCurrency from "@utils/formattedCurrency";
-
+import useNavigation from "../../../../utils/useNavigation";
 
 function Summary() {
 
   const { accessToken } = useAuth();
+
+  const { go_to_payment } = useNavigation();
 
   const { cart, getTotalPrice } = accessToken ? useUserCart() : useGuestCart();
 
@@ -43,7 +45,7 @@ function Summary() {
     checkout_with_guest(),
     undefined,
     (data) => {
-      console.log(data)
+      go_to_payment(data.data.metaData);
     },
     (error) => {
       message.error(error.response.data.error.message);
@@ -53,7 +55,7 @@ function Summary() {
     checkout_with_user(),
     undefined,
     (data) => {
-      console.log(data)
+      go_to_payment(data.data.metaData);
     },
     (error) => {
       message.error(error.response.data.error.message);
@@ -65,11 +67,11 @@ function Summary() {
       checkoutForUser(
         {
           order_products: orderProducts,
-          payment: selectedPayment,
+          payment_method: selectedPayment,
           order_shipping: orderShipping,
           order_checkout: {
             final_total: getTotalPrice(),
-            voucher_id: voucherId
+            voucher: null,
           },
           note: note,
         }
@@ -77,10 +79,11 @@ function Summary() {
       checkoutForGuest(
         {
           order_products: orderProducts,
-          payment: selectedPayment,
+          payment_method: selectedPayment,
           order_shipping: orderShipping,
           order_checkout: {
             final_total: getTotalPrice(),
+            total: getTotalPrice(),
           },
           note: note,
         }

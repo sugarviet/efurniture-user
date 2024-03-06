@@ -44,7 +44,7 @@ function Billing() {
       setOrderShipping({ ...orderShipping, email: userData?.email });
       setIsInputEmail(true);
     }
-  }, [userData, accessToken]);
+  }, [userData]);
 
   return (
     <section>

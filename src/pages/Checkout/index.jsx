@@ -28,8 +28,6 @@ function Checkout() {
 
   const { activeTab } = useSwitchTab();
 
-  console.log(activeTab)
-
   return (
     <main className="min-h-screen">
       <div className="lg:furniture-divided-bottom pt-0">

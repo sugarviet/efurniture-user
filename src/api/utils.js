@@ -5,7 +5,11 @@ import { ACCESS_TOKEN, REFRESH_TOKEN, CLIENT_ID } from "../constants/token";
 const API_URL_DEVELOPMENT = "https://jsonplaceholder.typicode.com";
 const API_URL_PRODUCTION = "http://34.126.181.161:4646/api/v1";
 
+const BANKING_URL_TEST = "https://oauth.casso.vn/v2";
+const BANKING_APIKEY = "AK_CS.48c554e0dae211ee9fc1351b243e3c9a.ccul1F28EeCEkr0AMc09OSoOA3t4YVsIVaVZtd0XlQy6HiDlTcDVulp1UavyE0C2Ss4pwuM4"
+
 const BASE_URL = API_URL_PRODUCTION;
+const BANKING_URL = BANKING_URL_TEST;
 
 const accessToken = Cookies.get(ACCESS_TOKEN);
 const refreshToken = Cookies.get(REFRESH_TOKEN);
@@ -17,6 +21,10 @@ export const API = axios.create({
 
 export const USER_API = axios.create({
     baseURL: BASE_URL,
+});
+
+export const BANKING_API = axios.create({
+    baseURL: BANKING_URL,
 });
 
 const cookies = () => ({
@@ -69,6 +77,16 @@ USER_API.interceptors.response.use(
             }
         }
 
+        return Promise.reject(error);
+    }
+);
+
+BANKING_API.interceptors.request.use(
+    (config) => {
+        config.headers["Authorization"] = `Apikey ${BANKING_APIKEY}`;
+        return config;
+    },
+    (error) => {
         return Promise.reject(error);
     }
 );

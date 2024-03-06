@@ -14,14 +14,13 @@ function CouponListModal({ setIsModalCreateOpen, handleChooseVoucher }) {
 
     const { cart } = useUserCart();
 
-    // const voucherInfo = cart?.map((item) => ({
-    //     product_id: item._id,
-    //     price: item.regular_price
-    // }));
+    const voucherInfo = cart?.map((item) => ({
+        product_id: item._id,
+        price: item.regular_price
+    }));
 
-    // const { data, isLoading } = useFetchWithAuth(get_voucher_by_specified(), undefined, { voucherInfo });
+    const { data, isLoading } = useFetchWithAuth(get_voucher_by_specified(), undefined, { voucherInfo });
 
-    const data = null;
     const emptyVoucher = !data?.length;
 
     const [chooseVoucher, setChooseVoucher] = useState();
@@ -32,7 +31,7 @@ function CouponListModal({ setIsModalCreateOpen, handleChooseVoucher }) {
 
     }
 
-    // if (isLoading) return <LoadingSpinner />;
+    if (isLoading) return <LoadingSpinner />;
 
     return (
         <section className="relative">
