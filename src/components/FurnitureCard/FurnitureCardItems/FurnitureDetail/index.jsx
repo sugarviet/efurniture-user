@@ -8,7 +8,6 @@ function FurnitureDetail() {
   const { attributes, sale_price, regular_price } = furniture;
 
   const attributeKeys = Object.keys(attributes.attributeType);
-
   return (
     <main className="flex flex-row justify-between pb-[2rem] text-[0.875rem] leading-[1.6] border-b-[0.0625rem] border-border">
       <div>
@@ -21,7 +20,7 @@ function FurnitureDetail() {
           ))}
         </ul>
         <nav className="mt-4">
-          <a className="underline text-[0.8125rem]" href="#">
+          <a className="underline text-[0.8125rem]" href={`/product-detail/${furniture.slug}`}>
             View details
           </a>
         </nav>

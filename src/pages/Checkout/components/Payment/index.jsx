@@ -3,6 +3,11 @@ import { useState } from "react";
 import useSwitchTab from "../../hooks/useSwitchTab";
 import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
 import { useOrderStore } from "../../../../stores/useGuestOrderStore";
+import formattedCurrency from "@utils/formattedCurrency";
+import useUserCart from "@hooks/useUserCart";
+import useGuestCart from "@hooks/useGuestCart";
+import useAuth from "@stores/useAuth";
+import useScroll from "@hooks/useScroll";
 
 const PAYMENT_METHOD = {
   banking: "Online Payment",
@@ -11,13 +16,24 @@ const PAYMENT_METHOD = {
 
 function Payment() {
 
+  const { accessToken } = useAuth();
+
+  const { getTotalPrice } = accessToken ? useUserCart() : useGuestCart();
+
   const { setSelectedPayment, selectedPayment } = useOrderStore();
 
   const { handleChangeTab } = useSwitchTab();
 
+  const { handleScrollToTop } = useScroll();
+
   const handleChangeMethod = (payment) => {
     setSelectedPayment(payment)
   };
+
+  const handleNextStep = () => {
+    handleChangeTab(CHECKOUT_TABS.summary)
+    handleScrollToTop()
+  }
 
   return (
     <div>
@@ -26,7 +42,7 @@ function Payment() {
       </article>
 
       <section className='font-HelveticaRoman'>
-        <p className='text-[14px] lg:text-[14px] leading-[1.1875] tracking-[0.5px] pb-1'>Payment total: <strong>₫ 489.000.000</strong></p>
+        <p className='text-[14px] lg:text-[14px] leading-[1.1875] tracking-[0.5px] pb-1'>Payment total: <strong>{formattedCurrency(getTotalPrice())}</strong></p>
         <div className="pb-16">
           <RadioModal
             name="payment"
@@ -62,7 +78,7 @@ function Payment() {
 
         <button
           type="submit"
-          onClick={() => handleChangeTab(CHECKOUT_TABS.summary)}
+          onClick={() => handleNextStep()}
           className="furniture-button-black-hover w-full px-[55px] py-[14px] text-[0.6875rem] tracking-[0.125rem]"
         >
           continue to summary

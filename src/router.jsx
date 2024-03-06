@@ -22,6 +22,7 @@ const ProductDetail = lazy(() => import("@pages/ProductDetail"));
 const Checkout = lazy(() => import("@pages/Checkout"));
 const Search = lazy(() => import("@pages/Search"));
 const Cart = lazy(() => import("@pages/Cart"));
+const BankingPayment = lazy(() => import("@pages/BankingPayment"));
 
 export const PATH = {
   home: "/",
@@ -39,6 +40,7 @@ export const PATH = {
   checkout: "/checkout",
   productBySubType: "/products/:type/:subtype",
   search: "/search",
+  bankingPayment: "/payment",
 };
 
 export const routers = createBrowserRouter([
@@ -107,11 +109,15 @@ export const routers = createBrowserRouter([
   {
     path: PATH.checkout,
     element: <CheckoutLayout />,
-    children: [
-      {
-        path: PATH.checkout,
-        element: <Checkout />,
-      },
-    ],
+    children: [{
+      path: PATH.checkout,
+      element: <Checkout />,
+    },
+
+    ]
   },
+  {
+    path: PATH.bankingPayment,
+    element: <BankingPayment />,
+  }
 ]);

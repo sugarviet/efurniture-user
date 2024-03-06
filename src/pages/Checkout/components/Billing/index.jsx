@@ -6,20 +6,31 @@ import { useState, useEffect } from 'react';
 import useSwitchTab from "../../hooks/useSwitchTab";
 import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
 import { useOrderStore } from "../../../../stores/useGuestOrderStore";
+import useAuth from "@stores/useAuth";
+import useUserProfile from "@hooks/useUserProfile";
+import useScroll from "@hooks/useScroll";
+
 
 function Billing() {
 
+  const { accessToken } = useAuth();
+
+  const { userData } = useUserProfile();
+
   const { toggleLoginBottomBar } = useToggleLoginBottomBar();
+
+  const { handleScrollToTop } = useScroll();
 
   const { handleChangeTab } = useSwitchTab();
 
-  const { setOrderShipping, orderShipping } = useOrderStore();
+  const { setOrderShipping, orderShipping, selectedDistrict, selectedWard } = useOrderStore();
 
   const [isInputEmail, setIsInputEmail] = useState(false);
 
   const onFinish = (values) => {
-    setOrderShipping(values);
+    setOrderShipping({ ...values, district: selectedDistrict, ward: selectedWard });
     handleChangeTab(CHECKOUT_TABS.delivery)
+    handleScrollToTop();
   };
 
   const handleEmailChange = (e) => {
@@ -29,22 +40,17 @@ function Billing() {
   };
 
   useEffect(() => {
-    if (orderShipping.email) {
+    if (orderShipping.email || userData?.email) {
+      setOrderShipping({ ...orderShipping, email: userData?.email });
       setIsInputEmail(true);
     }
-  }, [orderShipping]);
-
-  const goToNext = () => {
-    handleChangeTab(CHECKOUT_TABS.delivery)
-
-  }
+  }, [userData]);
 
   return (
     <section>
-      <button className="bg-red text-white px-2 py-3 rounded-lg" onClick={goToNext}>go to delivery</button>
       <div className='max-w-[43.75rem] text-[0.875rem] leading-[1.5] pb-[45px] tracking-[0.5px] pt-6 lg:pt-0'>
         <h2 className='font-HelveticaBold text-[1.5rem] leading-[1.20833] tracking-[0.08em] pb-6'>checkout as guest</h2>
-        <p className='pb-[25px]'>You can check out without creating an account. You'll have a chance to create an account later.</p>
+        {!accessToken && <p className='pb-[25px]'>You can check out without creating an account. You'll have a chance to create an account later.</p>}
         <section className="w-full max-w-[43.75rem]">
           <Form
             name="billing"
@@ -53,13 +59,14 @@ function Billing() {
             }}
             onFinish={onFinish}
             autoComplete="off"
-            initialValues={{ province: "Thành Phố Hồ Chí Minh", ...orderShipping }}
+            initialValues={{ province: "Thành Phố Hồ Chí Minh", email: userData?.email, ...orderShipping }}
           >
             <FormInput
               label="Email"
               name="email"
               className="furniture-input w-full h-[3rem]"
               type="newLetterEmail"
+              disabled={userData ? true : false}
               onChange={handleEmailChange}
             />
 
@@ -99,17 +106,20 @@ function Billing() {
           </Form>
         </section>
       </div>
-      <div className="furniture-divided-top pt-10 pb-6">
-        <h2 className='font-HelveticaBold text-[1.5rem] leading-[1.20833] tracking-[0.08em] pb-6'>OR, SIGN IN WITH ACCOUNT</h2>
-        <p className='pb-[25px]'>If you already have a Efurniture account, you can login to it now, and use your stored details.</p>
 
-        <button onClick={() => toggleLoginBottomBar()} className="furniture-button-white-hover flex flex-row gap-4 items-center justify-center w-full sm:w-[75%] lg:w-full sm:px-[55px] py-[14px] text-[0.6875rem] tracking-[0.125rem]">
-          <img className="w-[15px]" src="./images/user.svg" />
-          log in to existing account
-        </button>
-      </div>
+      {!accessToken &&
+        <div className="furniture-divided-top pt-10 pb-6">
+          <h2 className='font-HelveticaBold text-[1.5rem] leading-[1.20833] tracking-[0.08em] pb-6'>OR, SIGN IN WITH ACCOUNT</h2>
+          <p className='pb-[25px]'>If you already have a Efurniture account, you can login to it now, and use your stored details.</p>
+
+          <button onClick={() => toggleLoginBottomBar()} className="furniture-button-white-hover flex flex-row gap-4 items-center justify-center w-full sm:w-[75%] lg:w-full sm:px-[55px] py-[14px] text-[0.6875rem] tracking-[0.125rem]">
+            <img className="w-[15px]" src="./images/user.svg" />
+            log in to existing account
+          </button>
+        </div>
+      }
     </section>
   )
 }
 
-export default Billing
+export default Billing;

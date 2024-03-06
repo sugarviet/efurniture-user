@@ -38,7 +38,7 @@ function Checkout() {
           <div className="furniture-divided-left pt-8 px-5 lg:pt-10 lg:px-16 ">
             <AppSuspense>{tabsCheckout[activeTab].component}</AppSuspense>
             <div className="border-t border-x mb-[-2px] mt-[48px] lg:hidden block">
-              <ToggleCheckoutButton/>
+              <ToggleCheckoutButton />
             </div>
           </div>
         </article>

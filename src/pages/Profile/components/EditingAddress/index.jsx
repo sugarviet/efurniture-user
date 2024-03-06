@@ -6,7 +6,7 @@ import { useUpdateWithAuth } from "@hooks/api-hooks";
 import { edit_address } from "@api/addressApi";
 import { useQueryClient } from "@tanstack/react-query";
 import { get_addresses } from "@api/profileApi";
-import { get_provice_in_saigon } from "@api/addressApi";
+import { get_district_in_saigon } from "@api/addressApi";
 import FormSelect from "@components/FormSelect";
 import { useFetchOutsideSystem } from "@hooks/api-hooks";
 import useNotification from "@hooks/useNotification";
@@ -15,7 +15,7 @@ const EditingAddress = ({ data, setIsModalEditOpen }) => {
   const {success_message, error_message} = useNotification();
   const queryClient = useQueryClient();
   const { data: data_address, isLoading } = useFetchOutsideSystem(
-    get_provice_in_saigon()
+    get_district_in_saigon()
   );
   const { mutate } = useUpdateWithAuth(
     edit_address(data._id),

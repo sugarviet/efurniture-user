@@ -4,9 +4,13 @@ import SideBar from "../SideBar";
 import CartProduct from "@components/CartProduct";
 import LoadingSpinner from "../LoadingSpinner";
 import Proptypes from "prop-types";
+import useCartStore from "@stores/useCartStore";
 
 export default function CartSideBar({ cartData }) {
+
   const { cart, getTotalPrice, isLoading } = cartData;
+
+  const { closeCart } = useCartStore();
 
   if (isLoading) return <LoadingSpinner />;
   const isCartEmpty = !cart.length;
@@ -59,6 +63,7 @@ export default function CartSideBar({ cartData }) {
               </a>
               <Link
                 to={"/checkout"}
+                onClick={closeCart}
                 className="font-HelveticaBold furniture-button-black-hover text-[11px] max-w-[17.1875rem] py-[18px] px-[55px] tracking-[0.125rem]"
               >
                 CHECKOUT

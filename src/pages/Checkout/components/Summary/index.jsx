@@ -1,54 +1,107 @@
+import { useState } from "react";
 import CheckoutEdit from "@components/CheckoutEdit";
 import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
-
-import { usePost } from "../../../../hooks/api-hooks";
+import { usePost, usePostAuth } from "@hooks/api-hooks";
 import { message } from "antd";
-import { checkout_with_guest } from "../../../../api/checkoutApi";
-import { useOrderStore } from "../../../../stores/useGuestOrderStore";
+import { checkout_with_guest, checkout_with_user } from "@api/checkoutApi";
+import { useOrderStore } from "@stores/useGuestOrderStore";
+import AppModal from "@components/ui/AppModal";
+import CouponListModal from "../CouponListModal";
+import useAuth from "@stores/useAuth";
+import useUserCart from "@hooks/useUserCart";
+import useGuestCart from "@hooks/useGuestCart";
+import formattedCurrency from "@utils/formattedCurrency";
+import useNavigation from "../../../../utils/useNavigation";
 
 function Summary() {
 
+  const { accessToken } = useAuth();
+
+  const { go_to_payment } = useNavigation();
+
+  const { cart, getTotalPrice } = accessToken ? useUserCart() : useGuestCart();
+
   const {
     selectedPayment,
-    orderProducts,
     orderShipping,
-    total,
+    note,
   } = useOrderStore();
 
-  const { mutate } = usePost(
+  const [dataAfterVoucher, setDataAfterVoucher] = useState();
+
+  console.log(dataAfterVoucher)
+
+  const [isCouponOpen, setIsCouponOpen] = useState(false);
+
+  const orderProducts = cart.map((cart) => ({
+    product_id: cart._id,
+    quantity: cart.quantity_in_cart,
+    price: cart.regular_price,
+  }))
+
+  const { mutate: checkoutForGuest } = usePost(
     checkout_with_guest(),
     undefined,
     (data) => {
-      console.log(data)
+      go_to_payment(data.data.metaData);
+    },
+    (error) => {
+      message.error(error.response.data.error.message);
+    }
+  );
+  const { mutate: checkoutForUser } = usePostAuth(
+    checkout_with_user(),
+    undefined,
+    (data) => {
+      go_to_payment(data.data.metaData);
     },
     (error) => {
       message.error(error.response.data.error.message);
     }
   );
 
-  const checkoutForGuest = () => {
-    mutate(
-      {
-        order_products: orderProducts,
-        payment: selectedPayment,
-        order_shipping: orderShipping,
-        order_checkout: {
-          final_total: total,
+  const makeCheckout = () => {
+    accessToken ?
+      checkoutForUser(
+        {
+          order_products: orderProducts,
+          payment_method: selectedPayment,
+          order_shipping: orderShipping,
+          order_checkout: {
+            final_total: dataAfterVoucher ? dataAfterVoucher.order_total_after_voucher :  getTotalPrice(),
+            voucher: dataAfterVoucher ? dataAfterVoucher.voucher : "",
+            total: getTotalPrice(),
+          },
+          note: note,
         }
-      }
-    );
+      ) :
+      checkoutForGuest(
+        {
+          order_products: orderProducts,
+          payment_method: selectedPayment,
+          order_shipping: orderShipping,
+          order_checkout: {
+            final_total: getTotalPrice(),
+            total: getTotalPrice(),
+          },
+          note: note,
+        }
+      )
   };
+
+  const handleOpenCoupon = () => {
+    setIsCouponOpen(!isCouponOpen);
+  }
 
   return (
     <section className='w-full lg:max-w-[43.75rem] text-[0.875rem] leading-[1.5] pb-[45px] tracking-[0.5px] pt-6 lg:pt-0'>
-
       <section className='pb-10'>
         <CheckoutEdit title="BILLING ADDRESS" activeTab={CHECKOUT_TABS.billing} />
-        <p className='text-[13px] leading-[23.3px] tracking-[0.5px]'>Vu Truong Giang</p>
-        <p className='text-[14px] leading-[23.3px] tracking-[0.5px]'>Phường Hiệp Phú, Quận 9</p>
-        <p className='text-[14px] leading-[23.3px] tracking-[0.5px]'>Hem 58/21, Tan Lap 1</p>
-        <p className='text-[14px] leading-[23.3px] tracking-[0.5px]'>0981890260</p>
-        <p className='text-[14px] leading-[23.3px] tracking-[0.5px]'>giang.cat.luongg@gmail.com</p>
+        <p className='text-[13px] leading-[23.3px] tracking-[0.5px]'>{orderShipping.first_name + " " + orderShipping.last_name}</p>
+        <p className='text-[14px] leading-[23.3px] tracking-[0.5px]'>{orderShipping.address}</p>
+        <p className='text-[14px] leading-[23.3px] tracking-[0.5px]'>{orderShipping.ward}, {orderShipping.district}</p>
+        <p className='text-[14px] leading-[23.3px] tracking-[0.5px]'>{orderShipping.phone}</p>
+        <p className='text-[14px] leading-[23.3px] tracking-[0.5px]'>{orderShipping.email}</p>
       </section>
 
       <section className="pb-6">
@@ -58,32 +111,60 @@ function Summary() {
 
       <section className="pb-20">
         <CheckoutEdit title="PAYMENT METHOD" activeTab={CHECKOUT_TABS.payment} />
-        <p className='text-[13px] leading-[23.3px] tracking-[0.5px] font-HelveticaBold'>Banking</p>
+        <p className='text-[13px] leading-[23.3px] tracking-[0.5px] font-HelveticaBold'>{selectedPayment}</p>
         <p className='text-[13px] leading-[23.3px] tracking-[0.5px] '>Pay 50% of the order total when placing the final order and the rest of the amount (50%) upon delivery. (you will receive an email when it is time to make the rest payment.
           Terms & Conditions and applicable sales tax will be attached when you receive your order from the store. The request for a quotation does not constitute any legally binding contract between you and the applicable store.</p>
       </section>
 
       <section className="border-b border-blackPrimary pb-[30px]">
         <p className="text-[18px] leading-[34.2px] tracking-[0.5px] font-HelveticaBold">Your comment:</p>
-        <p className='text-[13px] leading-[23.3px] tracking-[0.5px]'>dwdwdwdwd</p>
+        <p className='text-[13px] leading-[23.3px] tracking-[0.5px]'>{note}</p>
       </section>
+
+      {accessToken &&
+        <>
+          <div className="flex flex-row justify-between items-center mt-3">
+            <div onClick={handleOpenCoupon} className="text-sm font-medium flex flex-row justify-between cursor-pointer hover:no-underline underline hover:text-secondary">
+              Apply coupon code
+            </div>
+            {dataAfterVoucher &&
+              <p className="text-[13px] font-HelveticaBold">{dataAfterVoucher.voucher.code}</p>
+            }
+          </div>
+          <AppModal isOpen={isCouponOpen} onClose={handleOpenCoupon} className="max-w-[700px]">
+            <CouponListModal setIsModalCreateOpen={handleOpenCoupon} setDataAfterVoucher={setDataAfterVoucher} />
+          </AppModal>
+        </>
+      }
 
       <ul className="pt-8 list-none">
         <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
           <span className="">Subtotal </span>
-          <span>₫ 64.770.000,00</span>
+          <span>{formattedCurrency(getTotalPrice())}</span>
         </li>
         <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
-          <span className="">Store Contact </span>
-          <span>₫ 0,00</span>
+          <span className="">Discount </span>
+          <span>
+            {dataAfterVoucher ?
+              formattedCurrency(dataAfterVoucher.voucher.value / 100 * getTotalPrice())
+              :
+              "0,00đ"
+            }
+          </span>
         </li>
         <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
           <span className="">QUOTATION TOTAL </span>
-          <span>₫ 64.770.000,00</span>
+          <span>
+            {dataAfterVoucher ?
+              formattedCurrency(dataAfterVoucher.order_total_after_voucher)
+              :
+              formattedCurrency(getTotalPrice())
+            }
+          </span>
         </li>
         <li className="flex flex-row justify-between items-center mt-[-0.3125rem] pb-[0.25rem] text-[0.75rem] leading-[2] tracking-[0.05em] text-grey2">
           <span className="">VAT part of total </span>
-          <span>₫ 5.888.182,00</span>
+          <span>0,00 ₫</span>
         </li>
       </ul>
 
@@ -95,7 +176,13 @@ function Summary() {
               THIS IS EVERYTHING YOU NEED TO PAY RIGHT NOW
             </span>
           </span>
-          <span className="">₫ 64.770.000,00</span>
+          <span className="">
+            {dataAfterVoucher ?
+              formattedCurrency(dataAfterVoucher.order_total_after_voucher)
+              :
+              formattedCurrency(getTotalPrice())
+            }
+          </span>
         </li>
       </ul>
 
@@ -108,7 +195,7 @@ function Summary() {
         </div>
         <div className="text-[13px] leading-[24.7px] tracking-[0.5px] pb-4">
           <p className="pt-4">
-            At BoConcept we do not have all our products in stock, as most of our furniture is made just for you and your home.
+            At eFurniture we do not have all our products in stock, as most of our furniture is made just for you and your home.
           </p>
           <p className="pt-4">
             Our normal delivery time is
@@ -121,13 +208,11 @@ function Summary() {
       </section>
 
       <button
-        type="submit"
-        onClick={() => checkoutForGuest()}
+        onClick={() => makeCheckout()}
         className="furniture-button-black-hover w-full px-[55px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-6"
       >
         purchase now
       </button>
-
     </section>
   )
 }

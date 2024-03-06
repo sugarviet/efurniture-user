@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import CheckoutProduct from "@components/CheckoutProduct"
+import { useToggleCheckoutBottomBar } from "@hooks/useToggleBottomBar";
 
 function SplashCheckoutProduct() {
 
     const [splashCheckout, setSplashCheckout] = useState(true);
+
+    const { closeCheckoutBottomBar } = useToggleCheckoutBottomBar();
 
     useEffect(() => {
         const handleResize = () => {
@@ -11,6 +14,7 @@ function SplashCheckoutProduct() {
                 setSplashCheckout(false);
             } else {
                 setSplashCheckout(true);
+                closeCheckoutBottomBar();
             }
         };
 
