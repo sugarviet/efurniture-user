@@ -8,7 +8,7 @@ import axios from "axios";
 import BankOption from "../BankOption";
 import BankBriefInfo from "../BankBriefInfo";
 
-function BankSelection() {
+function BankSelection({ onChange }) {
   const [selectedBank, setSelectedBank] = useState(undefined);
   const [modalOpen, setModalOpen] = useState(false);
   const { data, isLoading } = useQuery([get_banks_api()], () =>
@@ -21,12 +21,15 @@ function BankSelection() {
   const handleSelect = (bank) => {
     setModalOpen(false);
     setSelectedBank(bank);
+    onChange(bank);
   };
+
+  console.log(selectedBank);
 
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <section className="w-2/3">
+    <section className="w-full">
       <div className="font-semibold mb-2">Bank</div>
       <button
         onClick={() => setModalOpen(true)}

@@ -17,8 +17,6 @@ const CreatingAddress = ({ setIsModalCreateOpen }) => {
     get_district_in_saigon()
   );
 
-  console.log(data_address);
-
   const { mutate } = usePostAuth(
     add_address(),
     undefined,
