@@ -1,7 +1,6 @@
 import Proptypes from "prop-types";
 
 const AppSelect = ({ data, onChange, value }) => {
-
   return (
     <div className="relative">
       <select

@@ -34,7 +34,7 @@ export const PATH = {
   wishlist: "/wishlist",
   roomDetail: "/room/:slug",
   roomByPlace: "/rooms/:place",
-  profile: "/profile/:tab",
+  profile: "/profile",
   stores: "/stores",
   productDetail: "/product-detail/:slug",
   checkout: "/checkout",
@@ -109,15 +109,15 @@ export const routers = createBrowserRouter([
   {
     path: PATH.checkout,
     element: <CheckoutLayout />,
-    children: [{
-      path: PATH.checkout,
-      element: <Checkout />,
-    },
-
-    ]
+    children: [
+      {
+        path: PATH.checkout,
+        element: <Checkout />,
+      },
+    ],
   },
   {
     path: PATH.bankingPayment,
     element: <BankingPayment />,
-  }
+  },
 ]);

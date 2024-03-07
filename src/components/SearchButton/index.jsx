@@ -3,15 +3,14 @@ import { useContext } from "react";
 import { SearchInputContext } from "../SearchInput/SearchInnputContext";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-function SearchButton({ className }) {
+function SearchButton({ className, handleSearch }) {
   const { searchValue } = useContext(SearchInputContext);
   const [params, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate(`/search`);
-    setSearchParams({ q: searchValue });
+    handleSearch(searchValue);
   };
 
   return (
