@@ -29,8 +29,6 @@ function Summary() {
 
   const [dataAfterVoucher, setDataAfterVoucher] = useState();
 
-  console.log(dataAfterVoucher)
-
   const [isCouponOpen, setIsCouponOpen] = useState(false);
 
   const orderProducts = cart.map((cart) => ({
@@ -69,7 +67,7 @@ function Summary() {
           order_shipping: orderShipping,
           order_checkout: {
             final_total: dataAfterVoucher ? dataAfterVoucher.order_total_after_voucher :  getTotalPrice(),
-            voucher: dataAfterVoucher ? dataAfterVoucher.voucher : "",
+            voucher: dataAfterVoucher ? dataAfterVoucher.voucher : null,
             total: getTotalPrice(),
           },
           note: note,

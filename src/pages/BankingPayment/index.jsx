@@ -12,7 +12,7 @@ export default function BankingPayment() {
 
     const queryClient = useQueryClient();
 
-    const { go_to_home } = useNavigation();
+    const { go_to_order_confirmation } = useNavigation();
 
     const { data: dataTransaction } = useFetchBanking(
         get_banking_transaction()
@@ -48,9 +48,10 @@ export default function BankingPayment() {
     useEffect(() => {
         const interval = setInterval(() => {
             asyncTransaction({ bank_acc_id: BANK_INFO.ACCOUNT_NO });
-            if (dataTransaction && dataTransaction[0].amount >= totalPrice && dataTransaction[0].description.includes(orderId)) {
-                go_to_home();
-            }
+            go_to_order_confirmation(orderDetail);
+            // if (dataTransaction && dataTransaction[0].amount >= totalPrice && dataTransaction[0].description.includes(orderId)) {
+            //     go_to_order_confirmation(orderDetail);
+            // }
         }, 1000 * 60);
         return () => clearInterval(interval);
     }, [dataTransaction]);
