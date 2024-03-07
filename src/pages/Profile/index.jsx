@@ -6,6 +6,8 @@ import useAuth from "../../stores/useAuth";
 import { useParams } from "react-router";
 import { classNames } from "../../utils/classNames";
 import BankAccount from "./components/BankAccount";
+import { useSearchParams } from "react-router-dom";
+import useUrlState from "../../hooks/useUrlState";
 
 const Address = lazy(() => import("./components/Address"));
 const Orders = lazy(() => import("./components/Orders"));
@@ -37,9 +39,9 @@ const TAB_PROFILE = {
 
 const Profile = () => {
   const tabKeys = Object.keys(TAB_PROFILE);
-  const { tab } = useParams();
 
-  const [currentTab, setCurrentTab] = useState(tab || tabKeys[0]);
+  // const [currentTab, setCurrentTab] = useState(params.get("tab") || tabKeys[0]);
+  const [currentTab, setCurrentTab] = useUrlState("tab");
   const { clearTokens } = useAuth();
 
   return (

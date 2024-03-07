@@ -1,8 +1,14 @@
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-function useUrlState() {
-    const [urlState, setUrlState] = useSearchParams();
-    return [urlState, setUrlState];
+function useUrlState(key) {
+    const [params, setParams] = useSearchParams();
+
+    const handleSetUrlState = (value) => {
+        setParams({ [key]: value })
+    }
+
+    return [params.get(key), handleSetUrlState];
 }
 
 export default useUrlState;

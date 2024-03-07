@@ -226,7 +226,7 @@ export default function Navbar() {
                 </div>
 
                 <Link
-                  to={accessToken ? "profile/favorites" : "/wishlist"}
+                  to={accessToken ? "profile?tab=favorites" : "/wishlist"}
                   className="ml-4 lg:ml-6 flex items-center justify-center"
                 >
                   <FavoriteButton favored />
