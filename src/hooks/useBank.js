@@ -1,4 +1,4 @@
-import { get_create_bank_info_api } from "../api/bankApi";
+import { get_bank_account_api, get_create_bank_info_api } from "../api/bankApi";
 import { useDeleteAuth, useFetchWithAuth, usePostAuth, useUpdateWithAuth } from "./api-hooks";
 
 function useBank() {

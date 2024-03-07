@@ -1,19 +1,16 @@
+import useBank from "../../hooks/useBank";
 import formatBankAccountNumber from "../../utils/formatBankAccountNumber";
 import BankBriefInfo from "../BankBriefInfo";
 
-const BANK = {
-  logo: "https://api.vietqr.io/img/STB.png",
-  name: "Ngân hàng TMCP Sài Gòn Thương Tín",
-};
-
-function BankAccountCard() {
+function BankAccountCard({ bank }) {
+  const { bank_account_name, account_number, bank_logo, bank_name } = bank;
   return (
     <div className="border border-black rounded px-4 pb-4 w-96">
-      <BankBriefInfo info={BANK} />
+      <BankBriefInfo info={{ logo: bank_logo, name: bank_name }} />
       <div className="flex flex-col">
-        <span className="tracking-widest">DOAN GIA BAO</span>
+        <span className="tracking-widest">{bank_account_name}</span>
         <span className="text-2xl tracking-widest">
-          {formatBankAccountNumber("066427062002")}
+          {formatBankAccountNumber(account_number + "")}
         </span>
       </div>
     </div>

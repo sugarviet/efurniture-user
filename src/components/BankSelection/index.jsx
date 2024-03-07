@@ -24,8 +24,6 @@ function BankSelection({ onChange }) {
     onChange(bank);
   };
 
-  console.log(selectedBank);
-
   if (isLoading) return <LoadingSpinner />;
 
   return (
