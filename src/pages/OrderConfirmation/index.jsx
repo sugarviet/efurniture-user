@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import FormattedCurrency from '@utils/FormattedCurrency'
 import FormattedDate from '@utils/FormattedDate'
-
+import useNavigation from '../../utils/useNavigation'
 const products = [
   {
     name: "SOFA CHEATES 19",
@@ -20,16 +20,20 @@ const products = [
 
 function OrderConfirmation() {
 
+  const { go_to_home } = useNavigation();
+
   const location = useLocation();
   const orderConfirmation = location.state || { orderConfirmation: null };
 
-  const orderProduct = orderConfirmation.order_products;
+  const orderProduct = orderConfirmation.order_products || { orderProduct: null };
+  const orderShipping = orderConfirmation.order_shipping || { orderShipping: null };
+  const orderCheckout = orderConfirmation.order_checkout || { orderCheckout: null };
 
-  const orderShipping = orderConfirmation.order_shipping;
-
-  const orderCheckout = orderConfirmation.order_checkout;
-
-  console.log(orderConfirmation)
+  useEffect(() => {
+    if (!orderConfirmation.orderConfirmation) {
+      go_to_home();
+    }
+  }, [orderConfirmation, go_to_home]);
 
   return (
     <section className='min-h-screen mb-12'>
@@ -66,23 +70,26 @@ function OrderConfirmation() {
                 <div className='mt-28'>
                   <p className='font-HelveticaBold text-[1.5rem] leading-[1.20833] tracking-[0.08em]'>Billing address</p>
                   <table className='mt-6 w-[70%]'>
-                    <tr>
-                      <td className='font-HelveticaBold text-[16px] leading-[1.20833] tracking-[0.08em]'>Name</td>
-                      <td className='pt-2 leading-[1.4] tracking-[0.04em]'>{orderShipping.first_name} {orderShipping.last_name}</td>
-                    </tr>
-                    <tr className='mt-2'>
-                      <td className='font-HelveticaBold text-[16px] leading-[1.20833] tracking-[0.08em]'>Address</td>
-                      <td className='pt-2 max-w-[150px] leading-[1.4] tracking-[0.04em]'>{orderShipping.ward}, {orderShipping.district}, {orderShipping.address}</td>
-                    </tr>
-                    <tr>
-                      <td className='font-HelveticaBold text-[16px] leading-[1.20833] tracking-[0.08em]'>Phone</td>
-                      <td className='pt-2 leading-[1.4] tracking-[0.04em]'>{orderShipping.phone}</td>
-                    </tr>
-                    <tr>
-                      <td className='font-HelveticaBold text-[16px] leading-[1.20833] tracking-[0.08em]'>Email</td>
-                      <td className='pt-2 leading-[1.4] tracking-[0.04em]'>{orderShipping.email}</td>
-                    </tr>
+                    <tbody>
+                      <tr>
+                        <td className='font-HelveticaBold text-[16px] leading-[1.20833] tracking-[0.08em]'>Name</td>
+                        <td className='pt-2 leading-[1.4] tracking-[0.04em]'>{orderShipping.first_name} {orderShipping.last_name}</td>
+                      </tr>
+                      <tr className='mt-2'>
+                        <td className='font-HelveticaBold text-[16px] leading-[1.20833] tracking-[0.08em]'>Address</td>
+                        <td className='pt-2 max-w-[150px] leading-[1.4] tracking-[0.04em]'>{orderShipping.ward}, {orderShipping.district}, {orderShipping.address}</td>
+                      </tr>
+                      <tr>
+                        <td className='font-HelveticaBold text-[16px] leading-[1.20833] tracking-[0.08em]'>Phone</td>
+                        <td className='pt-2 leading-[1.4] tracking-[0.04em]'>{orderShipping.phone}</td>
+                      </tr>
+                      <tr>
+                        <td className='font-HelveticaBold text-[16px] leading-[1.20833] tracking-[0.08em]'>Email</td>
+                        <td className='pt-2 leading-[1.4] tracking-[0.04em]'>{orderShipping.email}</td>
+                      </tr>
+                    </tbody>
                   </table>
+
                 </div>
                 <div className='flex flex-row gap-4 max-w-[400px]'>
                   <Link to="/">
@@ -127,8 +134,8 @@ function OrderConfirmation() {
                   </div>
                 </div>
                 <div className={`furniture-divided-bottom pb-8 h-[320px] ${products.length > 2 ? "overflow-y-auto" : "overflow-y-hidden"}`}>
-                  {products.map((product) => (
-                    <div className='mt-8 flex flex-row justify-between'>
+                  {products.map((product, index) => (
+                    <div key={index} className='mt-8 flex flex-row justify-between'>
                       <div className='flex flex-row gap-5'>
                         <div className='w-16 h-16 sm:w-28 sm:h-28 rounded-xl px-2 py-2 bg-white'>
                           <img className='w-full h-full' src={product.image}></img>
@@ -146,13 +153,13 @@ function OrderConfirmation() {
                   <ul className="pt-4 list-none furniture-divided-bottom pb-4">
                     <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
                       <span className="">Subtotal </span>
-                      <span>{FormattedCurrency(orderConfirmation.order_checkout.final_total)}</span>
+                      <span>{FormattedCurrency(orderCheckout.final_total)}</span>
                     </li>
                     <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
                       <span className="">Discount </span>
                       <span>
                         {orderConfirmation ?
-                          FormattedCurrency(orderConfirmation.order_checkout.voucher.value / 100 * orderConfirmation.order_checkout.total)
+                          FormattedCurrency(orderCheckout.voucher?.value / 100 * orderCheckout.total)
                           :
                           "0,00đ"
                         }
@@ -169,7 +176,7 @@ function OrderConfirmation() {
                     <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
                       <span className="text-[15px] font-HelveticaBold">QUOTATION TOTAL </span>
                       <span className='text-[15px] font-HelveticaBold'>
-                        {FormattedCurrency(orderConfirmation.order_checkout.total)}
+                        {FormattedCurrency(orderCheckout.total)}
                       </span>
                     </li>
                   </ul>
