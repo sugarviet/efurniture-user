@@ -38,7 +38,7 @@ const Profile = () => {
   const { clearTokens } = useAuth();
 
   return (
-    <main className="flex flex-col gap-8">
+    <main className="flex flex-col gap-8 pb-12">
       <section className="text-center my-3 flex flex-col gap-5 w-full h-56 justify-end mb-10">
         <div>
           <h1 className="text-5xl font-black my-4">

@@ -28,7 +28,7 @@ function Billing() {
   const [isInputEmail, setIsInputEmail] = useState(false);
 
   const onFinish = (values) => {
-    setOrderShipping({ ...values, district: selectedDistrict, ward: selectedWard });
+    setOrderShipping({ ...values, district: selectedDistrict, ward: selectedWard, longitude: 106.75197333979435, latitude: 10.786098323202225 });
     handleChangeTab(CHECKOUT_TABS.delivery)
     handleScrollToTop();
   };

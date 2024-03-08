@@ -3,20 +3,6 @@ import { Link, useLocation } from 'react-router-dom'
 import FormattedCurrency from '@utils/FormattedCurrency'
 import FormattedDate from '@utils/FormattedDate'
 import useNavigation from '../../utils/useNavigation'
-const products = [
-  {
-    name: "SOFA CHEATES 19",
-    quantity: 1,
-    price: 11000000,
-    image: 'https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dwc7a69a2b/images/1520000/1522718.jpg?sw=2000'
-  },
-  {
-    name: "CHAIR CHEATES 19",
-    quantity: 2,
-    price: 18000000,
-    image: 'https://images.demandware.net/dw/image/v2/BBBV_PRD/on/demandware.static/-/Sites-master-catalog/default/dw771bc54e/images/2110000/2113832.jpg?sw=1000'
-  },
-]
 
 function OrderConfirmation() {
 
@@ -25,12 +11,14 @@ function OrderConfirmation() {
   const location = useLocation();
   const orderConfirmation = location.state || { orderConfirmation: null };
 
-  const orderProduct = orderConfirmation.order_products || { orderProduct: null };
+  const orderProduct = orderConfirmation.order_products || [];
   const orderShipping = orderConfirmation.order_shipping || { orderShipping: null };
   const orderCheckout = orderConfirmation.order_checkout || { orderCheckout: null };
 
+  console.log(orderConfirmation)
+
   useEffect(() => {
-    if (!orderConfirmation.orderConfirmation) {
+    if (orderConfirmation.orderConfirmation === null) {
       go_to_home();
     }
   }, [orderConfirmation, go_to_home]);
@@ -133,12 +121,12 @@ function OrderConfirmation() {
                     </article>
                   </div>
                 </div>
-                <div className={`furniture-divided-bottom pb-8 h-[320px] ${products.length > 2 ? "overflow-y-auto" : "overflow-y-hidden"}`}>
-                  {products.map((product, index) => (
-                    <div key={index} className='mt-8 flex flex-row justify-between'>
+                <div className={`furniture-divided-bottom pb-8 ${orderProduct.length > 2 ? "overflow-y-auto h-[320px]" : "overflow-y-hidden"}`}>
+                  {orderProduct.map((product) => (
+                    <div key={product._id} className='mt-8 flex flex-row justify-between'>
                       <div className='flex flex-row gap-5'>
                         <div className='w-16 h-16 sm:w-28 sm:h-28 rounded-xl px-2 py-2 bg-white'>
-                          <img className='w-full h-full' src={product.image}></img>
+                          <img className='w-full h-full' src={product.thumb}></img>
                         </div>
                         <div className='flex flex-col'>
                           <p className='font-HelveticaBold text-[11px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{product.name}</p>
@@ -153,7 +141,7 @@ function OrderConfirmation() {
                   <ul className="pt-4 list-none furniture-divided-bottom pb-4">
                     <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
                       <span className="">Subtotal </span>
-                      <span>{FormattedCurrency(orderCheckout.final_total)}</span>
+                      <span>{FormattedCurrency(orderCheckout.total)}</span>
                     </li>
                     <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
                       <span className="">Discount </span>
@@ -176,7 +164,7 @@ function OrderConfirmation() {
                     <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
                       <span className="text-[15px] font-HelveticaBold">QUOTATION TOTAL </span>
                       <span className='text-[15px] font-HelveticaBold'>
-                        {FormattedCurrency(orderCheckout.total)}
+                        {FormattedCurrency(orderCheckout.final_total)}
                       </span>
                     </li>
                   </ul>
