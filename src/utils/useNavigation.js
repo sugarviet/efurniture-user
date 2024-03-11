@@ -13,7 +13,10 @@ function useNavigation() {
 
     const go_to_back = () => navigate(-1);
 
+    const go_to_login = () => navigate("/login");
+
     return {
+        go_to_login,
         go_to_payment,
         go_to_home,
         go_to_order_confirmation,
