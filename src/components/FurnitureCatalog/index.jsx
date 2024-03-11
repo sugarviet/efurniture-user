@@ -6,6 +6,10 @@ import findAttributeRange from "../../utils/findAttributeRange";
 import SelectionInput from "../SelectionInput";
 import EmptyProductResult from "../EmptyProductResult";
 
+const SORT_OPTION = {
+  
+}
+
 function FurnitureCatalog({ data }) {
   const [catalog, setCatalog] = useState(data.data || []);
   const { accessToken } = useAuth();
@@ -49,7 +53,19 @@ function FurnitureCatalog({ data }) {
       <section className="hidden md:flex md:col-span-12 md:flex-row-reverse px-4">
         <div>
           <span className="text-sm">Sort by: </span>
-          <SelectionInput onChange={handleSort} type="furniture_sorting" />
+          <SelectionInput
+            onChange={handleSort}
+            options={[
+              {
+                value: "price_asc",
+                label: "Price (ascending)",
+              },
+              {
+                value: "price_desc",
+                label: "Price (descending)",
+              },
+            ]}
+          />
         </div>
       </section>
       <section className="hidden md:block md:col-span-3 lg:col-span-3 xl:col-span-3 px-4">

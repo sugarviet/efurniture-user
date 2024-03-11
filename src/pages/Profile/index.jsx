@@ -5,6 +5,9 @@ import { withAuthentication } from "../../hocs/withAuthentication";
 import useAuth from "../../stores/useAuth";
 import { useParams } from "react-router";
 import { classNames } from "../../utils/classNames";
+import BankAccount from "./components/BankAccount";
+import { useSearchParams } from "react-router-dom";
+import useUrlState from "../../hooks/useUrlState";
 import useNavigation from "../../utils/useNavigation";
 import OrderDetail from "./components/OrderDetail";
 
@@ -26,6 +29,10 @@ const TAB_PROFILE = {
     title: "Address",
     component: <Address />,
   },
+  bankAccount: {
+    title: "Bank Account",
+    component: <BankAccount />,
+  },
   personal: {
     title: "Personal data",
     component: <PersonalData />,
@@ -34,17 +41,19 @@ const TAB_PROFILE = {
 
 const Profile = () => {
   const tabKeys = Object.keys(TAB_PROFILE);
-  const { tab, id } = useParams();
 
-  const [currentTab, setCurrentTab] = useState(tab || tabKeys[0]);
+  // const { id,tab } = useParams();
+  // const [currentTab, setCurrentTab] = useState(tab || tabKeys[0]);
+
+  const [currentTab, setCurrentTab] = useUrlState("tab");
   const { clearTokens } = useAuth();
 
-  const { go_to_profile_tab } = useNavigation();
+  // const { go_to_profile_tab } = useNavigation();
 
-  const handleChangeTab = (key) => {
-    setCurrentTab(key)
-    go_to_profile_tab(key)
-  }
+  // const handleChangeTab = (key) => {
+  //   setCurrentTab(key)
+  //   go_to_profile_tab(key)
+  // }
 
   return (
     <main className="flex flex-col gap-8 pb-12">
@@ -82,7 +91,7 @@ const Profile = () => {
                       "furniture-link",
                       currentTab === key ? "underline" : ""
                     )}
-                    onClick={() => handleChangeTab(key)}
+                    onClick={() => setCurrentTab(key)}
                   >
                     {title}
                   </p>
@@ -92,11 +101,7 @@ const Profile = () => {
           </div>
 
           <div>
-            {id ?
-              <OrderDetail />
-              :
-              <AppSuspense>{TAB_PROFILE[currentTab].component}</AppSuspense>
-            }
+            <AppSuspense>{TAB_PROFILE[currentTab].component}</AppSuspense>
           </div>
         </AppRow>
       </section>

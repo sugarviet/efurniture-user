@@ -4,24 +4,33 @@ import SearchButton from "../SearchButton";
 import PropTypes from "prop-types";
 import { SearchInputContext, SearchInputProvider } from "./SearchInnputContext";
 
-const Input = ({ placeholder, className }) => {
+const Input = ({ placeholder, className, onChange = () => {} }) => {
   const { searchValue, setSearchValue } = useContext(SearchInputContext);
+
+  const handleOnChange = (value) => {
+    setSearchValue(value);
+    onChange(value);
+  };
 
   return (
     <input
       className={classNames("w-full bg-transparent outline-none ", className)}
       placeholder={placeholder}
       value={searchValue}
-      onChange={(e) => setSearchValue(e.target.value)}
+      onChange={(e) => handleOnChange(e.target.value)}
     />
   );
 };
 
-function SearchInput({ children, placeholder, className }) {
+function SearchInput({ children, placeholder, className, onChange }) {
   return (
     <SearchInputProvider>
       <form className="flex w-full items-center justify-between relative">
-        <Input placeholder={placeholder} className={className} />
+        <Input
+          onChange={onChange}
+          placeholder={placeholder}
+          className={className}
+        />
         {children}
       </form>
     </SearchInputProvider>
