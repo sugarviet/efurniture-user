@@ -1,29 +1,19 @@
-import { useParams } from "react-router";
 import { get_order_detail_by_id } from "@api/orderHistoryApi";
-import { useFetchWithAuth } from "@hooks/api-hooks";
-import LoadingSpinner from "@components/LoadingSpinner";
 import useNavigation from "../../../../utils/useNavigation";
 import FormattedCurrency from '@utils/FormattedCurrency'
 import formattedTime from '@utils/formattedTime'
 import FormattedDate from '@utils/FormattedDate'
+import { withFetchDataWithAuth } from "../../../../hocs/withFetchDataWithAuth";
+import PropTypes from "prop-types";
 
-function OrderDetail() {
+function OrderDetail({ data }) {
 
     const { go_to_back } = useNavigation();
 
-    const { id } = useParams();
+    const orderShipping = data?.order_shipping;
 
-    const { data: orderDetail, isLoading } = useFetchWithAuth(get_order_detail_by_id(id));
-
-    const orderShipping = orderDetail?.order_shipping || { orderShipping: null };
-
-    const orderProduct = orderDetail?.order_products || [];
-    const orderCheckout = orderDetail?.order_checkout || { orderCheckout: null };
-
-    if (isLoading) return <LoadingSpinner />;
-
-    console.log(orderDetail)
-
+    const orderProduct = data?.order_products || [];
+    const orderCheckout = data?.order_checkout;
 
     return (
         <section className="border-[1px] rounded-lg shadow-md max-w-[60rem] px-16 py-12">
@@ -40,12 +30,12 @@ function OrderDetail() {
 
             <section>
                 <article className="flex flex-row gap-1 items-center pt-6 gap-4">
-                    <p className='font-HelveticaBold text-[1.3rem] leading-[1.20833] tracking-[0.08em] '>Order detail # {orderDetail.order_code}</p>
+                    <p className='font-HelveticaBold text-[1.3rem] leading-[1.20833] tracking-[0.08em] '>Order detail # {data.order_code}</p>
                     <div className="bg-blackPrimary px-2 py-2 rounded-md ">
                         <p className="text-white font-HelveticaBold leading-[1.20833] tracking-[0.08em]">PENDING</p>
                     </div>
                 </article>
-                <p className='text-[14px] font-medium leading-[1.4] tracking-[0.04em] pt-2'>Date: {FormattedDate(orderDetail.createdAt)}</p>
+                <p className='text-[14px] font-medium leading-[1.4] tracking-[0.04em] pt-2'>Date: {FormattedDate(data.createdAt)}</p>
 
                 <div className='relative w-full h-[2px] bg-blackPrimary mt-10 mb-14' >
                     <div className='bg-blackPrimary top-[-15px] left-0 rounded-[50%] w-8 h-8 relative  after:absolute after:top-[6px] after:left-[12px] after:w-[7px] after:h-[14px] after:rotate-45 after:border-r-[2px] after:border-b-[2px]'>
@@ -55,7 +45,7 @@ function OrderDetail() {
 
                     <article className='absolute top-6 left-[-20px] flex flex-col items-center'>
                         <p className='text-[14px] font-medium leading-[1.4] tracking-[0.04em]'>Ordered</p>
-                        <p className='text-[14px]  text-grey1 leading-[1.4] tracking-[0.04em]'>{formattedTime(orderDetail.createdAt)}, {FormattedDate(orderDetail.createdAt)}</p>
+                        <p className='text-[14px]  text-grey1 leading-[1.4] tracking-[0.04em]'>{formattedTime(data.createdAt)}, {FormattedDate(data.createdAt)}</p>
                     </article>
                     <article className='absolute top-6 left-1/2 -translate-x-1/2 flex flex-col items-center'>
                         <article className='text-[14px] font-medium leading-[1.4] tracking-[0.04em]'>Ready to ship</article>
@@ -95,7 +85,7 @@ function OrderDetail() {
                     </div>
                     <div className="basis-1/3">
                         <p className='font-HelveticaBold text-[1.5rem] leading-[1.20833] tracking-[0.08em]'>Payment method</p>
-                        <p className='pt-2 leading-[1.4] tracking-[0.04em] mt-2'>{orderDetail.payment_method}</p>
+                        <p className='pt-2 leading-[1.4] tracking-[0.04em] mt-2'>{data.payment_method}</p>
                         <p className='pt-2 leading-[1.4] tracking-[0.04em]'>&#x00028;Thanh toán thành công&#x00029;</p>
 
                     </div>
@@ -105,8 +95,8 @@ function OrderDetail() {
                     <p className='font-HelveticaBold text-[1.5rem] leading-[1.20833] tracking-[0.08em] pt-10 pb-5'>Order items</p>
                     <div className='w-full bg-[#F2F2F4] rounded-md px-3 sm:px-12 pb-12'>
                         <div className={`furniture-divided-bottom pb-8 ${orderProduct.length > 5 ? "overflow-y-auto h-[320px]" : "overflow-y-hidden"}`}>
-                            {orderProduct.map((product) => (
-                                <div key={product._id} className='mt-8 flex flex-row justify-between'>
+                            {orderProduct.map((product, key) => (
+                                <div key={key} className='mt-8 flex flex-row justify-between'>
                                     <div className='flex flex-row gap-5'>
                                         <div className='w-16 h-16 sm:w-28 sm:h-28 rounded-xl px-2 py-2 bg-white'>
                                             <img className='w-full h-full' src={product.thumb}></img>
@@ -129,7 +119,7 @@ function OrderDetail() {
                                 <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
                                     <span className="">Discount </span>
                                     <span>
-                                        {orderDetail ?
+                                        {data ?
                                             FormattedCurrency(orderCheckout.total - orderCheckout.final_total)
                                             :
                                             "0,00đ"
@@ -160,4 +150,9 @@ function OrderDetail() {
     )
 }
 
-export default OrderDetail
+OrderDetail.propTypes = {
+    data: PropTypes.object,
+};
+
+
+export default withFetchDataWithAuth(OrderDetail, get_order_detail_by_id)
