@@ -24,6 +24,7 @@ const Search = lazy(() => import("@pages/Search"));
 const Cart = lazy(() => import("@pages/Cart"));
 const BankingPayment = lazy(() => import("@pages/BankingPayment"));
 const OrderConfirmation = lazy(() => import("@pages/OrderConfirmation"));
+const OrderDetail = lazy(() => import("./pages/Profile/components/OrderDetail"));
 
 export const PATH = {
   home: "/",
@@ -43,6 +44,7 @@ export const PATH = {
   search: "/search",
   bankingPayment: "/payment",
   orderConfirmation: "/order-confirmation",
+  orderDetail: ":id",
 };
 
 export const routers = createBrowserRouter([
@@ -85,6 +87,10 @@ export const routers = createBrowserRouter([
       {
         path: PATH.profile,
         element: <Profile />,
+        children: [{
+          path: PATH.orderDetail,
+          element: <OrderDetail />
+        }]
       },
       {
         path: PATH.productDetail,

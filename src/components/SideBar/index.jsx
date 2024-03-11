@@ -30,7 +30,7 @@ export default function SideBar({ children }) {
             className={`font-HelveticaRoman h-full fixed top-0  bg-white w-full md:w-[60%] lg:w-[46%] min-[1600px]:w-[34%]  overflow-hidden z-[7777] ${
               isOpen
                 ? "right-0 duration-700"
-                : "md:right-[-60%] lg:right-[-46%] 2xl:right-[-34%] duration-300 animate-cartDisappear"
+                : "right-[-100%] md:right-[-60%] lg:right-[-46%] min-[1600px]:right-[-34%] duration-300 animate-cartDisappear"
             }`}
           >
             {children}

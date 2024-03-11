@@ -5,6 +5,8 @@ import { withAuthentication } from "../../hocs/withAuthentication";
 import useAuth from "../../stores/useAuth";
 import { useParams } from "react-router";
 import { classNames } from "../../utils/classNames";
+import useNavigation from "../../utils/useNavigation";
+import OrderDetail from "./components/OrderDetail";
 
 const Address = lazy(() => import("./components/Address"));
 const Orders = lazy(() => import("./components/Orders"));
@@ -32,10 +34,17 @@ const TAB_PROFILE = {
 
 const Profile = () => {
   const tabKeys = Object.keys(TAB_PROFILE);
-  const { tab } = useParams();
+  const { tab, id } = useParams();
 
   const [currentTab, setCurrentTab] = useState(tab || tabKeys[0]);
   const { clearTokens } = useAuth();
+
+  const { go_to_profile_tab } = useNavigation();
+
+  const handleChangeTab = (key) => {
+    setCurrentTab(key)
+    go_to_profile_tab(key)
+  }
 
   return (
     <main className="flex flex-col gap-8 pb-12">
@@ -73,7 +82,7 @@ const Profile = () => {
                       "furniture-link",
                       currentTab === key ? "underline" : ""
                     )}
-                    onClick={() => setCurrentTab(key)}
+                    onClick={() => handleChangeTab(key)}
                   >
                     {title}
                   </p>
@@ -83,7 +92,11 @@ const Profile = () => {
           </div>
 
           <div>
-            <AppSuspense>{TAB_PROFILE[currentTab].component}</AppSuspense>
+            {id ?
+              <OrderDetail />
+              :
+              <AppSuspense>{TAB_PROFILE[currentTab].component}</AppSuspense>
+            }
           </div>
         </AppRow>
       </section>

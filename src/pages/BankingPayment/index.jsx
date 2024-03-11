@@ -26,7 +26,7 @@ export default function BankingPayment() {
 
     const QR = `https://img.vietqr.io/image/${BANK_INFO.BANK_ID}-${BANK_INFO.ACCOUNT_NO}-${BANK_INFO.TEMPLATE}.png?amount=${totalPrice}&addInfo=${orderId}&accountName=${BANK_INFO.ACCOUNT_NAME}`
 
-console.log(orderDetail)
+    console.log(orderDetail)
     const [openDetail, setOpenDetail] = useState(false);
 
     const handleOpenDetail = () => {
