@@ -1,7 +1,8 @@
 import { useState } from "react";
 import SocialList from "./components/SocialList";
 import MenuSection from "./components/MenuSection";
-const menuItems = [
+import useAuth from "../../../../stores/useAuth";
+const MENU_ITEMS = [
   {
     title: "Contact",
     items: [
@@ -33,20 +34,36 @@ const menuItems = [
       { name: "Press Lounge" },
     ],
   },
+];
+
+const GUEST_MENU_ITEMS = [
+  ...MENU_ITEMS,
   {
     title: "My Efurniture",
     items: [
       { name: "Login", to: "/login" },
       { name: "Register", to: "/register" },
-      { name: "Orders" },
-      { name: "Offers" },
-      { name: "Favorites" },
+      { name: "Favorites", to: "/wishlist" },
+    ],
+  },
+];
+
+const USER_MENU_ITEMS = [
+  ...MENU_ITEMS,
+  {
+    title: "My Efurniture",
+    items: [
+      { name: "Profile", to: "/profile?tab=personal" },
+      { name: "Orders", to: "/profile?tab=orders" },
+      { name: "Favorites", to: "/profile?tab=favorites" },
+      { name: "Logout", to: "/logout" },
     ],
   },
 ];
 
 function FooterMid() {
   const [openMenu, setOpenMenu] = useState([]);
+  const { accessToken } = useAuth();
 
   const toggleMenu = (index) => {
     if (openMenu.includes(index)) {
@@ -60,16 +77,18 @@ function FooterMid() {
     <section className="pt-[1rem] sm:pt-[2.5rem] pb-[3rem] sm:grid sm:grid-cols-[75%_25%]">
       <div className="w-full">
         <ul className="flex flex-col sm:flex-row justify-between gap-[0.75rem] max-w-[81.25rem] list-none">
-          {menuItems.map((menu, index) => (
-            <MenuSection
-              key={index}
-              title={menu.title}
-              items={menu.items}
-              index={index + 1}
-              openMenu={openMenu}
-              toggleMenu={toggleMenu}
-            />
-          ))}
+          {(accessToken ? USER_MENU_ITEMS : GUEST_MENU_ITEMS).map(
+            (menu, index) => (
+              <MenuSection
+                key={index}
+                title={menu.title}
+                items={menu.items}
+                index={index + 1}
+                openMenu={openMenu}
+                toggleMenu={toggleMenu}
+              />
+            )
+          )}
         </ul>
       </div>
       <div className="sm:hidden w-full flex justify-center py-8">

@@ -8,6 +8,7 @@ import CheckoutLayout from "@layouts/CheckoutLayout";
 
 // Pages
 import Home from "@pages/Home";
+import Logout from "./pages/Logout";
 
 const Profile = lazy(() => import("@pages/Profile"));
 const StoreLocation = lazy(() => import("@pages/StoreLocation"));
@@ -43,6 +44,7 @@ export const PATH = {
   search: "/search",
   bankingPayment: "/payment",
   orderConfirmation: "/order-confirmation",
+  logout: "/logout",
 };
 
 export const routers = createBrowserRouter([
@@ -101,6 +103,10 @@ export const routers = createBrowserRouter([
       {
         path: PATH.cart,
         element: <Cart />,
+      },
+      {
+        path: PATH.logout,
+        element: <Logout />,
       },
       {
         path: "*",
