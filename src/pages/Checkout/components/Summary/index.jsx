@@ -27,16 +27,18 @@ function Summary() {
     note,
   } = useOrderStore();
 
-  const [dataAfterVoucher, setDataAfterVoucher] = useState();
+  console.log("cart", cart)
 
-  console.log(dataAfterVoucher)
+  const [dataAfterVoucher, setDataAfterVoucher] = useState();
 
   const [isCouponOpen, setIsCouponOpen] = useState(false);
 
   const orderProducts = cart.map((cart) => ({
     product_id: cart._id,
     quantity: cart.quantity_in_cart,
-    price: cart.regular_price,
+    price: cart.sale_price > 0 ? cart.sale_price : cart.regular_price,
+    name: cart.name,
+    thumb: cart.thumbs[0]
   }))
 
   const { mutate: checkoutForGuest } = usePost(
@@ -68,8 +70,8 @@ function Summary() {
           payment_method: selectedPayment,
           order_shipping: orderShipping,
           order_checkout: {
-            final_total: dataAfterVoucher ? dataAfterVoucher.order_total_after_voucher :  getTotalPrice(),
-            voucher: dataAfterVoucher ? dataAfterVoucher.voucher : "",
+            final_total: dataAfterVoucher ? dataAfterVoucher.order_total_after_voucher : getTotalPrice(),
+            voucher: dataAfterVoucher ? dataAfterVoucher.voucher : null,
             total: getTotalPrice(),
           },
           note: note,

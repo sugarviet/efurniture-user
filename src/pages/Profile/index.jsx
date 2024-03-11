@@ -3,11 +3,11 @@ import AppRow from "@components/AppRow";
 import AppSuspense from "@components/AppSuspense";
 import { withAuthentication } from "../../hocs/withAuthentication";
 import useAuth from "../../stores/useAuth";
-import { useParams } from "react-router";
 import { classNames } from "../../utils/classNames";
 import BankAccount from "./components/BankAccount";
-import { useSearchParams } from "react-router-dom";
 import useUrlState from "../../hooks/useUrlState";
+import OrderDetail from "./components/OrderDetail";
+import { useLocation } from "react-router-dom";
 
 const Address = lazy(() => import("./components/Address"));
 const Orders = lazy(() => import("./components/Orders"));
@@ -40,12 +40,15 @@ const TAB_PROFILE = {
 const Profile = () => {
   const tabKeys = Object.keys(TAB_PROFILE);
 
-  // const [currentTab, setCurrentTab] = useState(params.get("tab") || tabKeys[0]);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const id = searchParams.get("id");
+
   const [currentTab, setCurrentTab] = useUrlState("tab");
   const { clearTokens } = useAuth();
 
   return (
-    <main className="flex flex-col gap-8">
+    <main className="flex flex-col gap-8 pb-12">
       <section className="text-center my-3 flex flex-col gap-5 w-full h-56 justify-end mb-10">
         <div>
           <h1 className="text-5xl font-black my-4">
@@ -90,7 +93,11 @@ const Profile = () => {
           </div>
 
           <div>
-            <AppSuspense>{TAB_PROFILE[currentTab].component}</AppSuspense>
+            {id ?
+              <OrderDetail />
+              :
+              <AppSuspense>{TAB_PROFILE[currentTab].component}</AppSuspense>
+            }
           </div>
         </AppRow>
       </section>

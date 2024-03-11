@@ -12,7 +12,7 @@ export default function BankingPayment() {
 
     const queryClient = useQueryClient();
 
-    const { go_to_home } = useNavigation();
+    const { go_to_order_confirmation } = useNavigation();
 
     const { data: dataTransaction } = useFetchBanking(
         get_banking_transaction()
@@ -26,7 +26,7 @@ export default function BankingPayment() {
 
     const QR = `https://img.vietqr.io/image/${BANK_INFO.BANK_ID}-${BANK_INFO.ACCOUNT_NO}-${BANK_INFO.TEMPLATE}.png?amount=${totalPrice}&addInfo=${orderId}&accountName=${BANK_INFO.ACCOUNT_NAME}`
 
-
+    console.log(orderDetail)
     const [openDetail, setOpenDetail] = useState(false);
 
     const handleOpenDetail = () => {
@@ -48,9 +48,10 @@ export default function BankingPayment() {
     useEffect(() => {
         const interval = setInterval(() => {
             asyncTransaction({ bank_acc_id: BANK_INFO.ACCOUNT_NO });
-            if (dataTransaction && dataTransaction[0].amount >= totalPrice && dataTransaction[0].description.includes(orderId)) {
-                go_to_home();
-            }
+            go_to_order_confirmation(orderDetail);
+            // if (dataTransaction && dataTransaction[0].amount >= totalPrice && dataTransaction[0].description.includes(orderId)) {
+            //     go_to_order_confirmation(orderDetail);
+            // }
         }, 1000 * 60);
         return () => clearInterval(interval);
     }, [dataTransaction]);
@@ -79,7 +80,7 @@ export default function BankingPayment() {
 
                         <p className='pt-5 text-gray-500 font-medium]'>Mã đơn hàng</p>
                         <div className='flex flex-row gap-2 pt-2'>
-                            <p className='text-base font-semibold tracking-wide'>DWDWDWD </p>
+                            <p className='text-base font-semibold tracking-wide'>{orderDetail.order_code} </p>
                         </div>
 
                         <div className='border-b w-full mt-5'></div>
