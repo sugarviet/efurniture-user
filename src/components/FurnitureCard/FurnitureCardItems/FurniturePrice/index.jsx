@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import formattedCurrency from "../../../../utils/FormattedCurrency";
+import formattedCurrency from "../../../../utils/formattedCurrency";
 import { FurnitureCardContext } from "../../FurnitureCardContext";
 
 function FurniturePrice() {

@@ -4,7 +4,7 @@ import CartProduct from "@components/CartProduct";
 import LoadingSpinner from "../LoadingSpinner";
 import Proptypes from "prop-types";
 import useCartStore from "@stores/useCartStore";
-import formattedCurrency from '../../utils/FormattedCurrency'
+import formattedCurrency from '../../utils/formattedCurrency'
 export default function CartSideBar({ cartData }) {
 
   const { cart, getTotalPrice, isLoading } = cartData;

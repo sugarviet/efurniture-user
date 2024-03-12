@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { FurnitureCardContext } from "../../FurnitureCardContext";
-import formattedCurrency from "../../../../utils/FormattedCurrency";
+import formattedCurrency from "../../../../utils/formattedCurrency";
 
 function FurnitureDetail() {
   const { furniture, onSale } = useContext(FurnitureCardContext);
