@@ -1,11 +1,11 @@
 import CartProduct from "@components/CartProduct";
-import useCart from "@hooks/useCart";
 import formattedCurrency from "@utils/formattedCurrency";
 import { useNavigate } from "react-router-dom";
 import EmptyCart from "./components/EmptyCart";
+import useUserCart from "../../hooks/useUserCart";
 
 const Cart = () => {
-  const { cart, getTotalPrice } = useCart();
+  const { cart, getTotalPrice } = useUserCart();
 
   const navigate = useNavigate();
 

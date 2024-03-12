@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import FormattedCurrency from '@utils/FormattedCurrency'
 import FormattedDate from '@utils/FormattedDate'

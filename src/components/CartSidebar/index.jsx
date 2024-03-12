@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import formattedCurrency from "../../utils/formattedCurrency";
+import formattedCurrency from '../../utils/formattedCurrency'
 import SideBar from "../SideBar";
 import CartProduct from "@components/CartProduct";
 import LoadingSpinner from "../LoadingSpinner";
