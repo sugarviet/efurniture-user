@@ -1,3 +1,129 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body{
+    overflow-x: hidden;
+}
+
+@font-face {
+    font-family: 'HelveticaBold';
+    src: url('./fonts/3.ttf');
+}
+
+@font-face {
+    font-family: 'HelveticaRoman';
+    src: url('./fonts/2.ttf');
+}
+
+@font-face {
+    font-family: 'Baskerville';
+    src: url('./fonts/BaskervilleWGL4BTRoman.ttf');
+}
+
+
+@layer base {
+    h1 {
+        @apply text-[3.25rem] tracking-[0.125em] uppercase leading-[1.2];
+    }
+
+    h2 {
+        @apply text-[2rem] tracking-[0.125em] uppercase leading-[1.34375];
+    }
+    h3{
+        @apply text-[1.5625rem] tracking-[0.18em] uppercase leading-[1.2083333333];
+    }
+
+}
+@layer utilities {
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none; 
+  }
+}
+
+/* button */
+.furniture-button-black-hover {
+    @apply font-HelveticaBold uppercase tracking-[0.125rem] bg-blackPrimary text-center text-white border-[1px] border-blackPrimary hover:bg-white hover:text-black hover:border-[1px] hover:border-black duration-300 cursor-pointer
+}
+
+.furniture-button-white-hover {
+    @apply font-HelveticaBold uppercase tracking-[0.125rem] bg-white text-center text-blackPrimary border-[1px] border-blackPrimary hover:bg-black hover:text-white hover:border-[1px] hover:border-black duration-300 cursor-pointer
+}
+
+/* input number */
+.furniture-input-hide-arrow {
+    @apply [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
+}
+
+/* input  */
+.furniture-input {
+    @apply font-HelveticaRoman leading-[3rem] pl-5 pr-10 outline-none border-[0.5px] border-[#191915] focus:shadow-email
+}
+/* checkbox  */
+.furniture-checkbox {
+    @apply relative after:absolute checked:after:top-[2px] checked:after:left-[7px] checked:after:w-[6px] checked:after:h-[12px] checked:after:rotate-45 checked:after:border-r-[2px] checked:after:border-b-[2px] appearance-none w-[1.5625rem] h-[1.5625rem] outline-none
+}
+.furniture-checkbox-circle {
+    @apply relative after:absolute checked:after:top-[4px] checked:after:left-[8px] checked:after:w-[6px] checked:after:h-[12px] checked:after:rotate-45 checked:after:border-r-[2px] checked:after:border-b-[2px] appearance-none w-[1.5625rem] h-[1.5625rem] outline-none
+}
+
+/* ANIMATIONS */
+.fade-in-from-bottom {
+    opacity: 0;
+    animation: fadeInAndMove 0.7s ease-out forwards; 
+  }
+  
+  @keyframes fadeInAndMove {
+    0% {
+      transform: translateY(10%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+/* underline link  */
+.furniture-link {
+    @apply hover:text-blackPrimary relative after:absolute after:bottom-0 after:left-0 after:bg-blackPrimary after:h-[0.3px] after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300 cursor-pointer
+}
+
+.furniture-link-white-text {
+    @apply hover:text-white relative after:absolute after:bottom-0 after:left-0 after:bg-white after:h-[0.3px] after:w-0 hover:after:w-full after:transition-all after:ease-in-out after:duration-300 cursor-pointer
+}
+
+/* divided line  */
+.furniture-divided-top {
+    @apply border-t-[0.0625rem] border-border 
+}
+.furniture-divided-bottom {
+    @apply border-b-[0.0625rem] border-border 
+}
+.furniture-divided-left {
+    @apply border-l-[0.0625rem] border-border 
+}
+/* promotion banner */
+.furniture-promotion {
+    @apply text-xs tracking-[0.075rem] font-HelveticaBold leading-[18px] h-9 flex items-center justify-center bg-[#dc1016] text-white uppercase
+}
+
+/* border bottom active */
+.furniture-border-active {
+    @apply relative after:absolute after:bottom-[-1.6px] after:left-0 after:bg-blackPrimary after:h-[2px] after:w-full after:transition-all after:ease-in after:duration-200
+}
+/* overlay */
+.furniture-overlay {
+    @apply fixed inset-0 bg-black opacity-20 transition-opacity duration-300 z-50
+}
+
+.furniture-navbar-overlay {
+    @apply fixed inset-0 bg-black opacity-20 transition-opacity duration-300 -z-50
+}
+
+.antd-checkbox-input {
+    @apply furniture-checkbox border-[0.125rem] border-[#5a7468] checked:bg-[#5a7468]
+}

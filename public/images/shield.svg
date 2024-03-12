@@ -1,0 +1,3 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" class="svg-icon svg-icon-checkmark-shield" width="26"  height="29" ><defs><symbol viewBox="0 0 26 29" id="svg-checkmark-shield"><title>checkmark-shield</title><path d="M10.97 14.689l-2.572-2.608-1.42 1.4 3.972 4.028 8.056-7.943-1.4-1.42-6.637 6.543z" fill="#000"></path><path d="M12.874 28.113l-6.152-3.337a10.981 10.981 0 01-5.755-9.748l.092-13A2.002 2.002 0 013.073.043l20 .141A2.002 2.002 0 0125.058 2.2l-.092 13a10.982 10.982 0 01-5.893 9.665l-6.199 3.249zM3.059 2.043l-.092 13a8.985 8.985 0 004.71 7.975l5.213 2.828 5.254-2.753a8.984 8.984 0 004.822-7.909l.092-13-20-.142z" fill="#000"></path></symbol></defs>
+<use xlink:href="#svg-checkmark-shield" fill="#222222"></use>
+</svg>

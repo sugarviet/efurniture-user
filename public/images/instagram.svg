@@ -1,0 +1,3 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" class="svg-icon svg-icon-social-instagram-simple" width="24"  height="24" ><defs><symbol viewBox="0 0 24 24" id="svg-social-instagram-simple"><title>Artboard 98</title><path d="M20,0H4A4,4,0,0,0,0,4V20a4,4,0,0,0,4,4H20a4,4,0,0,0,4-4V4A4,4,0,0,0,20,0Zm2,20a2,2,0,0,1-2,2H4a2,2,0,0,1-2-2V4A2,2,0,0,1,4,2H20a2,2,0,0,1,2,2Z"></path><path d="M12,6a6,6,0,1,0,6,6A6,6,0,0,0,12,6Zm0,10a4,4,0,1,1,4-4A4,4,0,0,1,12,16Z"></path><circle cx="18.5" cy="5.5" r="1.5"></circle></symbol></defs>
+<use xlink:href="#svg-social-instagram-simple" fill="#73726E"></use>
+</svg>

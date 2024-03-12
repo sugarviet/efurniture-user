@@ -10,6 +10,12 @@ export default defineConfig({
       '@utils': '/src/utils',
       '@pages': '/src/pages',
       '@layouts': '/src/layouts',
+      '@stores': '/src/stores',
+      '@services': '/src/services',
+      '@constants': '/src/constants',
+      '@hooks': '/src/hooks',
+      '@hocs': '/src/hocs',
+      '@api': '/src/api',
     },
   },
 })
