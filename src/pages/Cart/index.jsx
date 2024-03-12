@@ -44,7 +44,7 @@ const Cart = () => {
             <div className="flex flex-col gap-2">
               <p className="font-bold">YOUR EXPECTED DELIVERY DATE</p>
               <p>
-                At BoConcept we do not have all our products in stock, as most
+                At eFurniture we do not have all our products in stock, as most
                 of our furniture is made just for you and your home.
               </p>
               <p>Our normal delivery time is</p>
