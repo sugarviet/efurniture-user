@@ -1,5 +1,4 @@
-import React from 'react'
-import formattedCurrency from '@utils/formattedCurrency'
+import formattedCurrency from '@utils/FormattedCurrency'
 import formattedDate from '@utils/formattedDate'
 import { get_order_by_state } from "@api/orderHistoryApi";
 import { useFetchWithAuth, } from "@hooks/api-hooks";
