@@ -3,13 +3,11 @@ import AppRow from "@components/AppRow";
 import AppSuspense from "@components/AppSuspense";
 import { withAuthentication } from "../../hocs/withAuthentication";
 import useAuth from "../../stores/useAuth";
-import { useParams } from "react-router";
 import { classNames } from "../../utils/classNames";
 import BankAccount from "./components/BankAccount";
-import { useSearchParams } from "react-router-dom";
 import useUrlState from "../../hooks/useUrlState";
-import useNavigation from "../../utils/useNavigation";
 import OrderDetail from "./components/OrderDetail";
+import { useLocation } from "react-router-dom";
 
 const Address = lazy(() => import("./components/Address"));
 const Orders = lazy(() => import("./components/Orders"));
@@ -42,18 +40,12 @@ const TAB_PROFILE = {
 const Profile = () => {
   const tabKeys = Object.keys(TAB_PROFILE);
 
-  // const { id,tab } = useParams();
-  // const [currentTab, setCurrentTab] = useState(tab || tabKeys[0]);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const id = searchParams.get("id");
 
   const [currentTab, setCurrentTab] = useUrlState("tab");
   const { clearTokens } = useAuth();
-
-  // const { go_to_profile_tab } = useNavigation();
-
-  // const handleChangeTab = (key) => {
-  //   setCurrentTab(key)
-  //   go_to_profile_tab(key)
-  // }
 
   return (
     <main className="flex flex-col gap-8 pb-12">
@@ -101,7 +93,11 @@ const Profile = () => {
           </div>
 
           <div>
-            <AppSuspense>{TAB_PROFILE[currentTab].component}</AppSuspense>
+            {id ?
+              <OrderDetail />
+              :
+              <AppSuspense>{TAB_PROFILE[currentTab].component}</AppSuspense>
+            }
           </div>
         </AppRow>
       </section>

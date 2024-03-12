@@ -90,9 +90,9 @@ function RegisterForm() {
         </section>
         <section className="mb-4">
           <p>
-            When you sign up for BoConcept newsletters, you agree to receive
-            news and information regarding events via email from BoConcept A/S
-            and your preferred/closest BoConcept store.
+            When you sign up for eFurniture newsletters, you agree to receive
+            news and information regarding events via email from eFurniture A/S
+            and your preferred/closest eFurniture store.
           </p>
           <br />
           <p>You can at any time revoke this consent.</p>
@@ -111,7 +111,7 @@ function RegisterForm() {
             <FormCheckbox name="agreement" />
 
             <span className="text-[0.875rem] leading-[1.715] tracking-[0.05em]">
-              Accept the BoConcept privacy policy and agree to BoConcept saving
+              Accept the eFurniture privacy policy and agree to eFurniture saving
               my personal information.
               <br />
               <a href="#" className="underline">
