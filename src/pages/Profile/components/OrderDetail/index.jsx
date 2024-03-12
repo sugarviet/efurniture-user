@@ -1,8 +1,8 @@
 import { get_order_detail_by_id } from "@api/orderHistoryApi";
 import useNavigation from "../../../../utils/useNavigation";
-import FormattedCurrency from '@utils/FormattedCurrency'
+import formattedCurrency from '@utils/formattedCurrency'
 import formattedTime from '@utils/formattedTime'
-import FormattedDate from '@utils/FormattedDate'
+import formattedDate from '@utils/formattedDate'
 import { withFetchDataWithAuth } from "../../../../hocs/withFetchDataWithAuth";
 import PropTypes from "prop-types";
 
@@ -35,7 +35,7 @@ function OrderDetail({ data }) {
                         <p className="text-white font-HelveticaBold leading-[1.20833] tracking-[0.08em]">PENDING</p>
                     </div>
                 </article>
-                <p className='text-[14px] font-medium leading-[1.4] tracking-[0.04em] pt-2'>Date: {FormattedDate(data.createdAt)}</p>
+                <p className='text-[14px] font-medium leading-[1.4] tracking-[0.04em] pt-2'>Date: {formattedDate(data.createdAt)}</p>
 
                 <div className='relative w-full h-[2px] bg-blackPrimary mt-10 mb-14' >
                     <div className='bg-blackPrimary top-[-15px] left-0 rounded-[50%] w-8 h-8 relative  after:absolute after:top-[6px] after:left-[12px] after:w-[7px] after:h-[14px] after:rotate-45 after:border-r-[2px] after:border-b-[2px]'>
@@ -45,7 +45,7 @@ function OrderDetail({ data }) {
 
                     <article className='absolute top-6 left-[-20px] flex flex-col items-center'>
                         <p className='text-[14px] font-medium leading-[1.4] tracking-[0.04em]'>Ordered</p>
-                        <p className='text-[14px]  text-grey1 leading-[1.4] tracking-[0.04em]'>{formattedTime(data.createdAt)}, {FormattedDate(data.createdAt)}</p>
+                        <p className='text-[14px]  text-grey1 leading-[1.4] tracking-[0.04em]'>{formattedTime(data.createdAt)}, {formattedDate(data.createdAt)}</p>
                     </article>
                     <article className='absolute top-6 left-1/2 -translate-x-1/2 flex flex-col items-center'>
                         <article className='text-[14px] font-medium leading-[1.4] tracking-[0.04em]'>Ready to ship</article>
@@ -106,7 +106,7 @@ function OrderDetail({ data }) {
                                             <p className='pt-3 text-[11px] sm:text-[13px] leading-[1.4] tracking-[0.04em]'>Qty: {product.quantity}</p>
                                         </div>
                                     </div>
-                                    <p className='font-HelveticaBold text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{FormattedCurrency(product.price)}</p>
+                                    <p className='font-HelveticaBold text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{formattedCurrency(product.price)}</p>
                                 </div>
                             ))}
                         </div>
@@ -114,13 +114,13 @@ function OrderDetail({ data }) {
                             <ul className="pt-4 list-none furniture-divided-bottom pb-4">
                                 <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
                                     <span className="">Subtotal </span>
-                                    <span>{FormattedCurrency(orderCheckout.total)}</span>
+                                    <span>{formattedCurrency(orderCheckout.total)}</span>
                                 </li>
                                 <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
                                     <span className="">Discount </span>
                                     <span>
                                         {data ?
-                                            FormattedCurrency(orderCheckout.total - orderCheckout.final_total)
+                                            formattedCurrency(orderCheckout.total - orderCheckout.final_total)
                                             :
                                             "0,00đ"
                                         }
@@ -137,7 +137,7 @@ function OrderDetail({ data }) {
                                 <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
                                     <span className="text-[15px] font-HelveticaBold">QUOTATION TOTAL </span>
                                     <span className='text-[20px] font-HelveticaBold'>
-                                        {FormattedCurrency(orderCheckout.final_total)}
+                                        {formattedCurrency(orderCheckout.final_total)}
                                     </span>
                                 </li>
                             </ul>

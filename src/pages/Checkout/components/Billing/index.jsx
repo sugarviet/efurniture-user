@@ -1,7 +1,7 @@
 import { Form } from "antd";
 import FormInput from "@components/FormInput";
 import BillingAddress from "../BillingAddress";
-import { useToggleLoginBottomBar } from "@hooks/UseToggleBottomBar";
+import { useToggleLoginBottomBar } from "@hooks/useToggleBottomBar";
 import { useState, useEffect } from "react";
 import useSwitchTab from "../../hooks/useSwitchTab";
 import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";

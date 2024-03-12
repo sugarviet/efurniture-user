@@ -1,4 +1,4 @@
-import FormattedDate from "@utils/FormattedDate";
+import formattedDate from "@utils/formattedDate";
 
 function VoucherModal({ data, chooseVoucher, getTotalPrice, setChooseVoucher }) {
     return (
@@ -17,7 +17,7 @@ function VoucherModal({ data, chooseVoucher, getTotalPrice, setChooseVoucher }) 
                             <p className='font-semibold text-[0.875rem] leading-[1.20833] tracking-[0.08em] pb-1'>{data.code}</p>
                             <p className='text-[0.875rem] leading-[1.20833] tracking-[0.08em]'>{data.value}% off Capped at ₫100k</p>
                             <p className='text-[0.875rem] leading-[1.20833] tracking-[0.08em]'>Min. Spend ₫{data.minimum_order_value / 1000000}M</p>
-                            <p className='text-[11px] leading-[1.20833] tracking-[0.08em] pt-2 text-grey1'>{(data.used_turn_count / data.maximum_use) * 100}% used, Valid Till: {FormattedDate(data.end_date)}</p>
+                            <p className='text-[11px] leading-[1.20833] tracking-[0.08em] pt-2 text-grey1'>{(data.used_turn_count / data.maximum_use) * 100}% used, Valid Till: {formattedDate(data.end_date)}</p>
                         </div>
                     </article>
                     <div className="flex justify-center items-center mr-3">

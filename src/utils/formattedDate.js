@@ -1,4 +1,4 @@
-export default function FormattedDate(value) {
+export default function formattedDate(value) {
     const date = new Date(value);
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');

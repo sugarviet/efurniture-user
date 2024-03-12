@@ -3,4 +3,3 @@ export default function formattedCurrency(value) {
         style: 'currency',
         currency: 'VND',
     }).format(value)
-}
