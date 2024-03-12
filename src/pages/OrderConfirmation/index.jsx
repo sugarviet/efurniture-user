@@ -87,7 +87,7 @@ function OrderConfirmation() {
                       Continue to shopping
                     </button>
                   </Link>
-                  <Link to="/profile/favorites">
+                  <Link to="/profile?tab=orders">
                     <button
                       className="furniture-button-black-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-8"
                     >
@@ -122,8 +122,8 @@ function OrderConfirmation() {
                   </div>
                 </div>
                 <div className={`furniture-divided-bottom pb-8 ${orderProduct.length > 2 ? "overflow-y-auto h-[320px]" : "overflow-y-hidden"}`}>
-                  {orderProduct.map((product) => (
-                    <div key={product._id} className='mt-8 flex flex-row justify-between'>
+                  {orderProduct.map((product, index) => (
+                    <div key={index} className='mt-8 flex flex-row justify-between'>
                       <div className='flex flex-row gap-5'>
                         <div className='w-16 h-16 sm:w-28 sm:h-28 rounded-xl px-2 py-2 bg-white'>
                           <img className='w-full h-full' src={product.thumb}></img>
@@ -147,7 +147,7 @@ function OrderConfirmation() {
                       <span className="">Discount </span>
                       <span>
                         {orderConfirmation ?
-                          FormattedCurrency(orderCheckout.voucher?.value / 100 * orderCheckout.total)
+                          FormattedCurrency(orderCheckout.total - orderCheckout.final_total)
                           :
                           "0,00đ"
                         }

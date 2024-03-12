@@ -7,15 +7,16 @@ import useSwitchTab from "../../hooks/useSwitchTab";
 import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
 import { useOrderStore } from "../../../../stores/useGuestOrderStore";
 import useAuth from "@stores/useAuth";
-import useUserProfile from "@hooks/useUserProfile";
 import useScroll from "@hooks/useScroll";
-
+import { get_user_info_detail } from "@api/profileApi";
+import { useFetchWithAuth } from "@hooks/api-hooks";
+import LoadingSpinner from "@components/LoadingSpinner";
 
 function Billing() {
 
   const { accessToken } = useAuth();
 
-  const { userData } = useUserProfile();
+  const { data: userData, isLoading } = useFetchWithAuth(get_user_info_detail());
 
   const { toggleLoginBottomBar } = useToggleLoginBottomBar();
 
@@ -41,15 +42,16 @@ function Billing() {
 
   useEffect(() => {
     if (orderShipping.email || userData?.email) {
-      setOrderShipping({ ...orderShipping, email: userData?.email });
       setIsInputEmail(true);
     }
   }, [userData]);
 
+  if (isLoading) return <LoadingSpinner />;
+
   return (
     <section>
       <div className='max-w-[43.75rem] text-[0.875rem] leading-[1.5] pb-[45px] tracking-[0.5px] pt-6 lg:pt-0'>
-        <h2 className='font-HelveticaBold text-[1.5rem] leading-[1.20833] tracking-[0.08em] pb-6'>checkout as guest</h2>
+        <h2 className='font-HelveticaBold text-[1.5rem] leading-[1.20833] tracking-[0.08em] pb-6'>{accessToken ? "CUSTOMER INFORMATION" : "checkout as guest"}</h2>
         {!accessToken && <p className='pb-[25px]'>You can check out without creating an account. You'll have a chance to create an account later.</p>}
         <section className="w-full max-w-[43.75rem]">
           <Form
@@ -58,6 +60,7 @@ function Billing() {
               span: 24,
             }}
             onFinish={onFinish}
+            requiredMark='optional'
             autoComplete="off"
             initialValues={{ province: "Thành Phố Hồ Chí Minh", email: userData?.email, ...orderShipping }}
           >

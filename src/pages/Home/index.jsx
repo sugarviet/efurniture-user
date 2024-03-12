@@ -5,7 +5,7 @@ import RoomSlider from "./components/RoomSlider"
 const details = [
   {
     title: 'CREATING EXTRAORDINARY SPACES',
-    description: 'BoConcept exists to transform spaces into more extraordinary places, and we are here to help you create your dream home. We offer every customer a comprehensive Interior Design service either at home, virtually or in store, for the small update or the grand transformation. Our interior stylists work with you to incorporate decor ideas, home accessories and more to craft a unique style for your home.',
+    description: 'eFurniture exists to transform spaces into more extraordinary places, and we are here to help you create your dream home. We offer every customer a comprehensive Interior Design service either at home, virtually or in store, for the small update or the grand transformation. Our interior stylists work with you to incorporate decor ideas, home accessories and more to craft a unique style for your home.',
     img: 'https://p3.aprimocdn.net/boconcept/211cdf9f-3f24-4707-aeec-ae3f00790db9/1208394_WEB-ImageCollageSmall-T-372x470.jpg',
   },
   {
