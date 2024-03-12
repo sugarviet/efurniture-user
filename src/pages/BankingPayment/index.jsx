@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import formattedCurrency from "@utils/formattedCurrency";
-import { BANK_INFO } from '@constants/banKInfoConstants';
+import { BANK_INFO } from '../../constants/bankInfoConstants';
 import { useFetchBanking } from '../../hooks/api-hooks';
 import { get_banking_transaction, async_banking_transaction } from '../../api/bankingTransactionApi';
 import { usePostWithBankingTransaction } from '../../hooks/api-hooks';
