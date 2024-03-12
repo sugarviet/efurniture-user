@@ -3,7 +3,8 @@ import ProductCarousel from "./components/ProductCarousel";
 import ProductInfo from "./components/ProductInfo";
 import { get_furniture_detail_api } from "../../api/furnitureApi";
 import { withFetchData } from "../../hocs/withFetchData";
-import formattedCurrency from "../../utils/formattedCurrency";
+import formattedCurrency from "@utils/formattedCurrency";
+import Proptypes from "prop-types";
 import { Link } from "react-router-dom";
 
 function ProductDetail({ data }) {
@@ -61,5 +62,10 @@ function ProductDetail({ data }) {
     </section>
   );
 }
+
+ProductDetail.propTypes = {
+  data: Proptypes.object,
+};
+
 
 export default withFetchData(ProductDetail, get_furniture_detail_api);

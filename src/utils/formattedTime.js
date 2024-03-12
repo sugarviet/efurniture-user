@@ -1,4 +1,4 @@
-export default function FormattedDate(value) {
+export default function formattedTime(value) {
     const time = new Date(value);
     const hours = time.getUTCHours().toString().padStart(2, '0');
     const minutes = time.getUTCMinutes().toString().padStart(2, '0');

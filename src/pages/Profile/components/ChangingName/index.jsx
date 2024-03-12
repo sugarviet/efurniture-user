@@ -48,9 +48,9 @@ const ChangingName = ({ data }) => {
 
         <div className="flex flex-col gap-5 text-base w-[40rem]">
           <p>
-            When you sign up for BoConcept newsletters, you agree to receive
-            news and information regarding events via email from BoConcept A/S
-            and your preferred/closest BoConcept store.
+            When you sign up for eFurniture newsletters, you agree to receive
+            news and information regarding events via email from eFurniture A/S
+            and your preferred/closest eFurniture store.
           </p>
 
           <p>You can at any time revoke this consent.</p>
@@ -65,7 +65,7 @@ const ChangingName = ({ data }) => {
           </p>
 
           <p className=" text-gray-400">
-            I accept the BoConcept privacy policy{" "}
+            I accept the eFurniture privacy policy{" "}
             <a href="#" className="underline">
               See privacy policy
             </a>

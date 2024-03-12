@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import FormattedCurrency from '@utils/FormattedCurrency'
-import FormattedDate from '@utils/FormattedDate'
+import formattedCurrency from '@utils/formattedCurrency'
+import formattedDate from '@utils/formattedDate'
 import useNavigation from '../../utils/useNavigation'
 
 function OrderConfirmation() {
@@ -47,7 +47,7 @@ function OrderConfirmation() {
 
                   <article className='absolute top-6 left-[-20px] flex flex-col items-center'>
                     <p className='text-[14px] font-medium leading-[1.4] tracking-[0.04em]'>Ordered</p>
-                    <p className='text-[14px]  text-grey1 leading-[1.4] tracking-[0.04em]'>{FormattedDate(orderConfirmation.createdAt)}</p>
+                    <p className='text-[14px]  text-grey1 leading-[1.4] tracking-[0.04em]'>{formattedDate(orderConfirmation.createdAt)}</p>
                   </article>
                   <article className='absolute top-6 left-1/2 -translate-x-1/2 text-[14px] font-medium leading-[1.4] tracking-[0.04em]'>Ready to ship</article>
                   <article className='absolute top-6 right-[-46px] flex flex-col items-center'>
@@ -87,7 +87,7 @@ function OrderConfirmation() {
                       Continue to shopping
                     </button>
                   </Link>
-                  <Link to="/profile/favorites">
+                  <Link to="/profile?tab=orders">
                     <button
                       className="furniture-button-black-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-8"
                     >
@@ -109,7 +109,7 @@ function OrderConfirmation() {
                   <div className='grid grid-cols-3 divide-x-[2px] divide-grey4 mt-4 w-full pb-14'>
                     <article className='flex flex-col items-center justify-center'>
                       <p className=''>Date</p>
-                      <p className='font-HelveticaBold text-[12px] sm:text-[14px]'>{FormattedDate(orderConfirmation.createdAt)}</p>
+                      <p className='font-HelveticaBold text-[12px] sm:text-[14px]'>{formattedDate(orderConfirmation.createdAt)}</p>
                     </article>
                     <article className='flex flex-col items-center justify-center px-6'>
                       <p className=''>Order ID</p>
@@ -122,8 +122,8 @@ function OrderConfirmation() {
                   </div>
                 </div>
                 <div className={`furniture-divided-bottom pb-8 ${orderProduct.length > 2 ? "overflow-y-auto h-[320px]" : "overflow-y-hidden"}`}>
-                  {orderProduct.map((product) => (
-                    <div key={product._id} className='mt-8 flex flex-row justify-between'>
+                  {orderProduct.map((product, index) => (
+                    <div key={index} className='mt-8 flex flex-row justify-between'>
                       <div className='flex flex-row gap-5'>
                         <div className='w-16 h-16 sm:w-28 sm:h-28 rounded-xl px-2 py-2 bg-white'>
                           <img className='w-full h-full' src={product.thumb}></img>
@@ -133,7 +133,7 @@ function OrderConfirmation() {
                           <p className='pt-3 text-[11px] sm:text-[13px] leading-[1.4] tracking-[0.04em]'>Qty: {product.quantity}</p>
                         </div>
                       </div>
-                      <p className='font-HelveticaBold text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{FormattedCurrency(product.price)}</p>
+                      <p className='font-HelveticaBold text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{formattedCurrency(product.price)}</p>
                     </div>
                   ))}
                 </div>
@@ -141,13 +141,13 @@ function OrderConfirmation() {
                   <ul className="pt-4 list-none furniture-divided-bottom pb-4">
                     <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
                       <span className="">Subtotal </span>
-                      <span>{FormattedCurrency(orderCheckout.total)}</span>
+                      <span>{formattedCurrency(orderCheckout.total)}</span>
                     </li>
                     <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
                       <span className="">Discount </span>
                       <span>
                         {orderConfirmation ?
-                          FormattedCurrency(orderCheckout.voucher?.value / 100 * orderCheckout.total)
+                          formattedCurrency(orderCheckout.total - orderCheckout.final_total)
                           :
                           "0,00đ"
                         }
@@ -164,7 +164,7 @@ function OrderConfirmation() {
                     <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
                       <span className="text-[15px] font-HelveticaBold">QUOTATION TOTAL </span>
                       <span className='text-[15px] font-HelveticaBold'>
-                        {FormattedCurrency(orderCheckout.final_total)}
+                        {formattedCurrency(orderCheckout.final_total)}
                       </span>
                     </li>
                   </ul>
