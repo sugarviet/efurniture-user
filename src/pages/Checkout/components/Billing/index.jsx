@@ -9,43 +9,48 @@ import { useOrderStore } from "../../../../stores/useGuestOrderStore";
 import useAuth from "@stores/useAuth";
 import useUserProfile from "@hooks/useUserProfile";
 import useScroll from "@hooks/useScroll";
+import { get_user_info_detail } from "@api/profileApi";
 
+import { useFetchWithAuth } from "@hooks/api-hooks";
 
 function Billing() {
 
   const { accessToken } = useAuth();
 
-  const { userData } = useUserProfile();
-
+  // const { userData, isLoading } = useUserProfile();
+  // console.log(isLoading);
+  const { data: userData, isLoading } = useFetchWithAuth(get_user_info_detail());
+  
   const { toggleLoginBottomBar } = useToggleLoginBottomBar();
-
+  
   const { handleScrollToTop } = useScroll();
 
   const { handleChangeTab } = useSwitchTab();
-
+  
   const { setOrderShipping, orderShipping, selectedDistrict, selectedWard } = useOrderStore();
-
+  
   const [isInputEmail, setIsInputEmail] = useState(false);
-
+  
   const onFinish = (values) => {
     setOrderShipping({ ...values, district: selectedDistrict, ward: selectedWard, longitude: 106.75197333979435, latitude: 10.786098323202225 });
     handleChangeTab(CHECKOUT_TABS.delivery)
     handleScrollToTop();
   };
-
+  
   const handleEmailChange = (e) => {
     if (e.target.value) {
       setIsInputEmail(true);
     }
   };
-
+  
   useEffect(() => {
     if (orderShipping.email || userData?.email) {
       setOrderShipping({ ...orderShipping, email: userData?.email });
       setIsInputEmail(true);
     }
   }, [userData]);
-
+  
+  if(isLoading) return <>Loading...</>;
   return (
     <section>
       <div className='max-w-[43.75rem] text-[0.875rem] leading-[1.5] pb-[45px] tracking-[0.5px] pt-6 lg:pt-0'>
@@ -59,10 +64,11 @@ function Billing() {
             }}
             onFinish={onFinish}
             autoComplete="off"
-            initialValues={{ province: "Thành Phố Hồ Chí Minh", email: userData?.email, ...orderShipping }}
+            initialValues={{ province: "Thành Phố Hồ Chí Minh", email: userData.email, ...orderShipping }}
           >
             <FormInput
               label="Email"
+              // defaultValue={ userData?.email }
               name="email"
               className="furniture-input w-full h-[3rem]"
               type="newLetterEmail"
