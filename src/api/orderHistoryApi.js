@@ -10,3 +10,7 @@ export const get_order_detail_by_id = (params, urlParams) => {
     return `${ORDER_URL}/${id}`
 }
 
+export const cancel_order_by_id = (id) => {
+    return `${ORDER_URL}/${id}/cancel`
+}
+

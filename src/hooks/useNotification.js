@@ -16,6 +16,14 @@ const type = {
       set_default: 'Failed set default address',
     }
   },
+  order: {
+    success: {
+      delete: 'Successfully deleted delete',
+    },
+    fail: {
+      delete: 'Failed deleted delete',
+    }
+  },
   payment: {
     success: {
       pay_success: 'Your order was paid successfully'
@@ -27,10 +35,10 @@ const type = {
 
 function useNotification() {
   const success_message = (msg, action, custom) => {
-    message.success(custom ? type[msg].success[action] : custom);
+    message.success(custom ? custom : type[msg].success[action]);
   };
   const error_message = (msg, action, custom) => {
-    message.success(custom ? type[msg].fail[action] : custom);
+    message.error(custom ? custom : type[msg].fail[action]);
 
   };
   return {
