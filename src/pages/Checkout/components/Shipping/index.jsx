@@ -7,7 +7,7 @@ import { useOrderStore } from "@stores/useGuestOrderStore";
 import useScroll from "@hooks/useScroll";
 
 const DELIVERY_METHOD = {
-  contact: "contact",
+  efurniture: "efurniture",
   warehouse: "warehouse",
 }
 
@@ -16,6 +16,8 @@ function Shipping() {
   const { handleChangeTab } = useSwitchTab();
 
   const { handleScrollToTop } = useScroll();
+
+  const { selectedDelivery, setSelectedDelivery } = useOrderStore();
 
   const {
     note,
@@ -28,8 +30,6 @@ function Shipping() {
     handleChangeTab(CHECKOUT_TABS.payment)
     handleScrollToTop();
   };
-
-  const [selectedDelivery, setSelectedDelivery] = useState(DELIVERY_METHOD.warehouse);
 
   const handleChangeMethod = (delivery) => {
     setSelectedDelivery(delivery);
@@ -51,7 +51,7 @@ function Shipping() {
       </article>
       <section className='py-10 font-HelveticaRoman'>
         <h3 className='text-[14px] lg:text-[1rem] leading-[1.1875] tracking-[0.08em] font-HelveticaBold pb-2'>DELIVERY METHOD </h3>
-        <div className="lg:pb-24">
+        <div className="pb-20 lg:pb-24">
           <RadioModal
             name="delivery"
             value="warehouse"
@@ -73,14 +73,14 @@ function Shipping() {
         <div>
           <RadioModal
             name="delivery"
-            value="contact"
+            value="efurniture"
             onChange={() => handleChangeMethod(DELIVERY_METHOD.contact)}
             checked={selectedDelivery === DELIVERY_METHOD.contact}
           >
             <article className='text-[14px] lg:text-[1rem] leading-[1.1875] tracking-[0.08em]'>
-              <h4 className='font-HelveticaBold uppercase text-[14px] xl:text-base'>STORE CONTACT</h4>
+              <h4 className='font-HelveticaBold uppercase text-[14px] xl:text-base'>eFurniture Delivery</h4>
               <p className='text-[11px] lg:text-[0.875rem] leading-[1.4] tracking-[0.04em] mt-[0.5rem]'>
-                Your product selection will be send to the BoConcept store nearest your geographical location. You will receive a quotation, including applicable discounts, sales tax and shipping cost
+                Your product selection will be send to the eFurniture store nearest your geographical location. You will receive a quotation, including applicable discounts, sales tax and shipping cost
               </p>
             </article>
           </RadioModal>

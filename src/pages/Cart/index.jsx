@@ -1,11 +1,11 @@
 import CartProduct from "@components/CartProduct";
-import useCart from "@hooks/useCart";
 import formattedCurrency from "@utils/formattedCurrency";
 import { useNavigate } from "react-router-dom";
 import EmptyCart from "./components/EmptyCart";
+import useUserCart from "../../hooks/useUserCart";
 
 const Cart = () => {
-  const { cart, getTotalPrice } = useCart();
+  const { cart, getTotalPrice } = useUserCart();
 
   const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ const Cart = () => {
             <div className="flex flex-col gap-2">
               <p className="font-bold">YOUR EXPECTED DELIVERY DATE</p>
               <p>
-                At BoConcept we do not have all our products in stock, as most
+                At eFurniture we do not have all our products in stock, as most
                 of our furniture is made just for you and your home.
               </p>
               <p>Our normal delivery time is</p>

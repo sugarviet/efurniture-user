@@ -17,11 +17,12 @@ function Summary() {
 
   const { accessToken } = useAuth();
 
-  const { go_to_payment } = useNavigation();
+  const { go_to_payment, go_to_order_confirmation } = useNavigation();
 
   const { cart, getTotalPrice } = accessToken ? useUserCart() : useGuestCart();
 
   const {
+    selectedDelivery,
     selectedPayment,
     orderShipping,
     note,
@@ -39,6 +40,14 @@ function Summary() {
     thumb: cart.thumbs[0]
   }))
 
+  const handlePaymentMethod = (metaData) => {
+    if (metaData.payment_method === "COD") {
+      go_to_order_confirmation(metaData);
+    } else {
+      go_to_payment(metaData);
+    }
+  };
+
   const { mutate: checkoutForGuest } = usePost(
     checkout_with_guest(),
     undefined,
@@ -53,7 +62,7 @@ function Summary() {
     checkout_with_user(),
     undefined,
     (data) => {
-      go_to_payment(data.data.metaData);
+      handlePaymentMethod(data.data.metaData)
     },
     (error) => {
       message.error(error.response.data.error.message);
@@ -106,7 +115,7 @@ function Summary() {
 
       <section className="pb-6">
         <CheckoutEdit title="DELIVERY METHOD" activeTab={CHECKOUT_TABS.delivery} />
-        <p className='text-[13px] leading-[23.3px] tracking-[0.5px]'>Store Contact</p>
+        <p className='text-[13px] leading-[23.3px] tracking-[0.5px]'>{selectedDelivery}</p>
       </section>
 
       <section className="pb-20">
