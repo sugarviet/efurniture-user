@@ -6,7 +6,7 @@ import { useFetchBanking } from '../../hooks/api-hooks';
 import { get_banking_transaction, async_banking_transaction } from '../../api/bankingTransactionApi';
 import { usePostWithBankingTransaction } from '../../hooks/api-hooks';
 import { useQueryClient } from "@tanstack/react-query";
-import useNavigation from '../../utils/useNavigation';
+import useNavigation from '../../hooks/useNavigation';
 
 export default function BankingPayment() {
 
@@ -26,7 +26,6 @@ export default function BankingPayment() {
 
     const QR = `https://img.vietqr.io/image/${BANK_INFO.BANK_ID}-${BANK_INFO.ACCOUNT_NO}-${BANK_INFO.TEMPLATE}.png?amount=${totalPrice}&addInfo=${orderId}&accountName=${BANK_INFO.ACCOUNT_NAME}`
 
-    console.log(orderDetail)
     const [openDetail, setOpenDetail] = useState(false);
 
     const handleOpenDetail = () => {

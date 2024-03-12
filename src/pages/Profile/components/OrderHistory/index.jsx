@@ -1,30 +1,26 @@
 import React from 'react'
 import FormattedCurrency from '@utils/FormattedCurrency'
 import FormattedDate from '@utils/FormattedDate'
-import { get_order_by_state } from "@api/orderHistoryApi";
-import { useFetchWithAuth, } from "@hooks/api-hooks";
-import { ORDER_STATE } from '@constants/orderStateConstants';
-import LoadingSpinner from "@components/LoadingSpinner";
-import useNavigation from '../../../../utils/useNavigation';
+import useNavigation from '@hooks/useNavigation';
 import useScroll from "@hooks/useScroll";
+import PropTypes from "prop-types";
 
-function Pending() {
+function OrderHistory({ data }) {
 
   const { handleScrollToTop } = useScroll();
 
   const { go_to_order_detail, go_to_home } = useNavigation();
 
-  const { data: pendingOrder, isLoading } = useFetchWithAuth(get_order_by_state(ORDER_STATE.pending));
+  const isEmptyData = data.data.length === 0;
 
-  if (isLoading) return <LoadingSpinner />;
 
   return (
     <>
-      {pendingOrder?.data.map((order, index) => (
+      {data?.data.map((order, index) => (
         <section key={index} className='pb-8'>
           <div className='bg-[#F7F7F6] px-8 py-4 border-b-grey5 border-[1px] rounded-t-xl'>
-            <section className='flex flex-row justify-between'>
-              <div className='flex flex-row gap-20'>
+            <section className='flex flex-row justify-between gap-20'>
+              <div className='flex flex-row  gap-10 2xl:gap-16'>
                 <article className='flex flex-col'>
                   <p className='text-[14px] text-grey1 leading-[1.4] tracking-[0.04em]'>Ordered</p>
                   <p className='text-[14px] font-medium leading-[1.4] tracking-[0.04em]'>{FormattedDate(order.createdAt)}</p>
@@ -59,6 +55,7 @@ function Pending() {
               </div>
             </section>
           </div >
+
           <div className='border-x-[1px] px-8 py-4 border-b-[1px] border-x-grey5 border-b-grey5'>
             {order.order_products.map((product, index) => (
               <section key={index} className='mt-8 flex flex-row justify-between border-b border-grey5 pb-8'>
@@ -80,10 +77,29 @@ function Pending() {
                   className="furniture-button-white-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-8"
                   onClick={go_to_home}
                 >
-                  Buy again
+                  Contact Store
                 </button>
+                {order.order_tracking[0].name === "Done" &&
+                  <section>
+                    <button
+                      className="furniture-button-white-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-8"
+                      onClick={go_to_home}
+                    >
+                      Buy again
+                    </button>
+                  </section>
+                }
               </section>
               {order.order_tracking[0].name === "Pending" &&
+                <section>
+                  <button
+                    className="furniture-button-black-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-8"
+                  >
+                    Cancel
+                  </button>
+                </section>
+              }
+              {order.order_tracking[0].name === "Processing" &&
                 <section>
                   <button
                     className="furniture-button-black-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-8"
@@ -93,12 +109,23 @@ function Pending() {
                 </section>
               }
             </div>
+
           </div>
         </section >
       ))
+      }
+      {isEmptyData &&
+        <div className='w-full md:w-[500px] xl:w-[600px] 2xl:w-[700px] max-[1920px]:w-[1000px] h-full flex flex-col items-center justify-center'>
+          <img className='w-52' src='https://res.cloudinary.com/dc4hafqoa/image/upload/v1710247931/eFurniture/empty-order_rlotiy.png'></img>
+          <p>No orders yet.</p>
+        </div>
       }
     </>
   )
 }
 
-export default Pending
+OrderHistory.propTypes = {
+  data: PropTypes.object,
+};
+
+export default OrderHistory;

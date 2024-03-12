@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import useAuth from "../../stores/useAuth";
-import useNavigation from "../../utils/useNavigation";
+import useNavigation from "../../hooks/useNavigation";
 
 function Logout() {
   const { clearTokens } = useAuth();

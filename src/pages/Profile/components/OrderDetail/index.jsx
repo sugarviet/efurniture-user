@@ -1,5 +1,5 @@
 import { get_order_detail_by_id } from "@api/orderHistoryApi";
-import useNavigation from "../../../../utils/useNavigation";
+import useNavigation from "../../../../hooks/useNavigation";
 import FormattedCurrency from '@utils/FormattedCurrency'
 import formattedTime from '@utils/formattedTime'
 import FormattedDate from '@utils/FormattedDate'
