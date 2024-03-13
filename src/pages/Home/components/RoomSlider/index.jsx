@@ -1,4 +1,7 @@
 import Sliders from "@components/Slider";
+import Proptypes from "prop-types";
+import { withFetchData } from "@hocs/withFetchData";
+import { get_all_room } from "../../../../api/roomApi";
 
 const rooms = [
     {
@@ -31,22 +34,25 @@ const rooms = [
     },
 ];
 
-const RoomSlider = () => {
-
+const RoomSlider = ({data}) => {
   return (
     <div>
-      <Sliders initialSlide={0} slideToScroll={3} slideToShow={6}>
-        {rooms.map((room, index) => (
-          <div className="pr-2" key={index}>
-            <img className='w-full h-full object-cover ' src={room.url} />
-            <a href="#" className="flex flex-row justify-between">
+      <Sliders initialSlide={0} slideToScroll={3} slideToShow={3}>
+        {data.map((room, index) => (
+          <a className="pr-2" key={index} href={`/room/${data.slug}`}>
+            <img className='w-full h-full object-cover ' src={room.thumb} />
+            <div className="flex flex-row justify-between">
               <p className='text-xs mt-4 text-blackPrimary tracking-[0.9px]'> {room.name}</p>
-            </a>
-          </div>
+            </div>
+          </a>
         ))}
       </Sliders>
     </div>
   )
 }
 
-export default RoomSlider
+RoomSlider.propTypes = {
+  data: Proptypes.array,
+};
+
+export default withFetchData(RoomSlider, get_all_room)

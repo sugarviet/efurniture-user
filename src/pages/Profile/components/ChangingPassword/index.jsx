@@ -30,6 +30,7 @@ const ChangingPassword = () => {
         labelCol={{
           span: 24,
         }}
+        requiredMark='optional'
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
