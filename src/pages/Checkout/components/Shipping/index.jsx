@@ -74,8 +74,8 @@ function Shipping() {
           <RadioModal
             name="delivery"
             value="efurniture"
-            onChange={() => handleChangeMethod(DELIVERY_METHOD.contact)}
-            checked={selectedDelivery === DELIVERY_METHOD.contact}
+            onChange={() => handleChangeMethod(DELIVERY_METHOD.efurniture)}
+            checked={selectedDelivery === DELIVERY_METHOD.efurniture}
           >
             <article className='text-[14px] lg:text-[1rem] leading-[1.1875] tracking-[0.08em]'>
               <h4 className='font-HelveticaBold uppercase text-[14px] xl:text-base'>eFurniture Delivery</h4>

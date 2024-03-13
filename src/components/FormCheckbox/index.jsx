@@ -1,7 +1,7 @@
 import FormItem from "../FormItem";
 import PropTypes from "prop-types";
 
-const FormCheckbox = ({ label, name, type, required, message, className }) => {
+const FormCheckbox = ({ label, name, type, required, message, className, children, valuePropName }) => {
   return (
     <FormItem
       label={label}
@@ -9,12 +9,16 @@ const FormCheckbox = ({ label, name, type, required, message, className }) => {
       type={type}
       required={required}
       message={message}
+      valuePropName={valuePropName}
     >
-      <input
-        className={`${"furniture-checkbox border-[0.125rem] border-[#5a7468] checked:bg-[#5a7468]"} ${className}`}
-        type="checkbox"
-      ></input>
-    
+      <label className="">
+        <input
+          className={`${"furniture-checkbox border-[0.125rem] border-[#5a7468] checked:bg-[#5a7468]"} ${className}`}
+          type="checkbox"
+        />
+        <span className="relative top-[-6px] left-2">{children}</span>
+      </label>
+
     </FormItem>
   );
 };
