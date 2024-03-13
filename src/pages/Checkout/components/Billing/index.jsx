@@ -1,7 +1,7 @@
 import { Form } from "antd";
 import FormInput from "@components/FormInput";
 import BillingAddress from "../BillingAddress";
-import { useToggleLoginBottomBar } from "@hooks/UseToggleBottomBar";
+import { useToggleLoginBottomBar } from "@hooks/useToggleBottomBar";
 import { useState, useEffect } from "react";
 import useSwitchTab from "../../hooks/useSwitchTab";
 import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
@@ -21,7 +21,7 @@ function Billing() {
   );
 
   const { toggleLoginBottomBar } = useToggleLoginBottomBar();
-
+  
   const { handleScrollToTop } = useScroll();
 
   const { handleChangeTab } = useSwitchTab();
@@ -48,13 +48,13 @@ function Billing() {
     handleChangeTab(CHECKOUT_TABS.delivery);
     handleScrollToTop();
   };
-
+  
   const handleEmailChange = (e) => {
     if (e.target.value) {
       setIsInputEmail(true);
     }
   };
-
+  
   useEffect(() => {
     if (orderShipping.email || userData?.email) {
       setIsInputEmail(true);
@@ -92,6 +92,7 @@ function Billing() {
           >
             <FormInput
               label="Email"
+              // defaultValue={ userData?.email }
               name="email"
               className="furniture-input w-full h-[3rem]"
               type="newLetterEmail"

@@ -6,7 +6,7 @@ import FurnitureCard from "@components/FurnitureCard";
 
 import FavoriteButton from "@components/FavoriteButton";
 import useAuth from "@stores/useAuth";
-import formattedCurrency from "../../utils/FormattedCurrency";
+import formattedCurrency from "../../utils/formattedCurrency";
 import { withFetchData } from "../../hocs/withFetchData";
 import { get_room_detail } from "../../api/roomApi";
 import useCart from "../../hooks/useGuestCart";
