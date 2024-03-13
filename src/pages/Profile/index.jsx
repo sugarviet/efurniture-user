@@ -1,4 +1,4 @@
-import { lazy, useState } from "react";
+import { lazy } from "react";
 import AppRow from "@components/AppRow";
 import AppSuspense from "@components/AppSuspense";
 import { withAuthentication } from "../../hocs/withAuthentication";
@@ -8,6 +8,9 @@ import BankAccount from "./components/BankAccount";
 import useUrlState from "../../hooks/useUrlState";
 import OrderDetail from "./components/OrderDetail";
 import { useLocation } from "react-router-dom";
+import { withFetchDataWithHeaders } from "../../hocs/withFetchDataWithHeaders";
+import { get_user_info_detail } from "../../api/profileApi";
+import Proptypes from "prop-types";
 
 const Address = lazy(() => import("./components/Address"));
 const Orders = lazy(() => import("./components/Orders"));
@@ -37,7 +40,7 @@ const TAB_PROFILE = {
   },
 };
 
-const Profile = () => {
+const Profile = ({data}) => {
   const tabKeys = Object.keys(TAB_PROFILE);
 
   const location = useLocation();
@@ -55,7 +58,7 @@ const Profile = () => {
             {TAB_PROFILE[currentTab].title}
           </h1>
           <div>
-            <h2 className="text-lg normal-case">Viet Dang</h2>
+            <h2 className="text-lg normal-case">{data.first_name} {data.last_name}</h2>
             <button onClick={clearTokens} className="underline">
               Logout
             </button>
@@ -105,4 +108,8 @@ const Profile = () => {
   );
 };
 
-export default withAuthentication(Profile);
+export default withAuthentication(withFetchDataWithHeaders(Profile, get_user_info_detail));
+
+Profile.propTypes = {
+  data: Proptypes.object,
+};
