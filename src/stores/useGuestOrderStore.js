@@ -7,7 +7,7 @@ const initialValues = {
     selectedDelivery: "efurniture",
     note: "",
     orderShipping: [],
-    selectedDistrict: '',
+    selectedDistrict: {},
     selectedWard: '',
 };
 
