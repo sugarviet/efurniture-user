@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import formattedCurrency from '@utils/formattedCurrency'
 import formattedDate from '@utils/formattedDate'
-import useNavigation from '../../utils/useNavigation'
+import useNavigation from '../../hooks/useNavigation'
 
 function OrderConfirmation() {
 
