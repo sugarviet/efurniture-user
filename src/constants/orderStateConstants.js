@@ -1,8 +1,10 @@
 export const ORDER_STATE = {
     all: "all",
     pending: "pending",
+    processing: "processing",
     shipping: "shipping",
-    payment: "payment",
-    success: "success",
-    cancelled: "cancelled",
+    done: "done",
+    failed: "failed",
+    cancel: "cancel",
+    refunded: "refunded",
   }

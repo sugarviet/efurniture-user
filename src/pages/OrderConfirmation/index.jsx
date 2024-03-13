@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import formattedCurrency from '@utils/formattedCurrency'
 import formattedDate from '@utils/formattedDate'
-import useNavigation from '../../utils/useNavigation'
+import useNavigation from '../../hooks/useNavigation'
 
 function OrderConfirmation() {
 
@@ -14,8 +14,6 @@ function OrderConfirmation() {
   const orderProduct = orderConfirmation.order_products || [];
   const orderShipping = orderConfirmation.order_shipping || { orderShipping: null };
   const orderCheckout = orderConfirmation.order_checkout || { orderCheckout: null };
-
-  console.log(orderConfirmation)
 
   useEffect(() => {
     if (orderConfirmation.orderConfirmation === null) {

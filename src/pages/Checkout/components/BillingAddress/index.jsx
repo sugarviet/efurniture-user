@@ -13,26 +13,26 @@ function BillingAddress() {
     //province
     const [districtId, setDistrictId] = useState(null);
 
-    const { setSelectedDistrict, setSelectedWard } = useOrderStore();
+    const { setSelectedDistrict, setSelectedWard, selectedDistrict } = useOrderStore();
 
     const { data: districtList } = useFetchOutsideSystem(
         get_district_in_saigon()
     );
 
     const { data: wardList } = useFetchOutsideSystem(
-        get_ward_in_saigon(districtId)
+        get_ward_in_saigon(selectedDistrict.id)
 
     );
 
     const handleDistrictChange = (e) => {
-        setDistrictId(e.target.value)
-        const selectedDistrictName = e.target.options[e.target.selectedIndex].text;
-        setSelectedDistrict(selectedDistrictName);
+        setSelectedDistrict({ id: e.target.value, name: e.target.options[e.target.selectedIndex].text })
+        // const selectedDistrictName = e.target.options[e.target.selectedIndex].text;
+        // setSelectedDistrict(e.target.value);
 
     };
     const handleWardChange = (e) => {
-        const selectedWardName = e.target.options[e.target.selectedIndex].text;
-        setSelectedWard(selectedWardName);
+        // const selectedWardName = e.target.options[e.target.selectedIndex].text;
+        setSelectedWard({ id: e.target.value, name: e.target.options[e.target.selectedIndex].text })
     };
 
 

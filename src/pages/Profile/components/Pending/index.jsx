@@ -4,7 +4,7 @@ import { get_order_by_state } from "@api/orderHistoryApi";
 import { useFetchWithAuth, } from "@hooks/api-hooks";
 import { ORDER_STATE } from '@constants/orderStateConstants';
 import LoadingSpinner from "@components/LoadingSpinner";
-import useNavigation from '../../../../utils/useNavigation';
+import useNavigation from '../../../../hooks/useNavigation';
 import useScroll from "@hooks/useScroll";
 
 function Pending() {

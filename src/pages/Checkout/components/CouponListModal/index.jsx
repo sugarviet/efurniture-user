@@ -47,8 +47,6 @@ function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
 
     const emptyVoucher = !data?.length;
 
-    console.log(cart)
-
     const handleSaveChoosenVoucher = () => {
         applyVoucher(productForVoucher)
         setIsModalCreateOpen(false);

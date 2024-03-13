@@ -39,8 +39,8 @@ function Billing() {
 
     setOrderShipping({
       ...values,
-      district: selectedDistrict,
-      ward: selectedWard,
+      district: selectedDistrict.name,
+      ward: selectedWard.name,
       longitude: coordinates[0],
       latitude: coordinates[1],
     });
@@ -88,6 +88,8 @@ function Billing() {
               province: "Thành Phố Hồ Chí Minh",
               email: userData?.email,
               ...orderShipping,
+              district: selectedDistrict.id,
+              ward:selectedWard.id,
             }}
           >
             <FormInput

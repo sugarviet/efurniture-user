@@ -11,7 +11,7 @@ import useAuth from "@stores/useAuth";
 import useUserCart from "@hooks/useUserCart";
 import useGuestCart from "@hooks/useGuestCart";
 import formattedCurrency from "@utils/formattedCurrency";
-import useNavigation from "../../../../utils/useNavigation";
+import useNavigation from "../../../../hooks/useNavigation";
 
 function Summary() {
 
