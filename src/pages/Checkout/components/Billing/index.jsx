@@ -13,10 +13,8 @@ import { useFetchWithAuth } from "@hooks/api-hooks";
 import getCoordinates from "../../../../utils/getCoordinate";
 import LoadingSpinner from "@components/LoadingSpinner";
 
-function Billing() {
+function Billing({userData}) {
   const { accessToken } = useAuth();
-
-  const { data: userData, isLoading } = accessToken ? useFetchWithAuth(get_user_info_detail()) : { data: null, isLoading: false };
 
   const { toggleLoginBottomBar } = useToggleLoginBottomBar();
 
@@ -59,7 +57,6 @@ function Billing() {
     }
   }, [userData]);
 
-  if (isLoading) return <LoadingSpinner />;
 
   return (
     <section>

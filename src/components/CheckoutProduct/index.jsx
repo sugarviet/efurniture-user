@@ -1,20 +1,14 @@
 import FurnitureCard from "../FurnitureCard";
 import PropTypes from "prop-types";
-import useGuestCart from "../../hooks/useGuestCart";
 import formattedCurrency from "../../utils/formattedCurrency";
-import useAuth from "../../stores/useAuth";
-import useUserCart from "../../hooks/useUserCart";
 import LoadingSpinner from "../LoadingSpinner";
-
-function CheckoutProduct({ activeTab }) {
+function CheckoutProduct({ activeTab, cartData }) {
   const discount = 0;
 
-  const { accessToken } = useAuth();
-  const { cart, getTotalPrice, isLoading } = accessToken
-    ? useUserCart()
-    : useGuestCart();
+  const { cart, getTotalPrice, isLoading } = cartData;
 
   if (isLoading) return <LoadingSpinner />;
+
   return (
     <section className="px-5 pb-6 lg:pl-[80px] lg:pr-[96px] lg:pb-0 xl:pl-[112px] xl:pr-[128px] xl:pb-0">
       {activeTab === "summary" && (
@@ -78,5 +72,6 @@ function CheckoutProduct({ activeTab }) {
 
 CheckoutProduct.propTypes = {
   activeTab: PropTypes.string,
+  cartData: PropTypes.object,
 };
 export default CheckoutProduct;
