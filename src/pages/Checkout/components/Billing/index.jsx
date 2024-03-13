@@ -19,7 +19,7 @@ function Billing() {
   const { data: userData, isLoading } = accessToken ? useFetchWithAuth(get_user_info_detail()) : { data: null, isLoading: false };
 
   const { toggleLoginBottomBar } = useToggleLoginBottomBar();
-  
+
   const { handleScrollToTop } = useScroll();
 
   const { handleChangeTab } = useSwitchTab();
@@ -46,13 +46,13 @@ function Billing() {
     handleChangeTab(CHECKOUT_TABS.delivery);
     handleScrollToTop();
   };
-  
+
   const handleEmailChange = (e) => {
     if (e.target.value) {
       setIsInputEmail(true);
     }
   };
-  
+
   useEffect(() => {
     if (orderShipping.email || userData?.email) {
       setIsInputEmail(true);
@@ -87,7 +87,7 @@ function Billing() {
               email: userData?.email,
               ...orderShipping,
               district: selectedDistrict.id,
-              ward:selectedWard.id,
+              ward: selectedWard.id,
             }}
           >
             <FormInput
@@ -101,9 +101,8 @@ function Billing() {
             />
 
             <div
-              className={`ease-slow-to-fast duration-1000 overflow-hidden max-h-0 ${
-                isInputEmail ? "max-h-[1500px]" : ""
-              }`}
+              className={`ease-slow-to-fast duration-1000 overflow-hidden max-h-0 ${isInputEmail ? "max-h-[1500px]" : ""
+                }`}
             >
               <section className="pb-4">
                 <section className="mb-6">
@@ -123,9 +122,8 @@ function Billing() {
 
             <button
               type="submit"
-              className={`furniture-button-black-hover w-full px-[55px] py-[14px] text-[0.6875rem] tracking-[0.125rem] ${
-                !isInputEmail ? "mt-0" : "mt-6"
-              } `}
+              className={`furniture-button-black-hover w-full px-[55px] py-[14px] text-[0.6875rem] tracking-[0.125rem] ${!isInputEmail ? "mt-0" : "mt-6"
+                } `}
             >
               CONTINUE TO DELIVERY
             </button>
