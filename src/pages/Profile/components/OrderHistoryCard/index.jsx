@@ -1,7 +1,7 @@
 import { useState } from "react";
 import AppModal from "@components/ui/AppModal";
-import FormattedCurrency from '@utils/FormattedCurrency'
-import FormattedDate from '@utils/FormattedDate'
+import formattedCurrency from '@utils/formattedCurrency'
+import formattedDate from '@utils/formattedDate'
 import useNavigation from '@hooks/useNavigation';
 import useScroll from "@hooks/useScroll";
 import PropTypes from "prop-types";
@@ -55,11 +55,11 @@ function OrderHistoryCard({ data }) {
                     <div className='flex flex-row  gap-10 2xl:gap-16'>
                         <article className='flex flex-col'>
                             <p className='text-[14px] text-grey1 leading-[1.4] tracking-[0.04em]'>Ordered</p>
-                            <p className='text-[14px] font-medium leading-[1.4] tracking-[0.04em]'>{FormattedDate(data.createdAt)}</p>
+                            <p className='text-[14px] font-medium leading-[1.4] tracking-[0.04em]'>{formattedDate(data.createdAt)}</p>
                         </article>
                         <article className='flex flex-col'>
                             <p className='text-[14px] text-grey1 leading-[1.4] tracking-[0.04em]'>Total</p>
-                            <p className='text-[14px] font-medium leading-[1.4] tracking-[0.04em]'>{FormattedCurrency(data.order_checkout.final_total)}</p>
+                            <p className='text-[14px] font-medium leading-[1.4] tracking-[0.04em]'>{formattedCurrency(data.order_checkout.final_total)}</p>
                         </article>
                         <article className='flex flex-col'>
                             <p className='text-[14px] text-grey1 leading-[1.4] tracking-[0.04em]'>Payment method</p>
@@ -100,7 +100,7 @@ function OrderHistoryCard({ data }) {
                                 <p className='pt-3 text-[11px] sm:text-[13px] leading-[1.4] tracking-[0.04em]'>Qty: {product.quantity}</p>
                             </article>
                         </div>
-                        <p className='font-HelveticaBold text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{FormattedCurrency(product.price)}</p>
+                        <p className='font-HelveticaBold text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{formattedCurrency(product.price)}</p>
                     </section>
                 ))}
                 <div className='flex flex-row justify-end gap-4 '>
