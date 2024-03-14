@@ -12,13 +12,13 @@ function ProductDetails({ data }) {
           </p>
           <ul className="columns-2 pb-8">
             {attributeKeys.map((key) => {
+              const { value, unit } = attributes.attributeType[key];
               return (
                 <li
                   key={key}
                   className="text-sm text-blackPrimary leading-[2] tracking-[0.2px]"
                 >
-                  <span className="text-grey1">{key}:</span>{" "}
-                  {attributes.attributeType[key]}
+                  <span className="text-grey1">{key}:</span> {value} {unit}
                 </li>
               );
             })}
