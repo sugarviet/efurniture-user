@@ -37,7 +37,8 @@ function FurnitureUserFavorite() {
     get_update_wishlist_api(furniture._id)
   );
 
-  const handleFavored = () => {
+  const handleFavored = (event) => {
+    event.stopPropagation();
     setFavored(!favored);
 
     if (!favored) onFavored();
