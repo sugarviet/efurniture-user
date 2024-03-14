@@ -2,7 +2,12 @@ import FavoriteButton from "@components/FavoriteButton";
 import { useState } from "react";
 import { useGuestStore } from "../../stores/useGuestStore";
 import useGuestCart from "../../hooks/useGuestCart";
+import useNavigation from "../../hooks/useNavigation"
+
 function ProductAddToCart({ furniture }) {
+
+  const { go_to_store } = useNavigation();
+
   const { wishlist, onFavored, onUnFavored } = useGuestStore();
   const { addToCart } = useGuestCart();
   const [isFavored, setIsFavored] = useState(
@@ -35,8 +40,8 @@ function ProductAddToCart({ furniture }) {
             Add to cart
           </button>
         </div>
-        <button className="uppercase furniture-button-white-hover w-full py-4 text-[11px]">
-          Find nearest store
+        <button onClick={go_to_store} className="uppercase furniture-button-white-hover w-full py-4 text-[11px]">
+          Find store
         </button>
       </div>
     </section>

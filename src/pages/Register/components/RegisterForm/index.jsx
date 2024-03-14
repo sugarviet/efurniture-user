@@ -37,6 +37,7 @@ function RegisterForm() {
       <Form
         className="max-w-[43.75rem]"
         name="register"
+        requiredMark="optional"
         labelCol={{
           span: 24,
         }}

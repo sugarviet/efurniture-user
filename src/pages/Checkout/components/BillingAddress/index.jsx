@@ -5,15 +5,13 @@ import { useState } from 'react';
 import { Form } from "antd";
 import { useOrderStore } from "../../../../stores/useGuestOrderStore";
 import useAuth from "@stores/useAuth";
+import FormSelect from "@components/FormSelect";
 
 function BillingAddress() {
 
     const { accessToken } = useAuth();
 
-    //province
-    const [districtId, setDistrictId] = useState(null);
-
-    const { setSelectedDistrict, setSelectedWard, selectedDistrict } = useOrderStore();
+    const { setSelectedDistrict, setSelectedWard, selectedDistrict, selectedWard } = useOrderStore();
 
     const { data: districtList } = useFetchOutsideSystem(
         get_district_in_saigon()
@@ -25,13 +23,11 @@ function BillingAddress() {
     );
 
     const handleDistrictChange = (e) => {
+        setSelectedWard({ id: "0", name: "" })
         setSelectedDistrict({ id: e.target.value, name: e.target.options[e.target.selectedIndex].text })
-        // const selectedDistrictName = e.target.options[e.target.selectedIndex].text;
-        // setSelectedDistrict(e.target.value);
 
     };
     const handleWardChange = (e) => {
-        // const selectedWardName = e.target.options[e.target.selectedIndex].text;
         setSelectedWard({ id: e.target.value, name: e.target.options[e.target.selectedIndex].text })
     };
 
@@ -64,23 +60,24 @@ function BillingAddress() {
                 type="lastName"
             />
 
-            <Form.Item label={<span className="text-base text-gray-800 font-semibold mb-[-5px]">District</span>} name="district">
-                <select onChange={handleDistrictChange} className='furniture-input w-full h-[3rem]'>
-                    <option value="">Choose district</option>
-                    {districtList?.map((district) => (
-                        <option key={district.district_id} value={district.district_id}>{district.district_name}</option>
-                    ))}
-                </select>
-            </Form.Item>
+            <FormSelect
+                label="District"
+                name="district"
+                type="district"
+                data={districtList?.map((district) => ({ label: district.district_name, value: district.district_id }))}
+                onChange={handleDistrictChange}
+            />
 
-            <Form.Item label={<span className="text-base text-gray-800 font-semibold mb-[-5px]">Ward</span>} name="ward">
-                <select onChange={handleWardChange} className='furniture-input w-full h-[3rem]'>
-                    <option value="">Choose ward</option>
-                    {wardList?.map((ward) => (
-                        <option key={ward.ward_id} value={ward.ward_id}>{ward.ward_name}</option>
-                    ))}
-                </select>
-            </Form.Item>
+            <div className="relative">
+                <FormSelect
+                    label="Ward"
+                    name="ward"
+                    type="ward"
+                    data={wardList?.map((ward) => ({ label: ward.ward_name, value: ward.ward_id }))}
+                    onChange={handleWardChange}
+                />
+                {selectedWard.id === "0" && <p className="absolute bottom-[-24px] text-[#ff4f4f]">Please choose a ward below</p>}
+            </div>
 
             <FormInput
                 label="Province"

@@ -1,18 +1,16 @@
 import { Form } from "antd";
 import FormInput from "@components/FormInput";
-import { usePost, usePostAuth } from "../../../../hooks/api-hooks";
-import { message } from "antd";
-import useAuth from "../../../../stores/useAuth";
-import { get_auth_login } from "../../../../api/authApi";
-import { get_add_all_wishlist_api } from "../../../../api/wishlistApi";
-import { useGuestStore } from "../../../../stores/useGuestStore";
-import jwtDecode from "jwt-decode";
-import useAuthentication from "../../../../hooks/useAuthentication";
+import { useToggleLoginBottomBar } from "@hooks/useToggleBottomBar";
+import useAuthentication from "../../hooks/useAuthentication";
 
 function LoginForm() {
-  const {login} = useAuthentication()
+
+  const { login } = useAuthentication()
+
+  const { closeLoginBottomBar} = useToggleLoginBottomBar();
   const onFinish = (values) => {
     login(values);
+    closeLoginBottomBar()
   };
 
   return (
@@ -20,6 +18,7 @@ function LoginForm() {
       <Form
         className="max-w-[43.75rem]"
         name="register"
+        requiredMark="optional"
         labelCol={{
           span: 24,
         }}

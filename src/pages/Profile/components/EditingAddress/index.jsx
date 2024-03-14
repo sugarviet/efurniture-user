@@ -44,6 +44,7 @@ const EditingAddress = ({ data, setIsModalEditOpen }) => {
       <p className="font-bold mb-3 text-xl">Edit adress</p>
       <Form
         name="editing_address"
+        requiredMark="optional"
         initialValues={data}
         labelCol={{
           span: 24,

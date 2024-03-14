@@ -50,7 +50,7 @@ export const useFetchWithAuth = (url, params, options) => {
   return useQuery([url, params], () => fetcher_with_auth(url, params), options);
 }
 
-const useGenericMutation = (func, key, params, onSuccessAPI = () => { }, onErrorAPI = () => { }) => {
+const useGenericMutation = (func, key, params, onSuccessAPI, onErrorAPI) => {
   const queryClient = useQueryClient();
   return useMutation(func, {
     onSuccess: (data) => {
@@ -75,7 +75,7 @@ export const useDeleteAuth = (url, params, onSuccessAPI = () => { }, onErrorAPI 
   );
 };
 
-export const usePost = (url, params, onSuccessAPI = () => { }, onErrorAPI = () => { }, key) => {
+export const usePost = (url, params, onSuccessAPI, onErrorAPI, key) => {
   return useGenericMutation(
     (data) => API.post(url, data),
     key,

@@ -3,8 +3,11 @@ import { Link, useLocation } from 'react-router-dom'
 import formattedCurrency from '@utils/formattedCurrency'
 import formattedDate from '@utils/formattedDate'
 import useNavigation from '../../hooks/useNavigation'
+import useAuth from "@stores/useAuth";
 
 function OrderConfirmation() {
+
+  const { accessToken } = useAuth();
 
   const { go_to_home } = useNavigation();
 
@@ -85,13 +88,15 @@ function OrderConfirmation() {
                       Continue to shopping
                     </button>
                   </Link>
-                  <Link to="/profile?tab=orders">
-                    <button
-                      className="furniture-button-black-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-8"
-                    >
-                      Tracking your order
-                    </button>
-                  </Link>
+                  {accessToken &&
+                    <Link to="/profile?tab=orders">
+                      <button
+                        className="furniture-button-black-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-8"
+                      >
+                        Tracking your order
+                      </button>
+                    </Link>
+                  }
                 </div>
               </section>
             </div>

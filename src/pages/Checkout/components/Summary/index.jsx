@@ -13,14 +13,17 @@ import useGuestCart from "@hooks/useGuestCart";
 import formattedCurrency from "@utils/formattedCurrency";
 import useNavigation from "../../../../hooks/useNavigation";
 import { Form } from "antd";
-import FormInput from "@components/FormInput";
 import FormCheckbox from "@components/FormCheckbox";
+
+const PAYMENT_METHOD = {
+  cod: "COD",
+}
 
 function Summary() {
 
   const { accessToken } = useAuth();
 
-  const { go_to_payment, go_to_order_confirmation } = useNavigation();
+  const { go_to_payment, go_to_order_confirmation, go_to_login } = useNavigation();
 
   const { cart, getTotalPrice } = accessToken ? useUserCart() : useGuestCart();
 
@@ -35,6 +38,8 @@ function Summary() {
 
   const [isCouponOpen, setIsCouponOpen] = useState(false);
 
+  const [isCouponForUser, setIsCouponForUser] = useState(false);
+
   const orderProducts = cart.map((cart) => ({
     product_id: cart._id,
     quantity: cart.quantity_in_cart,
@@ -44,7 +49,7 @@ function Summary() {
   }))
 
   const handlePaymentMethod = (metaData) => {
-    if (metaData.payment_method === "COD") {
+    if (metaData.payment_method === PAYMENT_METHOD.cod) {
       go_to_order_confirmation(metaData);
     } else {
       go_to_payment(metaData);
@@ -55,7 +60,7 @@ function Summary() {
     checkout_with_guest(),
     undefined,
     (data) => {
-      go_to_payment(data.data.metaData);
+      handlePaymentMethod(data.data.metaData);
     },
     (error) => {
       message.error(error.response.data.error.message);
@@ -72,7 +77,7 @@ function Summary() {
     }
   );
 
-  const onFinish = (values) => {
+  const onFinish = () => {
     accessToken ?
       checkoutForUser(
         {
@@ -99,11 +104,14 @@ function Summary() {
           note: note,
         }
       )
-    console.log(values)
   };
 
   const handleOpenCoupon = () => {
-    setIsCouponOpen(!isCouponOpen);
+    if (accessToken) {
+      setIsCouponOpen(!isCouponOpen);
+    }
+    setIsCouponForUser(!isCouponForUser)
+
   }
 
   return (
@@ -111,6 +119,7 @@ function Summary() {
       <Form
         className="max-w-[43.75rem]"
         name="summary"
+        requiredMark="optional"
         labelCol={{
           span: 24,
         }}
@@ -142,21 +151,37 @@ function Summary() {
           <p className='text-[13px] leading-[23.3px] tracking-[0.5px]'>{note}</p>
         </section>
 
-        {accessToken &&
-          <>
-            <div className="flex flex-row justify-between items-center mt-3">
-              <div onClick={handleOpenCoupon} className="text-sm font-medium flex flex-row justify-between cursor-pointer hover:no-underline underline hover:text-secondary">
-                Apply coupon code
-              </div>
-              {dataAfterVoucher &&
-                <p className="text-[13px] font-HelveticaBold">{dataAfterVoucher.voucher.code}</p>
-              }
+        <>
+          <div className="flex flex-row justify-between items-center mt-3">
+            <div onClick={handleOpenCoupon} className="text-sm font-medium flex flex-row justify-between cursor-pointer hover:no-underline underline hover:text-secondary">
+              Apply coupon code
             </div>
+            {dataAfterVoucher &&
+              <p className="text-[13px] font-HelveticaBold">{dataAfterVoucher.voucher.code}</p>
+            }
+          </div>
+          {accessToken ?
             <AppModal isOpen={isCouponOpen} onClose={handleOpenCoupon} className="max-w-[700px]">
               <CouponListModal setIsModalCreateOpen={handleOpenCoupon} setDataAfterVoucher={setDataAfterVoucher} />
             </AppModal>
-          </>
-        }
+            :
+            <AppModal isOpen={isCouponForUser} onClose={handleOpenCoupon} className="max-w-[700px] h-[200px]">
+              <div className="flex flex-col gap-6">
+                <p className="text-xl font-bold">
+                  Coupon codes can only be used by efurniture members. Login now?
+                </p>
+                <div className="flex gap-2 ml-auto">
+                  <button className="furniture-button-black-hover px-6 py-2.5" onClick={go_to_login} >
+                    Login
+                  </button>
+                  <button className="furniture-button-white-hover px-6 py-2.5" onClick={handleOpenCoupon}>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </AppModal>
+          }
+        </>
 
         <ul className="pt-8 list-none">
           <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">

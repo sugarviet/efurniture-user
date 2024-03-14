@@ -8,12 +8,10 @@ import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
 import { useOrderStore } from "../../../../stores/useGuestOrderStore";
 import useAuth from "@stores/useAuth";
 import useScroll from "@hooks/useScroll";
-import { get_user_info_detail } from "@api/profileApi";
-import { useFetchWithAuth } from "@hooks/api-hooks";
 import getCoordinates from "../../../../utils/getCoordinate";
-import LoadingSpinner from "@components/LoadingSpinner";
 
-function Billing({userData}) {
+function Billing({ userData }) {
+
   const { accessToken } = useAuth();
 
   const { toggleLoginBottomBar } = useToggleLoginBottomBar();
@@ -81,15 +79,14 @@ function Billing({userData}) {
             autoComplete="off"
             initialValues={{
               province: "Thành Phố Hồ Chí Minh",
-              email: userData?.email,
+              email: userData ? userData.email : "",
               ...orderShipping,
               district: selectedDistrict.id,
-              ward: selectedWard.id,
+              ward: selectedWard.id ? selectedWard.id : "",
             }}
           >
             <FormInput
               label="Email"
-              // defaultValue={ userData?.email }
               name="email"
               className="furniture-input w-full h-[3rem]"
               type="newLetterEmail"

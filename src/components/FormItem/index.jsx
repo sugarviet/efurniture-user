@@ -103,12 +103,17 @@ const FORM_TYPES = {
   },
   ward: {
     rules: [
-      { required: true, message: "Please enter a valid ward" },
+      { required: true, message: "Please choose a ward below" },
     ]
   },
   district: {
     rules: [
-      { required: true, message: "Please enter a valid district" },
+      { required: true, message: "Please choose a district below" },
+    ]
+  },
+  province: {
+    rules: [
+      { required: true },
     ]
   },
   detailAddress: {

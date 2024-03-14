@@ -8,7 +8,7 @@ const initialValues = {
     note: "",
     orderShipping: [],
     selectedDistrict: {},
-    selectedWard: '',
+    selectedWard: {},
 };
 
 export const useOrderStore = create(
@@ -21,6 +21,7 @@ export const useOrderStore = create(
             setSelectedDelivery: (delivery) => set({ selectedDelivery: delivery }),
             setNote: (noteFilled) => set({ note: noteFilled }),
             setOrderShipping: (shipping) => set({ orderShipping: shipping }),
+            reset: () => set(initialValues)
         }),
         {
             name: "order-guest-storage",

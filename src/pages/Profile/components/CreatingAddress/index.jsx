@@ -44,6 +44,7 @@ const CreatingAddress = ({ setIsModalCreateOpen }) => {
         labelCol={{
           span: 24,
         }}
+        requiredMark="optional"
         initialValues={{
           province: "TP HCM",
           district: "Quận 9",

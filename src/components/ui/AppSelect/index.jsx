@@ -1,6 +1,8 @@
 import Proptypes from "prop-types";
 
-const AppSelect = ({ data, onChange, value }) => {
+const AppSelect = ({ data, onChange, value, name }) => {
+
+  const updateData = [{ label: `Choose ${name}`, value: "" }, ...data];
   return (
     <div className="relative">
       <select
@@ -8,9 +10,9 @@ const AppSelect = ({ data, onChange, value }) => {
         onChange={onChange}
         value={value}
       >
-        {data.map((district) => (
-          <option key={district.district_id} value={district.district_name}>
-            {district.district_name}
+        {updateData.map((option, index) => (
+          <option key={index} value={option.value}>
+            {option.label}
           </option>
         ))}
       </select>
