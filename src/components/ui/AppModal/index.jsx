@@ -16,11 +16,12 @@ const AppModal = ({ isOpen, onClose, children, className }) => {
           {isOpen ? <div className="furniture-overlay"></div> : null}
 
           <div
-            className={`fixed inset-0 flex items-center justify-center z-50  ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-              } transition-opacity duration-300`}
+            className={`fixed inset-0 flex items-center justify-center z-50  ${
+              isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+            } transition-opacity duration-300`}
           >
             <div
-              className={`bg-white w-1/2 p-6 rounded-lg shadow-lg h-[600px] overflow-y-auto ${className}`}
+              className={`bg-white w-1/2 p-6 rounded-lg shadow-lg overflow-y-auto ${className}`}
               ref={modalRef}
               onClick={(e) => e.stopPropagation()}
             >
@@ -49,8 +50,8 @@ const AppModal = ({ isOpen, onClose, children, className }) => {
               {children}
             </div>
           </div>
-        </>
-        , document.body
+        </>,
+        document.body
       )}
     </>
   );
