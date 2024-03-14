@@ -1,56 +1,77 @@
+import useCartStore from "../stores/useCartStore";
 import { useGuestStore } from "../stores/useGuestStore";
+import useNotification from "./useNotification";
 
 function useGuestCart() {
-    const { cart, setCart } = useGuestStore();
+  const { cart, setCart } = useGuestStore();
+  const { success_message } = useNotification();
+  const { toggleCart } = useCartStore();
 
-    const addToCart = (item) => {
-        const isInCart = cart.some(i => i._id === item._id);
+  const addToCart = (item) => {
+    const isInCart = cart.some((i) => i._id === item._id);
 
-        if (isInCart) return increaseQuantity(item._id);
-
-        setCart([...cart, { ...item, quantity_in_cart: 1 }])
+    if (!isInCart) {
+      setCart([...cart, { ...item, quantity_in_cart: 1 }]);
+      toggleCart();
+      return;
     }
 
-    const removeFromCart = (id) => {
-        setCart([...cart.filter(item => item._id !== id)]);
-    }
+    increaseQuantity(item._id);
+    success_message(null, null, `${item.name} has already in the cart`);
+  };
 
-    const increaseQuantity = (id) => {
-        const cartClone = [...cart];
-        const item = cartClone.find(item => item._id === id);
+  const removeFromCart = (id) => {
+    setCart([...cart.filter((item) => item._id !== id)]);
+  };
 
-        item.quantity_in_cart += 1;
+  const increaseQuantity = (id) => {
+    const cartClone = [...cart];
+    const item = cartClone.find((item) => item._id === id);
 
-        setCart(cartClone);
-    }
+    item.quantity_in_cart += 1;
 
-    const decreaseQuantity = (id) => {
-        const cartClone = [...cart];
-        const item = cartClone.find(item => item._id === id);
+    setCart(cartClone);
+  };
 
-        item.quantity_in_cart -= 1;
+  const decreaseQuantity = (id) => {
+    const cartClone = [...cart];
+    const item = cartClone.find((item) => item._id === id);
 
-        if (item.quantity_in_cart <= 0) return removeFromCart(id);
+    item.quantity_in_cart -= 1;
 
-        setCart(cartClone);
-    }
+    if (item.quantity_in_cart <= 0) return removeFromCart(id);
 
-    const updateQuantity = (id, quantity) => {
-        const cartClone = [...cart];
-        const item = cartClone.find(item => item._id === id);
+    setCart(cartClone);
+  };
 
-        item.quantity_in_cart = quantity;
+  const updateQuantity = (id, quantity) => {
+    const cartClone = [...cart];
+    const item = cartClone.find((item) => item._id === id);
 
-        if (item.quantity_in_cart <= 0) return removeFromCart(id);
+    item.quantity_in_cart = quantity;
 
-        setCart(cartClone);
-    }
+    if (item.quantity_in_cart <= 0) return removeFromCart(id);
 
-    const getTotalPrice = () => {
-        return cart.reduce((total, item) => total + item.sale_price * item.quantity_in_cart, 0);
-    }
+    setCart(cartClone);
+  };
 
-    return { cart, addToCart, decreaseQuantity, increaseQuantity, removeFromCart, updateQuantity, getTotalPrice, isLoading: false };
+  const getTotalPrice = () => {
+    return cart.reduce(
+      (total, item) => total + item.sale_price * item.quantity_in_cart,
+      0
+    );
+  };
+
+  return {
+    cart,
+    addToCart,
+    decreaseQuantity,
+    increaseQuantity,
+    removeFromCart,
+    updateQuantity,
+    getTotalPrice,
+    isLoading: false,
+  };
 }
 
 export default useGuestCart;
