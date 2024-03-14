@@ -4,10 +4,12 @@ import FavoriteButton from "../../../FavoriteButton";
 
 import styles from "./FurnitureFavorite.module.css";
 import { useGuestStore } from "../../../../stores/useGuestStore";
+import useNotification from "../../../../hooks/useNotification";
 
 function FurnitureFavorite() {
   const { furniture } = useContext(FurnitureCardContext);
   const { wishlist, onFavored, onUnFavored } = useGuestStore();
+  const { success_message } = useNotification();
 
   const [favored, setFavored] = useState(
     wishlist.some((item) => item._id === furniture._id)
@@ -17,7 +19,10 @@ function FurnitureFavorite() {
     event.stopPropagation();
     setFavored(!favored);
 
-    if (!favored) onFavored(furniture);
+    if (!favored) {
+      onFavored(furniture);
+      success_message(null, null, `Added ${furniture.name} to Favorites`);
+    }
     if (favored) onUnFavored(furniture._id);
   };
 
