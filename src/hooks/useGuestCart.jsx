@@ -17,7 +17,7 @@ function useGuestCart() {
     }
 
     increaseQuantity(item._id);
-    success_message(null, null, `${item.name} has already in the cart`);
+    success_message(null, null, `${item.name} has already been in the cart`);
   };
 
   const removeFromCart = (id) => {
