@@ -100,13 +100,6 @@ function BillingAddress() {
                 className="furniture-input w-full h-[3rem]"
                 type="phone"
             />
-
-            <div className="flex flex-row gap-3 pb-4">
-                <input className="furniture-checkbox border-[0.125rem] border-[#5a7468] checked:bg-[#5a7468]"
-                    type="checkbox"
-                />
-                <p>Ship to billing address</p>
-            </div>
         </section>
     )
 }

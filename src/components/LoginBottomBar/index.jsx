@@ -39,7 +39,7 @@ function LoginBottomBar() {
 
               <FormInput
                 label="Email"
-                name="Email"
+                name="username"
                 className="furniture-input w-full h-[3rem]"
                 type="email"
               />

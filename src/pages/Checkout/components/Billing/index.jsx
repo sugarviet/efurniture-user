@@ -13,15 +13,11 @@ import { useFetchWithAuth } from "@hooks/api-hooks";
 import getCoordinates from "../../../../utils/getCoordinate";
 import LoadingSpinner from "@components/LoadingSpinner";
 
-function Billing() {
+function Billing({userData}) {
   const { accessToken } = useAuth();
 
-  const { data: userData, isLoading } = useFetchWithAuth(
-    get_user_info_detail()
-  );
-
   const { toggleLoginBottomBar } = useToggleLoginBottomBar();
-  
+
   const { handleScrollToTop } = useScroll();
 
   const { handleChangeTab } = useSwitchTab();
@@ -48,20 +44,19 @@ function Billing() {
     handleChangeTab(CHECKOUT_TABS.delivery);
     handleScrollToTop();
   };
-  
+
   const handleEmailChange = (e) => {
     if (e.target.value) {
       setIsInputEmail(true);
     }
   };
-  
+
   useEffect(() => {
     if (orderShipping.email || userData?.email) {
       setIsInputEmail(true);
     }
   }, [userData]);
 
-  if (isLoading) return <LoadingSpinner />;
 
   return (
     <section>
@@ -89,7 +84,7 @@ function Billing() {
               email: userData?.email,
               ...orderShipping,
               district: selectedDistrict.id,
-              ward:selectedWard.id,
+              ward: selectedWard.id,
             }}
           >
             <FormInput
@@ -103,27 +98,11 @@ function Billing() {
             />
 
             <div
-              className={`ease-slow-to-fast duration-1000 overflow-hidden max-h-0 ${
-                isInputEmail ? "max-h-[1500px]" : ""
-              }`}
+              className={`ease-slow-to-fast duration-1000 overflow-hidden max-h-0 ${isInputEmail ? "max-h-[1500px]" : ""
+                }`}
             >
               <section className="pb-4">
-                <div className="flex flex-row gap-3 pb-4">
-                  <input
-                    className="furniture-checkbox border-[0.125rem] border-[#5a7468] checked:bg-[#5a7468]"
-                    type="checkbox"
-                  />
-                  <p>Sign me up for the Efurniture newsletter.</p>
-                </div>
                 <section className="mb-6">
-                  <p>
-                    When you sign up for Efurniture newsletters, you agree to
-                    receive news and information regarding events via email from
-                    Efurniture A/S and your preferred/closest Efurniture store.
-                  </p>
-                  <br />
-                  <p>You can at any time revoke this consent.</p>
-                  <br />
                   <p>
                     Read more in our{" "}
                     <a href="#" className="underline">
@@ -140,9 +119,8 @@ function Billing() {
 
             <button
               type="submit"
-              className={`furniture-button-black-hover w-full px-[55px] py-[14px] text-[0.6875rem] tracking-[0.125rem] ${
-                !isInputEmail ? "mt-0" : "mt-6"
-              } `}
+              className={`furniture-button-black-hover w-full px-[55px] py-[14px] text-[0.6875rem] tracking-[0.125rem] ${!isInputEmail ? "mt-0" : "mt-6"
+                } `}
             >
               CONTINUE TO DELIVERY
             </button>
