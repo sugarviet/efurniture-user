@@ -2,18 +2,22 @@ import { useState, lazy } from "react";
 import PropTypes from "prop-types";
 import AppModal from "@components/ui/AppModal";
 import { useDeleteWithAuth, useUpdateWithAuth } from "@hooks/api-hooks";
-import { set_address_default_by_user,delete_single_address } from "@api/addressApi";
+import {
+  set_address_default_by_user,
+  delete_single_address,
+} from "@api/addressApi";
 import { message } from "antd";
 import { useQueryClient } from "@tanstack/react-query";
 import { get_addresses } from "@api/profileApi";
 import useNotification from "@hooks/useNotification";
+import AlertModal from "../../../../components/AlertModal";
 
-const EditingAddress = lazy(() => import('../EditingAddress'));
+const EditingAddress = lazy(() => import("../EditingAddress"));
 
 const AddressCard = ({ data }) => {
-const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const { is_default, province, ward, district, address, _id } = data;
-  const {success_message, error_message} = useNotification();
+  const { success_message, error_message } = useNotification();
 
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
@@ -23,13 +27,11 @@ const queryClient = useQueryClient();
     undefined,
     () => {
       queryClient.invalidateQueries(get_addresses());
-      success_message('address', 'set_default')
-
+      success_message("address", "set_default");
     },
     () => {
       message.error("Set default address failed");
-      error_message('address', 'set_default')
-
+      error_message("address", "set_default");
     }
   );
 
@@ -38,12 +40,10 @@ const queryClient = useQueryClient();
     undefined,
     () => {
       queryClient.invalidateQueries(get_addresses());
-      success_message('address', 'delete')
-
+      success_message("address", "delete");
     },
     () => {
-      error_message('address', 'delete')
-
+      error_message("address", "delete");
     }
   );
 
@@ -71,7 +71,10 @@ const queryClient = useQueryClient();
 
         <div className="flex gap-4">
           {!is_default && (
-            <button onClick={() => set_address_default({})} className="underline">
+            <button
+              onClick={() => set_address_default({})}
+              className="underline"
+            >
               Make default
             </button>
           )}
@@ -85,23 +88,15 @@ const queryClient = useQueryClient();
       </article>
 
       <AppModal isOpen={isModalEditOpen} onClose={toggleModalEdit}>
-        <EditingAddress data={data} setIsModalEditOpen={setIsModalEditOpen}/>
+        <EditingAddress data={data} setIsModalEditOpen={setIsModalEditOpen} />
       </AppModal>
 
       <AppModal isOpen={isModalDeleteOpen} onClose={toggleModalDelete}>
-        <div className="flex flex-col gap-6">
-          <p className="text-xl font-bold text-center">
-            Are you sure that you want to delete this address?
-          </p>
-          <div className="flex gap-2 ml-auto">
-            <button className="furniture-button-black-hover px-6 py-2.5" onClick={() => delete_address({})}>
-              Delete
-            </button>
-            <button className="furniture-button-black-hover px-6 py-2.5" onClick={toggleModalDelete}>
-              Cancel
-            </button>
-          </div>
-        </div>
+        <AlertModal
+          message="Are you sure that you want to delete this address?"
+          onConfirm={delete_address}
+          onCancel={toggleModalDelete}
+        />
       </AppModal>
     </>
   );

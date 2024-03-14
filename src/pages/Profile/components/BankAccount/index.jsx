@@ -5,11 +5,15 @@ import { withFetchDataWithHeaders } from "../../../../hocs/withFetchDataWithHead
 
 function BankAccount({ data }) {
   return (
-    <section className="w-2/3">
-      {data.map((bank) => (
-        <BankAccountCard key={bank._id} bank={bank} />
-      ))}
-      <BankAccountForm />;
+    <section>
+      <div className="grid grid-cols-2 gap-4 mr-6">
+        {data.map((bank) => (
+          <BankAccountCard className="col-span-1" key={bank._id} bank={bank} />
+        ))}
+      </div>
+      <div className="w-2/3 mt-6">
+        <BankAccountForm />;
+      </div>
     </section>
   );
 }

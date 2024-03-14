@@ -1,6 +1,9 @@
 import Sliders from "@components/Slider";
 import FurnitureCard from "../../../../components/FurnitureCard";
 import useAuth from "../../../../stores/useAuth";
+import {withFetchData} from "../../../../hocs/withFetchData"
+import { get_best_sellers } from "../../../../api/bestsellerApi";
+import PropTypes from "prop-types";
 
 const bestsellers = [
   {
@@ -122,17 +125,17 @@ const bestsellers = [
   },
 ];
 
-const BestSellersSlider = () => {
+const BestSellersSlider = ({data}) => {
   const { accessToken } = useAuth();
   return (
     <div>
       <Sliders initialSlide={3} slideToScroll={4} slideToShow={4}>
-        {bestsellers.map((item, index) => (
+        {data?.data.map((item, index) => (
           <div
             className="w-[345.476px] h-full border border-border border-r-0 bg-white pb-[0.5rem]"
             key={index}
           >
-            <FurnitureCard item={item} key={item}>
+            <FurnitureCard item={item.product} key={item}>
               <FurnitureCard.Model className="w-[60%]">
                 {accessToken ? (
                   <FurnitureCard.UserFavorite />
@@ -157,4 +160,8 @@ const BestSellersSlider = () => {
   );
 };
 
-export default BestSellersSlider;
+BestSellersSlider.propTypes = {
+  data: PropTypes.object,
+};
+
+export default withFetchData(BestSellersSlider, get_best_sellers);
