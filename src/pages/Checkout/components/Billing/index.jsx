@@ -20,7 +20,7 @@ function Billing({ userData }) {
 
   const { handleChangeTab } = useSwitchTab();
 
-  const { setOrderShipping, orderShipping, selectedDistrict, selectedWard } =
+  const { setOrderShipping, orderShipping, selectedDistrict, selectedWard, selectedAddress } =
     useOrderStore();
 
   const [isInputEmail, setIsInputEmail] = useState(false);
@@ -30,14 +30,27 @@ function Billing({ userData }) {
     const coordinates = await getCoordinates(
       `${address} ${selectedDistrict} ${selectedWard} ${province}`
     );
-
-    setOrderShipping({
-      ...values,
-      district: selectedDistrict.name,
-      ward: selectedWard.name,
-      longitude: coordinates[0],
-      latitude: coordinates[1],
-    });
+    !selectedAddress
+      ?
+      setOrderShipping({
+        ...values,
+        district: selectedDistrict.name,
+        ward: selectedWard.name,
+        longitude: coordinates[0],
+        latitude: coordinates[1],
+      })
+      :
+      setOrderShipping({
+        address: selectedAddress.address,
+        district: selectedDistrict.name,
+        email: userData.email,
+        ward: selectedWard.name,
+        longitude: coordinates[0],
+        latitude: coordinates[1],
+        first_name: userData.first_name,
+        last_name: userData.last_name,
+        phone: selectedAddress.phone,
+      })
 
     handleChangeTab(CHECKOUT_TABS.delivery);
     handleScrollToTop();
@@ -111,7 +124,7 @@ function Billing({ userData }) {
                 </section>
               </section>
 
-              <BillingAddress />
+              <BillingAddress userData={userData} />
             </div>
 
             <button

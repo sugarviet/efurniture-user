@@ -5,22 +5,47 @@ import { usePostAuth } from "@hooks/api-hooks";
 import { add_address } from "@api/addressApi";
 import { useFetchOutsideSystem } from "@hooks/api-hooks";
 import FormSelect from "@components/FormSelect";
-import { get_district_in_saigon } from "@api/addressApi";
+import { get_district_in_saigon, get_ward_in_saigon } from "@api/addressApi";
+import { get_addresses } from "@api/profileApi";
 import useNotification from "@hooks/useNotification";
-
+import { useState } from "react";
 import PropTypes from "prop-types";
+import { useQueryClient } from "@tanstack/react-query";
 
 const CreatingAddress = ({ setIsModalCreateOpen }) => {
+
   const [form] = Form.useForm();
+
   const { success_message, error_message } = useNotification();
-  const { data: data_address, isLoading } = useFetchOutsideSystem(
+
+  const queryClient = useQueryClient();
+
+  const [selectedDistrict, setSelectedDistrict] = useState({});
+  const [selectedWard, setSelectedWard] = useState({});
+
+  const { data: districtList } = useFetchOutsideSystem(
     get_district_in_saigon()
   );
+
+  const { data: wardList } = useFetchOutsideSystem(
+    get_ward_in_saigon(selectedDistrict.id)
+
+  );
+
+  const handleDistrictChange = (e) => {
+    setSelectedDistrict({ id: e.target.value, name: e.target.options[e.target.selectedIndex].text })
+  };
+
+  const handleWardChange = (e) => {
+    setSelectedWard({ id: e.target.value, name: e.target.options[e.target.selectedIndex].text })
+  };
+
 
   const { mutate } = usePostAuth(
     add_address(),
     undefined,
     () => {
+      queryClient.invalidateQueries(get_addresses());
       success_message("address", "add");
     },
     () => {
@@ -28,10 +53,15 @@ const CreatingAddress = ({ setIsModalCreateOpen }) => {
     }
   );
 
-  if (isLoading) return;
   const onFinish = (values) => {
     console.log("Success:", values);
-    mutate(values);
+    mutate(
+      {
+        ...values,
+        district: selectedDistrict.name,
+        ward: selectedWard.name
+      }
+    );
     form.resetFields();
     setIsModalCreateOpen(false);
   };
@@ -46,22 +76,27 @@ const CreatingAddress = ({ setIsModalCreateOpen }) => {
         }}
         requiredMark="optional"
         initialValues={{
-          province: "TP HCM",
-          district: "Quận 9",
+          province: "Thành Phố Hồ Chí Minh",
         }}
         onFinish={onFinish}
         autoComplete="off"
       >
-        <FormInput label="Address name" name="address" className="w-full" />
-        <FormInput label="Province" name="province" className="w-full" />
-        <FormInput label="Phone" name="phone" className="w-full" />
-        <FormInput label="Ward" name="ward" className="w-full" />
-
+        <FormInput label="Address name" name="address" className="w-full" type="detailAddress" />
+        <FormInput label="Province" name="province" className="w-full" disabled type="province" />
+        <FormInput label="Phone" name="phone" className="w-full" type="phone" />
         <FormSelect
           label="District"
           name="district"
-          data={data_address}
-          value={"Quận 9"}
+          type="district"
+          data={districtList?.map((district) => ({ label: district.district_name, value: district.district_id }))}
+          onChange={handleDistrictChange}
+        />
+        <FormSelect
+          label="Ward"
+          name="ward"
+          type="ward"
+          data={wardList?.map((ward) => ({ label: ward.ward_name, value: ward.ward_id }))}
+          onChange={handleWardChange}
         />
 
         <div className="flex flex-col gap-5 text-base w-[40rem]">
