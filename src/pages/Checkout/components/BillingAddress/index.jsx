@@ -1,13 +1,14 @@
 import FormInput from "@components/FormInput";
-import { useFetchOutsideSystem, useFetchWithAuth } from "@hooks/api-hooks";
-import { get_district_in_saigon, get_ward_in_saigon, get_all_address } from "@api/addressApi";
-import { useState } from 'react';
+import { useFetchOutsideSystem } from "@hooks/api-hooks";
+import { get_district_in_saigon, get_ward_in_saigon } from "@api/addressApi";
 import { useOrderStore } from "../../../../stores/useGuestOrderStore";
 import useAuth from "@stores/useAuth";
 import FormSelect from "@components/FormSelect";
 import FormCheckbox from "@components/FormCheckbox";
 
-function BillingAddress({ userData }) {
+function BillingAddress({ userData, addressList }) {
+
+    console.log(addressList)
 
     const { accessToken } = useAuth();
 
@@ -22,10 +23,7 @@ function BillingAddress({ userData }) {
         setSelectedAddress
     } = useOrderStore();
 
-    const { data: addressList, isLoading } = useFetchWithAuth(
-        get_all_address()
-    );
-    console.log(addressList);
+
 
     const { data: districtList } = useFetchOutsideSystem(
         get_district_in_saigon()
@@ -54,12 +52,10 @@ function BillingAddress({ userData }) {
         const selectedValue = event.target.value
         const selectedObject = addressList.find(address => address._id === selectedValue);
         setSelectedAddress(selectedObject);
-        setSelectedDistrict({name:selectedObject.district})
-        setSelectedWard({name:selectedObject.ward})
+        setSelectedDistrict({ name: selectedObject?.district })
+        setSelectedWard({ name: selectedObject?.ward })
         console.log(orderShipping)
     };
-
-    if (isLoading) return;
 
     return (
         <section className="w-full max-w-[43.75rem]">
@@ -68,9 +64,14 @@ function BillingAddress({ userData }) {
             {accessToken &&
                 <div className="furniture-divided-bottom pb-10 mb-5">
                     <p className='text-[14px] leading-[24px] tracking-[0.7px]'>Select an address</p>
-                    <select onChange={handleChooseAddress} className='furniture-input w-full h-[3rem] text-base tracking-[0.8px] leading-[48px] text-ellipsis'>
-                        <option value="">Select from saved addresses</option>
-                        <option value="">Add new address</option>
+                    <select
+                        placeholder="Select new address"
+                        value={selectedAddress ? selectedAddress._id : ""}
+                        onChange={handleChooseAddress}
+                        className='furniture-input w-full h-[3rem] text-base tracking-[0.8px] leading-[48px] text-ellipsis'
+                    >
+                        {/* <option value="">Select from saved addresses</option> */}
+                        <option value="">Select new address</option>
                         {addressList?.map((address) => (
                             <option key={address._id} value={address._id}>{address.province} - {address.address}, {address.ward}, {address.district}</option>
                         ))}
@@ -83,9 +84,9 @@ function BillingAddress({ userData }) {
                                 <div className='grid grid-cols-[1fr_auto] py-[1.5rem] pr-[1.5rem] pl-[4rem]'>
                                     <article className='text-[12px] lg:text-[14px] leading-[1.1875] tracking-[0.08em] flex flex-col gap-1'>
                                         <h4 className='font-medium text uppercase'>{selectedAddress.address}, {selectedAddress.ward}, {selectedAddress.district}, {selectedAddress.province}</h4>
-                                        <p>{userData.first_name} {userData.last_name}</p>
+                                        <p>{userData?.first_name} {userData?.last_name}</p>
                                         <p>{selectedAddress.phone}</p>
-                                        <p>{userData.email} </p>
+                                        <p>{userData?.email} </p>
                                     </article>
                                 </div>
                             </div>

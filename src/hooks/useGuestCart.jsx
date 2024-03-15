@@ -62,6 +62,10 @@ function useGuestCart() {
     );
   };
 
+  const clearCart = () => {
+    setCart([])
+  }
+
   return {
     cart,
     addToCart,
@@ -70,6 +74,7 @@ function useGuestCart() {
     removeFromCart,
     updateQuantity,
     getTotalPrice,
+    clearCart,
     isLoading: false,
   };
 }

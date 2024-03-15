@@ -7,10 +7,13 @@ import { get_banking_transaction, async_banking_transaction } from '../../api/ba
 import { usePostWithBankingTransaction } from '../../hooks/api-hooks';
 import { useQueryClient } from "@tanstack/react-query";
 import useNavigation from '../../hooks/useNavigation';
+import useGuestCart from '../../hooks/useGuestCart';
 
 export default function BankingPayment() {
 
     const queryClient = useQueryClient();
+
+    const { clearCart } = useGuestCart()
 
     const { go_to_order_confirmation } = useNavigation();
 
@@ -44,6 +47,9 @@ export default function BankingPayment() {
     );
 
     useEffect(() => {
+        if (orderDetail.guest) {
+            clearCart();
+        }
         const interval = setInterval(() => {
             asyncTransaction({ bank_acc_id: BANK_INFO.ACCOUNT_NO });
             go_to_order_confirmation(orderDetail);

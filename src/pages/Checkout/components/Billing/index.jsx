@@ -9,6 +9,9 @@ import { useOrderStore } from "../../../../stores/useGuestOrderStore";
 import useAuth from "@stores/useAuth";
 import useScroll from "@hooks/useScroll";
 import getCoordinates from "../../../../utils/getCoordinate";
+import { withFetchDataWithAddress } from "../../../../hocs/withFetchDataWithAddress";
+
+const BillingAddressUser = withFetchDataWithAddress(BillingAddress)
 
 function Billing({ userData }) {
 
@@ -124,7 +127,12 @@ function Billing({ userData }) {
                 </section>
               </section>
 
-              <BillingAddress userData={userData} />
+              {accessToken ?
+                <BillingAddressUser/>
+                :
+                <BillingAddress userData={userData} />
+              }
+
             </div>
 
             <button
