@@ -37,7 +37,6 @@ export default function BankingPayment() {
         undefined,
         (data) => {
             queryClient.invalidateQueries(get_banking_transaction());
-            console.log(data);
         },
         (error) => {
             console.log(error);

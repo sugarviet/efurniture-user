@@ -11,6 +11,7 @@ import { useLocation } from "react-router-dom";
 import { withFetchDataWithHeaders } from "../../hocs/withFetchDataWithHeaders";
 import { get_user_info_detail } from "../../api/profileApi";
 import Proptypes from "prop-types";
+import { useOrderStore } from "../../stores/useGuestOrderStore";
 
 const Address = lazy(() => import("./components/Address"));
 const Orders = lazy(() => import("./components/Orders"));
@@ -40,7 +41,7 @@ const TAB_PROFILE = {
   },
 };
 
-const Profile = ({data}) => {
+const Profile = ({ data }) => {
   const tabKeys = Object.keys(TAB_PROFILE);
 
   const location = useLocation();
@@ -49,6 +50,14 @@ const Profile = ({data}) => {
 
   const [currentTab, setCurrentTab] = useUrlState("tab");
   const { clearTokens } = useAuth();
+
+  const { reset } = useOrderStore();
+
+  const handleLogout = () => {
+    reset();
+    clearTokens();
+    
+  }
 
   return (
     <main className="flex flex-col gap-8 pb-12">
@@ -59,7 +68,7 @@ const Profile = ({data}) => {
           </h1>
           <div>
             <h2 className="text-lg normal-case">{data.first_name} {data.last_name}</h2>
-            <button onClick={clearTokens} className="underline">
+            <button onClick={handleLogout} className="underline">
               Logout
             </button>
           </div>

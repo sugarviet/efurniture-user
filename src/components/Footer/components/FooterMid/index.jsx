@@ -4,34 +4,28 @@ import MenuSection from "./components/MenuSection";
 import useAuth from "../../../../stores/useAuth";
 const MENU_ITEMS = [
   {
-    title: "Contact",
+    title: "Products",
     items: [
-      { name: "Contact us" },
-      { name: "Find Store" },
-      { name: "Book appointment" },
-      { name: "As a professional" },
+      { name: "Sofa", to: "/products/sofa" },
+      { name: "Armchairs", to: "/products/armchairs" },
+      { name: "Sofas", to: "/products/sofas" },
+      { name: "Chair", to: "/products/chair" },
     ],
   },
   {
-    title: "Customer service",
+    title: "Rooms",
     items: [
-      { name: "Customer information" },
-      { name: "Delivery" },
-      { name: "Returns" },
-      { name: "1 year warranty" },
-      { name: "Assembly instructions" },
-      { name: "Handling and packaging" },
-      { name: "Product care" },
-      { name: "Order free samples" },
+      { name: "NVH Room", to: "/room/nvh_room" },
+      { name: "Living Room", to: "/room/living-room" },
     ],
   },
   {
-    title: "About",
+    title: "Links",
     items: [
-      { name: "About Efurniture" },
-      { name: "Join our team" },
-      { name: "Franchise" },
-      { name: "Press Lounge" },
+      { name: "Home", to: "/" },
+      { name: "Cart", to: "/cart" },
+      { name: "Find store", to: "/stores" },
+      { name: "Checkout", to: "/checkout" },
     ],
   },
 ];
@@ -97,10 +91,10 @@ function FooterMid() {
       <div className="sm:pl-[4rem]">
         <div className="w-full flex flex-col justify-center items-center sm:block">
           <h3 className="font-HelveticaBold pb-[1.5rem] text-[16px]">
-            Make a booking
+            Go to shopping
           </h3>
           <button className="furniture-button-white-hover px-[55px] py-[18px] text-[0.6875rem] ">
-            Book now{" "}
+            Shopping{" "}
           </button>
         </div>
       </div>

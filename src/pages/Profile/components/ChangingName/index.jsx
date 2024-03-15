@@ -35,6 +35,7 @@ const ChangingName = ({ data }) => {
         labelCol={{
           span: 24,
         }}
+        requiredMark="optional"
         initialValues={data}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}

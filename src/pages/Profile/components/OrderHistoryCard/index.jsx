@@ -144,10 +144,10 @@ function OrderHistoryCard({ data }) {
                 </div>
 
             </div>
-            <AppModal isOpen={isModalDeleteOpen} onClose={toggleModalDelete}>
+            <AppModal className="max-h-[200px] max-w-[700px]" isOpen={isModalDeleteOpen} onClose={toggleModalDelete}>
                 <div className="flex flex-col gap-6">
                     <p className="text-xl font-bold text-center">
-                        Are you sure that you want to delete this address?
+                        Are you sure that you want to cancel this order?
                     </p>
                     <div className="flex gap-2 ml-auto">
                         <button className="furniture-button-black-hover px-6 py-2.5" onClick={() => cancelOrder({})}>

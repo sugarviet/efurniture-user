@@ -1,5 +1,3 @@
-import { useOrderStore } from "../stores/useGuestOrderStore";
-
 export const withBillingGuest = (WrappedComponent) => {
     return () => {
 
