@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  get_bank_account_api,
-  get_banks_api,
-  get_delete_bank_api,
-} from "../../api/bankApi";
-import { useDeleteWithAuth } from "../../hooks/api-hooks";
 import useBank from "../../hooks/useBank";
-import { classNames } from "../../utils/classNames";
 import formatBankAccountNumber from "../../utils/formatBankAccountNumber";
 import AlertModal from "../AlertModal";
 import BankBriefInfo from "../BankBriefInfo";
@@ -23,14 +16,7 @@ function BankAccountCard({ bank, className }) {
     is_default,
   } = bank;
 
-  const { setDefault } = useBank();
-  const { mutate: removeBankAccount } = useDeleteWithAuth(
-    get_delete_bank_api(bank._id),
-    undefined,
-    () => {},
-    () => {},
-    get_bank_account_api()
-  );
+  const { setDefault, removeBankAccount } = useBank();
 
   return (
     <section className={className}>
@@ -67,7 +53,7 @@ function BankAccountCard({ bank, className }) {
       >
         <AlertModal
           message="Are you sure that you want to delete this bank?"
-          onConfirm={removeBankAccount}
+          onConfirm={() => removeBankAccount(bank._id)}
           onCancel={() => setIsModalDeleteOpen(false)}
         />
       </AppModal>

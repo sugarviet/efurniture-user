@@ -1,11 +1,17 @@
-import { toast } from "sonner";
 import { get_bank_account_api, get_create_bank_info_api } from "../api/bankApi";
-import { usePostAuth, useUpdateWithAuth } from "./api-hooks";
+import { useDeleteAuth, usePostAuth, useUpdateWithAuth } from "./api-hooks";
 import useNotification from "./useNotification";
 
 function useBank() {
   const { error_message, success_message } = useNotification();
-  const { mutate: createBankAccount } = usePostAuth(get_create_bank_info_api());
+  const { mutate: createBankAccount } = usePostAuth(
+    get_create_bank_info_api(),
+    undefined,
+    () => {},
+    () => {},
+    get_bank_account_api()
+  );
+
   const { mutate: updateBankAccount } = useUpdateWithAuth(
     get_create_bank_info_api(),
     undefined,
@@ -15,6 +21,14 @@ function useBank() {
     (error) => {
       error_message(null, null, error.message);
     },
+    get_bank_account_api()
+  );
+
+  const { mutate: remove } = useDeleteAuth(
+    get_create_bank_info_api(),
+    undefined,
+    () => {},
+    () => {},
     get_bank_account_api()
   );
 
@@ -37,7 +51,12 @@ function useBank() {
     updateBankAccount(body);
   };
 
-  return { addBankAccount, setDefault };
+  const removeBankAccount = (id) => {
+    const body = { bankInfor_id: id };
+    remove(body);
+  };
+
+  return { addBankAccount, setDefault, removeBankAccount };
 }
 
 export default useBank;
