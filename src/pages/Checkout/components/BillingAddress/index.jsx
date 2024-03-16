@@ -8,8 +8,6 @@ import FormCheckbox from "@components/FormCheckbox";
 
 function BillingAddress({ userData, addressList }) {
 
-    console.log(addressList)
-
     const { accessToken } = useAuth();
 
     const {
@@ -22,8 +20,6 @@ function BillingAddress({ userData, addressList }) {
         selectedAddress,
         setSelectedAddress
     } = useOrderStore();
-
-
 
     const { data: districtList } = useFetchOutsideSystem(
         get_district_in_saigon()

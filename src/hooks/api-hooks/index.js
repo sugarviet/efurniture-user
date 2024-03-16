@@ -125,7 +125,7 @@ export const usePostWithAuth = (url, params, onSuccessAPI, onErrorAPI) => {
   );
 };
 
-export const usePostWithBankingTransaction = (url, params, onSuccessAPI, onErrorAPI, key) => {
+export const usePostWithBankingTransaction = (url, params, onSuccessAPI = () => { }, onErrorAPI = () => { }, key) => {
   return useGenericMutation(
     (data) => BANKING_API.post(url, data),
     key,

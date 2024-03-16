@@ -8,10 +8,6 @@ import { withUserCart } from "../../hocs/withUserCart"
 import { withBillingGuest } from "../../hocs/withBillingGuest"
 import { withBillingUser } from "../../hocs/withBillingUser"
 import useAuth from "../../stores/useAuth";
-import useUserCart from "../../hooks/useUserCart";
-import useGuestCart from "../../hooks/useGuestCart";
-import useNavigation from "../../hooks/useNavigation";
-import { useEffect } from "react";
 
 const Billing = lazy(() => import("./components/Billing"));
 const Shipping = lazy(() => import("./components/Shipping"));
@@ -32,9 +28,6 @@ function Checkout() {
 
   const { activeTab } = useSwitchTab();
 
-  const { go_to_home } = useNavigation()
-
-  const { cart } = accessToken ? useUserCart() : useGuestCart();
 
   const tabsCheckout = {
     billing: {
@@ -51,9 +44,6 @@ function Checkout() {
     },
   };
 
-  useEffect(() => {
-    if (!cart.length && !accessToken) go_to_home();
-  }, [cart]);
 
   return (
     <main className="min-h-screen">
