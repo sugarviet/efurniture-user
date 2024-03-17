@@ -158,7 +158,7 @@ function OrderHistoryCard({ data }) {
                     </p>
                     <div className="flex gap-2 ml-auto">
                         <button className="furniture-button-black-hover px-6 py-2.5" onClick={() => cancelOrder({})}>
-                            Delete
+                            Cancel
                         </button>
                         <button className="furniture-button-black-hover px-6 py-2.5" onClick={toggleModalDelete}>
                             Cancel
