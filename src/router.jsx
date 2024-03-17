@@ -45,6 +45,7 @@ export const PATH = {
   bankingPayment: "/payment",
   orderConfirmation: "/order-confirmation",
   logout: "/logout",
+  notfound: "/notfound",
 };
 
 export const routers = createBrowserRouter([
@@ -107,6 +108,10 @@ export const routers = createBrowserRouter([
       {
         path: PATH.logout,
         element: <Logout />,
+      },
+      {
+        path: PATH.notfound,
+        element: <NotFound />,
       },
       {
         path: "*",
