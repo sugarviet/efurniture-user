@@ -9,6 +9,7 @@ import CheckoutLayout from "@layouts/CheckoutLayout";
 // Pages
 import Home from "@pages/Home";
 import Logout from "./pages/Logout";
+import BankingPayment from "./pages/BankingPayment";
 
 const Profile = lazy(() => import("@pages/Profile"));
 const StoreLocation = lazy(() => import("@pages/StoreLocation"));
@@ -23,7 +24,6 @@ const ProductDetail = lazy(() => import("@pages/ProductDetail"));
 const Checkout = lazy(() => import("@pages/Checkout"));
 const Search = lazy(() => import("@pages/Search"));
 const Cart = lazy(() => import("@pages/Cart"));
-const BankingPayment = lazy(() => import("@pages/BankingPayment"));
 const OrderConfirmation = lazy(() => import("@pages/OrderConfirmation"));
 
 export const PATH = {

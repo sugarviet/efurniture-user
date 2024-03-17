@@ -8,7 +8,7 @@ const API_URL_PRODUCTION = "http://34.126.181.161:4646/api/v1";
 import { toast } from "sonner";
 import { sleep } from "../utils/sleep";
 const BANKING_URL_TEST = "https://oauth.casso.vn/v2";
-const BANKING_API_KEY = "AK_CS.95b71330db9411ee9d58e1c7c53ac48c.MArA1NZa4mZraplE6qGueWgQgaX9VTNVwOYTCz0ZWAwYZHnJiJcP2RVkkskLhWzEYin6qhWt"
+const BANKING_API_KEY = "AK_CS.efb29200e36a11ee9d413757570d4de8.8hDyi7AgyeMQPZYlCZ0NKqluhqJdeYGTSsJhmthuVoYJ6F9AIjHv7znMssbmKGxgYRU94oM8"
 
 const BASE_URL = API_URL_PRODUCTION;
 const BANKING_URL = BANKING_URL_TEST;

@@ -7,6 +7,7 @@ import { withFetchDataWithAuth } from "../../../../hocs/withFetchDataWithAuth";
 import PropTypes from "prop-types";
 
 function OrderDetail({ data }) {
+    console.log(data);
 
     const { go_to_back } = useNavigation();
 
@@ -54,7 +55,7 @@ function OrderDetail({ data }) {
 
                     <article className='absolute top-6 right-[-46px] flex flex-col items-center'>
                         <p className='text-[14px] font-medium leading-[1.4] tracking-[0.04em]'>Expected delivery</p>
-                        <p className='text-[14px]  text-grey1 leading-[1.4] tracking-[0.04em]'>Feb 22 - 26</p>
+                        <p className='text-[14px]  text-grey1 leading-[1.4] tracking-[0.04em]'>{formattedDate(data.createdAt, 3)} - {formattedDate(data.createdAt, 4)}</p>
                     </article>
                 </div>
 
@@ -86,7 +87,8 @@ function OrderDetail({ data }) {
                     <div className="basis-1/3">
                         <p className='font-HelveticaBold text-[1.5rem] leading-[1.20833] tracking-[0.08em]'>Payment method</p>
                         <p className='pt-2 leading-[1.4] tracking-[0.04em] mt-2'>{data.payment_method}</p>
-                        {/* <p className='pt-2 leading-[1.4] tracking-[0.04em]'>&#x00028;Thanh toán thành công&#x00029;</p> */}
+                        <p className='pt-2 leading-[1.4] tracking-[0.04em] text-[#ee4d2d]'>&#x00028;{orderCheckout.is_paid == true ? "Have been paid successfully" : "Have not been paid yet"}&#x00029;</p>
+
                     </div>
                 </div>
 

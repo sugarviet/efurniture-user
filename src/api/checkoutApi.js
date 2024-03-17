@@ -1,7 +1,15 @@
-const CHECKOUT_GUEST_API = '/order/guest/create-order';
-const CHECKOUT_USER_API = '/order/create-order';
+
+const ORDER_CHECKOUT_URL = '/order';
 
 
-export const checkout_with_guest = () => CHECKOUT_GUEST_API;
+export const checkout_with_guest = () => {
+    return `${ORDER_CHECKOUT_URL}/guest/create-order`
+}
 
-export const checkout_with_user = () => CHECKOUT_USER_API;
+export const checkout_with_user = () => {
+    return `${ORDER_CHECKOUT_URL}/create-order`
+}
+
+export const set_is_paid_order = () => {
+    return `${ORDER_CHECKOUT_URL}/paid`
+}

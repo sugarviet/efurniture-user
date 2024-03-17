@@ -26,6 +26,9 @@ function Checkout() {
 
   const { accessToken } = useAuth();
 
+  const { activeTab } = useSwitchTab();
+
+
   const tabsCheckout = {
     billing: {
       component: accessToken ? <BillingUser /> : <BillingGuest />,
@@ -41,7 +44,6 @@ function Checkout() {
     },
   };
 
-  const { activeTab } = useSwitchTab();
 
   return (
     <main className="min-h-screen">

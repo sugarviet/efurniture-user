@@ -4,12 +4,15 @@ import formattedCurrency from '@utils/formattedCurrency'
 import formattedDate from '@utils/formattedDate'
 import useNavigation from '../../hooks/useNavigation'
 import useAuth from "@stores/useAuth";
+import useGuestCart from '../../hooks/useGuestCart'
 
 function OrderConfirmation() {
 
   const { accessToken } = useAuth();
 
   const { go_to_home } = useNavigation();
+
+  const { clearCart } = useGuestCart();
 
   const location = useLocation();
   const orderConfirmation = location.state || { orderConfirmation: null };
@@ -22,7 +25,10 @@ function OrderConfirmation() {
     if (orderConfirmation.orderConfirmation === null) {
       go_to_home();
     }
-  }, [orderConfirmation, go_to_home]);
+    if(orderConfirmation.guest){
+      clearCart();
+    }
+  }, [orderConfirmation]);
 
   return (
     <section className='min-h-screen mb-12'>

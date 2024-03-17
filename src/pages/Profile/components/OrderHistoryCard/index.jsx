@@ -2,7 +2,7 @@ import { useState } from "react";
 import AppModal from "@components/ui/AppModal";
 import formattedCurrency from '@utils/formattedCurrency'
 import formattedDate from '@utils/formattedDate'
-import useNavigation from '@hooks/useNavigation';
+import useNavigation from "../../../../hooks/useNavigation";
 import useScroll from "@hooks/useScroll";
 import PropTypes from "prop-types";
 import { useUpdateWithAuth, useFetchWithAuth } from "@hooks/api-hooks";
@@ -25,7 +25,7 @@ function OrderHistoryCard({ data }) {
 
     const { success_message, error_message } = useNotification();
 
-    const { go_to_order_detail, go_to_home } = useNavigation();
+    const { go_to_order_detail, go_to_home, go_to_payment } = useNavigation();
 
     const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
 
@@ -103,44 +103,51 @@ function OrderHistoryCard({ data }) {
                         <p className='font-HelveticaBold text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{formattedCurrency(product.price)}</p>
                     </section>
                 ))}
-                <div className='flex flex-row justify-end gap-4 '>
-                    <section>
-                        <button
-                            className="furniture-button-white-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-8"
-                            onClick={go_to_home}
-                        >
-                            Contact Store
-                        </button>
-                    </section>
-                    {data.order_tracking[data.order_tracking.length - 1].name === ORDER_STATE.done &&
-                        <section>
-                            <button
-                                className="furniture-button-white-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-8"
-                                onClick={go_to_home}
-                            >
-                                Buy again
-                            </button>
-                        </section>
-                    }
-                    {data.order_tracking[data.order_tracking.length - 1].name === ORDER_STATE.pending &&
-                        <section>
-                            <button
-                                onClick={toggleModalDelete}
-                                className="furniture-button-black-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-8"
-                            >
-                                Cancel
-                            </button>
-                        </section>
-                    }
-                    {data.order_tracking[data.order_tracking.length - 1].name === ORDER_STATE.processing &&
-                        <section>
-                            <button
-                                className="furniture-button-black-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-8"
-                            >
-                                Refund
-                            </button>
-                        </section>
-                    }
+                <div className='flex flex-row justify-between items-center gap-4  mt-8'>
+                    <div>
+                        <p className='pt-2 leading-[1.4] tracking-[0.04em] text-[#ee4d2d]'>{data.order_checkout.is_paid == false && "*Order has not been paid yet"}</p>
+                    </div>
+                    <div className='flex flex-row justify-end gap-4'>
+                        {data.order_tracking[data.order_tracking.length - 1].name === ORDER_STATE.done &&
+                            <section>
+                                <button
+                                    className="furniture-button-white-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem]"
+                                    onClick={go_to_home}
+                                >
+                                    Buy again
+                                </button>
+                            </section>
+                        }
+                        {data.order_tracking[data.order_tracking.length - 1].name === ORDER_STATE.pending &&
+                            <section>
+                                <button
+                                    onClick={toggleModalDelete}
+                                    className="furniture-button-black-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem]"
+                                >
+                                    Cancel
+                                </button>
+                            </section>
+                        }
+                        {data.order_tracking[data.order_tracking.length - 1].name === ORDER_STATE.processing &&
+                            <section>
+                                <button
+                                    className="furniture-button-black-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem]"
+                                >
+                                    Refund
+                                </button>
+                            </section>
+                        }
+                        {data.order_checkout.is_paid == false &&
+                            <section>
+                                <button
+                                    onClick={() => go_to_payment(data)}
+                                    className="furniture-button-black-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem]"
+                                >
+                                    Pay again
+                                </button>
+                            </section>
+                        }
+                    </div>
                 </div>
 
             </div>
@@ -151,7 +158,7 @@ function OrderHistoryCard({ data }) {
                     </p>
                     <div className="flex gap-2 ml-auto">
                         <button className="furniture-button-black-hover px-6 py-2.5" onClick={() => cancelOrder({})}>
-                            Delete
+                            Cancel
                         </button>
                         <button className="furniture-button-black-hover px-6 py-2.5" onClick={toggleModalDelete}>
                             Cancel

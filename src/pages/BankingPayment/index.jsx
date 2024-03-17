@@ -4,17 +4,22 @@ import formattedCurrency from "@utils/formattedCurrency";
 import { BANK_INFO } from '../../constants/bankInfoConstants';
 import { useFetchBanking } from '../../hooks/api-hooks';
 import { get_banking_transaction, async_banking_transaction } from '../../api/bankingTransactionApi';
-import { usePostWithBankingTransaction } from '../../hooks/api-hooks';
+import { set_is_paid_order } from '../../api/checkoutApi';
+import { usePostWithBankingTransaction, usePostAuth } from '../../hooks/api-hooks';
 import { useQueryClient } from "@tanstack/react-query";
 import useNavigation from '../../hooks/useNavigation';
+import useGuestCart from '../../hooks/useGuestCart';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 export default function BankingPayment() {
 
     const queryClient = useQueryClient();
 
+    const { clearCart } = useGuestCart()
+
     const { go_to_order_confirmation } = useNavigation();
 
-    const { data: dataTransaction } = useFetchBanking(
+    const { data: dataTransaction, isLoading } = useFetchBanking(
         get_banking_transaction()
     );
 
@@ -35,8 +40,18 @@ export default function BankingPayment() {
     const { mutate: asyncTransaction } = usePostWithBankingTransaction(
         async_banking_transaction(),
         undefined,
-        (data) => {
+        () => {
             queryClient.invalidateQueries(get_banking_transaction());
+        },
+        (error) => {
+            console.log(error);
+        }
+    );
+    const { mutate: setIsPaid } = usePostAuth(
+        set_is_paid_order(),
+        undefined,
+        (data) => {
+            console.log(data);
         },
         (error) => {
             console.log(error);
@@ -44,15 +59,33 @@ export default function BankingPayment() {
     );
 
     useEffect(() => {
+        if (orderDetail.guest) {
+            clearCart();
+        }
         const interval = setInterval(() => {
-            asyncTransaction({ bank_acc_id: BANK_INFO.ACCOUNT_NO });
+            setIsPaid({
+                order_id: orderDetail._id,
+                amount: dataTransaction[0]?.amount,
+                description: dataTransaction[0]?.description,
+                when: dataTransaction[0]?.when
+            })
             go_to_order_confirmation(orderDetail);
+            //asyncTransaction({ bank_acc_id: BANK_INFO.ACCOUNT_NO });
             // if (dataTransaction && dataTransaction[0].amount >= totalPrice && dataTransaction[0].description.includes(orderId)) {
             //     go_to_order_confirmation(orderDetail);
+            //     setIsPaid({
+            //         order_id: orderDetail._id,
+            //         amount: dataTransaction[0]?.amount,
+            //         description: dataTransaction[0]?.description,
+            //         when: dataTransaction[0]?.when
+            //     })
+
             // }
         }, 1000 * 60);
         return () => clearInterval(interval);
     }, [dataTransaction]);
+
+    if(isLoading) return <LoadingSpinner/>
 
     return (
         <section className='bg-[#fffcff] min-h-screen font-HelveticaRoman'>
