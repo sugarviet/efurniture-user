@@ -1,19 +1,18 @@
 import axios from "axios";
 import Cookies from 'js-cookie';
 import { ACCESS_TOKEN, REFRESH_TOKEN, CLIENT_ID } from "../constants/token";
+import { get_auth_logout, get_auth_refresh_token } from "./authApi";
 
 const API_URL_DEVELOPMENT = "https://jsonplaceholder.typicode.com";
 const API_URL_PRODUCTION = "http://34.126.181.161:4646/api/v1";
-
+import { toast } from "sonner";
+import { sleep } from "../utils/sleep";
 const BANKING_URL_TEST = "https://oauth.casso.vn/v2";
 const BANKING_API_KEY = "AK_CS.95b71330db9411ee9d58e1c7c53ac48c.MArA1NZa4mZraplE6qGueWgQgaX9VTNVwOYTCz0ZWAwYZHnJiJcP2RVkkskLhWzEYin6qhWt"
 
 const BASE_URL = API_URL_PRODUCTION;
 const BANKING_URL = BANKING_URL_TEST;
 
-const accessToken = Cookies.get(ACCESS_TOKEN);
-const refreshToken = Cookies.get(REFRESH_TOKEN);
-const accountId = Cookies.get(CLIENT_ID);
 
 export const API = axios.create({
     baseURL: BASE_URL,
@@ -42,6 +41,71 @@ const cookies = () => ({
     },
 })
 
+const refreshTokenAndRetry = async (config) => {
+    try {
+        const refreshResponse = await axios.post(get_auth_refresh_token, {
+            refresh_token: cookies().refreshToken.value,
+            account_id: cookies().accountId.value
+        });
+        const accessTokenRes = refreshResponse.data.accessToken;
+        const refreshTokenRes = refreshResponse.data.refreshToken;
+
+        Cookies.set("access_token", accessTokenRes);
+        Cookies.set("refresh_token", refreshTokenRes);
+
+        config.headers[cookies().accessToken.key] = accessTokenRes;
+        config.headers[cookies().refreshToken.key] = refreshTokenRes;
+        config.headers[cookies().accountId.key] = cookies().accountId.value;
+
+        return axios(config);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const logoutUser = async () => {
+    try {
+        const logoutResponse = await axios.post(get_auth_logout, {
+            access_token: cookies().accessToken.value,
+            refresh_token: cookies().refreshToken.value,
+            account_id: cookies().accountId.value
+        });
+        toast.error('Someone is logging into your account')
+        await sleep(2000);
+        window.location.replace("/login");
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+const errorHandler = async (error) => {
+    if (error.response) {
+        switch (error.response.status) {
+            case 401:
+                return refreshTokenAndRetry(error.config);
+            case 403:
+                console.error('Forbidden:', error.response.data);
+                break;
+            case 404:
+                toast.error('The requested does not exist');
+                break;
+            case 409:
+                return logoutUser(error.config);
+            case 500:
+                toast.error('Something went wrong');
+                break;
+            default:
+                toast.error('Error:', error.response.data);
+        }
+    } else if (error.request) {
+        toast.error('Request made but no response received:', error.request);
+    } else {
+        toast.error('Error during request setup:', error.message);
+    }
+    return Promise.reject(error);
+};
+
+
 USER_API.interceptors.request.use(
     (config) => {
         config.headers[cookies()['accessToken'].key] = cookies()['accessToken'].value;
@@ -55,30 +119,18 @@ USER_API.interceptors.request.use(
     }
 );
 
+API.interceptors.response.use(
+    (response) => {
+        return response
+    },
+    errorHandler
+);
+
 USER_API.interceptors.response.use(
     (response) => {
         return response
     },
-    async (error) => {
-        const originalRequest = error.config;
-        if (error.response && error.response.status === 401 && !originalRequest._retry) {
-            try {
-                const refreshResponse = await axios.post(`${BASE_URL}/refresh`);
-                const accessTokenRes = refreshResponse.data.accessToken;
-                const refreshTokenRes = refreshResponse.data.refreshToken;
-
-                originalRequest.headers[cookies()['accessToken'].key] = Cookies.set("access_token", accessTokenRes);
-                originalRequest.headers[cookies()['refreshToken'].key] = Cookies.set("refresh_token", refreshTokenRes);
-                originalRequest.headers[cookies()['accountId'].key] = accountId;
-
-                return axios(originalRequest);
-            } catch (error) {
-                return Promise.reject(error);
-            }
-        }
-
-        return Promise.reject(error);
-    }
+    errorHandler
 );
 
 BANKING_API.interceptors.request.use(
