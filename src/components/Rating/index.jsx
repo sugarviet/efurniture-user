@@ -1,34 +1,11 @@
+import { RATING_VALUES } from "../../constants/enum";
 import { classNames } from "../../utils/classNames";
-
-const RATING_VALUES = [
-  {
-    icon: "../../../public/images/stunned.png",
-    label: "Terrible",
-  },
-  {
-    icon: "../../../public/images/sad-face.png",
-    label: "Bad",
-  },
-  {
-    icon: "../../../public/images/surprised.png",
-    label: "Okay",
-  },
-  {
-    icon: "../../../public/images/happiness.png",
-    label: "Good",
-  },
-  {
-    icon: "../../../public/images/smile.png",
-    label: "Amazing",
-  },
-];
 
 function Rating({ onChange, value, className }) {
   return (
     <section className={classNames("grid grid-cols-5 gap-4", className)}>
       {RATING_VALUES.map((item, i) => {
-        const { icon, label } = item;
-        const rate = i + 1;
+        const { icon, label, rate } = item;
         return (
           <button
             type="button"
