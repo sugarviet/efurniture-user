@@ -16,6 +16,11 @@ function ProductFeedback({ product }) {
 
   if (isLoading) return <LoadingSpinner />;
 
+  if (get_total_feedback() <= 0)
+    return (
+      <span className="text-gray-500 text-md px-32">Have no feedbacks</span>
+    );
+
   return (
     <section className="px-32">
       <div className="mb-4">
