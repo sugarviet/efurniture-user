@@ -1,8 +1,8 @@
 import { get_feedback_api_of } from "../api/feedbackApi";
-import { useFetchWithAuth } from "./api-hooks";
+import { useFetch } from "./api-hooks";
 
 function useFeedback(id) {
-  const { data, isLoading } = useFetchWithAuth(get_feedback_api_of(id));
+  const { data, isLoading } = useFetch(get_feedback_api_of(id));
 
   const get_average_rating = () =>
     data.reduce((rating, cur) => rating + cur.rating, 0) / data.length;
@@ -18,8 +18,12 @@ function useFeedback(id) {
 
   const get_all_feedback = () =>
     data.map((feedback) => {
-      const { name } = feedback;
-      return { name: name || "Anh ba khía", ...feedback };
+      const { account_id } = feedback;
+      const { first_name, last_name } = account_id;
+      return {
+        name: `${first_name} ${last_name}`,
+        ...feedback,
+      };
     });
 
   return {
