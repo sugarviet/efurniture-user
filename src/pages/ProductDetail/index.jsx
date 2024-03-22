@@ -6,6 +6,7 @@ import { withFetchData } from "../../hocs/withFetchData";
 import formattedCurrency from "@utils/formattedCurrency";
 import Proptypes from "prop-types";
 import { Link } from "react-router-dom";
+import ProductFeedback from "./components/ProductFeedback";
 
 function ProductDetail({ data }) {
   const { name, regular_price, sale_price, type } = data;
@@ -58,6 +59,7 @@ function ProductDetail({ data }) {
           </div>
           <div className="furniture-divided-bottom w-full py-4 sm:py-8"></div>
         </section>
+        <ProductFeedback product={data} />
       </section>
     </section>
   );
@@ -66,6 +68,5 @@ function ProductDetail({ data }) {
 ProductDetail.propTypes = {
   data: Proptypes.object,
 };
-
 
 export default withFetchData(ProductDetail, get_furniture_detail_api);

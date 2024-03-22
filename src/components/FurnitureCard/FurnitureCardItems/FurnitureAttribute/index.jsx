@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { FurnitureCardContext } from "../../FurnitureCardContext";
 import FurnitureDimensionOption from "../FurnitureDimensionOption";
+import FurnitureRating from "../FurnitureRating";
 
 function FurnitureAttribute() {
   const { furniture } = useContext(FurnitureCardContext);
@@ -9,12 +10,12 @@ function FurnitureAttribute() {
 
   return (
     <div>
-      <FurnitureDimensionOption />
+      <div className="flex justify-between items-center">
+        <FurnitureDimensionOption />
+        <FurnitureRating />
+      </div>
       <div className="text-xs tracking-[0.9px] text-black mt-[0.75rem]">
         <a href="#">{name}</a>
-      </div>
-      <div className="text-[0.6875rem] text-grey2 tracking-[0.5px]">
-        {/* {variation[0].material} */}
       </div>
     </div>
   );
