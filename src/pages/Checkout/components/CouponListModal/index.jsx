@@ -1,19 +1,15 @@
 
-import PropTypes from "prop-types";
-import { useState } from "react";
-import {
-    useFetchWithAuth,
-} from "@hooks/api-hooks";
-import { get_voucher_by_specified } from "@api/voucherApi";
-import useUserCart from "@hooks/useUserCart";
-import LoadingSpinner from "@components/LoadingSpinner";
-import {
-    usePostAuth,
-} from "@hooks/api-hooks";
 import {
     apply_voucher
 } from "@api/voucherApi";
+import {
+    usePostAuth,
+} from "@hooks/api-hooks";
+import useUserCart from "@hooks/useUserCart";
+import PropTypes from "prop-types";
+import { useState } from "react";
 import VoucherModal from "../../../../components/VoucherModal";
+import useVoucher from "../../../../hooks/useVoucher";
 
 function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
 
@@ -21,18 +17,15 @@ function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
 
     const { cart, getTotalPrice } = useUserCart();
 
-    const voucherInfo = cart?.map((item) => ({
-        product_id: item._id,
-        price: item.sale_price ? item.sale_price : item.regular_price,
-    }));
+    const {
+        couponList,
+      } = useVoucher();
 
-    const productForVoucher = cart?.map((item) => ({
+    const productForVoucher = cart.map((item) => ({
         product_id: item._id,
         price: item.sale_price ? item.sale_price : item.regular_price,
         quantity: item.quantity_in_cart
     }));
-
-    const { data, isLoading } = useFetchWithAuth(get_voucher_by_specified(), undefined, { voucherInfo });
 
     const { mutate: applyVoucher } = usePostAuth(
         apply_voucher(chooseVoucher),
@@ -45,21 +38,22 @@ function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
         }
     );
 
-    const emptyVoucher = !data?.length;
+    const emptyVoucher = !couponList?.length;
 
     const handleSaveChoosenVoucher = () => {
         applyVoucher(productForVoucher)
         setIsModalCreateOpen(false);
     }
 
-    if (isLoading) return <LoadingSpinner />;
+
 
     return (
         <section className="relative">
             <p className='font-HelveticaBold text-[1rem] leading-[1.20833] tracking-[0.08em] pb-6'>Choose eFurniture voucher</p>
             <div className={`max-w-[600px] pb-24 pt-5 ${emptyVoucher ? "h-[50px]" : "h-[500px] overflow-y-auto "}`}>
-                {data?.map((voucher) => (
+                {couponList?.data.metaData.map((voucher) => (
                     <VoucherModal
+                        key={voucher._id}
                         data={voucher}
                         getTotalPrice={getTotalPrice}
                         chooseVoucher={chooseVoucher}
