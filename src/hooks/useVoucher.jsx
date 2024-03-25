@@ -4,11 +4,7 @@ import useGuestCart from "@hooks/useGuestCart";
 import useUserCart from "@hooks/useUserCart";
 import useAuth from "@stores/useAuth";
 import { message } from "antd";
-import { useState } from "react";
-
-const PAYMENT_METHOD = {
-    cod: "COD",
-}
+import { useEffect, useState } from "react";
 
 export default function useVoucher() {
 
@@ -17,8 +13,6 @@ export default function useVoucher() {
     const { cart } = accessToken ? useUserCart() : useGuestCart();
 
     const [dataAfterVoucher, setDataAfterVoucher] = useState();
-
-    const [couponList, setCouponList] = useState([]);
 
     const [isCouponOpen, setIsCouponOpen] = useState(false);
 
@@ -29,11 +23,11 @@ export default function useVoucher() {
         price: item.sale_price ? item.sale_price : item.regular_price,
     }));
 
-    const { mutate: getSpecificVoucher } = usePostAuth(
+    const { mutate: getSpecificVoucher, data: couponList } = usePostAuth(
         get_voucher_by_specified(),
         undefined,
         (data) => {
-            setCouponList(data.data.metaData)
+
         },
         (error) => {
             message.error(error.response.data.error.message);
@@ -42,12 +36,14 @@ export default function useVoucher() {
 
     const handleOpenCoupon = () => {
         if (accessToken) {
-            getSpecificVoucher(voucherInfo)
             setIsCouponOpen(!isCouponOpen);
         }
         setIsCouponForUser(!isCouponForUser)
-
     }
+
+    useEffect(() => {
+        getSpecificVoucher(voucherInfo);
+    }, [])
 
     return {
         dataAfterVoucher,

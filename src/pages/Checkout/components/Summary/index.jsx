@@ -2,10 +2,7 @@ import CheckoutEdit from "@components/CheckoutEdit";
 import FormCheckbox from "@components/FormCheckbox";
 import AppModal from "@components/ui/AppModal";
 import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
-import useGuestCart from "@hooks/useGuestCart";
-import useUserCart from "@hooks/useUserCart";
 import useAuth from "@stores/useAuth";
-import { useOrderStore } from "@stores/useGuestOrderStore";
 import formattedCurrency from "@utils/formattedCurrency";
 import { Form } from "antd";
 import useCheckoutSummary from "../../../../hooks/useCheckoutSummary";
@@ -88,7 +85,7 @@ function Summary() {
           </div>
           {accessToken ?
             <AppModal isOpen={isCouponOpen} onClose={handleOpenCoupon} className="max-w-[700px]">
-              <CouponListModal data={couponList} setIsModalCreateOpen={handleOpenCoupon} setDataAfterVoucher={setDataAfterVoucher} />
+              {isCouponOpen && <CouponListModal setIsModalCreateOpen={handleOpenCoupon} setDataAfterVoucher={setDataAfterVoucher} />}
             </AppModal>
             :
             <AppModal isOpen={isCouponForUser} onClose={handleOpenCoupon} className="max-w-[700px] h-[200px]">
