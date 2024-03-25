@@ -1,118 +1,44 @@
-import { useState } from "react";
 import CheckoutEdit from "@components/CheckoutEdit";
-import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
-import { usePost, usePostAuth } from "@hooks/api-hooks";
-import { message } from "antd";
-import { checkout_with_guest, checkout_with_user } from "@api/checkoutApi";
-import { useOrderStore } from "@stores/useGuestOrderStore";
-import AppModal from "@components/ui/AppModal";
-import CouponListModal from "../CouponListModal";
-import useAuth from "@stores/useAuth";
-import useUserCart from "@hooks/useUserCart";
-import useGuestCart from "@hooks/useGuestCart";
-import formattedCurrency from "@utils/formattedCurrency";
-import useNavigation from "../../../../hooks/useNavigation";
-import { Form } from "antd";
 import FormCheckbox from "@components/FormCheckbox";
+import AppModal from "@components/ui/AppModal";
+import { CHECKOUT_TABS } from "@constants/checkoutTabConstants";
+import useGuestCart from "@hooks/useGuestCart";
+import useUserCart from "@hooks/useUserCart";
+import useAuth from "@stores/useAuth";
+import { useOrderStore } from "@stores/useGuestOrderStore";
+import formattedCurrency from "@utils/formattedCurrency";
+import { Form } from "antd";
+import useCheckoutSummary from "../../../../hooks/useCheckoutSummary";
+import useNavigation from "../../../../hooks/useNavigation";
+import useVoucher from "../../../../hooks/useVoucher";
+import CouponListModal from "../CouponListModal";
 
-const PAYMENT_METHOD = {
-  cod: "COD",
-}
+
 
 function Summary() {
 
   const { accessToken } = useAuth();
 
-  const { go_to_payment, go_to_order_confirmation, go_to_login } = useNavigation();
-
-  const { cart, getTotalPrice } = accessToken ? useUserCart() : useGuestCart();
+  const { go_to_login } = useNavigation();
 
   const {
+    onFinish,
+    getTotalPrice,
     selectedDelivery,
     selectedPayment,
     orderShipping,
-    note,
-  } = useOrderStore();
+    note
+  } = useCheckoutSummary();
 
-  const [dataAfterVoucher, setDataAfterVoucher] = useState();
+  const {
+    dataAfterVoucher,
+    setDataAfterVoucher,
+    couponList,
+    handleOpenCoupon,
+    isCouponOpen,
+    isCouponForUser
+  } = useVoucher();
 
-  const [isCouponOpen, setIsCouponOpen] = useState(false);
-
-  const [isCouponForUser, setIsCouponForUser] = useState(false);
-
-  const orderProducts = cart.map((cart) => ({
-    product_id: cart._id,
-    quantity: cart.quantity_in_cart,
-    price: cart.sale_price > 0 ? cart.sale_price : cart.regular_price,
-    name: cart.name,
-    thumb: cart.thumbs[0]
-  }))
-
-  const handlePaymentMethod = (metaData) => {
-    if (metaData.payment_method === PAYMENT_METHOD.cod) {
-      go_to_order_confirmation(metaData);
-    } else {
-      go_to_payment(metaData);
-    }
-  };
-
-  const { mutate: checkoutForGuest } = usePost(
-    checkout_with_guest(),
-    undefined,
-    (data) => {
-      handlePaymentMethod(data.data.metaData);
-    },
-    (error) => {
-      message.error(error.response.data.error.message);
-    }
-  );
-  const { mutate: checkoutForUser } = usePostAuth(
-    checkout_with_user(),
-    undefined,
-    (data) => {
-      handlePaymentMethod(data.data.metaData)
-    },
-    (error) => {
-      message.error(error.response.data.error.message);
-    }
-  );
-
-  const onFinish = () => {
-    accessToken ?
-      checkoutForUser(
-        {
-          order_products: orderProducts,
-          payment_method: selectedPayment,
-          order_shipping: orderShipping,
-          order_checkout: {
-            final_total: dataAfterVoucher ? dataAfterVoucher.order_total_after_voucher : getTotalPrice(),
-            voucher: dataAfterVoucher ? dataAfterVoucher.voucher : null,
-            total: getTotalPrice(),
-          },
-          note: note,
-        }
-      ) :
-      checkoutForGuest(
-        {
-          order_products: orderProducts,
-          payment_method: selectedPayment,
-          order_shipping: orderShipping,
-          order_checkout: {
-            final_total: getTotalPrice(),
-            total: getTotalPrice(),
-          },
-          note: note,
-        }
-      )
-  };
-
-  const handleOpenCoupon = () => {
-    if (accessToken) {
-      setIsCouponOpen(!isCouponOpen);
-    }
-    setIsCouponForUser(!isCouponForUser)
-
-  }
 
   return (
     <section className='w-full lg:max-w-[43.75rem] text-[0.875rem] leading-[1.5] pb-[45px] tracking-[0.5px] pt-6 lg:pt-0'>
@@ -162,7 +88,7 @@ function Summary() {
           </div>
           {accessToken ?
             <AppModal isOpen={isCouponOpen} onClose={handleOpenCoupon} className="max-w-[700px]">
-              <CouponListModal setIsModalCreateOpen={handleOpenCoupon} setDataAfterVoucher={setDataAfterVoucher} />
+              <CouponListModal data={couponList} setIsModalCreateOpen={handleOpenCoupon} setDataAfterVoucher={setDataAfterVoucher} />
             </AppModal>
             :
             <AppModal isOpen={isCouponForUser} onClose={handleOpenCoupon} className="max-w-[700px] h-[200px]">

@@ -1,38 +1,26 @@
 
-import PropTypes from "prop-types";
-import { useState } from "react";
-import {
-    useFetchWithAuth,
-} from "@hooks/api-hooks";
-import { get_voucher_by_specified } from "@api/voucherApi";
-import useUserCart from "@hooks/useUserCart";
-import LoadingSpinner from "@components/LoadingSpinner";
-import {
-    usePostAuth,
-} from "@hooks/api-hooks";
 import {
     apply_voucher
 } from "@api/voucherApi";
+import {
+    usePostAuth,
+} from "@hooks/api-hooks";
+import useUserCart from "@hooks/useUserCart";
+import PropTypes from "prop-types";
+import { useState } from "react";
 import VoucherModal from "../../../../components/VoucherModal";
 
-function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
+function CouponListModal({ data, setIsModalCreateOpen, setDataAfterVoucher }) {
 
     const [chooseVoucher, setChooseVoucher] = useState();
 
     const { cart, getTotalPrice } = useUserCart();
-
-    const voucherInfo = cart?.map((item) => ({
-        product_id: item._id,
-        price: item.sale_price ? item.sale_price : item.regular_price,
-    }));
 
     const productForVoucher = cart?.map((item) => ({
         product_id: item._id,
         price: item.sale_price ? item.sale_price : item.regular_price,
         quantity: item.quantity_in_cart
     }));
-
-    const { data, isLoading } = useFetchWithAuth(get_voucher_by_specified(), undefined, { voucherInfo });
 
     const { mutate: applyVoucher } = usePostAuth(
         apply_voucher(chooseVoucher),
@@ -52,7 +40,7 @@ function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
         setIsModalCreateOpen(false);
     }
 
-    if (isLoading) return <LoadingSpinner />;
+
 
     return (
         <section className="relative">
@@ -60,6 +48,7 @@ function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
             <div className={`max-w-[600px] pb-24 pt-5 ${emptyVoucher ? "h-[50px]" : "h-[500px] overflow-y-auto "}`}>
                 {data?.map((voucher) => (
                     <VoucherModal
+                        key={voucher._id}
                         data={voucher}
                         getTotalPrice={getTotalPrice}
                         chooseVoucher={chooseVoucher}
