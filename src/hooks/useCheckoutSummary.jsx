@@ -27,19 +27,6 @@ export default function useCheckoutSummary() {
         note,
     } = useOrderStore();
 
-    const {
-        dataAfterVoucher,
-    } = useVoucher();
-
-    const orderProducts = cart.map((cart) => ({
-        product_id: cart._id,
-        quantity: cart.quantity_in_cart,
-        price: cart.sale_price > 0 ? cart.sale_price : cart.regular_price,
-        name: cart.name,
-        thumb: cart.thumbs[0]
-    }))
-
-
     const handlePaymentMethod = (metaData) => {
         if (metaData.payment_method === PAYMENT_METHOD.cod) {
             go_to_order_confirmation(metaData);
@@ -69,41 +56,14 @@ export default function useCheckoutSummary() {
         }
     );
 
-    const onFinish = () => {
-        accessToken ?
-            checkoutForUser(
-                {
-                    order_products: orderProducts,
-                    payment_method: selectedPayment,
-                    order_shipping: orderShipping,
-                    order_checkout: {
-                        final_total: dataAfterVoucher ? dataAfterVoucher.order_total_after_voucher : getTotalPrice(),
-                        voucher: dataAfterVoucher ? dataAfterVoucher.voucher : null,
-                        total: getTotalPrice(),
-                    },
-                    note: note,
-                }
-            ) :
-            checkoutForGuest(
-                {
-                    order_products: orderProducts,
-                    payment_method: selectedPayment,
-                    order_shipping: orderShipping,
-                    order_checkout: {
-                        final_total: getTotalPrice(),
-                        total: getTotalPrice(),
-                    },
-                    note: note,
-                }
-            )
-    };
-
     return {
-        onFinish,
+        cart,
         getTotalPrice,
         selectedDelivery, 
         selectedPayment,
         orderShipping, 
-        note
+        note,
+        checkoutForGuest,
+        checkoutForUser
     };
 }

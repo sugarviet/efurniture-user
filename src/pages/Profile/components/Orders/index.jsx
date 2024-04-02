@@ -69,8 +69,8 @@ const Orders = () => {
           <div
             className={`duration-300 w-36 z-[9] h-10 bg-blackPrimary rounded-md absolute left-1/2 -translate-x-1/2 
             ${currentTab === ORDER_STATE.all ? 'top-[20px]'
-                : currentTab === ORDER_STATE.pending ? 'top-[18.2%]'
-                  : currentTab === ORDER_STATE.processing ? 'top-[32%]'
+                : currentTab === ORDER_STATE.pending ? 'top-[16.2%]'
+                  : currentTab === ORDER_STATE.processing ? 'top-[28.5%]'
                     : currentTab === ORDER_STATE.shipping ? 'top-[46%]'
                       : currentTab === ORDER_STATE.done ? 'top-[59.4%]'
                         : currentTab === ORDER_STATE.cancel ? 'top-[73.4%]'

@@ -51,8 +51,8 @@ function Payment() {
             checked={selectedPayment === PAYMENT_METHOD.banking}
           >
             <article className='text-[14px] lg:text-[1rem] leading-[1.1875] tracking-[0.08em] '>
-              <h4 className='font-HelveticaBold uppercase'>credit card</h4>
-              <img className="pt-2" src="https://www.boconcept.com/on/demandware.static/-/Sites/default/dw33bdd143/images/checkout/payment_uk_ie.png"></img>
+              <h4 className='font-HelveticaBold uppercase'>online payment</h4>
+              <img className="pt-2 w-16" src="https://vietqr.io/img/vietqr%20api%20-%20payment%20kit.png"></img>
             </article>
           </RadioModal>
         </div>
