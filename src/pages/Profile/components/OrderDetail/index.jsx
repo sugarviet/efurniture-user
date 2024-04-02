@@ -33,7 +33,7 @@ function OrderDetail({ data }) {
                 <article className="flex flex-row items-center pt-6 gap-4">
                     <p className='font-HelveticaBold text-[1.3rem] leading-[1.20833] tracking-[0.08em] '>Order detail # {data.order_code}</p>
                     <div className="bg-blackPrimary px-2 py-2 rounded-md ">
-                        <p className="text-white font-HelveticaBold leading-[1.20833] tracking-[0.08em]">PENDING</p>
+                        <p className="text-white font-HelveticaBold leading-[1.20833] tracking-[0.08em]">{data.current_order_tracking.name}</p>
                     </div>
                 </article>
                 <p className='text-[14px] font-medium leading-[1.4] tracking-[0.04em] pt-2'>Date: {formattedDate(data.createdAt)}</p>

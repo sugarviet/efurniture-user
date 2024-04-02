@@ -1,12 +1,13 @@
 import { useUpdateWithAuth } from "@hooks/api-hooks";
-import { cancel_order_by_id } from "../../../api/orderHistoryApi";
+import { cancel_order_by_id, get_order_by_state } from "../../../api/orderHistoryApi";
 import { useQueryClient } from "@tanstack/react-query";
 import useNotification from "@hooks/useNotification";
 import { useState } from "react";
+import { ORDER_STATE } from "../../../constants/orderStateConstants";
 
 const useCancelOrder = (id) => {
     const queryClient = useQueryClient();
-    const { success_message, error_message } = useNotification();
+    const { error_message, success_message } = useNotification();
 
     const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
 
@@ -15,21 +16,21 @@ const useCancelOrder = (id) => {
     };
 
 
-    const cancelOrderMutation = useUpdateWithAuth(
+    const { mutate: cancelOrderMutation } = useUpdateWithAuth(
         cancel_order_by_id(id),
         undefined,
         () => {
-            queryClient.invalidateQueries(get_order_by_state(ORDER_STATE.pending));
-            success_message("order", "delete");
+            queryClient.invalidateQueries(get_order_by_state(ORDER_STATE.processing));
+            queryClient.invalidateQueries(get_order_by_state(ORDER_STATE.all));
+            success_message(null, null, "Cancel order successfully");
         },
-        () => {
-            error_message("order", "delete");
+        (error) => {
+            error_message(null, null, error.message);
         }
     );
 
-    const cancelOrder = () => {
-        cancelOrderMutation.mutate({});
-        setIsModalDeleteOpen(!isModalDeleteOpen);
+    const cancelOrder = (note) => {
+        cancelOrderMutation(note);
     };
 
 

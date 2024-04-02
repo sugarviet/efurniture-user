@@ -1,7 +1,8 @@
 import AppModal from "@components/ui/AppModal";
 import React from 'react';
-import useNavigation from "../../../../hooks/useNavigation";
-import useCancelOrder from '../../hooks/useCancelOrder';
+import useNavigation from "../../hooks/useNavigation";
+import useCancelOrder from '../../pages/Profile/hooks/useCancelOrder';
+import OrderCancelForm from "../OrderCancelForm";
 
 const TYPES = {
     Pending:
@@ -16,6 +17,12 @@ const TYPES = {
         bgColor: 'furniture-button-black-hover',
         action: 'cancelOrder'
     },
+    Cancelled:
+    {
+        name: "View details",
+        bgColor: 'furniture-button-black-hover',
+        action: 'viewDetail'
+    },
     Done:
     {
         name: "Buy again",
@@ -27,9 +34,9 @@ const TYPES = {
 function OrderActionButton({ type, className, data }) {
     const { name, bgColor, action } = TYPES[type];
 
-    const { toggleModalDelete, isModalDeleteOpen, cancelOrder } = useCancelOrder();
+    const { toggleModalDelete, isModalDeleteOpen } = useCancelOrder();
 
-    const { go_to_payment } = useNavigation();
+    const { go_to_payment,go_to_order_detail } = useNavigation();
 
     const handleAction = (actionName) => {
         if (actionName === 'payAgain') {
@@ -38,8 +45,8 @@ function OrderActionButton({ type, className, data }) {
         if (actionName === 'cancelOrder') {
             toggleModalDelete();
         }
-        if (actionName === 'repurchase') {
-            
+        if (actionName === 'viewDetail') {
+            go_to_order_detail(data._id)
         }
     };
 
@@ -54,28 +61,13 @@ function OrderActionButton({ type, className, data }) {
                 </button>
             </section>
             <AppModal
-                className="max-h-[200px] max-w-[700px]"
+                className=" max-w-[700px] relative -z-50"
                 isOpen={isModalDeleteOpen}
                 onClose={toggleModalDelete}
+                disableClickOutside
             >
                 <div className="flex flex-col gap-6">
-                    <p className="text-xl font-bold text-center">
-                        Are you sure that you want to cancel this order?
-                    </p>
-                    <div className="flex gap-2 ml-auto">
-                        <button
-                            className="furniture-button-black-hover px-6 py-2.5"
-                            onClick={toggleModalDelete}
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            className="furniture-button-black-hover px-6 py-2.5"
-                            onClick={() => cancelOrder({})}
-                        >
-                            Confirm
-                        </button>
-                    </div>
+                    <OrderCancelForm isModalDeleteOpen={isModalDeleteOpen} toggleModalDelete={toggleModalDelete} data={data} />
                 </div>
             </AppModal>
         </>

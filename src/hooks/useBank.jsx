@@ -7,7 +7,9 @@ function useBank() {
   const { mutate: createBankAccount } = usePostAuth(
     get_create_bank_info_api(),
     undefined,
-    () => {},
+    () => {
+      success_message(null, null, "Create bank account successfully");
+    },
     () => {},
     get_bank_account_api()
   );

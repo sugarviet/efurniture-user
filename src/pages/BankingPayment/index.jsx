@@ -80,7 +80,7 @@ export default function BankingPayment() {
             //     })
 
             // }
-        }, 1000 * 1);
+        }, 1000 * 10);
         return () => clearInterval(interval);
     }, [dataTransaction]);
 
@@ -93,7 +93,7 @@ export default function BankingPayment() {
                     <img className='w-20 lg:w-36' src='https://res.cloudinary.com/dc4hafqoa/image/upload/v1709624643/eFurniture/vietqr_aepcie.png' />
                     <p className='lg:text-normal text-[0px] md:text-[12px]'> Hệ thống tạo mã QR CODE</p>
                 </figure>
-                <img className='w-36 lg:w-48' src='https://res.cloudinary.com/dc4hafqoa/image/upload/v1710784824/eFurniture/2_ipfgnq.png' />
+                <img className='w-36 lg:w-48' src='https://res.cloudinary.com/dc4hafqoa/image/upload/v1712089475/eFurniture/logo_white_ngffku.png' />
             </article>
             <section className='px-6 lg:px-12 xl:px-28 2xl:px-56 py-10 flex flex-col lg:flex-row gap-8 pt-36'>
                 <div className='basis-2/6 '>
@@ -102,7 +102,7 @@ export default function BankingPayment() {
 
                         <p className='pt-6 text-gray-500 font-medium]'>Nhà cung cấp</p>
                         <figure className='flex flex-row items-center gap-2 pt-3'>
-                            <img className='w-20' src='https://res.cloudinary.com/dc4hafqoa/image/upload/v1710784824/eFurniture/2_ipfgnq.png' />
+                            <img className='w-20' src='https://res.cloudinary.com/dc4hafqoa/image/upload/v1712089475/eFurniture/logo_white_ngffku.png' />
                             <p className='text-base font-bold'>Công ty cổ phần eFurniture</p>
                         </figure>
 
@@ -143,7 +143,7 @@ export default function BankingPayment() {
                             <div className={`text-[0.875rem] pr-[1.25rem] ease-in-out duration-200 overflow-hidden max-h-0 ${openDetail ? "max-h-[300px]" : ""}`}>
                                 <p className='pt-6 text-gray-500 font-medium]'>Nhà cung cấp</p>
                                 <figure className='flex flex-row items-center gap-2 pt-3'>
-                                    <img className='w-20' src='https://res.cloudinary.com/dc4hafqoa/image/upload/v1710784824/eFurniture/2_ipfgnq.png' />
+                                    <img className='w-20' src='https://res.cloudinary.com/dc4hafqoa/image/upload/v1712089475/eFurniture/logo_white_ngffku.png' />
                                     <p className='text-base font-bold'>Công ty cổ phần eFurniture</p>
                                 </figure>
 

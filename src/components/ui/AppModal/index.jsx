@@ -1,13 +1,12 @@
-/* eslint-disable react/no-unknown-property */
 import { useRef } from "react";
 import useClickOutside from "@hooks/useClickOutside";
 import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
 
-const AppModal = ({ isOpen, onClose, children, className }) => {
+const AppModal = ({ isOpen, onClose, children, className, disableClickOutside }) => {
   const modalRef = useRef();
 
-  useClickOutside(modalRef, onClose, isOpen);
+  useClickOutside(disableClickOutside ? null : modalRef, onClose, isOpen);
 
   return (
     <>
@@ -62,6 +61,7 @@ AppModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  disableClickOutside: PropTypes.bool,
 };
 
 export default AppModal;

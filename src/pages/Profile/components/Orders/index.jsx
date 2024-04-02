@@ -13,8 +13,7 @@ const Orders = () => {
   const Processing = withFetchDataWithHeaders(OrderHistory, () => get_order_by_state(ORDER_STATE.processing))
   const Shipping = withFetchDataWithHeaders(OrderHistory, () => get_order_by_state(ORDER_STATE.shipping))
   const Done = withFetchDataWithHeaders(OrderHistory, () => get_order_by_state(ORDER_STATE.done))
-  const Cancel = withFetchDataWithHeaders(OrderHistory, () => get_order_by_state(ORDER_STATE.cancel))
-  const Failed = withFetchDataWithHeaders(OrderHistory, () => get_order_by_state(ORDER_STATE.failed))
+  const Cancel = withFetchDataWithHeaders(OrderHistory, () => get_order_by_state(ORDER_STATE.cancelled))
   const Refunded = withFetchDataWithHeaders(OrderHistory, () => get_order_by_state(ORDER_STATE.refunded))
 
 
@@ -39,7 +38,7 @@ const Orders = () => {
       title: "Done",
       component: <Done />,
     },
-    cancel: {
+    cancelled: {
       title: "Cancel",
       component: <Cancel />,
     },
@@ -58,10 +57,10 @@ const Orders = () => {
       <p className="font-HelveticaBold text-[1.5rem] leading-[1.20833] tracking-[0.08em]">Orders</p>
       <p className="text-[14px] leading-[1.4] tracking-[0.04em] pb-4">View your order history and check the delivery status for your items.</p>
       <div className="flex flex-row pt-5 gap-12">
-        <div className="relative shadow-sm max-h-[500px]">
+        <div className="relative shadow-sm max-h-[445px]">
           <div className="flex flex-col items-center gap-6 bg-white border py-5 rounded-md px-6">
             {tabKeys.map((tabKey) => (
-              <div key={tabKey} onClick={() => setCurrentTab(tabKey)} className={`z-10 py-2 px-10 rounded-md duration-500 select-none ${currentTab === tabKey && 'text-white'}`}>
+              <div key={tabKey} onClick={() => setCurrentTab(tabKey)} className={` z-10 py-2 px-10 rounded-md duration-500 select-none ${currentTab === tabKey && 'text-white'}`}>
                 {TAB_ORDER[tabKey].title}
               </div>
             ))}
@@ -69,12 +68,12 @@ const Orders = () => {
           <div
             className={`duration-300 w-36 z-[9] h-10 bg-blackPrimary rounded-md absolute left-1/2 -translate-x-1/2 
             ${currentTab === ORDER_STATE.all ? 'top-[20px]'
-                : currentTab === ORDER_STATE.pending ? 'top-[16.2%]'
-                  : currentTab === ORDER_STATE.processing ? 'top-[28.5%]'
+                : currentTab === ORDER_STATE.pending ? 'top-[18.2%]'
+                  : currentTab === ORDER_STATE.processing ? 'top-[32.1%]'
                     : currentTab === ORDER_STATE.shipping ? 'top-[46%]'
                       : currentTab === ORDER_STATE.done ? 'top-[59.4%]'
-                        : currentTab === ORDER_STATE.cancel ? 'top-[73.4%]'
-                            : currentTab === ORDER_STATE.refunded && 'top-[87%]'
+                        : currentTab === ORDER_STATE.cancelled ? 'top-[73.4%]'
+                          : currentTab === ORDER_STATE.refunded && 'top-[87%]'
               }`}
           />
         </div>

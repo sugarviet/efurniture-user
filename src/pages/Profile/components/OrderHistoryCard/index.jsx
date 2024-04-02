@@ -3,12 +3,10 @@ import formattedCurrency from "@utils/formattedCurrency";
 import formattedDate from "@utils/formattedDate";
 import PropTypes from "prop-types";
 import useNavigation from "../../../../hooks/useNavigation";
-import OrderActionButton from "../OrderActionButton";
+import OrderActionButton from "../../../../components/OrderActionButton";
 import ProductOrderBriefInfo from "../ProductOrderBriefInfo";
 
 function OrderHistoryCard({ data }) {
-
-  console.log(data)
 
   const { handleScrollToTop } = useScroll();
 
