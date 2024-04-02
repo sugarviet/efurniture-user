@@ -1,51 +1,18 @@
-import { useState } from "react";
-import AppModal from "@components/ui/AppModal";
+import useScroll from "@hooks/useScroll";
 import formattedCurrency from "@utils/formattedCurrency";
 import formattedDate from "@utils/formattedDate";
-import useNavigation from "../../../../hooks/useNavigation";
-import useScroll from "@hooks/useScroll";
 import PropTypes from "prop-types";
-import { useUpdateWithAuth } from "@hooks/api-hooks";
-import { cancel_order_by_id } from "../../../../api/orderHistoryApi";
-import { get_order_by_state } from "../../../../api/orderHistoryApi";
-import useNotification from "@hooks/useNotification";
-import { useQueryClient } from "@tanstack/react-query";
+import useNavigation from "../../../../hooks/useNavigation";
+import OrderActionButton from "../OrderActionButton";
 import ProductOrderBriefInfo from "../ProductOrderBriefInfo";
 
-const ORDER_STATE = {
-  pending: "Pending",
-  processing: "Processing",
-  done: "Done",
-};
-
 function OrderHistoryCard({ data }) {
-  const queryClient = useQueryClient();
+
+  console.log(data)
 
   const { handleScrollToTop } = useScroll();
 
-  const { success_message, error_message } = useNotification();
-
-  const { go_to_order_detail, go_to_home, go_to_payment } = useNavigation();
-
-  const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
-
-  const { mutate: cancelOrder } = useUpdateWithAuth(
-    cancel_order_by_id(data._id),
-    undefined,
-    () => {
-      queryClient.invalidateQueries(get_order_by_state(ORDER_STATE.pending));
-      success_message("order", "delete");
-      setIsModalDeleteOpen(!isModalDeleteOpen);
-    },
-    () => {
-      setIsModalDeleteOpen(!isModalDeleteOpen);
-      error_message("order", "delete");
-    }
-  );
-
-  const toggleModalDelete = () => {
-    setIsModalDeleteOpen(!isModalDeleteOpen);
-  };
+  const { go_to_order_detail } = useNavigation();
 
   return (
     <section className="pb-8">
@@ -108,82 +75,19 @@ function OrderHistoryCard({ data }) {
         {data.order_products.map((product, index) => (
           <ProductOrderBriefInfo key={index} product={product} />
         ))}
-        <div className="flex flex-row justify-between items-center gap-4  mt-8">
+        <div className="flex flex-row justify-between items-center gap-4 mt-8">
           <div>
             <p className="pt-2 leading-[1.4] tracking-[0.04em] text-[#ee4d2d]">
               {data.order_checkout.is_paid == false &&
                 "*Order has not been paid yet"}
             </p>
           </div>
-          <div className="flex flex-row justify-end gap-4">
-            {data.order_tracking[data.order_tracking.length - 1].name ===
-              ORDER_STATE.done && (
-              <section>
-                <button
-                  className="furniture-button-white-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem]"
-                  onClick={go_to_home}
-                >
-                  Buy again
-                </button>
-              </section>
-            )}
-            {data.order_tracking[data.order_tracking.length - 1].name ===
-              ORDER_STATE.pending && (
-              <section>
-                <button
-                  onClick={toggleModalDelete}
-                  className="furniture-button-black-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem]"
-                >
-                  Cancel
-                </button>
-              </section>
-            )}
-            {data.order_tracking[data.order_tracking.length - 1].name ===
-              ORDER_STATE.processing && (
-              <section>
-                <button className="furniture-button-black-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem]">
-                  Refund
-                </button>
-              </section>
-            )}
-            {data.order_checkout.is_paid == false && (
-              <section>
-                <button
-                  onClick={() => go_to_payment(data)}
-                  className="furniture-button-black-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem]"
-                >
-                  Pay again
-                </button>
-              </section>
-            )}
+          <div className="">
+            <OrderActionButton data={data} type={data.current_order_tracking.name} />
           </div>
         </div>
       </div>
-      <AppModal
-        className="max-h-[200px] max-w-[700px]"
-        isOpen={isModalDeleteOpen}
-        onClose={toggleModalDelete}
-      >
-        <div className="flex flex-col gap-6">
-          <p className="text-xl font-bold text-center">
-            Are you sure that you want to cancel this order?
-          </p>
-          <div className="flex gap-2 ml-auto">
-            <button
-              className="furniture-button-black-hover px-6 py-2.5"
-              onClick={() => cancelOrder({})}
-            >
-              Cancel
-            </button>
-            <button
-              className="furniture-button-black-hover px-6 py-2.5"
-              onClick={toggleModalDelete}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      </AppModal>
+
     </section>
   );
 }

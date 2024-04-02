@@ -65,9 +65,9 @@ export default function BankingPayment() {
         const interval = setInterval(() => {
             setIsPaid({
                 order_id: orderDetail._id,
-                amount: dataTransaction[0]?.amount,
-                description: dataTransaction[0]?.description,
-                when: dataTransaction[0]?.when
+                amount: dataTransaction[0].amount,
+                description: dataTransaction[0].description,
+                when: dataTransaction[0].when
             })
             go_to_order_confirmation(orderDetail);
             //asyncTransaction({ bank_acc_id: BANK_INFO.ACCOUNT_NO });
@@ -81,7 +81,7 @@ export default function BankingPayment() {
             //     })
 
             // }
-        }, 1000 * 60);
+        }, 1000 * 10);
         return () => clearInterval(interval);
     }, [dataTransaction]);
 

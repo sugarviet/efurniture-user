@@ -21,6 +21,8 @@ function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
         couponList,
       } = useVoucher();
 
+      console.log(couponList)
+
     const productForVoucher = cart.map((item) => ({
         product_id: item._id,
         price: item.sale_price ? item.sale_price : item.regular_price,
@@ -38,7 +40,7 @@ function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
         }
     );
 
-    const emptyVoucher = !couponList?.length;
+    const emptyVoucher = !couponList?.data.metaData.length;
 
     const handleSaveChoosenVoucher = () => {
         applyVoucher(productForVoucher)
