@@ -38,7 +38,11 @@ const RoomDetail = ({ data }) => {
               <div className="px-[18px] relative flex flex-col justify-between">
                 <FurnitureCard.Attribute />
                 <FurnitureCard.Price />
-                <FurnitureCard.ShoppingButton />
+                {accessToken ? (
+                  <FurnitureCard.UserShoppingButton />
+                ) : (
+                  <FurnitureCard.GuestShoppingButton />
+                )}
               </div>
             </FurnitureCard>
           );
