@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 function FurnitureModel({ children, className }) {
   const { furniture, dimension, onSale } = useContext(FurnitureCardContext);
 
-  const { model_id, name, thumbs, slug } = furniture;
+  const { model3D, name, thumbs, slug } = furniture;
 
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ function FurnitureModel({ children, className }) {
       )}
 
       {dimension === MODEL_DIMENSION.three_dimension && (
-        <RoomleConfiguration3D model_id={model_id} />
+        <RoomleConfiguration3D model_id={model3D} />
       )}
 
       {children}
@@ -39,7 +39,7 @@ function FurnitureModel({ children, className }) {
       {onSale && (
         <img
           className="w-10 h-10 absolute bottom-0 right-2"
-          src="https://www.boconcept.com/on/demandware.static/-/Library-Sites-BoConceptSharedLibrary/default/dwe05ddb62/images/promotionicons/One%20time%20offer%20icon%20pct-0111.svg"
+          src="/images/discount.png"
         />
       )}
     </div>
