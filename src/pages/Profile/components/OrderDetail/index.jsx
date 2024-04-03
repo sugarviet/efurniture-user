@@ -30,10 +30,10 @@ function OrderDetail({ data }) {
             </section>
 
             <section>
-                <article className="flex flex-row gap-1 items-center pt-6 gap-4">
+                <article className="flex flex-row items-center pt-6 gap-4">
                     <p className='font-HelveticaBold text-[1.3rem] leading-[1.20833] tracking-[0.08em] '>Order detail # {data.order_code}</p>
                     <div className="bg-blackPrimary px-2 py-2 rounded-md ">
-                        <p className="text-white font-HelveticaBold leading-[1.20833] tracking-[0.08em]">PENDING</p>
+                        <p className="text-white font-HelveticaBold leading-[1.20833] tracking-[0.08em]">{data.current_order_tracking.name}</p>
                     </div>
                 </article>
                 <p className='text-[14px] font-medium leading-[1.4] tracking-[0.04em] pt-2'>Date: {formattedDate(data.createdAt)}</p>
@@ -84,11 +84,15 @@ function OrderDetail({ data }) {
                             </tbody>
                         </table>
                     </div>
-                    <div className="basis-1/3">
-                        <p className='font-HelveticaBold text-[1.5rem] leading-[1.20833] tracking-[0.08em]'>Payment method</p>
-                        <p className='pt-2 leading-[1.4] tracking-[0.04em] mt-2'>{data.payment_method}</p>
-                        <p className='pt-2 leading-[1.4] tracking-[0.04em] text-[#ee4d2d]'>&#x00028;{orderCheckout.is_paid == true ? "Have been paid successfully" : "Have not been paid yet"}&#x00029;</p>
-
+                    <div className="basis-1/3 flex flex-col justify-between">
+                        <div>
+                            <p className='font-HelveticaBold text-[1.5rem] leading-[1.20833] tracking-[0.08em]'>Payment method</p>
+                            <p className='pt-2 leading-[1.4] tracking-[0.04em] mt-2'>{data.payment_method}</p>
+                        </div>
+                        <div>
+                            <p className='font-HelveticaBold text-[1.5rem] leading-[1.20833] tracking-[0.08em]'>Shipping method</p>
+                            <p className='pt-2 leading-[1.4] tracking-[0.04em] mt-2'>eFurniture Express</p>
+                        </div>
                     </div>
                 </div>
 
@@ -100,14 +104,17 @@ function OrderDetail({ data }) {
                                 <div key={key} className='mt-8 flex flex-row justify-between'>
                                     <div className='flex flex-row gap-5'>
                                         <div className='w-16 h-16 sm:w-28 sm:h-28 rounded-xl px-2 py-2 bg-white'>
-                                            <img className='w-full h-full' src={product.thumb}></img>
+                                            <img className='w-full h-full' src={product.product_id.thumbs}></img>
                                         </div>
                                         <div className='flex flex-col'>
                                             <p className='font-HelveticaBold text-[11px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{product.name}</p>
                                             <p className='pt-3 text-[11px] sm:text-[13px] leading-[1.4] tracking-[0.04em]'>Qty: {product.quantity}</p>
                                         </div>
                                     </div>
-                                    <p className='font-HelveticaBold text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{formattedCurrency(product.price)}</p>
+                                    <div className='flex flex-col'>
+                                        <p className='font-HelveticaRoman text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em] line-through text-grey2'>{formattedCurrency(product.product_id.regular_price)}</p>
+                                        <p className='font-HelveticaBold text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{formattedCurrency(product.product_id.sale_price)}</p>
+                                    </div>
                                 </div>
                             ))}
                         </div>

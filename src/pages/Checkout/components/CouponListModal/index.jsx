@@ -38,7 +38,7 @@ function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
         }
     );
 
-    const emptyVoucher = !couponList?.length;
+    const emptyVoucher = !couponList?.data.metaData.length;
 
     const handleSaveChoosenVoucher = () => {
         applyVoucher(productForVoucher)

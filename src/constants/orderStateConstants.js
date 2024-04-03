@@ -5,6 +5,6 @@ export const ORDER_STATE = {
     shipping: "shipping",
     done: "done",
     failed: "failed",
-    cancel: "cancel",
+    cancelled: "cancelled",
     refunded: "refunded",
   }

@@ -50,7 +50,6 @@ function BillingAddress({ userData, addressList }) {
         setSelectedAddress(selectedObject);
         setSelectedDistrict({ name: selectedObject?.district })
         setSelectedWard({ name: selectedObject?.ward })
-        console.log(orderShipping)
     };
 
     return (
