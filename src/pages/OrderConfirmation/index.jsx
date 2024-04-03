@@ -5,6 +5,7 @@ import formattedDate from '@utils/formattedDate'
 import useNavigation from '../../hooks/useNavigation'
 import useAuth from "@stores/useAuth";
 import useGuestCart from '../../hooks/useGuestCart'
+import DepositPrice from '../../components/DepositPrice'
 
 function OrderConfirmation() {
 
@@ -17,8 +18,8 @@ function OrderConfirmation() {
   const location = useLocation();
   const orderConfirmation = location.state || { orderConfirmation: null };
 
-  console.log(orderConfirmation)
-
+  const isPaidDeposit = orderConfirmation.order_checkout.paid.type === "Deposit";
+  
   const orderProduct = orderConfirmation.order_products || [];
   const orderShipping = orderConfirmation.order_shipping || { orderShipping: null };
   const orderCheckout = orderConfirmation.order_checkout || { orderCheckout: null };
@@ -178,6 +179,9 @@ function OrderConfirmation() {
                         0.00đ
                       </span>
                     </li>
+                    {isPaidDeposit &&
+                      <DepositPrice order={orderConfirmation}/>
+                    }
                   </ul>
                   <ul className='pt-4'>
                     <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">

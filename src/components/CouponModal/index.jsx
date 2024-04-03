@@ -1,6 +1,7 @@
 import formattedDate from "@utils/formattedDate";
 import CouponError from "../CouponError";
 import { useOrderStore } from "../../stores/useGuestOrderStore";
+import formatMoney from "../../utils/formatMoney";
 
 function CouponModal({ data, getTotalPrice }) {
 
@@ -36,7 +37,7 @@ function CouponModal({ data, getTotalPrice }) {
                         <div className="pl-3 py-3">
                             <p className='font-semibold text-[0.875rem] leading-[1.20833] tracking-[0.08em] pb-1'>{data.code}</p>
                             <p className='text-[0.875rem] leading-[1.20833] tracking-[0.08em]'>{data.value}% off Capped at ₫100k</p>
-                            <p className='text-[0.875rem] leading-[1.20833] tracking-[0.08em]'>Min. Spend ₫{data.minimum_order_value / 1000000}M</p>
+                            <p className='text-[0.875rem] leading-[1.20833] tracking-[0.08em]'>Min. Spend ₫{formatMoney(data.minimum_order_value)}</p>
                             <p className='text-[11px] leading-[1.20833] tracking-[0.08em] pt-2 text-grey1'>{(data.used_turn_count / data.maximum_use) * 100}% used, Valid Till: {formattedDate(data.end_date)}</p>
                         </div>
                     </article>
