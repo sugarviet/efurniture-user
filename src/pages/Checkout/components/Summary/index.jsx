@@ -34,7 +34,7 @@ function Summary() {
     setDataAfterVoucher,
     handleOpenCoupon,
     isCouponOpen,
-    isCouponForUser
+    isCouponForUser,
   } = useVoucher();
 
   const orderProducts = cart.map((cart) => ({
