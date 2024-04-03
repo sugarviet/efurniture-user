@@ -10,6 +10,7 @@ import ProductFeedback from "./components/ProductFeedback";
 
 function ProductDetail({ data }) {
   const { name, regular_price, sale_price, type } = data;
+
   return (
     <section>
       <article className="furniture-promotion mt-7">
