@@ -37,12 +37,10 @@ function Summary() {
     isCouponForUser
   } = useVoucher();
 
-  console.log(dataAfterVoucher)
-
   const orderProducts = cart.map((cart) => ({
     product_id: cart._id,
     quantity: cart.quantity_in_cart,
-    price: cart.sale_price > 0 ? cart.sale_price : cart.regular_price,
+    price: cart.sale_price,
     name: cart.name,
     thumb: cart.thumbs[0]
   }))
@@ -76,6 +74,8 @@ function Summary() {
       )
   };
 
+  const quotationTotal = dataAfterVoucher ? dataAfterVoucher.order_total_after_voucher : getTotalPrice();
+  const formattedQuotationTotal = quotationTotal >= 0 ? formattedCurrency(quotationTotal) : formattedCurrency(0);
 
   return (
     <section className='w-full lg:max-w-[43.75rem] text-[0.875rem] leading-[1.5] pb-[45px] tracking-[0.5px] pt-6 lg:pt-0'>
@@ -164,11 +164,7 @@ function Summary() {
           <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
             <span className="">QUOTATION TOTAL </span>
             <span>
-              {dataAfterVoucher ?
-                formattedCurrency(dataAfterVoucher.order_total_after_voucher)
-                :
-                formattedCurrency(getTotalPrice())
-              }
+              {formattedQuotationTotal}
             </span>
           </li>
           <li className="flex flex-row justify-between items-center mt-[-0.3125rem] pb-[0.25rem] text-[0.75rem] leading-[2] tracking-[0.05em] text-grey2">
@@ -186,11 +182,7 @@ function Summary() {
               </span>
             </span>
             <span className="">
-              {dataAfterVoucher ?
-                formattedCurrency(dataAfterVoucher.order_total_after_voucher)
-                :
-                formattedCurrency(getTotalPrice())
-              }
+              {formattedQuotationTotal}
             </span>
           </li>
         </ul>
