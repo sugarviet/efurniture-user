@@ -5,7 +5,6 @@ import { useState } from "react";
 
 function ProductOrderBriefInfo({ product }) {
   const [modelOpened, setModalOpened] = useState(false);
-  console.log(product);
   return (
     <div>
       <section className="mt-8 flex flex-row justify-between border-b border-grey5 pb-8">

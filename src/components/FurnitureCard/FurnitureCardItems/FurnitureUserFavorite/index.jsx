@@ -24,17 +24,22 @@ function FurnitureUserFavorite() {
 
   const { mutate: onFavored } = usePostAuth(
     get_update_wishlist_api(furniture._id),
-    null,
+    undefined,
     () => {
       success_message(null, null, `Added ${furniture.name} to Favorites`);
     },
     (error) => {
       error_message(null, null, error.message);
-    }
+    },
+    get_wishlist_api()
   );
 
   const { mutate: onUnFavored } = useDeleteAuth(
-    get_update_wishlist_api(furniture._id)
+    get_update_wishlist_api(furniture._id),
+    undefined,
+    () => {},
+    () => {},
+    get_wishlist_api()
   );
 
   const handleFavored = (event) => {

@@ -8,7 +8,8 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 function FurnitureModel({ children, className }) {
-  const { furniture, dimension, onSale } = useContext(FurnitureCardContext);
+  const { furniture, dimension, onSale, salePercentage } =
+    useContext(FurnitureCardContext);
 
   const { model3D, name, thumbs, slug } = furniture;
 
@@ -37,10 +38,9 @@ function FurnitureModel({ children, className }) {
       {children}
 
       {onSale && (
-        <img
-          className="w-10 h-10 absolute bottom-0 right-2"
-          src="/images/discount.png"
-        />
+        <div className="from-[#961200] to-[#c2560a] bg-gradient-to-l rounded-sm  px-2 py-1 flex items-center justify-center absolute bottom-0 right-2">
+          <span className="text-white text-sm">-{salePercentage}%</span>
+        </div>
       )}
     </div>
   );

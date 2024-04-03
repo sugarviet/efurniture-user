@@ -10,7 +10,6 @@ import ProductFeedback from "./components/ProductFeedback";
 
 function ProductDetail({ data }) {
   const { name, regular_price, sale_price, type } = data;
-  console.log(data);
   return (
     <section>
       <article className="furniture-promotion mt-7">
@@ -21,7 +20,7 @@ function ProductDetail({ data }) {
         <div className="z-10 absolute top-[1.25rem] left-[2.5rem]">
           <div className="text-[0.75rem] font-HelveticaBold flex flex-row gap-2 cursor-pointer">
             <img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB3aWR0aD0nOCcgaGVpZ2h0PScxMycgdmlld0JveD0nMCAwIDggMTMnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZycgZmlsbD0nIzIyMic+IDxwYXRoIGQ9J003LjA5MyAxMS41NzlsLS43MDcuNzA3LTUuNzQtNS43NCA1LjktNS45LjcwNy43MDgtNS4xOTIgNS4xOTJ6Jy8+IDwvc3ZnPg==" />
-            <Link to={`/products}`}>
+            <Link to={`/products/${type.slug}`}>
               <span className="text-blackPrimary">{type.name}</span>
             </Link>
           </div>
