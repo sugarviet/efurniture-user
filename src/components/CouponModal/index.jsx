@@ -1,14 +1,34 @@
 import formattedDate from "@utils/formattedDate";
+import CouponError from "../CouponError";
+import { useOrderStore } from "../../stores/useGuestOrderStore";
 
-function VoucherModal({ data, chooseVoucher, getTotalPrice, setChooseVoucher }) {
+function CouponModal({ data, getTotalPrice }) {
+
+    const { selectedCoupon, setSelectedCoupon } = useOrderStore();
+
+    const isHideCoupon = (data.used_turn_count === data.maximum_use_per_user) || (data.minimum_order_value > getTotalPrice())
+
+    const isUseCoupon = (data.used_turn_count !== data.maximum_use_per_user) && (data.minimum_order_value < getTotalPrice())
+
+    const maxUsedCoupon = data.used_turn_count === data.maximum_use_per_user
+
+    const notReachValueCoupon = data.minimum_order_value > getTotalPrice()
+
+    const handleCouponSelection = (couponId) => {
+        if (selectedCoupon === couponId) {
+            setSelectedCoupon(null);
+        } else {
+            setSelectedCoupon(couponId);
+        }
+    };
+
     return (
         <div>
             <>
                 <figure
                     key={data._id}
-
                     className={`z-0 relative flex flex-row mx-4 mb-2 border-[0.0625rem] border-[#E8E8E8] border-l-0 rounded-tr-[0.125rem] round-br-[0.125rem] shadow-couponCard 
-                        ${(data.used_turn_count === data.maximum_use_per_user) || (data.minimum_order_value > getTotalPrice()) ? "opacity-70" : "opacity-100"}
+                        ${isHideCoupon ? "opacity-70" : "opacity-100"}
                         
                         `}>
                     <img className="w-28" src="https://res.cloudinary.com/dc4hafqoa/image/upload/v1709351627/eFurniture/voucher-left_n2on4v.png"></img>
@@ -21,11 +41,11 @@ function VoucherModal({ data, chooseVoucher, getTotalPrice, setChooseVoucher }) 
                         </div>
                     </article>
                     <div className="flex justify-center items-center mr-3">
-                        {(data.used_turn_count === data.maximum_use_per_user) || (data.minimum_order_value > getTotalPrice())
+                        {isHideCoupon
                             ?
-                            <div className={`rounded-[50%] border-grey3 border-[1px] w-5 h-5 cursor-not-allowed ${chooseVoucher === data._id ? "bg-blackPrimary " : "bg-grey5 "}`}></div>
+                            <div className={`rounded-[50%] border-grey3 border-[1px] w-5 h-5 cursor-not-allowed ${selectedCoupon === data._id ? "bg-blackPrimary " : "bg-grey5 "}`}></div>
                             :
-                            <div onClick={() => setChooseVoucher(data._id)} className={`cursor-pointer rounded-[50%] border-grey3 border-[1px] w-5 h-5 ${chooseVoucher === data._id ? "bg-blackPrimary" : "bg-grey5 "}`}></div>
+                            <div onClick={() => handleCouponSelection(data._id)} className={`cursor-pointer rounded-[50%] border-grey3 border-[1px] w-5 h-5 ${selectedCoupon === data._id ? "bg-blackPrimary" : "bg-grey5 "}`}></div>
                         }
                     </div>
                     <div className="bg-white z-10 absolute right-[-5px] top-1 ">
@@ -37,27 +57,21 @@ function VoucherModal({ data, chooseVoucher, getTotalPrice, setChooseVoucher }) 
                         <div className='absolute top-5 right-[1px] border-b-black border-b-4 border-r-4 border-r-transparent rotate-90'></div>
                     </div>
                 </figure>
-                {(data.used_turn_count !== data.maximum_use_per_user) && (data.minimum_order_value < getTotalPrice())
+                {isUseCoupon
                     &&
                     <div className="mb-8"></div>
                 }
-                {data.used_turn_count === data.maximum_use_per_user
+                {maxUsedCoupon
                     &&
-                    <div className="flex flex-row gap-2 items-center mb-4 mx-4 ">
-                        <img className="w-3 h-3" src="https://res.cloudinary.com/dc4hafqoa/image/upload/v1709925291/eFurniture/exclamation_ud637a.png"></img>
-                        <p className="text-[#ee4d2d] text-[13px] leading-[1.4] tracking-[0.04em]"> You have used the maximum number of uses of this voucher</p>
-                    </div>
+                    <CouponError type="maxUsed" />
                 }
-                {data.minimum_order_value > getTotalPrice()
+                {notReachValueCoupon
                     &&
-                    <div className="flex flex-row gap-2 items-center mb-4 mx-4 ">
-                        <img className="w-3 h-3" src="https://res.cloudinary.com/dc4hafqoa/image/upload/v1709925291/eFurniture/exclamation_ud637a.png"></img>
-                        <p className="text-[#ee4d2d] text-[13px] leading-[1.4] tracking-[0.04em]">  Your order has not reached the minimum value of this voucher</p>
-                    </div>
+                    <CouponError type="notReachValue" />
                 }
             </>
         </div>
     )
 }
 
-export default VoucherModal
+export default CouponModal;

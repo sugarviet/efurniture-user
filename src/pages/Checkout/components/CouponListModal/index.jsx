@@ -8,18 +8,21 @@ import {
 import useUserCart from "@hooks/useUserCart";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import VoucherModal from "../../../../components/VoucherModal";
+import CouponModal from "../../../../components/CouponModal";
 import useVoucher from "../../../../hooks/useVoucher";
+import { useOrderStore } from "../../../../stores/useGuestOrderStore";
 
 function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
 
-    const [chooseVoucher, setChooseVoucher] = useState();
+    const { selectedCoupon } = useOrderStore();
+
+    console.log(selectedCoupon)
 
     const { cart, getTotalPrice } = useUserCart();
 
     const {
         couponList,
-      } = useVoucher();
+    } = useVoucher();
 
     const productForVoucher = cart.map((item) => ({
         product_id: item._id,
@@ -28,7 +31,7 @@ function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
     }));
 
     const { mutate: applyVoucher } = usePostAuth(
-        apply_voucher(chooseVoucher),
+        apply_voucher(selectedCoupon),
         undefined,
         (data) => {
             setDataAfterVoucher(data.data.metaData);
@@ -41,23 +44,23 @@ function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
     const emptyVoucher = !couponList?.data.metaData.length;
 
     const handleSaveChoosenVoucher = () => {
-        applyVoucher(productForVoucher)
+        if (selectedCoupon) {
+            applyVoucher(productForVoucher);
+        }
+        setDataAfterVoucher(null)
         setIsModalCreateOpen(false);
     }
-
-
 
     return (
         <section className="relative">
             <p className='font-HelveticaBold text-[1rem] leading-[1.20833] tracking-[0.08em] pb-6'>Choose eFurniture voucher</p>
             <div className={`max-w-[600px] pb-24 pt-5 ${emptyVoucher ? "h-[50px]" : "h-[500px] overflow-y-auto "}`}>
                 {couponList?.data.metaData.map((voucher) => (
-                    <VoucherModal
+                    <CouponModal
                         key={voucher._id}
                         data={voucher}
                         getTotalPrice={getTotalPrice}
-                        chooseVoucher={chooseVoucher}
-                        setChooseVoucher={setChooseVoucher} />
+                    />
                 ))}
                 {emptyVoucher
                     ? (
@@ -76,7 +79,7 @@ function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
                         Cancel
                     </button>
                     <button
-                        onClick={() => handleSaveChoosenVoucher(false)}
+                        onClick={() => handleSaveChoosenVoucher()}
                         className="furniture-button-black-hover px-[50px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-6"
                     >
                         Apply
@@ -89,6 +92,7 @@ function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
 
 CouponListModal.propTypes = {
     setIsModalCreateOpen: PropTypes.func.isRequired,
+    setDataAfterVoucher: PropTypes.func.isRequired,
 };
 
 export default CouponListModal

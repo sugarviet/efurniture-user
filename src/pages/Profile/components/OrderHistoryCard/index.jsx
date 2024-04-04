@@ -44,7 +44,7 @@ function OrderHistoryCard({ data }) {
               </p>
             </article>
           </div>
-          <div>
+          <div className="pl-4">
             <div className="flex flex-col">
               <p className="text-[14px] font-medium leading-[1.4] tracking-[0.04em]">
                 Order # {data.order_code}

@@ -6,6 +6,7 @@ const initialValues = {
     selectedPayment: "COD",
     selectedAddress: false,
     selectedDelivery: "efurniture",
+    selectedCoupon: null,
     note: "",
     orderShipping: [],
     selectedDistrict: {},
@@ -23,6 +24,7 @@ export const useOrderStore = create(
             setNote: (noteFilled) => set({ note: noteFilled }),
             setOrderShipping: (shipping) => set({ orderShipping: shipping }),
             setSelectedAddress: (address) => set({ selectedAddress: address }),
+            setSelectedCoupon: (coupon) => set({ selectedCoupon: coupon }),
             reset: () => set(initialValues)
         }),
         {
