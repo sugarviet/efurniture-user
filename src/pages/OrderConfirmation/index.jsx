@@ -133,23 +133,28 @@ function OrderConfirmation() {
                   </div>
                 </div>
                 <div className={`furniture-divided-bottom pb-8 ${orderProduct.length > 2 ? "overflow-y-auto h-[320px]" : "overflow-y-hidden"}`}>
-                  {orderProduct.map((product, index) => (
-                    <div key={index} className='mt-8 flex flex-row justify-between'>
-                      <div className='flex flex-row gap-5'>
-                        <div className='w-16 h-16 sm:w-28 sm:h-28 rounded-xl px-2 py-2 bg-white'>
-                          <img className='w-full h-full' src={product.product_id.thumbs}></img>
+                  {orderProduct.map((product, index) => {
+                    const onSale = product.product_id.regular_price - product.product_id.sale_price > 0;
+                    return (
+                      <div key={index} className='mt-8 flex flex-row justify-between'>
+                        <div className='flex flex-row gap-5'>
+                          <div className='w-16 h-16 sm:w-28 sm:h-28 rounded-xl px-2 py-2 bg-white'>
+                            <img className='w-full h-full' src={product.product_id.thumbs}></img>
+                          </div>
+                          <div className='flex flex-col'>
+                            <p className='font-HelveticaBold text-[11px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{product.name}</p>
+                            <p className='pt-3 text-[11px] sm:text-[13px] leading-[1.4] tracking-[0.04em]'>Qty: {product.quantity}</p>
+                          </div>
                         </div>
                         <div className='flex flex-col'>
-                          <p className='font-HelveticaBold text-[11px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{product.name}</p>
-                          <p className='pt-3 text-[11px] sm:text-[13px] leading-[1.4] tracking-[0.04em]'>Qty: {product.quantity}</p>
+                          {onSale &&
+                            <p className='font-HelveticaRoman text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em] line-through text-grey2'>{formattedCurrency(product.product_id.regular_price)}</p>
+                          }
+                          <p className='font-HelveticaBold text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{formattedCurrency(product.product_id.sale_price)}</p>
                         </div>
                       </div>
-                      <div className='flex flex-col'>
-                        <p className='font-HelveticaRoman text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em] line-through text-grey2'>{formattedCurrency(product.product_id.regular_price)}</p>
-                        <p className='font-HelveticaBold text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{formattedCurrency(product.product_id.sale_price)}</p>
-                      </div>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
                 <div className=''>
                   <ul className="pt-4 list-none furniture-divided-bottom pb-4">
