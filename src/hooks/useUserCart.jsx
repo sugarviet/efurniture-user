@@ -6,6 +6,7 @@ import {
   get_increase_by_one_api,
   get_remove_from_cart_api,
   get_update_quantity_api,
+  get_update_variation_api,
 } from "../api/cartApi";
 import {
   useDeleteAuth,
@@ -65,20 +66,23 @@ function useUserCart() {
     get_cart_api()
   );
 
+  const { mutate: updateVariationMutation } = useUpdateWithAuth(
+    get_update_variation_api(),
+    undefined,
+    () => {},
+    (error) => {
+      const message = error.response.data.error.message;
+      error_message(null, null, message);
+    },
+    get_cart_api()
+  );
+
   useEffect(() => {
     if (isLoading || !data) return;
     setCart(data.products);
   }, [data, isLoading]);
 
   const addToCart = (item) => {
-    const isInCart = cart.some((i) => i._id === item._id);
-
-    if (isInCart) {
-      success_message(null, null, `${item.name} has already been in the cart`);
-      increaseQuantity(item._id);
-      return;
-    }
-
     const { _id, select_variation } = item;
 
     const body = {
@@ -90,36 +94,50 @@ function useUserCart() {
     addToCartMutation(body);
   };
 
-  const removeFromCart = (id) => {
-    removeFromCartMutation({ _id: id, quantity: 1 });
+  const removeFromCart = (code) => {
+    removeFromCartMutation({ code: code, quantity: 1 });
   };
 
-  const increaseQuantity = (id) => {
-    increaseQuantityMutation({ _id: id, quantity: 1 });
+  const increaseQuantity = (code) => {
+    increaseQuantityMutation({ code: code, quantity: 1 });
   };
 
-  const decreaseQuantity = (id) => {
-    decreaseQuantityMutation({ _id: id, quantity: 1 });
+  const decreaseQuantity = (code) => {
+    decreaseQuantityMutation({ code: code, quantity: 1 });
   };
 
-  const updateQuantity = (id, quantity) => {
+  const updateQuantity = (code, quantity) => {
     updateQuantityMutation({
       product: {
-        _id: id,
+        code: code,
       },
       newQuantity: quantity,
     });
   };
 
   const getTotalPrice = () => {
-    return cart.reduce(
-      (total, item) => total + item.sale_price * item.quantity_in_cart,
-      0
-    );
+    return cart.reduce((total, item) => {
+      const subPrice = item.select_variation.reduce(
+        (total, cur) => total + cur.sub_price,
+        0
+      );
+      return total + (item.sale_price + subPrice) * item.quantity_in_cart;
+    }, 0);
+  };
+
+  const updateVariation = (item) => {
+    const { code, _id, select_variation } = item;
+    const body = {
+      code: code,
+      _id: _id,
+      variation: select_variation,
+    };
+    updateVariationMutation(body);
   };
 
   return {
     isLoading,
+    updateVariation,
     cart,
     addToCart,
     decreaseQuantity,

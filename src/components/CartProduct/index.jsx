@@ -1,9 +1,14 @@
-import { useState } from "react";
 import ProductVariation from "../../pages/ProductDetail/components/ProductVariation";
 import FurnitureCard from "../FurnitureCard";
 import QuantityOption from "../QuantityOption";
 
-function CartProduct({ data, cartData }) {
+function CartProduct({
+  data,
+  cartData,
+  addToPurchaseItems,
+  isInPurchase,
+  removeFromPurchaseItems,
+}) {
   const { code, quantity_in_cart, select_variation, variation } = data;
   const {
     increaseQuantity,
@@ -13,24 +18,35 @@ function CartProduct({ data, cartData }) {
     updateVariation,
   } = cartData;
 
-  console.log(data);
+  const handleSelectToPurchase = (checked) => {
+    if (!checked) removeFromPurchaseItems(data);
+    if (checked) addToPurchaseItems(data);
+  };
 
   return (
     <section className="flex flex-col my-6">
-      <div
-        onClick={() => removeFromCart(code)}
-        className="flex items-center justify-end"
-      >
-        <span className="text-[0.75rem] leading-[2] track-[0.05em] text-grey1 pr-[2px]">
-          Remove
-        </span>
-        <img
-          className="w-[15px]"
-          src="https://res.cloudinary.com/dc4hafqoa/image/upload/v1702979086/Beana_svg/close_veco12_l3nivu.svg"
+      <div className="flex justify-between items-center">
+        <input
+          onChange={(e) => handleSelectToPurchase(e.target.checked)}
+          checked={isInPurchase(data)}
+          type="checkbox"
+          className="w-6 h-6"
         />
+        <button
+          onClick={() => removeFromCart(code)}
+          className="flex items-center"
+        >
+          <span className="text-[0.75rem] leading-[2] track-[0.05em] text-grey1 pr-[2px]">
+            Remove
+          </span>
+          <img
+            className="w-[15px]"
+            src="https://res.cloudinary.com/dc4hafqoa/image/upload/v1702979086/Beana_svg/close_veco12_l3nivu.svg"
+          />
+        </button>
       </div>
       <FurnitureCard item={data} key={code}>
-        <FurnitureCard.Model className="w-[80%]" />
+        <FurnitureCard.Model className="w-[70%]" />
         <section className="flex flex-row justify-between">
           <div className="mb-4">
             <FurnitureCard.Attribute />

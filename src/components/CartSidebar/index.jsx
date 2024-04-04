@@ -5,10 +5,19 @@ import LoadingSpinner from "../LoadingSpinner";
 import Proptypes from "prop-types";
 import useCartStore from "@stores/useCartStore";
 import formattedCurrency from "../../utils/formattedCurrency";
+import usePurchase from "../../hooks/usePurchase";
 export default function CartSideBar({ cartData }) {
   const { cart, getTotalPrice, isLoading } = cartData;
 
   const { closeCart } = useCartStore();
+
+  const {
+    addToPurchaseItems,
+    isInPurchase,
+    removeFromPurchaseItems,
+    purchaseItems,
+    setPurchaseItems,
+  } = usePurchase();
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -26,7 +35,14 @@ export default function CartSideBar({ cartData }) {
           <div className="pt-0 pb-9 px-12 h-full overflow-y-scroll">
             {cart && cart?.length > 0 ? (
               cart.map((item) => (
-                <CartProduct cartData={cartData} key={item.code} data={item} />
+                <CartProduct
+                  addToPurchaseItems={addToPurchaseItems}
+                  removeFromPurchaseItems={removeFromPurchaseItems}
+                  isInPurchase={isInPurchase}
+                  cartData={cartData}
+                  key={item.code}
+                  data={item}
+                />
               ))
             ) : (
               <p>Your shopping cart is empty</p>
@@ -37,18 +53,35 @@ export default function CartSideBar({ cartData }) {
         <footer className="bg-[#f1f1f1] px-12 pt-4">
           <section className="m-auto max-w-[34.375rem]">
             {isCartEmpty ? null : (
-              <div>
-                <div className="grid grid-cols-[1fr_1fr]">
-                  <span className="text-center">Subtotal</span>
-                  <span className="text-center">
-                    {formattedCurrency(getTotalPrice())}
+              <div className="flex items-center justify-center">
+                <div className="flex flex-col items-center">
+                  <input
+                    onChange={(e) => {
+                      const checked = e.target.checked;
+                      if (checked) setPurchaseItems([...cart]);
+                      if (!checked) setPurchaseItems([]);
+                    }}
+                    checked={purchaseItems.length === cart.length}
+                    type="checkbox"
+                    className="w-6 h-6"
+                  />
+                  <span className="text-xs uppercase text-center mt-2">
+                    Purchase All
                   </span>
                 </div>
-                <div className="grid grid-cols-[1fr_1fr]">
-                  <span className="text-center">Order total</span>
-                  <span className="text-center">
-                    {formattedCurrency(getTotalPrice())}
-                  </span>
+                <div className="flex flex-col flex-1">
+                  <div className="grid grid-cols-[1fr_1fr]">
+                    <span className="text-center">Subtotal</span>
+                    <span className="text-center">
+                      {formattedCurrency(getTotalPrice())}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-[1fr_1fr]">
+                    <span className="text-center">Order total</span>
+                    <span className="text-center">
+                      {formattedCurrency(getTotalPrice())}
+                    </span>
+                  </div>
                 </div>
               </div>
             )}
@@ -66,7 +99,9 @@ export default function CartSideBar({ cartData }) {
                 </button>
               ) : (
                 <Link
-                  to={"/checkout"}
+                  to={`/checkout?q=${encodeURIComponent(
+                    JSON.stringify(purchaseItems)
+                  )}`}
                   onClick={closeCart}
                   className="font-HelveticaBold furniture-button-black-hover text-[11px] max-w-[17.1875rem] py-[18px] px-[55px] tracking-[0.125rem]"
                 >

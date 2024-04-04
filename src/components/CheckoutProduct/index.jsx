@@ -1,13 +1,24 @@
 import FurnitureCard from "../FurnitureCard";
 import PropTypes from "prop-types";
 import formattedCurrency from "../../utils/formattedCurrency";
-import LoadingSpinner from "../LoadingSpinner";
-function CheckoutProduct({ activeTab, cartData }) {
+import ProductVariation from "../../pages/ProductDetail/components/ProductVariation";
+import { useLocation } from "react-router-dom";
+function CheckoutProduct({ activeTab }) {
   const discount = 0;
 
-  const { cart, getTotalPrice, isLoading } = cartData;
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
-  if (isLoading) return <LoadingSpinner />;
+  const purchaseItems = JSON.parse(params.get("q"));
+
+  const getTotalPrice = () =>
+    purchaseItems.reduce((total, cur) => {
+      const subPrice = cur.select_variation.reduce(
+        (total, cur) => total + cur.sub_price,
+        0
+      );
+      return total + (cur.sale_price + subPrice) * cur.quantity_in_cart;
+    }, 0);
 
   return (
     <section className="px-5 pb-6 lg:pl-[80px] lg:pr-[96px] lg:pb-0 xl:pl-[112px] xl:pr-[128px] xl:pb-0">
@@ -27,8 +38,9 @@ function CheckoutProduct({ activeTab, cartData }) {
       )}
       <div className="pt-[2rem]">
         <ul className="list-none">
-          {cart.map((item, index) => {
-            const { name, quantity_in_cart } = item;
+          {purchaseItems.map((item, index) => {
+            const { name, quantity_in_cart, select_variation, variation } =
+              item;
             return (
               <section key={index} className="text-[0.875rem] ">
                 <FurnitureCard item={item} key={`${name} + ${index}`}>
@@ -39,10 +51,29 @@ function CheckoutProduct({ activeTab, cartData }) {
                         {name}
                       </h2>
                     </a>
-                    <p className="text-blackPrimary">Quantity: {quantity_in_cart}</p>
+                    <p className="text-blackPrimary">
+                      Quantity: {quantity_in_cart}
+                    </p>
                   </section>
                   <div className="flex flex-col justify-between gap-4 ">
                     <FurnitureCard.Detail />
+                    {select_variation.map((item, i) => {
+                      const { variation_id, property_id } = item;
+                      const currentVariation = variation.find(
+                        (i) => i._id === variation_id
+                      );
+                      currentVariation.properties =
+                        currentVariation.properties.filter(
+                          (item) => item._id === property_id
+                        );
+                      return (
+                        <ProductVariation
+                          key={i}
+                          currentVariation={currentVariation}
+                          variation={currentVariation}
+                        />
+                      );
+                    })}
                   </div>
                 </FurnitureCard>
               </section>

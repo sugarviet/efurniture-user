@@ -9,6 +9,8 @@ function ProductDetails() {
 
   const attributeKeys = Object.keys(attributes.attributeType);
 
+  console.log(furniture);
+
   return (
     <section className="h-full">
       <div className={`overflow-hidden transition-[height] duration-300`}>
