@@ -7,7 +7,7 @@ import { Toaster } from "sonner";
 function App() {
   return (
     <>
-      <Toaster position="top-right" />
+      <Toaster closeButton position="top-right" />
       <RouterProvider router={routers} />
     </>
   );

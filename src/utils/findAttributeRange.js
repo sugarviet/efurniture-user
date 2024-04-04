@@ -7,7 +7,7 @@ export default function findAttributeRange(attributes) {
             if (
                 !(key in maxValues) ||
                 value.value >
-                maxValues[key]
+                maxValues[key].val
             ) {
                 maxValues[key] = { val: value.value, unit: value.unit };
             }
@@ -15,7 +15,7 @@ export default function findAttributeRange(attributes) {
             if (
                 !(key in minValues) ||
                 value.value <=
-                minValues[key]
+                minValues[key].val
             ) {
                 minValues[key] = { val: value.value, unit: value.unit };
             }

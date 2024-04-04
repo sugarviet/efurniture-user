@@ -15,12 +15,16 @@ import {
 } from "./api-hooks";
 import useNotification from "./useNotification";
 import useCartStore from "../stores/useCartStore";
+import useAuth from "../stores/useAuth";
 
 function useUserCart() {
   const [cart, setCart] = useState([]);
+  const { accessToken } = useAuth();
   const { success_message, error_message } = useNotification();
   const { toggleCart } = useCartStore();
-  const { data, isLoading } = useFetchWithAuth(get_cart_api());
+  const { data, isLoading } = useFetchWithAuth(get_cart_api(), undefined, {
+    enabled: !!accessToken,
+  });
   const { mutate: addToCartMutation } = usePostAuth(
     get_add_to_cart_api(),
     undefined,
@@ -75,7 +79,15 @@ function useUserCart() {
       return;
     }
 
-    addToCartMutation({ _id: item._id, quantity: 1 });
+    const { _id, select_variation } = item;
+
+    const body = {
+      _id: _id,
+      variation: select_variation,
+      quantity: 1,
+    };
+
+    addToCartMutation(body);
   };
 
   const removeFromCart = (id) => {

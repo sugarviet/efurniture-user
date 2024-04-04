@@ -1,15 +1,52 @@
 import FavoriteButton from "@components/FavoriteButton";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useGuestStore } from "../../stores/useGuestStore";
 import useGuestCart from "../../hooks/useGuestCart";
-import useNavigation from "../../hooks/useNavigation"
+import useUserCart from "../../hooks/useUserCart";
+import useNavigation from "../../hooks/useNavigation";
+import useAuth from "../../stores/useAuth";
+import {
+  useDeleteAuth,
+  useFetchWithAuth,
+  usePostAuth,
+} from "../../hooks/api-hooks";
+import {
+  get_update_wishlist_api,
+  get_wishlist_api,
+} from "../../api/wishlistApi";
+import useNotification from "../../hooks/useNotification";
+import { ProductDetailContext } from "../../pages/ProductDetail/ProductDetailContext";
 
-function ProductAddToCart({ furniture }) {
-
+function ProductAddToCart() {
   const { go_to_store } = useNavigation();
+  const { furniture } = useContext(ProductDetailContext);
+
+  const { accessToken } = useAuth();
+  const { success_message, error_message } = useNotification();
+
+  const { data, isLoading } = useFetchWithAuth(get_wishlist_api(), undefined, {
+    enabled: !!accessToken,
+  });
+
+  const { mutate: onFavoredWithUser } = usePostAuth(
+    get_update_wishlist_api(furniture._id),
+    null,
+    () => {
+      success_message(null, null, `Added ${furniture.name} to Favorites`);
+    },
+    (error) => {
+      error_message(null, null, error.message);
+    }
+  );
+
+  const { mutate: onUnFavoredWithUser } = useDeleteAuth(
+    get_update_wishlist_api(furniture._id)
+  );
 
   const { wishlist, onFavored, onUnFavored } = useGuestStore();
-  const { addToCart } = useGuestCart();
+  const { addToCart: addToCartWithGuest } = useGuestCart();
+  const { addToCart: addToCartWithUser } = useUserCart();
+
   const [isFavored, setIsFavored] = useState(
     wishlist.some((item) => item._id === furniture._id)
   );
@@ -17,13 +54,27 @@ function ProductAddToCart({ furniture }) {
   const handleOnFavored = () => {
     setIsFavored(!isFavored);
 
-    if (!isFavored) onFavored(furniture);
-    if (isFavored) onUnFavored(furniture._id);
+    if (!isFavored) {
+      if (accessToken) onFavoredWithUser(furniture);
+      if (!accessToken) onFavored(furniture);
+    }
+    if (isFavored) {
+      if (accessToken) onUnFavoredWithUser(furniture);
+      if (!accessToken) onUnFavored(furniture._id);
+    }
   };
 
   const handleAddToCart = () => {
-    addToCart(furniture);
+    if (accessToken) addToCartWithUser(furniture);
+    if (!accessToken) addToCartWithGuest(furniture);
   };
+
+  useEffect(() => {
+    if (!accessToken || isLoading || !data) return;
+
+    const isFavored = data.some((item) => item._id === furniture._id);
+    setIsFavored(isFavored);
+  }, [data, isLoading]);
 
   return (
     <section className="flex flex-col justify-center items-center mt-8 w-full">
@@ -40,7 +91,10 @@ function ProductAddToCart({ furniture }) {
             Add to cart
           </button>
         </div>
-        <button onClick={go_to_store} className="uppercase furniture-button-white-hover w-full py-4 text-[11px]">
+        <button
+          onClick={go_to_store}
+          className="uppercase furniture-button-white-hover w-full py-4 text-[11px]"
+        >
           Find store
         </button>
       </div>

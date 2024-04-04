@@ -4,9 +4,8 @@ import CartProduct from "@components/CartProduct";
 import LoadingSpinner from "../LoadingSpinner";
 import Proptypes from "prop-types";
 import useCartStore from "@stores/useCartStore";
-import formattedCurrency from '../../utils/formattedCurrency'
+import formattedCurrency from "../../utils/formattedCurrency";
 export default function CartSideBar({ cartData }) {
-
   const { cart, getTotalPrice, isLoading } = cartData;
 
   const { closeCart } = useCartStore();
@@ -27,7 +26,7 @@ export default function CartSideBar({ cartData }) {
           <div className="pt-0 pb-9 px-12 h-full overflow-y-scroll">
             {cart && cart?.length > 0 ? (
               cart.map((item) => (
-                <CartProduct cartData={cartData} key={item._id} data={item} />
+                <CartProduct cartData={cartData} key={item.code} data={item} />
               ))
             ) : (
               <p>Your shopping cart is empty</p>
@@ -61,23 +60,19 @@ export default function CartSideBar({ cartData }) {
               >
                 View Cart
               </a>
-              {
-                isCartEmpty
-                  ?
-                  <button
-                    className="font-HelveticaBold furniture-button-black-hover text-[11px] max-w-[17.1875rem] py-[18px] px-[55px] tracking-[0.125rem] opacity-50"
-                  >
-                    CHECKOUT
-                  </button>
-                  :
-                  <Link
-                    to={"/checkout"}
-                    onClick={closeCart}
-                    className="font-HelveticaBold furniture-button-black-hover text-[11px] max-w-[17.1875rem] py-[18px] px-[55px] tracking-[0.125rem]"
-                  >
-                    CHECKOUT
-                  </Link>
-              }
+              {isCartEmpty ? (
+                <button className="font-HelveticaBold furniture-button-black-hover text-[11px] max-w-[17.1875rem] py-[18px] px-[55px] tracking-[0.125rem] opacity-50">
+                  CHECKOUT
+                </button>
+              ) : (
+                <Link
+                  to={"/checkout"}
+                  onClick={closeCart}
+                  className="font-HelveticaBold furniture-button-black-hover text-[11px] max-w-[17.1875rem] py-[18px] px-[55px] tracking-[0.125rem]"
+                >
+                  CHECKOUT
+                </Link>
+              )}
             </nav>
           </section>
         </footer>
