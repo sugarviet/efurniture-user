@@ -18,7 +18,9 @@ function FurnitureModel({ children, className }) {
   return (
     <div
       onClick={() => navigate(`/product-detail/${slug}`)}
-      className={`relative flex items-center mb-[0.9375rem] w-full h-72 hover:cursor-pointer`}
+      className={classNames(
+        `relative flex items-center mb-[0.9375rem] w-full h-72 hover:cursor-pointer`
+      )}
       title={name}
     >
       {dimension === MODEL_DIMENSION.two_dimension && (

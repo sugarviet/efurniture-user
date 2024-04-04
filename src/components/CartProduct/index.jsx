@@ -13,11 +13,13 @@ function CartProduct({ data, cartData }) {
     updateVariation,
   } = cartData;
 
+  console.log(data);
+
   return (
     <section className="flex flex-col my-6">
       <div
         onClick={() => removeFromCart(code)}
-        className="flex items-center justify-end mb-20"
+        className="flex items-center justify-end"
       >
         <span className="text-[0.75rem] leading-[2] track-[0.05em] text-grey1 pr-[2px]">
           Remove
@@ -28,7 +30,7 @@ function CartProduct({ data, cartData }) {
         />
       </div>
       <FurnitureCard item={data} key={code}>
-        <FurnitureCard.Model className="mb-16" />
+        <FurnitureCard.Model className="w-[80%]" />
         <section className="flex flex-row justify-between">
           <div className="mb-4">
             <FurnitureCard.Attribute />
