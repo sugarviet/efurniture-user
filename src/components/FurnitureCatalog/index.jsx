@@ -29,7 +29,9 @@ function FurnitureCatalog({ data }) {
     const dataClone = [...data.data];
 
     const filterCatalog = dataClone.filter((item) => {
-      const value = item.attributes.attributeType[attribute].value;
+      const attributeClone = item.attributes.attributeType[attribute];
+      if (!attributeClone) return true;
+      const value = attributeClone.value;
       return value <= range[1] && value >= range[0];
     });
 

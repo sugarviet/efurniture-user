@@ -13,7 +13,7 @@ function FurnitureCardProvider(props) {
   const salePercentage = (
     ((regular_price - sale_price) / regular_price) *
     100
-  ).toFixed(0);
+  ).toFixed(1);
 
   const value = {
     salePercentage,

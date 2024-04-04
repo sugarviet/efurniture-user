@@ -1,5 +1,5 @@
 import FavoriteButton from "@components/FavoriteButton";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useGuestStore } from "../../stores/useGuestStore";
 import useGuestCart from "../../hooks/useGuestCart";
 import useUserCart from "../../hooks/useUserCart";
@@ -15,14 +15,18 @@ import {
   get_wishlist_api,
 } from "../../api/wishlistApi";
 import useNotification from "../../hooks/useNotification";
+import { ProductDetailContext } from "../../pages/ProductDetail/ProductDetailContext";
 
-function ProductAddToCart({ furniture }) {
+function ProductAddToCart() {
   const { go_to_store } = useNavigation();
+  const { furniture } = useContext(ProductDetailContext);
 
   const { accessToken } = useAuth();
   const { success_message, error_message } = useNotification();
 
-  const { data, isLoading } = useFetchWithAuth(get_wishlist_api());
+  const { data, isLoading } = useFetchWithAuth(get_wishlist_api(), undefined, {
+    enabled: !!accessToken,
+  });
 
   const { mutate: onFavoredWithUser } = usePostAuth(
     get_update_wishlist_api(furniture._id),
@@ -71,8 +75,6 @@ function ProductAddToCart({ furniture }) {
     const isFavored = data.some((item) => item._id === furniture._id);
     setIsFavored(isFavored);
   }, [data, isLoading]);
-
-  if (isLoading) return null;
 
   return (
     <section className="flex flex-col justify-center items-center mt-8 w-full">

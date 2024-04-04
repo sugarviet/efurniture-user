@@ -7,7 +7,7 @@ function FurnitureDimensionOption() {
   const { dimension, setDimension } = useContext(FurnitureCardContext);
 
   return (
-    <section className="flex gap-2">
+    <section className="flex gap-2 mr-4">
       <DimensionButton
         selected={dimension === MODEL_DIMENSION.two_dimension}
         onClick={() => {
