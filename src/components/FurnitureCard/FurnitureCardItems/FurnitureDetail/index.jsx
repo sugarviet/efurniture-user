@@ -5,7 +5,11 @@ import formattedCurrency from "../../../../utils/formattedCurrency";
 function FurnitureDetail() {
   const { furniture, onSale } = useContext(FurnitureCardContext);
 
-  const { attributes, sale_price, regular_price } = furniture;
+  const { attributes, sale_price, regular_price, select_variation } = furniture;
+  const subPrice = select_variation.reduce(
+    (total, cur) => total + cur.sub_price,
+    0
+  );
 
   const attributeKeys = Object.keys(attributes.attributeType);
 
@@ -41,7 +45,7 @@ function FurnitureDetail() {
             {formattedCurrency(regular_price)}
           </span>
         )}
-        <span className="ml-2">{formattedCurrency(sale_price)}</span>
+        <span className="ml-2">{formattedCurrency(sale_price + subPrice)}</span>
       </div>
     </main>
   );

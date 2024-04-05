@@ -8,16 +8,13 @@ import ProductOrderBriefInfo from "../ProductOrderBriefInfo";
 import OrderPaidMessage from "../../../../components/OrderPaidMessage";
 
 function OrderHistoryCard({ data }) {
-
-  console.log(data)
-
   const { handleScrollToTop } = useScroll();
 
   const { go_to_order_detail } = useNavigation();
 
   return (
-    <section className="pb-8">
-      <div className="bg-[#F7F7F6] px-8 py-4 border-b-grey5 border-[1px] rounded-t-xl">
+    <section className="my-4">
+      <div className="bg-[#F7F7F6] px-8 py-4 border-b-grey5 border-[1px]">
         <section
           className="flex flex-row justify-between g
                 ap-20"
@@ -64,7 +61,7 @@ function OrderHistoryCard({ data }) {
                 </p>
                 <p className="border-r-[1px] border-grey3 h-4 mt-1"></p>
                 <p className="font-HelveticaBold text-[16px] text-green-700 leading-[1.4] tracking-[0.04em] pl-2">
-                  {data.order_tracking[data.order_tracking.length - 1].name}
+                  {data.current_order_tracking.name}
                 </p>
               </div>
             </div>
@@ -81,11 +78,13 @@ function OrderHistoryCard({ data }) {
             <OrderPaidMessage order={data}/>
           </div>
           <div className="">
-            <OrderActionButton data={data} type={data.current_order_tracking.name} />
+            <OrderActionButton
+              data={data}
+              type={data.current_order_tracking.name}
+            />
           </div>
         </div>
       </div>
-
     </section>
   );
 }

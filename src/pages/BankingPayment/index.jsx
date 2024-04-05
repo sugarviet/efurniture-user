@@ -56,7 +56,7 @@ export default function BankingPayment() {
             //     })
 
             // }
-        }, 1000 * 100);
+        }, 1000 * 10);
         return () => clearInterval(interval);
     }, [dataTransaction]);
 

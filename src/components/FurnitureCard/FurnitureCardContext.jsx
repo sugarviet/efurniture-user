@@ -10,8 +10,13 @@ function FurnitureCardProvider(props) {
   const [dimension, setDimension] = useState(MODEL_DIMENSION.two_dimension);
 
   const onSale = regular_price - sale_price > 0;
+  const salePercentage = (
+    ((regular_price - sale_price) / regular_price) *
+    100
+  ).toFixed(1);
 
   const value = {
+    salePercentage,
     furniture,
     dimension,
     setDimension,
