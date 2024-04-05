@@ -16,8 +16,6 @@ function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
 
     const { selectedCoupon } = useOrderStore();
 
-    console.log(selectedCoupon)
-
     const { cart, getTotalPrice } = useUserCart();
 
     const {

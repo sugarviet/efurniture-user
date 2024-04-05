@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import useNavigation from "../../../../hooks/useNavigation";
 import OrderActionButton from "../../../../components/OrderActionButton";
 import ProductOrderBriefInfo from "../ProductOrderBriefInfo";
+import OrderPaidMessage from "../../../../components/OrderPaidMessage";
 
 function OrderHistoryCard({ data }) {
   const { handleScrollToTop } = useScroll();
@@ -74,10 +75,7 @@ function OrderHistoryCard({ data }) {
         ))}
         <div className="flex flex-row justify-between items-center gap-4 mt-8">
           <div>
-            <p className="pt-2 leading-[1.4] tracking-[0.04em] text-[#ee4d2d]">
-              {data.order_checkout.is_paid == false &&
-                "*Order has not been paid yet"}
-            </p>
+            <OrderPaidMessage order={data}/>
           </div>
           <div className="">
             <OrderActionButton

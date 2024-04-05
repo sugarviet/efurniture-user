@@ -6,14 +6,16 @@ import formattedDate from '@utils/formattedDate'
 import { withFetchDataWithAuth } from "../../../../hocs/withFetchDataWithAuth";
 import PropTypes from "prop-types";
 import ProductOrderBriefInfo from "../ProductOrderBriefInfo";
+import DepositPrice from "../../../../components/DepositPrice";
 
 function OrderDetail({ data }) {
     console.log(data);
 
     const { go_to_back } = useNavigation();
 
-    const orderShipping = data?.order_shipping;
+    const isPaidDeposit = data.order_checkout.paid.type === "Deposit";
 
+    const orderShipping = data?.order_shipping;
     const orderProduct = data?.order_products || [];
     const orderCheckout = data?.order_checkout;
 
@@ -127,6 +129,9 @@ function OrderDetail({ data }) {
                                         0.00đ
                                     </span>
                                 </li>
+                                {isPaidDeposit &&
+                                    <DepositPrice order={data} />
+                                }
                             </ul>
                             <ul className='pt-4'>
                                 <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">

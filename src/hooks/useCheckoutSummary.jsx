@@ -28,9 +28,15 @@ export default function useCheckoutSummary() {
     } = useOrderStore();
 
     const handlePaymentMethod = (metaData) => {
-        if (metaData.payment_method === PAYMENT_METHOD.cod) {
+        const isDeposit = metaData.order_checkout.paid.type === "Deposit"
+        const isCod = metaData.payment_method === PAYMENT_METHOD.cod;
+        if (isDeposit && isCod) {
+            go_to_payment(metaData);
+        }
+        if (!isDeposit && isCod) {
             go_to_order_confirmation(metaData);
-        } else {
+        }
+        if (!isDeposit && !isCod) {
             go_to_payment(metaData);
         }
     };
@@ -49,6 +55,7 @@ export default function useCheckoutSummary() {
         checkout_with_user(),
         undefined,
         (data) => {
+            console.log(data.data.metaData);
             handlePaymentMethod(data.data.metaData)
         },
         (error) => {
@@ -59,9 +66,9 @@ export default function useCheckoutSummary() {
     return {
         cart,
         getTotalPrice,
-        selectedDelivery, 
+        selectedDelivery,
         selectedPayment,
-        orderShipping, 
+        orderShipping,
         note,
         checkoutForGuest,
         checkoutForUser

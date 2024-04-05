@@ -57,7 +57,7 @@ function Payment() {
           </RadioModal>
         </div>
 
-        <div>
+        <div className="pb-12">
           <RadioModal
             name="payment"
             value="COD"
@@ -67,7 +67,10 @@ function Payment() {
             <article className='text-[14px] lg:text-[1rem] leading-[1.1875] tracking-[0.08em]'>
               <h4 className='font-HelveticaBold uppercase'>cash on delivery</h4>
               <p className='text-[11px] lg:text-[0.875rem] leading-[1.4] tracking-[0.04em] mt-[0.5rem]'>
-                You will pay for your order once it is delivered to your home. The amount to be paid will be stated in the invoice.              </p>
+                You will pay for your order once it is delivered to your home. The amount to be paid will be stated in the invoice.<br/>
+                <span className="font-HelveticaBold">Please be aware: If your order exceeds ₫1,000,000, you will be required to pay a 10% deposit upfront for the order.</span>
+              </p>
+
             </article>
           </RadioModal>
         </div>
@@ -75,7 +78,6 @@ function Payment() {
       </section>
 
       <section className='pt-28 max-w-[43.75rem] font-HelveticaRoman'>
-
         <button
           type="submit"
           onClick={() => handleNextStep()}

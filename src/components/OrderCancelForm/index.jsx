@@ -12,6 +12,8 @@ function OrderCancelForm({ data, isModalDeleteOpen, toggleModalDelete }) {
 
     const [selectedBank, setSelectedBank] = useState();
 
+    const isCancelMethod = data.payment_method === "Online Payment" || data.order_checkout.paid.type === "Deposit"
+
 
     const onFinish = (values) => {
         const body = {
@@ -50,7 +52,7 @@ function OrderCancelForm({ data, isModalDeleteOpen, toggleModalDelete }) {
                 >
                     <TextArea />
                 </Form.Item>
-                {data.payment_method === "Online Payment" &&
+                {isCancelMethod &&
                     <>
                         <span >Choose your bank account to receive refund amount.</span>
                         <BankOptionSelect selectedBank={selectedBank} setSelectedBank={setSelectedBank} />

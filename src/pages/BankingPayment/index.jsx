@@ -2,61 +2,36 @@ import { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import formattedCurrency from "@utils/formattedCurrency";
 import { BANK_INFO } from '../../constants/bankInfoConstants';
-import { useFetchBanking } from '../../hooks/api-hooks';
-import { get_banking_transaction, async_banking_transaction } from '../../api/bankingTransactionApi';
-import { set_is_paid_order } from '../../api/checkoutApi';
-import { usePostWithBankingTransaction, usePostAuth } from '../../hooks/api-hooks';
-import { useQueryClient } from "@tanstack/react-query";
-import useNavigation from '../../hooks/useNavigation';
-import useGuestCart from '../../hooks/useGuestCart';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import useBankPayment from '../../hooks/useBankPayment';
+import useGuestCart from '../../hooks/useGuestCart';
 
 export default function BankingPayment() {
 
-    const queryClient = useQueryClient();
-
     const { clearCart } = useGuestCart()
-
-    const { go_to_order_confirmation } = useNavigation();
-
-    const { data: dataTransaction, isLoading } = useFetchBanking(
-        get_banking_transaction()
-    );
 
     const location = useLocation();
     const orderDetail = location.state || { orderDetail: null };
 
     const orderId = orderDetail._id;
-    const totalPrice = 2000;
+    const isDeposit = orderDetail.order_checkout.paid.type === "Deposit";
+
+    const totalPrice = orderDetail.order_checkout.paid.must_paid;
 
     const QR = `https://img.vietqr.io/image/${BANK_INFO.BANK_ID}-${BANK_INFO.ACCOUNT_NO}-${BANK_INFO.TEMPLATE}.png?amount=${totalPrice}&addInfo=${orderId}&accountName=${BANK_INFO.ACCOUNT_NAME}`
+
+    const {
+        dataTransaction,
+        setIsPaid,
+        asyncTransaction,
+        isLoading
+    } = useBankPayment();
 
     const [openDetail, setOpenDetail] = useState(false);
 
     const handleOpenDetail = () => {
         setOpenDetail(!openDetail);
     }
-
-    const { mutate: asyncTransaction } = usePostWithBankingTransaction(
-        async_banking_transaction(),
-        undefined,
-        () => {
-            queryClient.invalidateQueries(get_banking_transaction());
-        },
-        (error) => {
-            console.log(error);
-        }
-    );
-    const { mutate: setIsPaid } = usePostAuth(
-        set_is_paid_order(),
-        undefined,
-        (data) => {
-            go_to_order_confirmation(data.data.metaData);
-        },
-        (error) => {
-            console.log(error);
-        }
-    );
 
     useEffect(() => {
         if (orderDetail.guest) {
@@ -65,7 +40,8 @@ export default function BankingPayment() {
         const interval = setInterval(() => {
             setIsPaid({
                 order_id: orderDetail._id,
-                amount: dataTransaction[0].amount,
+                // amount: dataTransaction[0].amount,
+                amount: totalPrice,
                 description: dataTransaction[0].description,
                 when: dataTransaction[0].when
             })
@@ -118,14 +94,18 @@ export default function BankingPayment() {
                         <p className='pt-5 text-gray-500 font-medium]'>Mô tả</p>
                         <div className='flex flex-col pt-2'>
                             <p className='text-base font-semibold tracking-wide'>Khách hàng: {orderDetail.order_shipping.first_name} {orderDetail.order_shipping.last_name} </p>
-                            <p className='text-base font-semibold tracking-wide'>Nội dung: Thanh toán giao dịch tại eFurniture </p>
+                            {isDeposit ?
+                                <p className='text-base font-semibold tracking-wide'>Nội dung: Thanh toán đặt cọc cho đơn hàng</p>
+                                :
+                                <p className='text-base font-semibold tracking-wide'>Nội dung: Thanh toán giao dịch tại eFurniture </p>
+                            }
                         </div>
 
                         <div className='border-b w-full mt-5'></div>
 
                         <p className='pt-5 text-gray-500 first-line:font-medium]'>Số tiền</p>
                         <div className='flex flex-row gap-2 pt-2'>
-                            <p className='text-[#1E427E] font-HelveticaBold text-[22px] font-medium tracking-wide'>{formattedCurrency(orderDetail.order_checkout.final_total)} </p>
+                            <p className='text-[#1E427E] font-HelveticaBold text-[22px] font-medium tracking-wide'>{formattedCurrency(totalPrice)} </p>
                         </div>
                     </div>
                     <div className='lg:hidden inline-block bg-[#f5f7f9] w-full'>
