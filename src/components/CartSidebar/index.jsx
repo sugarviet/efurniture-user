@@ -21,7 +21,7 @@ export default function CartSideBar({ cartData }) {
 
   if (isLoading) return <LoadingSpinner />;
 
-  const isCartEmpty = !cart.length;
+  const isCartEmpty = !purchaseItems.length;
 
   return (
     <SideBar>
