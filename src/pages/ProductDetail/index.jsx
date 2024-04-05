@@ -10,7 +10,13 @@ import ProductFeedback from "./components/ProductFeedback";
 import { ProductDetailProvider } from "./ProductDetailContext";
 
 function ProductDetail({ data }) {
-  const { name, regular_price, sale_price, type } = data;
+  const { name, regular_price, sale_price, type, select_variation } = data;
+
+  const onSale = regular_price - sale_price > 0;
+  const subPrice = select_variation.reduce(
+    (total, cur) => total + cur.sub_price,
+    0
+  );
 
   return (
     <ProductDetailProvider data={data}>
@@ -41,11 +47,13 @@ function ProductDetail({ data }) {
               </div>
               <div className="lg:pr-6 xl:pr-24 max-w-[36.25rem] w-[100%] lg:w-[40%] 2xl:w-[100%] pt-8 sm:pt-0">
                 <article className="text-left sm:text-right">
-                  <span className="line-through text-grey2 text-[11px] sm:text-sm">
-                    {formattedCurrency(regular_price)}
-                  </span>
+                  {onSale && (
+                    <span className="line-through text-grey2 text-[11px] sm:text-sm">
+                      {formattedCurrency(regular_price)}
+                    </span>
+                  )}
                   <span className="block text-base sm:text-[1.5rem] text-blackPrimary tracking-[0.0313rem] font-HelveticaBold">
-                    {formattedCurrency(sale_price)}
+                    {formattedCurrency(sale_price + subPrice)}
                     <div className="text-[11px] sm:text-[0.875rem] text-grey2 font-HelveticaRoman">
                       Rec. retail price
                     </div>

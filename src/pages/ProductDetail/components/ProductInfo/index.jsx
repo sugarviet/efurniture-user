@@ -1,7 +1,6 @@
 import { useState } from "react";
 import ProductDetails from "../ProductDetails";
 import ProductFeatures from "../ProductFeatures";
-import ProductVariation from "../ProductVariation";
 
 const type = [
   {
