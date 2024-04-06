@@ -55,7 +55,6 @@ export default function useCheckoutSummary() {
         checkout_with_user(),
         undefined,
         (data) => {
-            console.log(data.data.metaData);
             handlePaymentMethod(data.data.metaData)
         },
         (error) => {

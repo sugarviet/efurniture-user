@@ -57,23 +57,25 @@ function CheckoutProduct({ activeTab }) {
                   </section>
                   <div className="flex flex-col justify-between gap-4 ">
                     <FurnitureCard.Detail />
-                    {select_variation.map((item, i) => {
-                      const { variation_id, property_id } = item;
-                      const currentVariation = variation.find(
-                        (i) => i._id === variation_id
-                      );
-                      currentVariation.properties =
-                        currentVariation.properties.filter(
-                          (item) => item._id === property_id
+                    <section className="mb-4">
+                      {select_variation.map((item, i) => {
+                        const { variation_id, property_id } = item;
+                        const currentVariation = variation.find(
+                          (i) => i._id === variation_id
                         );
-                      return (
-                        <ProductVariation
-                          key={i}
-                          currentVariation={currentVariation}
-                          variation={currentVariation}
-                        />
-                      );
-                    })}
+                        currentVariation.properties =
+                          currentVariation.properties.filter(
+                            (item) => item._id === property_id
+                          );
+                        return (
+                          <ProductVariation
+                            key={i}
+                            currentVariation={currentVariation}
+                            variation={currentVariation}
+                          />
+                        );
+                      })}
+                    </section>
                   </div>
                 </FurnitureCard>
               </section>

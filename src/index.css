@@ -65,7 +65,7 @@ body{
 }
 /* checkbox  */
 .furniture-checkbox {
-    @apply relative after:absolute checked:after:top-[2px] checked:after:left-[7px] checked:after:w-[6px] checked:after:h-[12px] checked:after:rotate-45 checked:after:border-r-[2px] checked:after:border-b-[2px] appearance-none w-[1.5625rem] h-[1.5625rem] outline-none
+    @apply relative after:absolute checked:after:top-[2px] checked:after:left-[7px] checked:after:w-[6px] checked:after:h-[12px] checked:after:rotate-45 checked:after:border-r-[2px] checked:after:border-b-[2px] appearance-none w-[1.5625rem] h-[1.5625rem] outline-none border-[0.125rem] border-[#5a7468] checked:bg-[#5a7468]
 }
 .furniture-checkbox-circle {
     @apply relative after:absolute checked:after:top-[4px] checked:after:left-[8px] checked:after:w-[6px] checked:after:h-[12px] checked:after:rotate-45 checked:after:border-r-[2px] checked:after:border-b-[2px] appearance-none w-[1.5625rem] h-[1.5625rem] outline-none

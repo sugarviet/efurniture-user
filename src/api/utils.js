@@ -95,7 +95,7 @@ const errorHandler = async (error) => {
                 toast.error('Something went wrong');
                 break;
             default:
-                toast.error('Error:', error.response.data);
+                // toast.error('Error:', error.response.data);
         }
     } else if (error.request) {
         toast.error('Request made but no response received:', error.request);

@@ -6,6 +6,7 @@ import useNavigation from '../../hooks/useNavigation'
 import useAuth from "@stores/useAuth";
 import useGuestCart from '../../hooks/useGuestCart'
 import DepositPrice from '../../components/DepositPrice'
+import ProductVariation from '../ProductDetail/components/ProductVariation'
 
 function OrderConfirmation() {
 
@@ -19,10 +20,17 @@ function OrderConfirmation() {
   const orderConfirmation = location.state || { orderConfirmation: null };
 
   const isPaidDeposit = orderConfirmation.order_checkout.paid.type === "Deposit";
-  
+  const totalPrice = orderConfirmation.order_checkout.total
+
   const orderProduct = orderConfirmation.order_products || [];
   const orderShipping = orderConfirmation.order_shipping || { orderShipping: null };
   const orderCheckout = orderConfirmation.order_checkout || { orderCheckout: null };
+
+  const discount = orderConfirmation.order_checkout.voucher
+    ? formattedCurrency(
+      (orderConfirmation.order_checkout.voucher.value / 100) * totalPrice
+    )
+    : "0,00đ"
 
   useEffect(() => {
     if (orderConfirmation.orderConfirmation === null) {
@@ -142,16 +150,32 @@ function OrderConfirmation() {
                           <div className='w-16 h-16 sm:w-28 sm:h-28 rounded-xl px-2 py-2 bg-white'>
                             <img className='w-full h-full' src={product.product_id.thumbs}></img>
                           </div>
-                          <div className='flex flex-col'>
-                            <p className='font-HelveticaBold text-[11px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{product.name}</p>
-                            <p className='pt-3 text-[11px] sm:text-[13px] leading-[1.4] tracking-[0.04em]'>Qty: {product.quantity}</p>
+                          <div className='flex flex-col justify-between'>
+                            <div>
+                              <p className='font-HelveticaBold text-[11px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{product.product_id.name}</p>
+                              <p className='text-[11px] sm:text-[13px] leading-[1.4] tracking-[0.04em]'>Qty: {product.quantity}</p>
+                            </div>
+                            <div>
+                              {product.product_id.variation.map((item, i) => {
+
+                                return (
+                                  <ProductVariation
+                                    key={i}
+                                    currentVariation={item}
+                                    variation={item}
+                                    className="text-[10px] w-6 h-6"
+                                  />
+                                );
+                              })}
+                            </div>
                           </div>
+
                         </div>
                         <div className='flex flex-col'>
                           {onSale &&
                             <p className='font-HelveticaRoman text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em] line-through text-grey2'>{formattedCurrency(product.product_id.regular_price)}</p>
                           }
-                          <p className='font-HelveticaBold text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{formattedCurrency(product.product_id.sale_price)}</p>
+                          <p className={`font-HelveticaBold text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em] ${!onSale && 'pt-2'}`}>{formattedCurrency(product.product_id.sale_price)}</p>
                         </div>
                       </div>
                     )
@@ -166,11 +190,7 @@ function OrderConfirmation() {
                     <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
                       <span className="">Discount </span>
                       <span>
-                        {orderConfirmation ?
-                          formattedCurrency(orderCheckout.total - orderCheckout.final_total)
-                          :
-                          "0,00đ"
-                        }
+                        {discount}
                       </span>
                     </li>
                     <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
@@ -180,7 +200,7 @@ function OrderConfirmation() {
                       </span>
                     </li>
                     {isPaidDeposit &&
-                      <DepositPrice order={orderConfirmation}/>
+                      <DepositPrice order={orderConfirmation} />
                     }
                   </ul>
                   <ul className='pt-4'>
