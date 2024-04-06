@@ -9,7 +9,7 @@ function OrderHistory({ data }) {
         <OrderHistoryCard data={order} key={index} />
       ))}
       {isEmptyData && (
-        <div className="w-full md:w-[500px] xl:w-[600px] 2xl:w-[700px] max-[1920px]:w-[1000px] h-full flex flex-col items-center justify-center">
+        <div className="w-full h-[500px] flex flex-col items-center justify-center">
           <img
             className="w-52"
             src="https://res.cloudinary.com/dc4hafqoa/image/upload/v1710247931/eFurniture/empty-order_rlotiy.png"
