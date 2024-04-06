@@ -72,6 +72,7 @@ function Summary({ purchaseItems, totalPrice }) {
   const quotationTotal = dataAfterVoucher
     ? dataAfterVoucher.order_total_after_voucher
     : totalPrice;
+
   const formattedQuotationTotal =
     quotationTotal >= 0
       ? formattedCurrency(quotationTotal)
@@ -83,7 +84,7 @@ function Summary({ purchaseItems, totalPrice }) {
     )
     : "0,00đ"
 
-  const isDeposit = selectedPayment === "COD" && totalPrice >= 1000000
+  const isDeposit = selectedPayment === "COD" && quotationTotal >= 1000000
 
   return (
     <section className="w-full lg:max-w-[43.75rem] text-[0.875rem] leading-[1.5] pb-[45px] tracking-[0.5px] pt-6 lg:pt-0">
@@ -173,7 +174,7 @@ function Summary({ purchaseItems, totalPrice }) {
             <AppModal
               isOpen={isCouponOpen}
               onClose={handleOpenCoupon}
-              className="max-w-[700px]"
+              className="w-[450px] lg:w-[650px]"
             >
               {isCouponOpen && (
                 <CouponListModal
