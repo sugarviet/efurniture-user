@@ -19,6 +19,14 @@ function OrderDetail({ data }) {
     const orderProduct = data?.order_products || [];
     const orderCheckout = data?.order_checkout;
 
+    const totalPrice = data.order_checkout.total
+
+    const discount = data.order_checkout.voucher
+    ? formattedCurrency(
+      (data.order_checkout.voucher.value / 100) * totalPrice
+    )
+    : "0,00đ"
+
     return (
         <section className="border-[1px] rounded-lg shadow-md max-w-[60rem] px-16 py-12">
             <section
@@ -116,11 +124,7 @@ function OrderDetail({ data }) {
                                 <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
                                     <span className="">Discount </span>
                                     <span>
-                                        {data ?
-                                            formattedCurrency(orderCheckout.total - orderCheckout.final_total)
-                                            :
-                                            "0,00đ"
-                                        }
+                                        {discount}
                                     </span>
                                 </li>
                                 <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">

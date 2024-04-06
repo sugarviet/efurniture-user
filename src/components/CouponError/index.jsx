@@ -5,7 +5,7 @@ const TYPES = {
     },
     notReachValue:
     {
-        action: 'Your order has not reached the minimum value of this voucher'
+        message: 'Your order has not reached the minimum value of this voucher'
     },
 };
 

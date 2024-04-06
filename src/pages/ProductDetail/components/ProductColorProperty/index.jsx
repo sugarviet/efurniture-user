@@ -1,6 +1,6 @@
 import { classNames } from "../../../../utils/classNames";
 
-function ProductColorProperty({ property, selectProperty, onSelectProperty }) {
+function ProductColorProperty({ property, selectProperty, onSelectProperty, className }) {
   const { value, _id } = property;
 
   return (
@@ -15,7 +15,7 @@ function ProductColorProperty({ property, selectProperty, onSelectProperty }) {
     >
       <div
         style={{ backgroundColor: value }}
-        className="rounded-full w-10 h-10"
+        className={`rounded-full w-10 h-10 ${className}`}
       ></div>
     </button>
   );

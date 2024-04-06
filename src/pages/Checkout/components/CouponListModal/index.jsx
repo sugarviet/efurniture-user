@@ -11,20 +11,35 @@ import { useState } from "react";
 import CouponModal from "../../../../components/CouponModal";
 import useVoucher from "../../../../hooks/useVoucher";
 import { useOrderStore } from "../../../../stores/useGuestOrderStore";
-
+import { useLocation } from "react-router-dom";
 function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
 
-    const { selectedCoupon } = useOrderStore();
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
 
-    const { cart, getTotalPrice } = useUserCart();
+    const purchaseItems = JSON.parse(params.get("q"));
+
+    const getTotalPrice = () =>
+        purchaseItems.reduce((total, cur) => {
+            const subPrice = cur.select_variation.reduce(
+                (total, cur) => total + cur.sub_price,
+                0
+            );
+            return total + (cur.sale_price + subPrice) * cur.quantity_in_cart;
+        }, 0);
+
+    const { selectedCoupon } = useOrderStore();
 
     const {
         couponList,
     } = useVoucher();
 
-    const productForVoucher = cart.map((item) => ({
+    const productForVoucher = purchaseItems.map((item) => ({
         product_id: item._id,
-        price: item.sale_price ? item.sale_price : item.regular_price,
+        price: item.select_variation.reduce(
+            (total, cur) => total + cur.sub_price,
+            0
+        ) + item.sale_price,
         quantity: item.quantity_in_cart
     }));
 

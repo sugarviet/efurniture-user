@@ -15,37 +15,38 @@ function ProductDetails() {
     <section className="h-full">
       <div className={`overflow-hidden transition-[height] duration-300`}>
         <div>
-          {variation.map((item, i) => {
-            const { _id } = item;
-            const currentVariation = [...select_variation].find(
-              (i) => i.variation_id === _id
-            );
-
-            const updateVariation = (property_id) => {
-              const updated_select_variation = select_variation.map((obj) =>
-                Object.assign({}, obj)
+          <section className="mb-4">
+            {variation.map((item, i) => {
+              const { _id } = item;
+              const currentVariation = [...select_variation].find(
+                (i) => i.variation_id === _id
               );
 
-              updated_select_variation.find(
-                (i) => i.variation_id === _id
-              ).property_id = property_id;
+              const updateVariation = (property_id) => {
+                const updated_select_variation = select_variation.map((obj) =>
+                  Object.assign({}, obj)
+                );
 
-              setFurniture((preState) => ({
-                ...preState,
-                select_variation: updated_select_variation,
-              }));
-            };
+                updated_select_variation.find(
+                  (i) => i.variation_id === _id
+                ).property_id = property_id;
 
-            return (
-              <ProductVariation
-                currentVariation={currentVariation}
-                onUpdateVariation={updateVariation}
-                key={i}
-                variation={item}
-              />
-            );
-          })}
+                setFurniture((preState) => ({
+                  ...preState,
+                  select_variation: updated_select_variation,
+                }));
+              };
 
+              return (
+                <ProductVariation
+                  currentVariation={currentVariation}
+                  onUpdateVariation={updateVariation}
+                  key={i}
+                  variation={item}
+                />
+              );
+            })}
+          </section>
           <p className="text-base text-blackPrimary font-HelveticaBold leading-[1.1875] tracking-[0.08em] uppercase pb-2">
             DIMENSIONS AND WEIGHT
           </p>

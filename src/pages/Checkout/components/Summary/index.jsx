@@ -9,8 +9,10 @@ import useCheckoutSummary from "../../../../hooks/useCheckoutSummary";
 import useNavigation from "../../../../hooks/useNavigation";
 import useVoucher from "../../../../hooks/useVoucher";
 import CouponListModal from "../CouponListModal";
+import usePurchase from "../../../../hooks/usePurchase";
 
 function Summary({ purchaseItems, totalPrice }) {
+
   const { accessToken } = useAuth();
 
   const { go_to_login } = useNavigation();
@@ -43,28 +45,28 @@ function Summary({ purchaseItems, totalPrice }) {
   const onFinish = () => {
     accessToken
       ? checkoutForUser({
-          order_products: orderProducts,
-          payment_method: selectedPayment,
-          order_shipping: orderShipping,
-          order_checkout: {
-            final_total: dataAfterVoucher
-              ? dataAfterVoucher.order_total_after_voucher
-              : totalPrice,
-            voucher: dataAfterVoucher ? dataAfterVoucher.voucher : null,
-            total: totalPrice,
-          },
-          note: note,
-        })
+        order_products: orderProducts,
+        payment_method: selectedPayment,
+        order_shipping: orderShipping,
+        order_checkout: {
+          final_total: dataAfterVoucher
+            ? dataAfterVoucher.order_total_after_voucher
+            : totalPrice,
+          voucher: dataAfterVoucher ? dataAfterVoucher.voucher : null,
+          total: totalPrice,
+        },
+        note: note,
+      })
       : checkoutForGuest({
-          order_products: orderProducts,
-          payment_method: selectedPayment,
-          order_shipping: orderShipping,
-          order_checkout: {
-            final_total: totalPrice,
-            total: totalPrice,
-          },
-          note: note,
-        });
+        order_products: orderProducts,
+        payment_method: selectedPayment,
+        order_shipping: orderShipping,
+        order_checkout: {
+          final_total: totalPrice,
+          total: totalPrice,
+        },
+        note: note,
+      });
   };
 
   const quotationTotal = dataAfterVoucher
@@ -74,6 +76,14 @@ function Summary({ purchaseItems, totalPrice }) {
     quotationTotal >= 0
       ? formattedCurrency(quotationTotal)
       : formattedCurrency(0);
+
+  const discount = dataAfterVoucher
+    ? formattedCurrency(
+      (dataAfterVoucher.voucher.value / 100) * totalPrice
+    )
+    : "0,00đ"
+
+  const isDeposit = selectedPayment === "COD" && totalPrice >= 1000000
 
   return (
     <section className="w-full lg:max-w-[43.75rem] text-[0.875rem] leading-[1.5] pb-[45px] tracking-[0.5px] pt-6 lg:pt-0">
@@ -210,33 +220,34 @@ function Summary({ purchaseItems, totalPrice }) {
           <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
             <span className="">Discount </span>
             <span>
-              {dataAfterVoucher
-                ? formattedCurrency(
-                    (dataAfterVoucher.voucher.value / 100) * totalPrice
-                  )
-                : "0,00đ"}
+              {discount}
             </span>
           </li>
           <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
             <span className="">QUOTATION TOTAL </span>
             <span>{formattedQuotationTotal}</span>
           </li>
-          <li className="flex flex-row justify-between items-center mt-[-0.3125rem] pb-[0.25rem] text-[0.75rem] leading-[2] tracking-[0.05em] text-grey2">
+          {/* <li className="flex flex-row justify-between items-center mt-[-0.3125rem] pb-[0.25rem] text-[0.75rem] leading-[2] tracking-[0.05em] text-grey2">
             <span className="">VAT part of total </span>
             <span>0,00 ₫</span>
-          </li>
+          </li> */}
         </ul>
 
         <ul className="pt-8 list-none">
           <li className="flex flex-row justify-between items-center font-HelveticaBold uppercase text-[16px] leading-[1.67] tracking-[0.08em]">
             <span className="flex flex-col items-baseline gap-[1.25rem]">
               total payment now
-              <span className="font-HelveticaRoman text-grey2 text-[0.75rem] leading-[2] tracking-[0.05em]">
-                THIS IS EVERYTHING YOU NEED TO PAY RIGHT NOW
-              </span>
             </span>
             <span className="">{formattedQuotationTotal}</span>
           </li>
+          {isDeposit &&
+            <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
+              <span>Deposit amount needs to be paid </span>
+              <span>
+                {formattedCurrency(quotationTotal * 0.1)}
+              </span>
+            </li>
+          }
         </ul>
 
         <section className="pt-12">

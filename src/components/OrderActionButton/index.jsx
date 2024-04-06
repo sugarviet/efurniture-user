@@ -15,6 +15,11 @@ const TYPES = {
     bgColor: "furniture-button-black-hover",
     action: "cancelOrder",
   },
+  Shipping: {
+    name: "View details",
+    bgColor: "furniture-button-black-hover",
+    action: "viewDetail",
+  },
   Cancelled: {
     name: "View details",
     bgColor: "furniture-button-black-hover",

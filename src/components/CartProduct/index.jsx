@@ -25,12 +25,12 @@ function CartProduct({
 
   return (
     <section className="flex flex-col my-6">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between">
         <input
           onChange={(e) => handleSelectToPurchase(e.target.checked)}
           checked={isInPurchase(data)}
           type="checkbox"
-          className="w-6 h-6"
+          className="furniture-checkbox "
         />
         <button
           onClick={() => removeFromCart(code)}
@@ -58,35 +58,37 @@ function CartProduct({
             quantity={quantity_in_cart}
           />
         </section>
-        {variation.map((item, i) => {
-          const { _id } = item;
-          const currentVariation = [...select_variation].find(
-            (i) => i.variation_id === _id
-          );
-
-          const onUpdateVariation = (property_id) => {
-            const updated_select_variation = select_variation.map((obj) =>
-              Object.assign({}, obj)
-            );
-            updated_select_variation.find(
+        <section className="mb-4">
+          {variation.map((item, i) => {
+            const { _id } = item;
+            const currentVariation = [...select_variation].find(
               (i) => i.variation_id === _id
-            ).property_id = property_id;
+            );
 
-            updateVariation({
-              ...data,
-              select_variation: updated_select_variation,
-            });
-          };
+            const onUpdateVariation = (property_id) => {
+              const updated_select_variation = select_variation.map((obj) =>
+                Object.assign({}, obj)
+              );
+              updated_select_variation.find(
+                (i) => i.variation_id === _id
+              ).property_id = property_id;
 
-          return (
-            <ProductVariation
-              currentVariation={currentVariation}
-              onUpdateVariation={onUpdateVariation}
-              key={i}
-              variation={item}
-            />
-          );
-        })}
+              updateVariation({
+                ...data,
+                select_variation: updated_select_variation,
+              });
+            };
+
+            return (
+              <ProductVariation
+                currentVariation={currentVariation}
+                onUpdateVariation={onUpdateVariation}
+                key={i}
+                variation={item}
+              />
+            );
+          })}
+        </section>
         <div className="flex flex-col justify-between gap-4">
           <FurnitureCard.Detail />
         </div>

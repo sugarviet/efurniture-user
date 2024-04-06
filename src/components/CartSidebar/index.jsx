@@ -63,7 +63,7 @@ export default function CartSideBar({ cartData }) {
                     }}
                     checked={purchaseItems.length === cart.length}
                     type="checkbox"
-                    className="w-6 h-6"
+                    className="furniture-checkbox"
                   />
                   <span className="text-xs uppercase text-center mt-2">
                     Purchase All
