@@ -5,17 +5,21 @@ import useAuthentication from "../../hooks/useAuthentication";
 
 function LoginForm() {
 
+  const [form] = Form.useForm();
+
   const { login } = useAuthentication()
 
-  const { closeLoginBottomBar} = useToggleLoginBottomBar();
+  const { closeLoginBottomBar } = useToggleLoginBottomBar();
   const onFinish = (values) => {
     login(values);
-    closeLoginBottomBar()
+    closeLoginBottomBar();
+    form.resetFields(["password"]);
   };
 
   return (
     <>
       <Form
+        form={form}
         className="max-w-[43.75rem]"
         name="register"
         requiredMark="optional"
@@ -25,9 +29,9 @@ function LoginForm() {
         onFinish={onFinish}
       >
         <FormInput
-          label="Email"
+          label="Username"
           name="username"
-          type="email"
+          type="username"
           className="furniture-input w-full h-[3rem]"
         />
         <FormInput

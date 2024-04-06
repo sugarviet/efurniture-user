@@ -7,6 +7,7 @@ import jwtDecode from "jwt-decode";
 import { message } from "antd";
 import { useOrderStore } from "../stores/useGuestOrderStore";
 import useNavigation from "./useNavigation";
+import useNotification from "./useNotification";
 
 export default function useAuthentication() {
   const { setTokens, clearTokens } = useAuth();
@@ -15,6 +16,8 @@ export default function useAuthentication() {
 
   const { reset } = useOrderStore();
   const { go_to_login } = useNavigation();
+
+  const { success_message, error_message } = useNotification();
 
   const { mutate: addToWishlist } = usePostWithAuth(get_add_all_wishlist_api());
 
@@ -29,7 +32,7 @@ export default function useAuthentication() {
       addToWishlist(wishlist.map((item) => item._id));
     },
     (error) => {
-      message.error(error.response.data.error.message);
+      error_message(null, null, "Your username or password is incorrect. Please try again.");
     }
   );
 
