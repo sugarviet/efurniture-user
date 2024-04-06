@@ -68,13 +68,26 @@ function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
         <section className="relative">
             <p className='font-HelveticaBold text-[1rem] leading-[1.20833] tracking-[0.08em] pb-6'>Choose eFurniture voucher</p>
             <div className={`max-w-[600px] pb-24 pt-5 ${emptyVoucher ? "h-[50px]" : "h-[500px] overflow-y-auto "}`}>
-                {couponList?.data.metaData.map((voucher) => (
-                    <CouponModal
-                        key={voucher._id}
-                        data={voucher}
-                        getTotalPrice={getTotalPrice}
-                    />
-                ))}
+                {couponList?.data.metaData
+                    .sort((a, b) => {
+                        const aIsHideCoupon = (a.used_turn_count === a.maximum_use_per_user) || (a.minimum_order_value > getTotalPrice());
+                        const bIsHideCoupon = (b.used_turn_count === b.maximum_use_per_user) || (b.minimum_order_value > getTotalPrice());
+                        if (aIsHideCoupon && !bIsHideCoupon) {
+                            return 1;
+                        } else if (!aIsHideCoupon && bIsHideCoupon) {
+                            return -1;
+                        } else {
+                            return 0;
+                        }
+                    })
+                    .map((voucher) => (
+                        <CouponModal
+                            key={voucher._id}
+                            data={voucher}
+                            getTotalPrice={getTotalPrice}
+                        />
+                    ))
+                }
                 {emptyVoucher
                     ? (
                         <p>No voucher available in your wallet</p>

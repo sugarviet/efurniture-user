@@ -31,7 +31,7 @@ function OrderCancelForm({ data, isModalDeleteOpen, toggleModalDelete }) {
     };
 
     return (
-        <section className={`${data.payment_method === "Online Payment" ? "h-[600px]" : "h-[300px]"}`}>
+        <section className={`${isCancelMethod ? "h-[600px]" : "h-[300px]"}`}>
             <Form
                 form={form}
                 className="px-8"
