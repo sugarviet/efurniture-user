@@ -1,7 +1,7 @@
 import Sliders from "@components/Slider";
 import FurnitureCard from "../../../../components/FurnitureCard";
 import useAuth from "../../../../stores/useAuth";
-import {withFetchData} from "../../../../hocs/withFetchData"
+import { withFetchData } from "../../../../hocs/withFetchData";
 import { get_best_sellers } from "../../../../api/bestsellerApi";
 import PropTypes from "prop-types";
 
@@ -125,7 +125,7 @@ const bestsellers = [
   },
 ];
 
-const BestSellersSlider = ({data}) => {
+const BestSellersSlider = ({ data }) => {
   const { accessToken } = useAuth();
   return (
     <div>
@@ -136,14 +136,14 @@ const BestSellersSlider = ({data}) => {
             key={index}
           >
             <FurnitureCard item={item.product} key={item}>
-              <FurnitureCard.Model className="w-[60%]">
+              <FurnitureCard.Model className="px-4">
                 {accessToken ? (
                   <FurnitureCard.UserFavorite />
                 ) : (
                   <FurnitureCard.Favorite />
                 )}
               </FurnitureCard.Model>
-              <div className="mx-[18px] relative flex flex-col justify-between">
+              <div className="mx-4 relative flex flex-col justify-between">
                 <FurnitureCard.Attribute />
                 <FurnitureCard.Price />
                 {accessToken ? (
