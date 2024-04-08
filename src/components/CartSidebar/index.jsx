@@ -7,12 +7,13 @@ import useCartStore from "@stores/useCartStore";
 import formattedCurrency from "../../utils/formattedCurrency";
 import usePurchase from "../../hooks/usePurchase";
 export default function CartSideBar({ cartData }) {
-  const { cart, getTotalPrice, isLoading } = cartData;
+  const { cart, isLoading } = cartData;
 
   const { closeCart } = useCartStore();
 
   const {
     addToPurchaseItems,
+    getTotalPrice,
     isInPurchase,
     removeFromPurchaseItems,
     purchaseItems,

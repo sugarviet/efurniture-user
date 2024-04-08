@@ -115,16 +115,6 @@ function useUserCart() {
     });
   };
 
-  const getTotalPrice = () => {
-    return cart.reduce((total, item) => {
-      const subPrice = item.select_variation.reduce(
-        (total, cur) => total + cur.sub_price,
-        0
-      );
-      return total + (item.sale_price + subPrice) * item.quantity_in_cart;
-    }, 0);
-  };
-
   const updateVariation = (item) => {
     const { code, _id, select_variation } = item;
     const body = {
@@ -143,7 +133,6 @@ function useUserCart() {
     decreaseQuantity,
     increaseQuantity,
     removeFromCart,
-    getTotalPrice,
     updateQuantity,
   };
 }

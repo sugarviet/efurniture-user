@@ -67,13 +67,6 @@ function useGuestCart() {
     setCart(cartClone);
   };
 
-  const getTotalPrice = () => {
-    return cart.reduce(
-      (total, item) => total + item.sale_price * item.quantity_in_cart,
-      0
-    );
-  };
-
   const updateVariation = (item) => {
     const code = hashCodeItem(item);
     const isInCart = cart.some((i) => i.code === code);
@@ -100,7 +93,6 @@ function useGuestCart() {
     increaseQuantity,
     removeFromCart,
     updateQuantity,
-    getTotalPrice,
     clearCart,
     isLoading: false,
   };

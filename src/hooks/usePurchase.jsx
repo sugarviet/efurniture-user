@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function usePurchase() {
   const [purchaseItems, setPurchaseItems] = useState([]);
+
   const addToPurchaseItems = (item) => {
     setPurchaseItems([...purchaseItems, item]);
   };
@@ -12,8 +13,19 @@ function usePurchase() {
 
   const isInPurchase = (item) =>
     purchaseItems.some((i) => i.code === item.code);
+
+  const getTotalPrice = () => {
+    return purchaseItems.reduce((total, item) => {
+      const subPrice = item.select_variation.reduce(
+        (total, cur) => total + cur.sub_price,
+        0
+      );
+      return total + (item.sale_price + subPrice) * item.quantity_in_cart;
+    }, 0);
+  };
   return {
     purchaseItems,
+    getTotalPrice,
     setPurchaseItems,
     isInPurchase,
     addToPurchaseItems,

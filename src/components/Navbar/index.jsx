@@ -51,7 +51,7 @@ export default function Navbar() {
 
   const handleSearch = (searchValue) => {
     navigate(`/search`);
-    setSearchParams({ q: searchValue });
+    setSearchParams({ q: searchValue || "" });
   };
 
   return (
