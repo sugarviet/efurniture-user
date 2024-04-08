@@ -19,7 +19,7 @@ function FurnitureModel({ children, className }) {
     <div
       onClick={() => navigate(`/product-detail/${slug}`)}
       className={classNames(
-        `relative flex items-center mb-[0.9375rem] w-full h-72 hover:cursor-pointer`
+        `relative flex items-center justify-center mb-[0.9375rem] w-full h-72 hover:cursor-pointer`
       )}
       title={name}
     >
@@ -35,7 +35,7 @@ function FurnitureModel({ children, className }) {
       {dimension === MODEL_DIMENSION.two_dimension && (
         <img
           className={classNames(
-            "relative left-1/2 -translate-x-1/2 object-cover ",
+            "relative object-contain object-center",
             className
           )}
           src={thumbs[0]}
