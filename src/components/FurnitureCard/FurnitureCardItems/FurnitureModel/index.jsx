@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 function FurnitureModel({ children, className }) {
-  const { furniture, dimension, onSale, salePercentage } =
+  const { furniture, dimension, onSale, salePercentage, outOfStock } =
     useContext(FurnitureCardContext);
 
   const { model3D, name, thumbs, slug } = furniture;
@@ -23,6 +23,15 @@ function FurnitureModel({ children, className }) {
       )}
       title={name}
     >
+      {outOfStock && (
+        <div className="absolute top-0 left-0 right-0 bottom-0 z-10 bg-white opacity-70 flex items-center justify-center">
+          <div className="border border-dashed border-black shadow-xl -rotate-45 flex py-1 px-4 items-center justify-center">
+            <span className="uppercase text-lg font-bold tracking-widest">
+              out of stock
+            </span>
+          </div>
+        </div>
+      )}
       {dimension === MODEL_DIMENSION.two_dimension && (
         <img
           className={classNames(
