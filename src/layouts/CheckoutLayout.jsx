@@ -5,11 +5,14 @@ import CheckoutFooter from "@components/CheckoutFooter"
 import CheckoutBottomBar from "@components/CheckoutBottomBar"
 import LoginBottomBar from "@components/LoginBottomBar"
 import useAuth from "../stores/useAuth"
+import { ErrorBoundary } from "react-error-boundary"
+import Error from "../pages/Error"
 
 const RootLayout = () => {
   const { accessToken } = useAuth();
 
   return (
+    <ErrorBoundary fallback={<Error />}>
     <div className="font-HelveticaRoman">
       <CheckoutBottomBar />
       {!accessToken && <LoginBottomBar />}
@@ -19,6 +22,8 @@ const RootLayout = () => {
       </AppSuspense>
       <CheckoutFooter />
     </div>
+    </ErrorBoundary>
+    
   )
 }
 
