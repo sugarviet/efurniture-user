@@ -3,12 +3,18 @@
 import { RouterProvider } from "react-router-dom";
 import { routers } from "./router";
 import { Toaster } from "sonner";
+import Error from "./pages/Error";
+import { ErrorBoundary } from "react-error-boundary";
 
 function App() {
   return (
     <>
+    <ErrorBoundary fallback={<Error />}>
+
       <Toaster closeButton position="top-right" />
       <RouterProvider router={routers} />
+    </ErrorBoundary>
+
     </>
   );
 }

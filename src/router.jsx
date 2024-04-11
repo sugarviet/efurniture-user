@@ -2,7 +2,6 @@
 import { lazy } from "react";
 
 import { createBrowserRouter } from "react-router-dom";
-
 import RootLayout from "@layouts/RootLayout";
 import CheckoutLayout from "@layouts/CheckoutLayout";
 

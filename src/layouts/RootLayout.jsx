@@ -29,7 +29,6 @@ const RootLayout = () => {
   }, [activeTab]);
 
   return (
-
     <ErrorBoundary fallback={<Error />}>
       <div className="font-HelveticaRoman">
         {accessToken ? <UserCartSideBar /> : <GuestCartSideBar />}
@@ -39,7 +38,6 @@ const RootLayout = () => {
         </AppSuspense>
         <Footer />
       </div>
-
     </ErrorBoundary>
   );
 };
