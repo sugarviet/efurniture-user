@@ -8,6 +8,7 @@ import useUserCart from "@hooks/useUserCart";
 import useGuestCart from "@hooks/useGuestCart";
 import useAuth from "@stores/useAuth";
 import useScroll from "@hooks/useScroll";
+import usePurchase from "../../../../hooks/usePurchase";
 
 const PAYMENT_METHOD = {
   banking: "Online Payment",
@@ -18,7 +19,7 @@ function Payment() {
 
   const { accessToken } = useAuth();
 
-  const { getTotalPrice } = accessToken ? useUserCart() : useGuestCart();
+  const { getTotalPrice } = usePurchase();
 
   const { setSelectedPayment, selectedPayment } = useOrderStore();
 

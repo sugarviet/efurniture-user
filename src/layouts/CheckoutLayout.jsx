@@ -12,7 +12,7 @@ const RootLayout = () => {
   const { accessToken } = useAuth();
 
   return (
-    <ErrorBoundary fallback={<Error />}>
+    // <ErrorBoundary fallback={<Error />}>
     <div className="font-HelveticaRoman">
       <CheckoutBottomBar />
       {!accessToken && <LoginBottomBar />}
@@ -22,7 +22,7 @@ const RootLayout = () => {
       </AppSuspense>
       <CheckoutFooter />
     </div>
-    </ErrorBoundary>
+    // </ErrorBoundary>
     
   )
 }
