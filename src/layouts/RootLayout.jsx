@@ -9,6 +9,8 @@ import useAuth from "../stores/useAuth";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import useSwitchTab from "../pages/Checkout/hooks/useSwitchTab";
+import { ErrorBoundary } from "react-error-boundary";
+import Error from "../pages/Error";
 
 const GuestCartSideBar = withGuestCart(CartSideBar);
 const UserCartSideBar = withUserCart(CartSideBar);
@@ -27,14 +29,18 @@ const RootLayout = () => {
   }, [activeTab]);
 
   return (
-    <div className="font-HelveticaRoman">
-      {accessToken ? <UserCartSideBar /> : <GuestCartSideBar />}
-      <Navbar />
-      <AppSuspense>
-        <Outlet />
-      </AppSuspense>
-      <Footer />
-    </div>
+
+    <ErrorBoundary fallback={<Error />}>
+      <div className="font-HelveticaRoman">
+        {accessToken ? <UserCartSideBar /> : <GuestCartSideBar />}
+        <Navbar />
+        <AppSuspense>
+          <Outlet />
+        </AppSuspense>
+        <Footer />
+      </div>
+
+    </ErrorBoundary>
   );
 };
 

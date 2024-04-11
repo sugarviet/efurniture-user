@@ -22,7 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           },
         }}
       >
-        <App />
+          <App />
       </ConfigProvider>
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </QueryClientProvider>
