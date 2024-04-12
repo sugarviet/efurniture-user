@@ -32,13 +32,22 @@ function ProductOrderBriefInfo({ product }) {
                 Qty: {product.quantity}
               </p>
               <div>
-                {product.product_id.variation.map((item, i) => {
+                {product.variation.map((item, i) => {
+                  const { variation_id, property_id } = item;
+                  const currentVariation =
+                    product.product_id.variation.find(
+                      (i) => i._id === variation_id
+                    );
+                  currentVariation.properties =
+                    currentVariation.properties.filter(
+                      (item) => item._id === property_id
+                    );
                   return (
                     <ProductVariation
                       key={i}
-                      currentVariation={item}
-                      variation={item}
-                      className="text-[10px] w-6 h-6 pt-[6px]"
+                      currentVariation={currentVariation}
+                      variation={currentVariation}
+                      className="text-[10px] w-6 h-6 pt-2"
                     />
                   );
                 })}

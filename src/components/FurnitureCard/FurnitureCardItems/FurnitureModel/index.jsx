@@ -19,7 +19,7 @@ function FurnitureModel({ children, className }) {
     <div
       onClick={() => navigate(`/product-detail/${slug}`)}
       className={classNames(
-        `relative flex items-center justify-center mb-[0.9375rem] w-full h-72 hover:cursor-pointer`
+        `flex items-center justify-center mb-[0.9375rem] w-full hover:cursor-pointer`
       )}
       title={name}
     >
@@ -32,27 +32,29 @@ function FurnitureModel({ children, className }) {
           </div>
         </div>
       )}
-      {dimension === MODEL_DIMENSION.two_dimension && (
-        <img
-          className={classNames(
-            "relative object-contain object-center",
-            className
-          )}
-          src={thumbs[0]}
-        />
-      )}
+      <div className="relative flex justify-center items-center">
+        {dimension === MODEL_DIMENSION.two_dimension && (
+          <img
+            className={classNames(
+              "",
+              className
+            )}
+            src={thumbs[0]}
+          />
+        )}
 
-      {dimension === MODEL_DIMENSION.three_dimension && (
-        <RoomleConfiguration3D model_id={model3D} />
-      )}
+        {dimension === MODEL_DIMENSION.three_dimension && (
+          <RoomleConfiguration3D model_id={model3D} />
+        )}
 
-      {children}
+        {children}
 
-      {onSale && (
-        <div className="from-[#961200] to-[#c2560a] bg-gradient-to-l rounded-sm  px-2 py-1 flex items-center justify-center absolute bottom-0 right-2">
-          <span className="text-white text-sm">-{salePercentage}%</span>
-        </div>
-      )}
+        {onSale && (
+          <div className="from-[#961200] to-[#c2560a] bg-gradient-to-l rounded-sm  px-2 py-1 flex items-center justify-center absolute bottom-4 right-0">
+            <span className="text-white text-sm">-{salePercentage}%</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
