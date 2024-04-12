@@ -126,17 +126,18 @@ const bestsellers = [
 ];
 
 const BestSellersSlider = ({ data }) => {
+  console.log(data);
   const { accessToken } = useAuth();
   return (
     <div>
       <Sliders initialSlide={3} slideToScroll={4} slideToShow={4}>
         {data?.data.map((item, index) => (
           <div
-            className="w-[345.476px] h-full border border-border border-r-0 bg-white pb-[0.5rem]"
+            className="w-[345.476px] h-[500px] border border-border border-r-0 bg-white pb-[0.5rem]"
             key={index}
           >
-            <FurnitureCard item={item.product} key={item}>
-              <FurnitureCard.Model className="px-4">
+            <FurnitureCard item={item} key={item}>
+              <FurnitureCard.Model className="px-4 h-[270px]">
                 {accessToken ? (
                   <FurnitureCard.UserFavorite />
                 ) : (
