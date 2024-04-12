@@ -18,7 +18,7 @@ const details = [
   {
     title: "LETS MEET IN STORE, IN HOME OR VIRTUALLY",
     description:
-      "Be inspired by the latest Nordic design and style. Visit us in store to see our wide range of Danish designed sofas, chairs, tables, beds, storage solutions and accessories - and get professional advice about home design. Our experts can help you find the perfect style to match your personality and your home decor, whether you are looking for a living room upgrade, a dining set or adding a single piece of design furniture to your home. Just pop in to your local store, set up a virtual appointment or contact us to book a chat today.",
+      "Be inspired by the latest Nordic design and style. Visit us in store to see our wide range of VietNam designed sofas, chairs, tables, beds, storage solutions and accessories - and get professional advice about home design. Our experts can help you find the perfect style to match your personality and your home decor, whether you are looking for a living room upgrade, a dining set or adding a single piece of design furniture to your home. Just pop in to your local store, set up a virtual appointment or contact us to book a chat today.",
     img: "https://p3.aprimocdn.net/boconcept/cfd55b19-e813-4395-99c1-ad4400f149af/630620__WEB-ImageCollageSmall-T-372x470.jpg",
   },
 ];
@@ -99,22 +99,22 @@ const Home = () => {
         </div>
       </section>
       {/* footer section */}
-      {/* <footer className="grid grid-cols-[1fr_1fr] mb-[4.5rem] px-[68px]">
-        <section className="flex flex-col items-start justify-end pr-[120px]">
-          <h3 className="font-HelveticaBold text-[40px] leading-[1.2] tracking-[0.15em] pb-10 line-clamp-3">DANISH DESIGN FURNITURE BY BOCONCEPT</h3>
-          <p className="font-Baskerville text-[1.25rem]">BoConcept was born in Herning in 1952 and has grown from a small firm to Denmark’s most
-            global furniture brand, with over 300 stores in more than 60 countries – and counting. Through Danish creativity and craftsmanship, we elevate
-            spaces with iconic design that brings joy and inspiration, collaborating with some of the most respected designers in Denmark and further afield
+      <footer className="flex flex-col xl:grid xl:grid-cols-[1fr_1fr] mb-[4.5rem] px-[68px]">
+        <section className="flex flex-col items-start justify-end md:pr-[120px]">
+          <h3 className="font-HelveticaBold text-[40px] leading-[1.2] tracking-[0.15em] pb-10 line-clamp-3">VIETNAM DESIGN FURNITURE BY EFURNITURE</h3>
+          <p className="font-Baskerville text-[1.25rem]">eFurniture was born in Viet Nam in 2023 and has grown from a small firm to VietNam’s most
+            global furniture brand, with over 300 stores in more than 32 provinces – and counting. Through VietNaM creativity and craftsmanship, we elevate
+            spaces with iconic design that brings joy and inspiration, collaborating with some of the most respected designers in VietNam and further afield
             to be timelessly on trend.
           </p>
         </section>
-        <section>
+        <section >
           {details.map((detail, index) => (
-            <div key={index} className={`grid grid-cols-[18.1818181818%_81.8181818182%]  ${index === details.length - 1 ? '' : 'mb-10'}`} >
+            <div key={index} className={`flex flex-col justify-start items-start gap-6 pt-10 md:grid md:grid-cols-[40%_60%] md:pt-10 lg:grid lg:grid-cols-[30%_70%] lg:pt-10 xl:pt-0 xl:grid xl:grid-cols-[18.1818181818%_81.8181818182%]  ${index === details.length - 1 ? '' : 'mb-10'}`} >
               <figure className="">
-                <img src={detail.img} />
+                <img className="" src={detail.img} />
               </figure>
-              <article className="pl-[1.875rem]">
+              <article className="md:pl-20 xl:pl-[1.875rem]">
                 <h3 className="font-HelveticaBold text-[24px] tracking-[0.08em] pb-[0.75rem] leading-[1.2083333333]">{detail.title}</h3>
                 <p className="text-base tracking-[0.04em] leading-[21px]">
                   {detail.description}
@@ -123,7 +123,7 @@ const Home = () => {
             </div>
           ))}
         </section>
-      </footer> */}
+      </footer>
     </section>
   );
 };
