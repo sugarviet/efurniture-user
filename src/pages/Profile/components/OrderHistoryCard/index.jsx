@@ -70,12 +70,18 @@ function OrderHistoryCard({ data }) {
       </div>
 
       <div className="border-x-[1px] px-8 py-4 border-b-[1px] border-x-grey5 border-b-grey5">
-        {data.order_products.map((product, index) => (
-          <ProductOrderBriefInfo key={index} product={product} />
-        ))}
+        {data.order_products.map((product, index) => {
+          return (
+            <ProductOrderBriefInfo
+              key={index}
+              product={product}
+              state={data.current_order_tracking.name.toLowerCase()}
+            />
+          );
+        })}
         <div className="flex flex-row justify-between items-center gap-4 mt-8">
           <div>
-            <OrderPaidMessage order={data}/>
+            <OrderPaidMessage order={data} />
           </div>
           <div className="">
             <OrderActionButton
