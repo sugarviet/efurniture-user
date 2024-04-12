@@ -21,7 +21,7 @@ function CheckoutProduct({ activeTab }) {
     }, 0);
 
   return (
-    <section className="px-5 pb-6 lg:pl-[80px] lg:pr-[96px] lg:pb-0 xl:pl-[112px] xl:pr-[128px] xl:pb-0">
+    <section className="px-5 pb-6 lg:px-[60px] lg:pb-0 xl:px-[80px] xl:pb-0 2xl:px-[128px]">
       {activeTab === "summary" && (
         <section>
           <h2 className="text-[1.5rem] leading-[1.2] font-HelveticaBold tracking-[0.08em] pb-2">
@@ -42,10 +42,10 @@ function CheckoutProduct({ activeTab }) {
             const { name, quantity_in_cart, select_variation, variation } =
               item;
             return (
-              <section key={index} className="text-[0.875rem] ">
+              <section key={index} className="text-[0.875rem] pb-16">
                 <FurnitureCard item={item} key={`${name} + ${index}`}>
-                  <FurnitureCard.Model className="mt-16 w-[80%]" />
-                  <section className="flex justify-between mt-20 md:mt-28 xl:mt-24 2xl:mt-32">
+                  <FurnitureCard.Model className="" />
+                  <section className="flex justify-between mt-10">
                     <a href="#">
                       <h2 className="text-[1.5rem] leading-[1.2] font-HelveticaBold tracking-[0.08em]">
                         {name}
