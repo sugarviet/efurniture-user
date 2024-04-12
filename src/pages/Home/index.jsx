@@ -1,3 +1,4 @@
+import ShowRoom3D from "../../components/ShowRoom3D";
 import BestSellersSlider from "./components/BestSellersSlider";
 import CategorySlider from "./components/CategorySlider";
 import RoomSlider from "./components/RoomSlider";
@@ -41,13 +42,7 @@ const Home = () => {
         </div>
       </header>
       <section className="pl-[68px] mb-[5.5rem]">
-        <div className="my-20">
-          <iframe
-            src="https://www.roomle.com/app/3d/a5a35m3xebtrdcvv3f28wh8e8r13pon"
-            className="w-full h-96"
-            frameborder="0"
-          ></iframe>
-        </div>
+        <ShowRoom3D />
         <div className="mt-[5.5rem] mb-4">
           <h2 className="text-[0.685rem] text-grey2 leading-[1.4] tracking-[0.08em] ">
             SHOP BY CATEGORY
@@ -108,21 +103,33 @@ const Home = () => {
       {/* footer section */}
       <footer className="flex flex-col xl:grid xl:grid-cols-[1fr_1fr] mb-[4.5rem] px-[68px]">
         <section className="flex flex-col items-start justify-end md:pr-[120px]">
-          <h3 className="font-HelveticaBold text-[40px] leading-[1.2] tracking-[0.15em] pb-10 line-clamp-3">VIETNAM DESIGN FURNITURE BY EFURNITURE</h3>
-          <p className="font-Baskerville text-[1.25rem]">eFurniture was born in Viet Nam in 2023 and has grown from a small firm to VietNam’s most
-            global furniture brand, with over 300 stores in more than 32 provinces – and counting. Through VietNaM creativity and craftsmanship, we elevate
-            spaces with iconic design that brings joy and inspiration, collaborating with some of the most respected designers in VietNam and further afield
-            to be timelessly on trend.
+          <h3 className="font-HelveticaBold text-[40px] leading-[1.2] tracking-[0.15em] pb-10 line-clamp-3">
+            VIETNAM DESIGN FURNITURE BY EFURNITURE
+          </h3>
+          <p className="font-Baskerville text-[1.25rem]">
+            eFurniture was born in Viet Nam in 2023 and has grown from a small
+            firm to VietNam’s most global furniture brand, with over 300 stores
+            in more than 32 provinces – and counting. Through VietNaM creativity
+            and craftsmanship, we elevate spaces with iconic design that brings
+            joy and inspiration, collaborating with some of the most respected
+            designers in VietNam and further afield to be timelessly on trend.
           </p>
         </section>
-        <section >
+        <section>
           {details.map((detail, index) => (
-            <div key={index} className={`flex flex-col justify-start items-start gap-6 pt-10 md:grid md:grid-cols-[40%_60%] md:pt-10 lg:grid lg:grid-cols-[30%_70%] lg:pt-10 xl:pt-0 xl:grid xl:grid-cols-[18.1818181818%_81.8181818182%]  ${index === details.length - 1 ? '' : 'mb-10'}`} >
+            <div
+              key={index}
+              className={`flex flex-col justify-start items-start gap-6 pt-10 md:grid md:grid-cols-[40%_60%] md:pt-10 lg:grid lg:grid-cols-[30%_70%] lg:pt-10 xl:pt-0 xl:grid xl:grid-cols-[18.1818181818%_81.8181818182%]  ${
+                index === details.length - 1 ? "" : "mb-10"
+              }`}
+            >
               <figure className="">
                 <img className="" src={detail.img} />
               </figure>
               <article className="md:pl-20 xl:pl-[1.875rem]">
-                <h3 className="font-HelveticaBold text-[24px] tracking-[0.08em] pb-[0.75rem] leading-[1.2083333333]">{detail.title}</h3>
+                <h3 className="font-HelveticaBold text-[24px] tracking-[0.08em] pb-[0.75rem] leading-[1.2083333333]">
+                  {detail.title}
+                </h3>
                 <p className="text-base tracking-[0.04em] leading-[21px]">
                   {detail.description}
                 </p>
