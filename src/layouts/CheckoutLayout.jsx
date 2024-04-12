@@ -8,11 +8,11 @@ import useAuth from "../stores/useAuth"
 import { ErrorBoundary } from "react-error-boundary"
 import Error from "../pages/Error"
 
-const RootLayout = () => {
+const CheckoutLayout = () => {
   const { accessToken } = useAuth();
 
   return (
-    // <ErrorBoundary fallback={<Error />}>
+    <ErrorBoundary fallback={<Error />}>
     <div className="font-HelveticaRoman">
       <CheckoutBottomBar />
       {!accessToken && <LoginBottomBar />}
@@ -22,9 +22,9 @@ const RootLayout = () => {
       </AppSuspense>
       <CheckoutFooter />
     </div>
-    // </ErrorBoundary>
+    </ErrorBoundary>
     
   )
 }
 
-export default RootLayout
+export default CheckoutLayout
