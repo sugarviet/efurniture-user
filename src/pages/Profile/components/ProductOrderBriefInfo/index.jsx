@@ -5,6 +5,7 @@ import { useState } from "react";
 import ProductVariation from "../../../ProductDetail/components/ProductVariation";
 
 function ProductOrderBriefInfo({ product }) {
+  console.log(product);
   const [modelOpened, setModalOpened] = useState(false);
 
   const onSale = product.product_id.regular_price - product.product_id.sale_price > 0;
@@ -75,7 +76,7 @@ function ProductOrderBriefInfo({ product }) {
       <AppModal isOpen={modelOpened} onClose={() => setModalOpened(false)}>
         <FeedbackForm
           onCancel={() => setModalOpened(false)}
-          id={product.product_id}
+          id={product.product_id._id}
         />
       </AppModal>
     </div>

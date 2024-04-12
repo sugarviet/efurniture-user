@@ -16,7 +16,7 @@ function FurnitureRating() {
 
   return (
     <div>
-      <span>{`(${averageRating})`}</span>
+      <span className="text-lg">{`${averageRating}`}</span>
       <Rate
         className="text-black text-xs ml-1"
         disabled

@@ -30,6 +30,11 @@ const TYPES = {
     bgColor: "furniture-button-black-hover",
     action: "repurchase",
   },
+  Failed: {
+    name: "Buy again",
+    bgColor: "furniture-button-black-hover",
+    action: "repurchase",
+  },
 };
 
 function OrderActionButton({ type, className, data }) {

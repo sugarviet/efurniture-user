@@ -84,7 +84,7 @@ const Home = () => {
           </h2>
         </div>
         <div>
-          {/* <BestSellersSlider /> */}
+          <BestSellersSlider />
         </div>
       </section>
       {/* Room slider */}

@@ -8,7 +8,7 @@ import useAuth from "../stores/useAuth"
 import { ErrorBoundary } from "react-error-boundary"
 import Error from "../pages/Error"
 
-const RootLayout = () => {
+const CheckoutLayout = () => {
   const { accessToken } = useAuth();
 
   return (
@@ -27,4 +27,4 @@ const RootLayout = () => {
   )
 }
 
-export default RootLayout
+export default CheckoutLayout
