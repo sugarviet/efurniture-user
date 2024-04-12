@@ -41,6 +41,13 @@ const Home = () => {
         </div>
       </header>
       <section className="pl-[68px] mb-[5.5rem]">
+        <div className="my-20">
+          <iframe
+            src="https://www.roomle.com/app/3d/a5a35m3xebtrdcvv3f28wh8e8r13pon"
+            className="w-full h-96"
+            frameborder="0"
+          ></iframe>
+        </div>
         <div className="mt-[5.5rem] mb-4">
           <h2 className="text-[0.685rem] text-grey2 leading-[1.4] tracking-[0.08em] ">
             SHOP BY CATEGORY
