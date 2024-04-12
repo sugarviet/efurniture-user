@@ -11,6 +11,7 @@ const useAuth = create((set) => ({
     Cookies.set('access_token', accessToken);
     Cookies.set('refresh_token', refreshToken);
     Cookies.set('account_id', accountId);
+    sessionStorage.removeItem('order-guest-storage')
   },
 
   clearTokens: () => {

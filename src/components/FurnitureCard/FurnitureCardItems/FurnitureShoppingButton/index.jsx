@@ -1,17 +1,26 @@
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { useContext } from "react";
 import { FurnitureCardContext } from "../../FurnitureCardContext";
+import { classNames } from "../../../../utils/classNames";
 
 function FurnitureShoppingButton({ cartData }) {
-  const { furniture } = useContext(FurnitureCardContext);
+  const { furniture, outOfStock } = useContext(FurnitureCardContext);
   const { addToCart } = cartData;
 
   return (
-    <ShoppingBagIcon
+    <button
+      type="button"
+      disabled={outOfStock}
+      className={classNames(
+        "hover:scale-110 border hover:cursor-pointer duration-300 p-2 absolute bottom-4 right-0 h-12 w-12 flex-shrink-0  group-hover:text-gray-500",
+        outOfStock
+          ? "border-gray-200 text-gray-200"
+          : "border-black text-slate-700"
+      )}
       onClick={() => addToCart(furniture)}
-      className="hover:scale-110 border hover:cursor-pointer duration-300 border-black p-2 absolute bottom-4 right-0 h-12 w-12 flex-shrink-0 text-slate-700 group-hover:text-gray-500"
-      aria-hidden="true"
-    />
+    >
+      <ShoppingBagIcon aria-hidden="true" />
+    </button>
   );
 }
 

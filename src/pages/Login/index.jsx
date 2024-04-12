@@ -1,5 +1,5 @@
 import withNonAuthentication from "../../hocs/withNonAuthentication";
-import LoginForm from "./components/LoginForm";
+import LoginForm from "../../components/LoginForm";
 
 const benefitList = [
   {

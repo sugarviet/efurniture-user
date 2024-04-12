@@ -4,11 +4,13 @@ import { persist, createJSONStorage } from "zustand/middleware";
 
 const initialValues = {
     selectedPayment: "COD",
+    selectedAddress: false,
     selectedDelivery: "efurniture",
+    selectedCoupon: null,
     note: "",
     orderShipping: [],
-    selectedDistrict: '',
-    selectedWard: '',
+    selectedDistrict: {},
+    selectedWard: {},
 };
 
 export const useOrderStore = create(
@@ -21,6 +23,9 @@ export const useOrderStore = create(
             setSelectedDelivery: (delivery) => set({ selectedDelivery: delivery }),
             setNote: (noteFilled) => set({ note: noteFilled }),
             setOrderShipping: (shipping) => set({ orderShipping: shipping }),
+            setSelectedAddress: (address) => set({ selectedAddress: address }),
+            setSelectedCoupon: (coupon) => set({ selectedCoupon: coupon }),
+            reset: () => set(initialValues)
         }),
         {
             name: "order-guest-storage",

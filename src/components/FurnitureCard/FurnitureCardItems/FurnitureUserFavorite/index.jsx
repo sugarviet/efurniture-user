@@ -12,23 +12,38 @@ import {
   get_update_wishlist_api,
   get_wishlist_api,
 } from "../../../../api/wishlistApi";
+import useNotification from "../../../../hooks/useNotification";
 
 function FurnitureUserFavorite() {
   const { furniture } = useContext(FurnitureCardContext);
+  const { error_message, success_message } = useNotification();
 
   const [favored, setFavored] = useState(false);
 
   const { data, isLoading } = useFetchWithAuth(get_wishlist_api());
 
   const { mutate: onFavored } = usePostAuth(
-    get_update_wishlist_api(furniture._id)
+    get_update_wishlist_api(furniture._id),
+    undefined,
+    () => {
+      success_message(null, null, `Added ${furniture.name} to Favorites`);
+    },
+    (error) => {
+      error_message(null, null, error.message);
+    },
+    get_wishlist_api()
   );
 
   const { mutate: onUnFavored } = useDeleteAuth(
-    get_update_wishlist_api(furniture._id)
+    get_update_wishlist_api(furniture._id),
+    undefined,
+    () => {},
+    () => {},
+    get_wishlist_api()
   );
 
-  const handleFavored = () => {
+  const handleFavored = (event) => {
+    event.stopPropagation();
     setFavored(!favored);
 
     if (!favored) onFavored();

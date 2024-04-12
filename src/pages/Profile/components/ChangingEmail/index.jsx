@@ -12,6 +12,7 @@ const ChangingEmail = () => {
     <section className="mt-4 border-t-2 py-4">
       <p className="font-bold mb-3">Change email</p>
       <Form
+        requiredMark="optional"
         name="changeEmail"
         labelCol={{
           span: 24,

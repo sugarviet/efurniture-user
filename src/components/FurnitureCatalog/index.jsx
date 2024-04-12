@@ -6,31 +6,32 @@ import findAttributeRange from "../../utils/findAttributeRange";
 import SelectionInput from "../SelectionInput";
 import EmptyProductResult from "../EmptyProductResult";
 
-const SORT_OPTION = {
-  
-}
-
 function FurnitureCatalog({ data }) {
   const [catalog, setCatalog] = useState(data.data || []);
   const { accessToken } = useAuth();
 
   if (!data.data.length) return <EmptyProductResult />;
 
-  const ATTRIBUTE_OBJ = data.data[0].attributes.attributeType;
-
   const ATTRIBUTES_RANGE = findAttributeRange(
-    Object.entries(ATTRIBUTE_OBJ).map(([key, value]) => ({ [key]: value }))
+    data.data.map((item) => item.attributes.attributeType)
   );
-  const ATTRIBUTES = Object.keys(ATTRIBUTE_OBJ);
+
+  const ATTRIBUTES = Array.from(
+    data.data.reduce((keys, data) => {
+      Object.keys(data.attributes.attributeType).forEach((key) =>
+        keys.add(key)
+      );
+      return keys;
+    }, new Set())
+  );
 
   const handleFilter = (attribute, range) => {
     const dataClone = [...data.data];
 
     const filterCatalog = dataClone.filter((item) => {
-      const value = (item.attributes.attributeType[attribute] + "").match(
-        /\d+/
-      )[0];
-
+      const attributeClone = item.attributes.attributeType[attribute];
+      if (!attributeClone) return true;
+      const value = attributeClone.value;
       return value <= range[1] && value >= range[0];
     });
 
@@ -75,8 +76,8 @@ function FurnitureCatalog({ data }) {
               handleFilter(attribute, value);
             },
             max: ATTRIBUTES_RANGE[1][attribute].val,
-            min: 0,
-            unit: ATTRIBUTES_RANGE[0][attribute].unit || attribute,
+            min: ATTRIBUTES_RANGE[0][attribute].val,
+            unit: ATTRIBUTES_RANGE[0][attribute].unit,
           };
 
           return (

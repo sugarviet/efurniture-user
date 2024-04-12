@@ -64,6 +64,11 @@ const FORM_TYPES = {
       validateConfirmNewPassword,
     ],
   },
+  username: {
+    rules: [
+      {required: true, message: "Please enter your username" },
+    ]
+  },
   email: {
     rules: [
       { type: 'email', required: true, message: "Please enter a valid email" },
@@ -103,12 +108,17 @@ const FORM_TYPES = {
   },
   ward: {
     rules: [
-      { required: true, message: "Please enter a valid ward" },
+      { required: true, message: "Please choose a ward below" },
     ]
   },
   district: {
     rules: [
-      { required: true, message: "Please enter a valid district" },
+      { required: true, message: "Please choose a district below" },
+    ]
+  },
+  province: {
+    rules: [
+      { required: true },
     ]
   },
   detailAddress: {
@@ -128,7 +138,7 @@ const FORM_TYPES = {
   },
 };
 
-const FormItem = ({ children, label, name, type, message, required, ...others }) => {
+const FormItem = ({ children, label, name, type, message, required, valuePropName, ...others }) => {
   const customRules = [
     { required: true, message },
     validateWhitespace,
@@ -138,6 +148,7 @@ const FormItem = ({ children, label, name, type, message, required, ...others })
       label={label ? <span className="text-base text-gray-800 font-semibold mb-[-5px]">{label}</span> : label}
       name={name}
       rules={required ? customRules : FORM_TYPES[type].rules}
+      valuePropName={valuePropName && "checked"}
       {...others}
     >
       {children}

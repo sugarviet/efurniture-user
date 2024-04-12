@@ -14,13 +14,14 @@ const BANK_INPUT_TYPE = {
   },
 };
 
-function BankInput({ type, onBlur = () => {}, onChange = () => {}, value }) {
+function BankInput({ type, onBlur, onChange, onFocus, value }) {
   const { label, input_type, placeholder, read_only } = BANK_INPUT_TYPE[type];
 
   return (
     <div className="flex flex-col">
       <div className="text-sm font-semibold mb-2">{label}</div>
       <input
+        onFocus={onFocus}
         readOnly={read_only}
         type={input_type}
         placeholder={placeholder}

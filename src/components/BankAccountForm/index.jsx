@@ -51,6 +51,7 @@ function BankAccountForm() {
       <BankSelection onChange={setBank} />
       <div className="grid grid-cols-2 gap-4 my-2">
         <BankInput
+          onFocus={() => setAccountError(false)}
           onBlur={handleLookUpAccount}
           onChange={setAccountNumber}
           value={accountNumber}

@@ -12,6 +12,7 @@ import FurnitureUserFavorite from "./FurnitureCardItems/FurnitureUserFavorite";
 import FurnitureShoppingButton from "./FurnitureCardItems/FurnitureShoppingButton";
 import { withGuestCart } from "../../hocs/withGuestCart";
 import { withUserCart } from "../../hocs/withUserCart";
+import FurnitureRating from "./FurnitureCardItems/FurnitureRating";
 
 function FurnitureCard({ item, children }) {
   return (

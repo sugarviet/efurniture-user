@@ -14,5 +14,5 @@ export const get_furniture_detail_api = (params) => {
 
 export const get_search_furniture_api = (params, urlParams) => {
     const { q: searchValue } = urlParams;
-    return `${FURNITURE_URL}/search/${searchValue}?page=1&limit=4`
+    return `${FURNITURE_URL}/search/${`${searchValue + " "}`}?page=1&limit=4`
 }

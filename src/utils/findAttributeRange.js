@@ -6,22 +6,18 @@ export default function findAttributeRange(attributes) {
         Object.entries(obj).forEach(([key, value]) => {
             if (
                 !(key in maxValues) ||
-                parseInt(value.match(/\d+/)[0]) >
-                parseInt(maxValues[key].match(/\d+/)[0])
+                value.value >
+                maxValues[key].val
             ) {
-                const [valStr, unit] = (value + "").split(" ")
-                const val = parseInt(valStr)
-                maxValues[key] = { val, unit };
+                maxValues[key] = { val: value.value, unit: value.unit };
             }
 
             if (
                 !(key in minValues) ||
-                parseInt(value.match(/\d+/)[0]) <
-                parseInt(minValues[key].match(/\d+/)[0])
+                value.value <=
+                minValues[key].val
             ) {
-                const [valStr, unit] = (value + "").split(" ")
-                const val = parseInt(valStr)
-                minValues[key] = { val, unit };
+                minValues[key] = { val: value.value, unit: value.unit };
             }
         });
     });

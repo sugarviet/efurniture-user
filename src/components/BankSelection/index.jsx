@@ -41,7 +41,11 @@ function BankSelection({ onChange }) {
         <ArrowDownCircleIcon className="w-6 h-6" />
       </button>
 
-      <AppModal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+      <AppModal
+        className="h-[600px]"
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      >
         <BankOption onSelect={handleSelect} options={data} />
       </AppModal>
     </section>

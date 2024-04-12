@@ -3,6 +3,12 @@ import AppSuspense from "@components/AppSuspense";
 import useSwitchTab from "./hooks/useSwitchTab";
 import ToggleCheckoutButton from "@components/ToggleCheckoutButton";
 import SplashCheckoutProduct from "@components/SplashCheckoutProduct";
+import { withGuestCart } from "../../hocs/withGuestCart";
+import { withUserCart } from "../../hocs/withUserCart";
+import { withBillingGuest } from "../../hocs/withBillingGuest";
+import { withBillingUser } from "../../hocs/withBillingUser";
+import useAuth from "../../stores/useAuth";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 const Billing = lazy(() => import("./components/Billing"));
 const Shipping = lazy(() => import("./components/Shipping"));
@@ -10,30 +16,58 @@ const Payment = lazy(() => import("./components/Payment"));
 const Summary = lazy(() => import("./components/Summary"));
 const CheckoutProduct = lazy(() => import("@components/CheckoutProduct"));
 
-const tabsCheckout = {
-  billing: {
-    component: <Billing />,
-  },
-  shipping: {
-    component: <Shipping />,
-  },
-  payment: {
-    component: <Payment />,
-  },
-  summary: {
-    component: <Summary />,
-  },
-};
+const GuestCheckoutProduct = withGuestCart(CheckoutProduct);
+const UserCheckoutProduct = withUserCart(CheckoutProduct);
+
+const BillingUser = withBillingUser(Billing);
+const BillingGuest = withBillingGuest(Billing);
+
 function Checkout() {
+  const { accessToken } = useAuth();
 
   const { activeTab } = useSwitchTab();
+
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+
+  const purchaseItems = JSON.parse(params.get("q"));
+
+  const getTotalPrice = () =>
+    purchaseItems.reduce((total, cur) => {
+      const subPrice = cur.select_variation.reduce(
+        (total, cur) => total + cur.sub_price,
+        0
+      );
+      return total + (cur.sale_price + subPrice) * cur.quantity_in_cart;
+    }, 0);
+
+  const tabsCheckout = {
+    billing: {
+      component: accessToken ? <BillingUser /> : <BillingGuest />,
+    },
+    shipping: {
+      component: <Shipping />,
+    },
+    payment: {
+      component: <Payment />,
+    },
+    summary: {
+      component: (
+        <Summary purchaseItems={purchaseItems} totalPrice={getTotalPrice()} />
+      ),
+    },
+  };
 
   return (
     <main className="min-h-screen">
       <div className="lg:furniture-divided-bottom pt-0">
         <article className="lg:grid lg:grid-cols-[54.17%_45.83%]">
           <div className="pt-[2.5rem] pb-[8.75rem] hidden lg:block">
-            <CheckoutProduct activeTab={activeTab} />
+            {accessToken ? (
+              <UserCheckoutProduct activeTab={activeTab} />
+            ) : (
+              <GuestCheckoutProduct activeTab={activeTab} />
+            )}
           </div>
           <div className="furniture-divided-left pt-8 px-5 lg:pt-10 lg:px-16 ">
             <AppSuspense>{tabsCheckout[activeTab].component}</AppSuspense>
@@ -45,7 +79,7 @@ function Checkout() {
       </div>
       <SplashCheckoutProduct />
     </main>
-  )
+  );
 }
 
-export default Checkout
+export default Checkout;

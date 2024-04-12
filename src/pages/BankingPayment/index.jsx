@@ -2,59 +2,65 @@ import { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import formattedCurrency from "@utils/formattedCurrency";
 import { BANK_INFO } from '../../constants/bankInfoConstants';
-import { useFetchBanking } from '../../hooks/api-hooks';
-import { get_banking_transaction, async_banking_transaction } from '../../api/bankingTransactionApi';
-import { usePostWithBankingTransaction } from '../../hooks/api-hooks';
-import { useQueryClient } from "@tanstack/react-query";
-import useNavigation from '../../utils/useNavigation';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import useBankPayment from '../../hooks/useBankPayment';
+import useGuestCart from '../../hooks/useGuestCart';
 
 export default function BankingPayment() {
 
-    const queryClient = useQueryClient();
-
-    const { go_to_order_confirmation } = useNavigation();
-
-    const { data: dataTransaction } = useFetchBanking(
-        get_banking_transaction()
-    );
+    const { clearCart } = useGuestCart()
 
     const location = useLocation();
     const orderDetail = location.state || { orderDetail: null };
 
     const orderId = orderDetail._id;
-    const totalPrice = 2000;
+    const isDeposit = orderDetail.order_checkout.paid.type === "Deposit";
+
+    const totalPrice = orderDetail.order_checkout.paid.must_paid;
 
     const QR = `https://img.vietqr.io/image/${BANK_INFO.BANK_ID}-${BANK_INFO.ACCOUNT_NO}-${BANK_INFO.TEMPLATE}.png?amount=${totalPrice}&addInfo=${orderId}&accountName=${BANK_INFO.ACCOUNT_NAME}`
 
-    console.log(orderDetail)
+    const {
+        dataTransaction,
+        setIsPaid,
+        asyncTransaction,
+        isLoading
+    } = useBankPayment();
+
     const [openDetail, setOpenDetail] = useState(false);
 
     const handleOpenDetail = () => {
         setOpenDetail(!openDetail);
     }
 
-    const { mutate: asyncTransaction } = usePostWithBankingTransaction(
-        async_banking_transaction(),
-        undefined,
-        (data) => {
-            queryClient.invalidateQueries(get_banking_transaction());
-            console.log(data);
-        },
-        (error) => {
-            console.log(error);
-        }
-    );
-
     useEffect(() => {
+        if (orderDetail.guest) {
+            clearCart();
+        }
         const interval = setInterval(() => {
-            asyncTransaction({ bank_acc_id: BANK_INFO.ACCOUNT_NO });
-            go_to_order_confirmation(orderDetail);
+            setIsPaid({
+                order_id: orderDetail._id,
+                // amount: dataTransaction[0].amount,
+                amount: totalPrice,
+                description: dataTransaction[0].description,
+                when: dataTransaction[0].when
+            })
+            //asyncTransaction({ bank_acc_id: BANK_INFO.ACCOUNT_NO });
             // if (dataTransaction && dataTransaction[0].amount >= totalPrice && dataTransaction[0].description.includes(orderId)) {
             //     go_to_order_confirmation(orderDetail);
+            //     setIsPaid({
+            //         order_id: orderDetail._id,
+            //         amount: dataTransaction[0]?.amount,
+            //         description: dataTransaction[0]?.description,
+            //         when: dataTransaction[0]?.when
+            //     })
+
             // }
-        }, 1000 * 60);
+        }, 1000 * 10);
         return () => clearInterval(interval);
     }, [dataTransaction]);
+
+    if (isLoading) return <LoadingSpinner />
 
     return (
         <section className='bg-[#fffcff] min-h-screen font-HelveticaRoman'>
@@ -63,7 +69,7 @@ export default function BankingPayment() {
                     <img className='w-20 lg:w-36' src='https://res.cloudinary.com/dc4hafqoa/image/upload/v1709624643/eFurniture/vietqr_aepcie.png' />
                     <p className='lg:text-normal text-[0px] md:text-[12px]'> Hệ thống tạo mã QR CODE</p>
                 </figure>
-                <img className='w-36 lg:w-48' src='https://res.cloudinary.com/dc4hafqoa/image/upload/v1709630799/eFurniture/logo_o37agc.png' />
+                <img className='w-36 lg:w-48' src='https://res.cloudinary.com/dc4hafqoa/image/upload/v1712089475/eFurniture/logo_white_ngffku.png' />
             </article>
             <section className='px-6 lg:px-12 xl:px-28 2xl:px-56 py-10 flex flex-col lg:flex-row gap-8 pt-36'>
                 <div className='basis-2/6 '>
@@ -72,7 +78,7 @@ export default function BankingPayment() {
 
                         <p className='pt-6 text-gray-500 font-medium]'>Nhà cung cấp</p>
                         <figure className='flex flex-row items-center gap-2 pt-3'>
-                            <img className='w-20' src='https://res.cloudinary.com/dc4hafqoa/image/upload/v1709630799/eFurniture/logo_o37agc.png' />
+                            <img className='w-20' src='https://res.cloudinary.com/dc4hafqoa/image/upload/v1712089475/eFurniture/logo_white_ngffku.png' />
                             <p className='text-base font-bold'>Công ty cổ phần eFurniture</p>
                         </figure>
 
@@ -88,14 +94,18 @@ export default function BankingPayment() {
                         <p className='pt-5 text-gray-500 font-medium]'>Mô tả</p>
                         <div className='flex flex-col pt-2'>
                             <p className='text-base font-semibold tracking-wide'>Khách hàng: {orderDetail.order_shipping.first_name} {orderDetail.order_shipping.last_name} </p>
-                            <p className='text-base font-semibold tracking-wide'>Nội dung: Thanh toán giao dịch tại eFurniture </p>
+                            {isDeposit ?
+                                <p className='text-base font-semibold tracking-wide'>Nội dung: Thanh toán đặt cọc cho đơn hàng</p>
+                                :
+                                <p className='text-base font-semibold tracking-wide'>Nội dung: Thanh toán giao dịch tại eFurniture </p>
+                            }
                         </div>
 
                         <div className='border-b w-full mt-5'></div>
 
                         <p className='pt-5 text-gray-500 first-line:font-medium]'>Số tiền</p>
                         <div className='flex flex-row gap-2 pt-2'>
-                            <p className='text-[#1E427E] font-HelveticaBold text-[22px] font-medium tracking-wide'>{formattedCurrency(orderDetail.order_checkout.final_total)} </p>
+                            <p className='text-[#1E427E] font-HelveticaBold text-[22px] font-medium tracking-wide'>{formattedCurrency(totalPrice)} </p>
                         </div>
                     </div>
                     <div className='lg:hidden inline-block bg-[#f5f7f9] w-full'>
@@ -113,7 +123,7 @@ export default function BankingPayment() {
                             <div className={`text-[0.875rem] pr-[1.25rem] ease-in-out duration-200 overflow-hidden max-h-0 ${openDetail ? "max-h-[300px]" : ""}`}>
                                 <p className='pt-6 text-gray-500 font-medium]'>Nhà cung cấp</p>
                                 <figure className='flex flex-row items-center gap-2 pt-3'>
-                                    <img className='w-20' src='https://res.cloudinary.com/dc4hafqoa/image/upload/v1709630799/eFurniture/logo_o37agc.png' />
+                                    <img className='w-20' src='https://res.cloudinary.com/dc4hafqoa/image/upload/v1712089475/eFurniture/logo_white_ngffku.png' />
                                     <p className='text-base font-bold'>Công ty cổ phần eFurniture</p>
                                 </figure>
 

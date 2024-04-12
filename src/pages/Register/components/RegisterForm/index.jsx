@@ -21,7 +21,7 @@ function RegisterForm() {
   );
   const onFinish = (values) => {
     const data = {
-      username: values.email,
+      username: values.username,
       email: values.email,
       password: values.password,
       confirm_password: values.confirm_password,
@@ -37,6 +37,7 @@ function RegisterForm() {
       <Form
         className="max-w-[43.75rem]"
         name="register"
+        requiredMark="optional"
         labelCol={{
           span: 24,
         }}
@@ -55,6 +56,12 @@ function RegisterForm() {
           className="furniture-input w-full h-[3rem]"
           required
           errorMessage="Please enter your last name"
+        />
+        <FormInput
+          label="Username"
+          name="username"
+          type="username"
+          className="furniture-input w-full h-[3rem]"
         />
         <FormInput
           label="Email"

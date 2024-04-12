@@ -1,41 +1,50 @@
 
-import PropTypes from "prop-types";
-import { useState } from "react";
-import {
-    useFetchWithAuth,
-} from "@hooks/api-hooks";
-import { get_voucher_by_specified } from "@api/voucherApi";
-import useUserCart from "@hooks/useUserCart";
-import LoadingSpinner from "@components/LoadingSpinner";
-import {
-    usePostAuth,
-} from "@hooks/api-hooks";
 import {
     apply_voucher
 } from "@api/voucherApi";
-import VoucherModal from "../../../../components/VoucherModal";
-
+import {
+    usePostAuth,
+} from "@hooks/api-hooks";
+import useUserCart from "@hooks/useUserCart";
+import PropTypes from "prop-types";
+import { useState } from "react";
+import CouponModal from "../../../../components/CouponModal";
+import useVoucher from "../../../../hooks/useVoucher";
+import { useOrderStore } from "../../../../stores/useGuestOrderStore";
+import { useLocation } from "react-router-dom";
 function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
 
-    const [chooseVoucher, setChooseVoucher] = useState();
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
 
-    const { cart, getTotalPrice } = useUserCart();
+    const purchaseItems = JSON.parse(params.get("q"));
 
-    const voucherInfo = cart?.map((item) => ({
+    const getTotalPrice = () =>
+        purchaseItems.reduce((total, cur) => {
+            const subPrice = cur.select_variation.reduce(
+                (total, cur) => total + cur.sub_price,
+                0
+            );
+            return total + (cur.sale_price + subPrice) * cur.quantity_in_cart;
+        }, 0);
+
+    const { selectedCoupon } = useOrderStore();
+
+    const {
+        couponList,
+    } = useVoucher();
+
+    const productForVoucher = purchaseItems.map((item) => ({
         product_id: item._id,
-        price: item.sale_price ? item.sale_price : item.regular_price,
-    }));
-
-    const productForVoucher = cart?.map((item) => ({
-        product_id: item._id,
-        price: item.sale_price ? item.sale_price : item.regular_price,
+        price: item.select_variation.reduce(
+            (total, cur) => total + cur.sub_price,
+            0
+        ) + item.sale_price,
         quantity: item.quantity_in_cart
     }));
 
-    const { data, isLoading } = useFetchWithAuth(get_voucher_by_specified(), undefined, { voucherInfo });
-
     const { mutate: applyVoucher } = usePostAuth(
-        apply_voucher(chooseVoucher),
+        apply_voucher(selectedCoupon),
         undefined,
         (data) => {
             setDataAfterVoucher(data.data.metaData);
@@ -45,28 +54,40 @@ function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
         }
     );
 
-    const emptyVoucher = !data?.length;
-
-    console.log(cart)
+    const emptyVoucher = !couponList?.data.metaData.length;
 
     const handleSaveChoosenVoucher = () => {
-        applyVoucher(productForVoucher)
+        if (selectedCoupon) {
+            applyVoucher(productForVoucher);
+        }
+        setDataAfterVoucher(null)
         setIsModalCreateOpen(false);
     }
-
-    if (isLoading) return <LoadingSpinner />;
 
     return (
         <section className="relative">
             <p className='font-HelveticaBold text-[1rem] leading-[1.20833] tracking-[0.08em] pb-6'>Choose eFurniture voucher</p>
             <div className={`max-w-[600px] pb-24 pt-5 ${emptyVoucher ? "h-[50px]" : "h-[500px] overflow-y-auto "}`}>
-                {data?.map((voucher) => (
-                    <VoucherModal
-                        data={voucher}
-                        getTotalPrice={getTotalPrice}
-                        chooseVoucher={chooseVoucher}
-                        setChooseVoucher={setChooseVoucher} />
-                ))}
+                {couponList?.data.metaData
+                    .sort((a, b) => {
+                        const aIsHideCoupon = (a.used_turn_count === a.maximum_use_per_user) || (a.minimum_order_value > getTotalPrice());
+                        const bIsHideCoupon = (b.used_turn_count === b.maximum_use_per_user) || (b.minimum_order_value > getTotalPrice());
+                        if (aIsHideCoupon && !bIsHideCoupon) {
+                            return 1;
+                        } else if (!aIsHideCoupon && bIsHideCoupon) {
+                            return -1;
+                        } else {
+                            return 0;
+                        }
+                    })
+                    .map((voucher) => (
+                        <CouponModal
+                            key={voucher._id}
+                            data={voucher}
+                            getTotalPrice={getTotalPrice}
+                        />
+                    ))
+                }
                 {emptyVoucher
                     ? (
                         <p>No voucher available in your wallet</p>
@@ -84,7 +105,7 @@ function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
                         Cancel
                     </button>
                     <button
-                        onClick={() => handleSaveChoosenVoucher(false)}
+                        onClick={() => handleSaveChoosenVoucher()}
                         className="furniture-button-black-hover px-[50px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-6"
                     >
                         Apply
@@ -97,6 +118,7 @@ function CouponListModal({ setIsModalCreateOpen, setDataAfterVoucher }) {
 
 CouponListModal.propTypes = {
     setIsModalCreateOpen: PropTypes.func.isRequired,
+    setDataAfterVoucher: PropTypes.func.isRequired,
 };
 
 export default CouponListModal

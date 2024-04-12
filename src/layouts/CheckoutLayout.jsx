@@ -1,21 +1,30 @@
 import CheckoutNavbar from "@components/CheckoutNavbar"
 import { Outlet } from "react-router-dom"
 import AppSuspense from "@components/AppSuspense"
-import  CheckoutFooter  from "@components/CheckoutFooter"
+import CheckoutFooter from "@components/CheckoutFooter"
 import CheckoutBottomBar from "@components/CheckoutBottomBar"
 import LoginBottomBar from "@components/LoginBottomBar"
-const RootLayout = () => {
+import useAuth from "../stores/useAuth"
+import { ErrorBoundary } from "react-error-boundary"
+import Error from "../pages/Error"
+
+const CheckoutLayout = () => {
+  const { accessToken } = useAuth();
+
   return (
+    <ErrorBoundary fallback={<Error />}>
     <div className="font-HelveticaRoman">
       <CheckoutBottomBar />
-      <LoginBottomBar />
+      {!accessToken && <LoginBottomBar />}
       <CheckoutNavbar />
       <AppSuspense>
         <Outlet />
       </AppSuspense>
-      <CheckoutFooter/>
+      <CheckoutFooter />
     </div>
+    </ErrorBoundary>
+    
   )
 }
 
-export default RootLayout
+export default CheckoutLayout

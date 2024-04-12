@@ -5,22 +5,36 @@ import formattedCurrency from "../../../../utils/formattedCurrency";
 function FurnitureDetail() {
   const { furniture, onSale } = useContext(FurnitureCardContext);
 
-  const { attributes, sale_price, regular_price } = furniture;
+  const { attributes, sale_price, regular_price, select_variation } = furniture;
+  const subPrice = select_variation.reduce(
+    (total, cur) => total + cur.sub_price,
+    0
+  );
 
   const attributeKeys = Object.keys(attributes.attributeType);
+
   return (
     <main className="flex flex-row justify-between pb-[2rem] text-[0.875rem] leading-[1.6] border-b-[0.0625rem] border-border">
       <div>
         <ul className="list-none">
-          {attributeKeys.map((key) => (
-            <li key={key}>
-              <span className="capitalize">{key}: </span>
-              <span>{attributes.attributeType[key]}</span>
-            </li>
-          ))}
+          {attributeKeys.map((key) => {
+            const { value, unit } = attributes.attributeType[key];
+
+            return (
+              <li key={key}>
+                <span className="capitalize">{key}: </span>
+                <span>
+                  {value} {unit}
+                </span>
+              </li>
+            );
+          })}
         </ul>
         <nav className="mt-4">
-          <a className="underline text-[0.8125rem]" href={`/product-detail/${furniture.slug}`}>
+          <a
+            className="underline text-[0.8125rem]"
+            href={`/product-detail/${furniture.slug}`}
+          >
             View details
           </a>
         </nav>
@@ -31,7 +45,7 @@ function FurnitureDetail() {
             {formattedCurrency(regular_price)}
           </span>
         )}
-        <span className="ml-2">{formattedCurrency(sale_price)}</span>
+        <span className="ml-2">{formattedCurrency(sale_price + subPrice)}</span>
       </div>
     </main>
   );

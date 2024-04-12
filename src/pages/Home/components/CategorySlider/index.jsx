@@ -1,5 +1,8 @@
 import Sliders from "@components/Slider";
 import CategoryTitle from "../../../../components/CategoryTitle";
+import { withFetchData } from "@hocs/withFetchData";
+import { get_furniture_type_api } from "../../../../api/furnitureTypeApi";
+import Proptypes from "prop-types";
 
 const categories = [
   {
@@ -44,15 +47,15 @@ const categories = [
   },
 ];
 
-const CategorySlider = () => {
+const CategorySlider = ({data}) => {
   return (
     <div>
-      <Sliders initialSlide={0} slideToScroll={6} slideToShow={6}>
-        {categories.map((category, index) => {
-          const { url, name } = category;
+      <Sliders initialSlide={0} slideToScroll={3} slideToShow={3}>
+        {data.map((category, index) => {
+          const {name, thumb, slug} = category;
           return (
             <div className="pr-2" key={index}>
-              <CategoryTitle url={url} name={name} />
+              <CategoryTitle name={name} url={thumb} slug={slug} />
             </div>
           );
         })}
@@ -61,4 +64,10 @@ const CategorySlider = () => {
   );
 };
 
-export default CategorySlider;
+CategorySlider.propTypes = {
+  data: Proptypes.array,
+};
+
+
+export default withFetchData(CategorySlider, get_furniture_type_api);
+
