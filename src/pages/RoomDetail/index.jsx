@@ -25,16 +25,17 @@ const RoomDetail = ({ data }) => {
 
       <div className="lg:col-span-9 md:col-span-9 col-span-12 grid grid-cols-2 gap-2">
         {catalog.map((item) => {
-          const { _id } = item.product;
+          const { _id, product } = item;
           return (
-            <FurnitureCard item={item.product} key={_id}>
-              <FurnitureCard.Model className="w-[60%]">
+            <FurnitureCard item={product} key={_id}>
+              <div className="relative">
+                <FurnitureCard.Model className="w-full" />
                 {accessToken ? (
                   <FurnitureCard.UserFavorite />
                 ) : (
                   <FurnitureCard.Favorite />
                 )}
-              </FurnitureCard.Model>
+              </div>
               <div className="px-[18px] relative flex flex-col justify-between">
                 <FurnitureCard.Attribute />
                 <FurnitureCard.Price />

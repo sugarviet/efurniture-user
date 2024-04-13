@@ -94,13 +94,14 @@ function FurnitureCatalog({ data }) {
           const { _id } = item;
           return (
             <FurnitureCard item={item} key={_id}>
-              <FurnitureCard.Model className="w-[60%]">
+              <div className="relative">
+                <FurnitureCard.Model className="w-[60%]" />
                 {accessToken ? (
                   <FurnitureCard.UserFavorite />
                 ) : (
                   <FurnitureCard.Favorite />
                 )}
-              </FurnitureCard.Model>
+              </div>
               <div className="px-[18px] relative flex flex-col justify-between">
                 <FurnitureCard.Attribute />
                 <FurnitureCard.Price />
