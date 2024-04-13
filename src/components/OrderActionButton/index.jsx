@@ -3,6 +3,7 @@ import React from "react";
 import useNavigation from "../../hooks/useNavigation";
 import useCancelOrder from "../../pages/Profile/hooks/useCancelOrder";
 import OrderCancelForm from "../OrderCancelForm";
+import useUserCart from "../../hooks/useUserCart";
 
 const TYPES = {
   Pending: {
@@ -39,6 +40,11 @@ const TYPES = {
 
 function OrderActionButton({ type, className, data }) {
   const { name, bgColor, action } = TYPES[type];
+  const { order_products } = data;
+
+  const { addAllToCart } = useUserCart();
+
+  console.log(data);
 
   const { toggleModalDelete, isModalDeleteOpen } = useCancelOrder();
 
@@ -53,6 +59,23 @@ function OrderActionButton({ type, className, data }) {
     }
     if (actionName === "viewDetail") {
       go_to_order_detail(data._id);
+    }
+    if (actionName === "repurchase") {
+      const list = order_products.map((product) => {
+        const { product_id } = product;
+        const { variation } = product_id;
+        return {
+          ...product_id,
+          select_variation: variation.map((item) => {
+            const { _id, properties } = item;
+            return {
+              variation_id: _id,
+              property_id: properties[0]._id,
+            };
+          }),
+        };
+      });
+      addAllToCart(list);
     }
   };
 

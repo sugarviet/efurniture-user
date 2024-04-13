@@ -9,6 +9,7 @@ function FeedbackForm({ id, onCancel }) {
   const { success_message } = useNotification();
   const { mutate } = usePostAuth(get_feedback_api(), undefined, () => {
     success_message(null, null, "Your feedback has been recorded");
+    onCancel();
   });
 
   const onFinish = (value) => {
