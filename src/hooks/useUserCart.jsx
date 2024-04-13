@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  get_add_all_api,
   get_add_to_cart_api,
   get_cart_api,
   get_decrease_by_one_api,
@@ -77,6 +78,19 @@ function useUserCart() {
     get_cart_api()
   );
 
+  const { mutate: addManyToCartMutation } = usePostAuth(
+    get_add_all_api(),
+    undefined,
+    () => {
+      toggleCart();
+    },
+    (error) => {
+      const message = error.response.data.error.message;
+      error_message(null, null, message);
+    },
+    get_cart_api()
+  );
+
   useEffect(() => {
     if (isLoading || !data) return;
     setCart(data.products);
@@ -125,8 +139,19 @@ function useUserCart() {
     updateVariationMutation(body);
   };
 
+  const addAllToCart = (list) => {
+    const body = list.map((item) => ({
+      _id: item._id,
+      variation: item.select_variation,
+      quantity: 1,
+    }));
+
+    addManyToCartMutation(body);
+  };
+
   return {
     isLoading,
+    addAllToCart,
     updateVariation,
     cart,
     addToCart,

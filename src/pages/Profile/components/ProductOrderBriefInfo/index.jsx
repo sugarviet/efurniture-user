@@ -4,13 +4,11 @@ import FeedbackForm from "../../../../components/FeedbackForm";
 import { useState } from "react";
 import ProductVariation from "../../../ProductDetail/components/ProductVariation";
 
-function ProductOrderBriefInfo({ product }) {
-  console.log(product);
+function ProductOrderBriefInfo({ product, state }) {
   const [modelOpened, setModalOpened] = useState(false);
 
-  const onSale = product.product_id.regular_price - product.product_id.sale_price > 0;
-
-
+  const onSale =
+    product.product_id.regular_price - product.product_id.sale_price > 0;
 
   const subPrice = product.variation.reduce(
     (total, cur) => total + cur.sub_price,
@@ -22,7 +20,10 @@ function ProductOrderBriefInfo({ product }) {
       <section className="mt-8 flex flex-row justify-between border-b border-grey5 pb-8">
         <div className="flex flex-row gap-5">
           <figure className="w-16 h-16 sm:w-28 sm:h-28 rounded-xl border-grey5 border-[1px] px-2 py-2 bg-white">
-            <img className="w-full h-full" src={product.product_id.thumbs}></img>
+            <img
+              className="w-full h-full"
+              src={product.product_id.thumbs}
+            ></img>
           </figure>
           <article className="flex flex-row py-1">
             <div className="flex flex-col justify-between">
@@ -35,10 +36,9 @@ function ProductOrderBriefInfo({ product }) {
               <div>
                 {product.variation.map((item, i) => {
                   const { variation_id, property_id } = item;
-                  const currentVariation =
-                    product.product_id.variation.find(
-                      (i) => i._id === variation_id
-                    );
+                  const currentVariation = product.product_id.variation.find(
+                    (i) => i._id === variation_id
+                  );
                   currentVariation.properties =
                     currentVariation.properties.filter(
                       (item) => item._id === property_id
@@ -54,23 +54,29 @@ function ProductOrderBriefInfo({ product }) {
                 })}
               </div>
             </div>
-            <div className='flex flex-col pl-24'>
-              {onSale &&
-                <p className='font-HelveticaRoman text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em] line-through text-grey2'>{formattedCurrency(product.product_id.regular_price)}</p>
-              }
-              <p className='font-HelveticaBold text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]'>{formattedCurrency(product.product_id.sale_price + subPrice)}</p>
+            <div className="flex flex-col pl-24">
+              {onSale && (
+                <p className="font-HelveticaRoman text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em] line-through text-grey2">
+                  {formattedCurrency(product.product_id.regular_price)}
+                </p>
+              )}
+              <p className="font-HelveticaBold text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]">
+                {formattedCurrency(product.product_id.sale_price + subPrice)}
+              </p>
             </div>
           </article>
         </div>
-        <div className="self-center">
-          <button
-            type="button"
-            onClick={() => setModalOpened(true)}
-            className="furniture-button-white-hover p-4 text-regular text-xs"
-          >
-            Feedback
-          </button>
-        </div>
+        {state === "done" && (
+          <div className="self-center">
+            <button
+              type="button"
+              onClick={() => setModalOpened(true)}
+              className="furniture-button-white-hover p-4 text-regular text-xs"
+            >
+              Feedback
+            </button>
+          </div>
+        )}
       </section>
 
       <AppModal isOpen={modelOpened} onClose={() => setModalOpened(false)}>
