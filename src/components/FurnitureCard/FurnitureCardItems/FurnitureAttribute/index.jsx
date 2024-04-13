@@ -28,7 +28,7 @@ function FurnitureAttribute() {
                     transform: `translateX(-${0.8 * index}rem)`,
                   }}
                   key={index}
-                  className={`w-7 h-7 rounded-full`}
+                  className={`w-7 h-7 rounded-full shadow-lg my-1 shadow-gray-400`}
                 ></li>
               );
             })}
