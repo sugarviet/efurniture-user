@@ -14,17 +14,21 @@ function OrderCancelForm({ data, isModalDeleteOpen, toggleModalDelete }) {
 
     const isCancelMethod = data.payment_method === "Online Payment" || data.order_checkout.paid.type === "Deposit"
 
-
     const onFinish = (values) => {
-        const body = {
-            note: {
-                ...values,
-                account_number: selectedBank.account_number,
-                bank_account_name: selectedBank.bank_account_name,
-                bank_code: selectedBank.bank_code,
-                bank_name: selectedBank.bank_name
-            }
-        };
+        let body;
+        if (isCancelMethod) {
+            body = {
+                note: {
+                    ...values,
+                    account_number: selectedBank.account_number,
+                    bank_account_name: selectedBank.bank_account_name,
+                    bank_code: selectedBank.bank_code,
+                    bank_name: selectedBank.bank_name
+                }
+            };
+        } else {
+            body = { note: values };
+        }
         cancelOrder(body);
         form.resetFields();
         toggleModalDelete(!isModalDeleteOpen)
