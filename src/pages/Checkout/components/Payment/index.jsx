@@ -15,12 +15,7 @@ const PAYMENT_METHOD = {
   cod: "COD",
 }
 
-function Payment() {
-
-  const { accessToken } = useAuth();
-
-  const { getTotalPrice } = usePurchase();
-
+function Payment({totalPrice}) {
   const { setSelectedPayment, selectedPayment } = useOrderStore();
 
   const { handleChangeTab } = useSwitchTab();
@@ -43,7 +38,7 @@ function Payment() {
       </article>
 
       <section className='font-HelveticaRoman'>
-        <p className='text-[14px] lg:text-[14px] leading-[1.1875] tracking-[0.5px] pb-1'>Payment total: <strong>{formattedCurrency(getTotalPrice())}</strong></p>
+        <p className='text-[14px] lg:text-[14px] leading-[1.1875] tracking-[0.5px] pb-1'>Payment total: <strong>{formattedCurrency(totalPrice)}</strong></p>
         <div className="pb-16">
           <RadioModal
             name="payment"
