@@ -49,7 +49,7 @@ function Checkout() {
       component: <Shipping />,
     },
     payment: {
-      component: <Payment />,
+      component: <Payment totalPrice={getTotalPrice()}/>,
     },
     summary: {
       component: (
