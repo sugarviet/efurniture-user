@@ -13,12 +13,16 @@ export default function BankingPayment() {
     const location = useLocation();
     const orderDetail = location.state || { orderDetail: null };
 
+    console.log(orderDetail);
+
     const orderId = orderDetail._id;
     const isDeposit = orderDetail.order_checkout.paid.type === "Deposit";
 
     const totalPrice = orderDetail.order_checkout.paid.must_paid;
 
-    const QR = `https://img.vietqr.io/image/${BANK_INFO.BANK_ID}-${BANK_INFO.ACCOUNT_NO}-${BANK_INFO.TEMPLATE}.png?amount=${totalPrice}&addInfo=${orderId}&accountName=${BANK_INFO.ACCOUNT_NAME}`
+    const totalPriceFormat = Math.round(totalPrice);
+
+    const QR = `https://img.vietqr.io/image/${BANK_INFO.BANK_ID}-${BANK_INFO.ACCOUNT_NO}-${BANK_INFO.TEMPLATE}.png?amount=${totalPriceFormat}&addInfo=${orderId}&accountName=${BANK_INFO.ACCOUNT_NAME}`
 
     const {
         dataTransaction,
