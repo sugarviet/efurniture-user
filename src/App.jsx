@@ -11,7 +11,7 @@ function App() {
     <>
     <ErrorBoundary fallback={<Error />}>
 
-      <Toaster closeButton position="top-right" />
+      <Toaster closeButton position="bottom-left" />
       <RouterProvider router={routers} />
     </ErrorBoundary>
 
