@@ -40,10 +40,9 @@ export default function BankingPayment() {
         const interval = setInterval(() => {
             setIsPaid({
                 order_id: orderDetail._id,
-                // amount: dataTransaction[0].amount,
                 amount: totalPrice,
-                description: dataTransaction[0].description,
-                when: dataTransaction[0].when
+                description: 'Thanh toan VietQR',
+                when: "today"
             })
             //asyncTransaction({ bank_acc_id: BANK_INFO.ACCOUNT_NO });
             // if (dataTransaction && dataTransaction[0].amount >= totalPrice && dataTransaction[0].description.includes(orderId)) {
@@ -56,7 +55,7 @@ export default function BankingPayment() {
             //     })
 
             // }
-        }, 1000 * 10);
+        },1000 * 10);
         return () => clearInterval(interval);
     }, [dataTransaction]);
 
