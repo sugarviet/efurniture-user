@@ -8,7 +8,7 @@ const Search = ({ data }) => {
   const [params] = useSearchParams();
   const searchValue = params.get("q") || "";
 
-  if (!data.data.data.length)
+  if (!data.data.length)
     return <SearchResultNotFound searchValue={searchValue} />;
 
   return (
@@ -16,7 +16,7 @@ const Search = ({ data }) => {
       <section className="w-full text-xs tracking-widest font-semibold h-28 flex items-center justify-center uppercase my-4">
         <p className="text-5xl font-bold">SEARCH RESULTS FOR: {searchValue}</p>
       </section>
-      <FurnitureCatalog data={data.data} />
+      <FurnitureCatalog data={data} />
     </main>
   );
 };
