@@ -32,7 +32,7 @@ function CheckoutProduct({ activeTab }) {
             is in order before proceeding to payment.
           </p>
           <p className="text-[14px] leading-[23.3px] tracking-[0.5px]">
-            {cart.length} items
+            {purchaseItems.length} items
           </p>
         </section>
       )}
