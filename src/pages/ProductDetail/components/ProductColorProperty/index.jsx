@@ -14,7 +14,7 @@ function ProductColorProperty({
     <button
       disabled={outOfStock}
       onClick={() => {
-        onSelectProperty(_id);
+        onSelectProperty(property);
       }}
       className={classNames(
         "border w-fit p-2",

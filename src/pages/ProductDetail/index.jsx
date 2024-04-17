@@ -7,16 +7,40 @@ import formattedCurrency from "@utils/formattedCurrency";
 import Proptypes from "prop-types";
 import { Link } from "react-router-dom";
 import ProductFeedback from "./components/ProductFeedback";
-import { ProductDetailProvider } from "./ProductDetailContext";
+import {
+  ProductDetailContext,
+  ProductDetailProvider,
+} from "./ProductDetailContext";
+import { useContext } from "react";
 
-function ProductDetail({ data }) {
-  const { name, regular_price, sale_price, type, select_variation } = data;
-
+const ProductPrice = () => {
+  const { furniture } = useContext(ProductDetailContext);
+  const { select_variation, regular_price, sale_price } = furniture;
   const onSale = regular_price - sale_price > 0;
   const subPrice = select_variation.reduce(
     (total, cur) => total + cur.sub_price,
     0
   );
+
+  return (
+    <article className="text-left sm:text-right">
+      {onSale && (
+        <span className="line-through text-grey2 text-[11px] sm:text-sm">
+          {formattedCurrency(regular_price)}
+        </span>
+      )}
+      <span className="block text-base sm:text-[1.5rem] text-blackPrimary tracking-[0.0313rem] font-HelveticaBold">
+        {formattedCurrency(sale_price + subPrice)}
+        <div className="text-[11px] sm:text-[0.875rem] text-grey2 font-HelveticaRoman">
+          Rec. retail price
+        </div>
+      </span>
+    </article>
+  );
+};
+
+function ProductDetail({ data }) {
+  const { name, type } = data;
 
   return (
     <ProductDetailProvider data={data}>
@@ -46,19 +70,7 @@ function ProductDetail({ data }) {
                 <ProductInfo data={data} />
               </div>
               <div className="lg:pr-6 xl:pr-24 max-w-[36.25rem] w-[100%] lg:w-[40%] 2xl:w-[100%] pt-8 sm:pt-0">
-                <article className="text-left sm:text-right">
-                  {onSale && (
-                    <span className="line-through text-grey2 text-[11px] sm:text-sm">
-                      {formattedCurrency(regular_price)}
-                    </span>
-                  )}
-                  <span className="block text-base sm:text-[1.5rem] text-blackPrimary tracking-[0.0313rem] font-HelveticaBold">
-                    {formattedCurrency(sale_price + subPrice)}
-                    <div className="text-[11px] sm:text-[0.875rem] text-grey2 font-HelveticaRoman">
-                      Rec. retail price
-                    </div>
-                  </span>
-                </article>
+                <ProductPrice />
                 <ProductAddToCart />
                 <div className="mt-2 flex flex-col justify-center items-center gap-[0.5rem] text-grey3 flex-wrap text-[0.8125rem] leading-[1.77] tracking-[0.0384]">
                   <span className="">
