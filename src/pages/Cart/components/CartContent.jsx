@@ -3,10 +3,18 @@ import CartProduct from "@components/CartProduct";
 import formattedCurrency from "@utils/formattedCurrency";
 import EmptyCart from "./EmptyCart";
 import Proptypes from "prop-types";
+import usePurchase from "../../../hooks/usePurchase";
 
 const CartContent = ({ cartData }) => {
-   const { cart, getTotalPrice } = cartData;
+  const { cart } = cartData;
   const navigate = useNavigate();
+
+  const {
+    addToPurchaseItems,
+    getTotalPrice,
+    isInPurchase,
+    removeFromPurchaseItems,
+  } = usePurchase();
 
   if (!cart.length) {
     return <EmptyCart />;
@@ -22,7 +30,14 @@ const CartContent = ({ cartData }) => {
           </div>
 
           {cart.map((item) => (
-            <CartProduct key={item._id} data={item} cartData={cartData} />
+            <CartProduct
+              addToPurchaseItems={addToPurchaseItems}
+              removeFromPurchaseItems={removeFromPurchaseItems}
+              isInPurchase={isInPurchase}
+              cartData={cartData}
+              key={item.code}
+              data={item}
+            />
           ))}
         </div>
         <div className="furniture-divided-left pt-8 px-5 lg:pt-10 lg:px-16 flex flex-col gap-5">
