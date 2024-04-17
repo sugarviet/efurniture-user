@@ -5,7 +5,12 @@ import { FurnitureCardContext } from "../../FurnitureCardContext";
 function FurniturePrice() {
   const { furniture, onSale } = useContext(FurnitureCardContext);
 
-  const { regular_price, sale_price } = furniture;
+  const { regular_price, sale_price, select_variation } = furniture;
+
+  const subPrice = select_variation.reduce(
+    (total, cur) => total + cur.sub_price,
+    0
+  );
 
   return (
     <div className="flex items-end gap-[0.8em] py-4">
@@ -15,7 +20,9 @@ function FurniturePrice() {
             Rec. retail price
           </div>
           <span className="order-2 mr-[0.625rem] text-xs tracking-[0.9px] text-black">
-            <span className="mr-2">{formattedCurrency(sale_price)}</span>
+            <span className="mr-2">
+              {formattedCurrency(sale_price + subPrice)}
+            </span>
 
             {onSale ? (
               <span className="line-through">

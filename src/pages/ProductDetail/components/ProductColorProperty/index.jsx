@@ -24,7 +24,7 @@ function ProductColorProperty({
     >
       <div
         style={{ backgroundColor: value }}
-        className={`rounded-full w-10 h-10 ${className}`}
+        className={`rounded-full w-10 h-10 border ${className}`}
       ></div>
     </button>
   );
