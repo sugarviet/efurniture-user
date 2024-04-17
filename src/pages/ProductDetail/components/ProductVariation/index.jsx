@@ -3,8 +3,8 @@ import ProductColorProperty from "../ProductColorProperty";
 function ProductVariation({ variation, currentVariation, onUpdateVariation, className }) {
   const { name, properties } = variation;
 
-  const onSelectProperty = (property_id) => {
-    onUpdateVariation(property_id);
+  const onSelectProperty = (property) => {
+    onUpdateVariation(property);
   };
 
   return (

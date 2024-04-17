@@ -1,10 +1,9 @@
 import useUserCart from "../hooks/useUserCart";
 
 export const withUserCart = (WrappedComponent) => {
-  return () => {
+  return (props) => {
     const cart = useUserCart();
-    
 
-    return <WrappedComponent cartData={cart}/>;
+    return <WrappedComponent {...props} cartData={cart} />;
   };
 };

@@ -65,13 +65,23 @@ function CartProduct({
               (i) => i.variation_id === _id
             );
 
-            const onUpdateVariation = (property_id) => {
+            const onUpdateVariation = (property) => {
+              const { _id: property_id, stock, sub_price } = property;
               const updated_select_variation = select_variation.map((obj) =>
                 Object.assign({}, obj)
               );
+
               updated_select_variation.find(
                 (i) => i.variation_id === _id
               ).property_id = property_id;
+
+              updated_select_variation.find(
+                (i) => i.variation_id === _id
+              ).sub_price = sub_price;
+
+              updated_select_variation.find(
+                (i) => i.variation_id === _id
+              ).stock = stock;
 
               updateVariation({
                 ...data,

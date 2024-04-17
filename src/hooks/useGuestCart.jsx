@@ -36,11 +36,11 @@ function useGuestCart() {
     setCart([...cart.filter((item) => item.code !== code)]);
   };
 
-  const increaseQuantity = (code) => {
+  const increaseQuantity = (code, quantity = 1) => {
     const cartClone = [...cart];
     const item = cartClone.find((item) => item.code === code);
 
-    item.quantity_in_cart += 1;
+    item.quantity_in_cart += quantity;
 
     setCart(cartClone);
   };
@@ -81,12 +81,32 @@ function useGuestCart() {
     setCart([...cart]);
   };
 
+  const addManyToCart = (list) => {
+    const subCart = [...cart];
+    for (let i = 0; i < list.length; i++) {
+      const { product, quantity } = list[i];
+      product.code = hashCodeItem(product);
+
+      const isInCart = subCart.some((i) => i.code === product.code);
+
+      if (!isInCart) {
+        subCart.push({ ...product, quantity_in_cart: quantity });
+      } else {
+        increaseQuantity(product.code, quantity);
+      }
+    }
+
+    setCart([...subCart]);
+    toggleCart();
+  };
+
   const clearCart = () => {
     setCart([]);
   };
 
   return {
     cart,
+    addManyToCart,
     updateVariation,
     addToCart,
     decreaseQuantity,
