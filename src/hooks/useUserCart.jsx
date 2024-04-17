@@ -149,7 +149,18 @@ function useUserCart() {
     addManyToCartMutation(body);
   };
 
+  const addManyToCart = (list) => {
+    const body = list.map((item) => ({
+      _id: item.product._id,
+      variation: item.product.select_variation,
+      quantity: item.quantity,
+    }));
+
+    addManyToCartMutation(body);
+  };
+
   return {
+    addManyToCart,
     isLoading,
     addAllToCart,
     updateVariation,
