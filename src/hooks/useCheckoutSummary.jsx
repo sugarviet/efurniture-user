@@ -16,7 +16,7 @@ export default function useCheckoutSummary() {
 
     const { accessToken } = useAuth();
 
-    const { go_to_payment, go_to_order_confirmation } = useNavigation();
+    const { go_to_payment, go_to_order_confirmation,go_to_pay_os } = useNavigation();
 
     const { cart, getTotalPrice } = accessToken ? useUserCart() : useGuestCart();
 
@@ -55,7 +55,10 @@ export default function useCheckoutSummary() {
         checkout_with_user(),
         undefined,
         (data) => {
-            handlePaymentMethod(data.data.metaData)
+         
+            if(data.status === 200 ){
+                window.location.href = data.data.metaData
+            }
         },
         (error) => {
             message.error(error.response.data.error.message);

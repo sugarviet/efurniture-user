@@ -38,7 +38,6 @@ const RoomSlider = ({ data }) => {
 
   const length = data.length;
 
-  console.log(length);
   const slideToShowLookup = {
     [length <= 5]: length,
     [length > 5]: length - 2,

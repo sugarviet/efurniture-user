@@ -20,7 +20,9 @@ function ProductDetails() {
                 (i) => i.variation_id === _id
               );
 
-              const updateVariation = (property_id) => {
+              const updateVariation = (property) => {
+                const { _id: property_id, stock, sub_price } = property;
+
                 const updated_select_variation = select_variation.map((obj) =>
                   Object.assign({}, obj)
                 );
@@ -28,6 +30,14 @@ function ProductDetails() {
                 updated_select_variation.find(
                   (i) => i.variation_id === _id
                 ).property_id = property_id;
+
+                updated_select_variation.find(
+                  (i) => i.variation_id === _id
+                ).sub_price = sub_price;
+
+                updated_select_variation.find(
+                  (i) => i.variation_id === _id
+                ).stock = stock;
 
                 setFurniture((preState) => ({
                   ...preState,

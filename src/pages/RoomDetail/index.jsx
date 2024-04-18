@@ -9,11 +9,27 @@ import useAuth from "@stores/useAuth";
 import formattedCurrency from "../../utils/formattedCurrency";
 import { withFetchData } from "../../hocs/withFetchData";
 import { get_room_detail } from "../../api/roomApi";
-import useCart from "../../hooks/useGuestCart";
+import useGuestCart from "../../hooks/useGuestCart";
+import { withGuestCart } from "../../hocs/withGuestCart";
+import { withUserCart } from "../../hocs/withUserCart";
+
+const AddRoomToCart = ({ cartData, data }) => {
+  const { addManyToCart } = cartData;
+  return (
+    <button
+      onClick={() => addManyToCart(data)}
+      className="uppercase bg-black text-white font-semibold px-36 py-3 text-xs"
+    >
+      Add to cart
+    </button>
+  );
+};
+
+const AddRoomToGuestCart = withGuestCart(AddRoomToCart);
+const AddRoomToUserCart = withUserCart(AddRoomToCart);
 
 const RoomDetail = ({ data }) => {
   const [catalog] = useState(data.products);
-  const { addManyToCart } = useCart();
   const { accessToken } = useAuth();
 
   return (
@@ -75,12 +91,11 @@ const RoomDetail = ({ data }) => {
               <FavoriteButton />
             </div>
 
-            <button
-              onClick={() => addManyToCart(catalog)}
-              className="uppercase bg-black text-white font-semibold px-36 py-3 text-xs"
-            >
-              Add to cart
-            </button>
+            {accessToken ? (
+              <AddRoomToUserCart data={catalog} />
+            ) : (
+              <AddRoomToGuestCart data={catalog} />
+            )}
           </div>
           <button className="uppercase bg-white text-black font-semibold px-36 py-3 text-xs border border-black">
             Find nearest store

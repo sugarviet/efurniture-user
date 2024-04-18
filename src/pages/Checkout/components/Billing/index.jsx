@@ -11,10 +11,9 @@ import useScroll from "@hooks/useScroll";
 import getCoordinates from "../../../../utils/getCoordinate";
 import { withFetchDataWithAddress } from "../../../../hocs/withFetchDataWithAddress";
 
-const BillingAddressUser = withFetchDataWithAddress(BillingAddress)
+const BillingAddressUser = withFetchDataWithAddress(BillingAddress);
 
 function Billing({ userData }) {
-
   const { accessToken } = useAuth();
 
   const { toggleLoginBottomBar } = useToggleLoginBottomBar();
@@ -23,8 +22,13 @@ function Billing({ userData }) {
 
   const { handleChangeTab } = useSwitchTab();
 
-  const { setOrderShipping, orderShipping, selectedDistrict, selectedWard, selectedAddress } =
-    useOrderStore();
+  const {
+    setOrderShipping,
+    orderShipping,
+    selectedDistrict,
+    selectedWard,
+    selectedAddress,
+  } = useOrderStore();
 
   const [isInputEmail, setIsInputEmail] = useState(false);
 
@@ -34,26 +38,25 @@ function Billing({ userData }) {
       `${address} ${selectedDistrict} ${selectedWard} ${province}`
     );
     !selectedAddress
-      ?
-      setOrderShipping({
-        ...values,
-        district: selectedDistrict.name,
-        ward: selectedWard.name,
-        longitude: coordinates[0],
-        latitude: coordinates[1],
-      })
-      :
-      setOrderShipping({
-        address: selectedAddress.address,
-        district: selectedDistrict.name,
-        email: userData.email,
-        ward: selectedWard.name,
-        longitude: coordinates[0],
-        latitude: coordinates[1],
-        first_name: userData.first_name,
-        last_name: userData.last_name,
-        phone: selectedAddress.phone,
-      })
+      ? setOrderShipping({
+          ...values,
+          district: selectedDistrict.name,
+          ward: selectedWard.name,
+          longitude: coordinates[0],
+          latitude: coordinates[1],
+        })
+      : setOrderShipping({
+          address: selectedAddress.address,
+          district: selectedDistrict.name,
+          email: userData.email,
+          ward: selectedWard.name,
+          province: "Thành Phố Hồ Chí Minh",
+          longitude: coordinates[0],
+          latitude: coordinates[1],
+          first_name: userData.first_name,
+          last_name: userData.last_name,
+          phone: selectedAddress.phone,
+        });
 
     handleChangeTab(CHECKOUT_TABS.delivery);
     handleScrollToTop();
@@ -70,7 +73,6 @@ function Billing({ userData }) {
       setIsInputEmail(true);
     }
   }, [userData]);
-
 
   return (
     <section>
@@ -111,8 +113,9 @@ function Billing({ userData }) {
             />
 
             <div
-              className={`ease-slow-to-fast duration-1000 overflow-hidden max-h-0 ${isInputEmail ? "max-h-[1500px]" : ""
-                }`}
+              className={`ease-slow-to-fast duration-1000 overflow-hidden max-h-0 ${
+                isInputEmail ? "max-h-[1500px]" : ""
+              }`}
             >
               <section className="pb-4">
                 <section className="mb-6">
@@ -127,18 +130,18 @@ function Billing({ userData }) {
                 </section>
               </section>
 
-              {accessToken ?
-                <BillingAddressUser/>
-                :
+              {accessToken ? (
+                <BillingAddressUser />
+              ) : (
                 <BillingAddress userData={userData} />
-              }
-
+              )}
             </div>
 
             <button
               type="submit"
-              className={`furniture-button-black-hover w-full px-[55px] py-[14px] text-[0.6875rem] tracking-[0.125rem] ${!isInputEmail ? "mt-0" : "mt-6"
-                } `}
+              className={`furniture-button-black-hover w-full px-[55px] py-[14px] text-[0.6875rem] tracking-[0.125rem] ${
+                !isInputEmail ? "mt-0" : "mt-6"
+              } `}
             >
               CONTINUE TO DELIVERY
             </button>

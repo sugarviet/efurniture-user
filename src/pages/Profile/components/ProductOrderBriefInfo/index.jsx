@@ -7,8 +7,8 @@ import ProductVariation from "../../../ProductDetail/components/ProductVariation
 function ProductOrderBriefInfo({ product, state }) {
   const [modelOpened, setModalOpened] = useState(false);
 
-  const onSale =
-    product.product_id.regular_price - product.product_id.sale_price > 0;
+  // const onSale =
+  //   product.product_id.regular_price - product.price > 0;
 
   const subPrice = product.variation.reduce(
     (total, cur) => total + cur.sub_price,
@@ -21,7 +21,7 @@ function ProductOrderBriefInfo({ product, state }) {
         <div className="flex flex-row gap-5">
           <figure className="w-16 h-16 sm:w-28 sm:h-28 rounded-xl border-grey5 border-[1px] px-2 py-2 bg-white">
             <img
-              className="w-full h-full"
+              className="w-full h-full object-contain"
               src={product.product_id.thumbs}
             ></img>
           </figure>
@@ -55,13 +55,13 @@ function ProductOrderBriefInfo({ product, state }) {
               </div>
             </div>
             <div className="flex flex-col pl-24">
-              {onSale && (
+              {/* {onSale && (
                 <p className="font-HelveticaRoman text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em] line-through text-grey2">
                   {formattedCurrency(product.product_id.regular_price)}
                 </p>
-              )}
+              )} */}
               <p className="font-HelveticaBold text-[13px] sm:text-[16px] leading-[1.20833] tracking-[0.08em]">
-                {formattedCurrency(product.product_id.sale_price + subPrice)}
+                {formattedCurrency(product.price + subPrice)}
               </p>
             </div>
           </article>
