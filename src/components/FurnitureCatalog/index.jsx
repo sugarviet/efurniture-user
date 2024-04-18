@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FilterSectionWrapper from "../FilterSectionWrapper";
 import FurnitureCard from "../FurnitureCard";
 import useAuth from "../../stores/useAuth";
@@ -9,6 +9,10 @@ import EmptyProductResult from "../EmptyProductResult";
 function FurnitureCatalog({ data }) {
   const [catalog, setCatalog] = useState(data.data || []);
   const { accessToken } = useAuth();
+
+  useEffect(() => {
+    setCatalog(data.data);
+  }, [data]);
 
   if (!data.data.length) return <EmptyProductResult />;
 
