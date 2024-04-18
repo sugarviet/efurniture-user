@@ -1,7 +1,8 @@
 const FURNITURE_URL = '/product'
 
-export const get_furniture_by_type_api = (params, page = 1) => {
+export const get_furniture_by_type_api = (params, urlParam) => {
     const { type, subtype } = params;
+    const { page = 1 } = urlParam;
     if (!subtype) return `${FURNITURE_URL}/${type}?page=${page}&limit=10`
 
     return `${FURNITURE_URL}/${type}/${subtype}?page=${page}&limit=10`
