@@ -37,15 +37,7 @@ function Summary({ purchaseItems, totalPrice }) {
     product_id: cart._id,
     price: cart.sale_price,
     quantity: cart.quantity_in_cart,
-    variation: cart.select_variation.map((item) => {
-      const { property_id, variation_id, sub_price } = item;
-      const body = {
-        property_id: property_id,
-        variation_id: variation_id,
-        sub_price: sub_price,
-      };
-      return body;
-    }),
+    variation: cart.select_variation,
   }));
 
   const onFinish = () => {
