@@ -9,7 +9,6 @@ import useCheckoutSummary from "../../../../hooks/useCheckoutSummary";
 import useNavigation from "../../../../hooks/useNavigation";
 import useVoucher from "../../../../hooks/useVoucher";
 import CouponListModal from "../CouponListModal";
-import usePurchase from "../../../../hooks/usePurchase";
 
 function Summary({ purchaseItems, totalPrice }) {
   const { accessToken } = useAuth();
@@ -50,7 +49,6 @@ function Summary({ purchaseItems, totalPrice }) {
   }));
 
   const onFinish = () => {
-    console.log(orderProducts);
     accessToken
       ? checkoutForUser({
           order_products: orderProducts,
@@ -232,10 +230,6 @@ function Summary({ purchaseItems, totalPrice }) {
             <span className="">QUOTATION TOTAL </span>
             <span>{formattedQuotationTotal}</span>
           </li>
-          {/* <li className="flex flex-row justify-between items-center mt-[-0.3125rem] pb-[0.25rem] text-[0.75rem] leading-[2] tracking-[0.05em] text-grey2">
-            <span className="">VAT part of total </span>
-            <span>0,00 ₫</span>
-          </li> */}
         </ul>
 
         <ul className="pt-8 list-none">
