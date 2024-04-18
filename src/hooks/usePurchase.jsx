@@ -25,8 +25,6 @@ function usePurchase() {
   };
 
   const updatePurchaseItem = (item) => {
-    if (!isInPurchase(item)) return;
-
     const purchaseItemsClone = [...purchaseItems].filter(
       (i) => i._id !== item._id
     );
