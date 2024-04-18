@@ -21,7 +21,7 @@ function ProductOrderBriefInfo({ product, state }) {
         <div className="flex flex-row gap-5">
           <figure className="w-16 h-16 sm:w-28 sm:h-28 rounded-xl border-grey5 border-[1px] px-2 py-2 bg-white">
             <img
-              className="w-full h-full"
+              className="w-full h-full object-contain"
               src={product.product_id.thumbs}
             ></img>
           </figure>
