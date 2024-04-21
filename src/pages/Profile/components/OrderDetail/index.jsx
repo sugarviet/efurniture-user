@@ -9,7 +9,6 @@ import ProductOrderBriefInfo from "../ProductOrderBriefInfo";
 import DepositPrice from "../../../../components/DepositPrice";
 
 function OrderDetail({ data }) {
-    console.log(data);
 
     const { go_to_back } = useNavigation();
 
