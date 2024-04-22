@@ -144,11 +144,11 @@ function BillingAddress({ userData, addressList }) {
                     className="furniture-input w-full h-[3rem]"
                     type={!selectedAddress ? "phone" : "default"}
                 />
-                {accessToken &&
+                {/* {accessToken &&
                     <FormCheckbox name="isCreateAddress" valuePropName={true}>
                         <span> Create a saved address for this address</span>
                     </FormCheckbox>
-                }
+                } */}
             </div>
         </section>
     )

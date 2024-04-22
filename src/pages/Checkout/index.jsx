@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { lazy, useEffect } from "react";
 import AppSuspense from "@components/AppSuspense";
 import useSwitchTab from "./hooks/useSwitchTab";
 import ToggleCheckoutButton from "@components/ToggleCheckoutButton";
@@ -9,6 +9,12 @@ import { withBillingGuest } from "../../hocs/withBillingGuest";
 import { withBillingUser } from "../../hocs/withBillingUser";
 import useAuth from "../../stores/useAuth";
 import { useLocation, useSearchParams } from "react-router-dom";
+import useUserCart from "../../hooks/useUserCart";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import useNavigation from "../../hooks/useNavigation";
+import { useFetchWithAuth } from "../../hooks/api-hooks";
+import { get_cart_api } from "../../api/cartApi";
+import { useGuestStore } from "../../stores/useGuestStore";
 
 const Billing = lazy(() => import("./components/Billing"));
 const Shipping = lazy(() => import("./components/Shipping"));
@@ -26,6 +32,13 @@ function Checkout() {
   const { accessToken } = useAuth();
 
   const { activeTab } = useSwitchTab();
+  const { go_to_home } = useNavigation();
+
+  const { data, isLoading } = useFetchWithAuth(get_cart_api(), undefined, {
+    enabled: !!accessToken,
+  });
+
+  const { cart } = useGuestStore();
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -49,7 +62,7 @@ function Checkout() {
       component: <Shipping />,
     },
     payment: {
-      component: <Payment totalPrice={getTotalPrice()}/>,
+      component: <Payment totalPrice={getTotalPrice()} />,
     },
     summary: {
       component: (
@@ -57,6 +70,17 @@ function Checkout() {
       ),
     },
   };
+
+  useEffect(() => {
+    if ((!isLoading && (!data || data.products.length === 0)) && accessToken) {
+      go_to_home();
+    }
+    if (!cart.length && !accessToken) {
+      go_to_home();
+    }
+  }, [data]);
+
+  if (isLoading && accessToken) return <LoadingSpinner />
 
   return (
     <main className="min-h-screen">
