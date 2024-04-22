@@ -11,7 +11,7 @@ function CartProduct({
   removeFromPurchaseItems,
   updatePurchaseItem,
 }) {
-  const { code, quantity_in_cart, select_variation, variation } = data;
+  const { code, quantity_in_cart, select_variation, variation, stock } = data;
   const {
     increaseQuantity,
     decreaseQuantity,
@@ -57,12 +57,17 @@ function CartProduct({
           <div className="mb-4">
             <FurnitureCard.Attribute />
           </div>
-          <QuantityOption
-            handleIncrease={() => increaseQuantity(code)}
-            handleDecrease={() => decreaseQuantity(code)}
-            handleUpdate={(quantity) => updateQuantity(code, quantity)}
-            quantity={quantity_in_cart}
-          />
+          <div>
+            <QuantityOption
+              handleIncrease={() => increaseQuantity(code)}
+              handleDecrease={() => decreaseQuantity(code)}
+              handleUpdate={(quantity) => updateQuantity(code, quantity)}
+              quantity={quantity_in_cart}
+            />
+            <div className="text-center text-xs text-gray-500">
+              {stock} products in stock
+            </div>
+          </div>
         </section>
         <section className="mb-4">
           {variation.map((item, i) => {

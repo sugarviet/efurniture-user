@@ -19,7 +19,7 @@ function FurnitureModel({ children, className }) {
     <div
       onClick={() => navigate(`/product-detail/${slug}`)}
       className={classNames(
-        `flex relative items-center justify-center mb-[0.9375rem] w-full hover:cursor-pointer`
+        `flex flex-col relative items-center justify-center mb-[0.9375rem] w-full hover:cursor-pointer`
       )}
       title={name}
     >
@@ -34,9 +34,8 @@ function FurnitureModel({ children, className }) {
         {dimension === MODEL_DIMENSION.three_dimension && (
           <RoomleConfiguration3D model_id={model3D} />
         )}
-
-        {children}
       </div>
+      {children}
       {onSale && (
         <div className="from-[#961200] to-[#c2560a] bg-gradient-to-l rounded-sm  px-2 py-1 flex items-center justify-center absolute bottom-4 right-0">
           <span className="text-white text-sm">-{salePercentage}%</span>
