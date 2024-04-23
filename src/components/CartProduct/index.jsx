@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import ProductVariation from "../../pages/ProductDetail/components/ProductVariation";
 import FurnitureCard from "../FurnitureCard";
 import QuantityOption from "../QuantityOption";
+import { classNames } from "../../utils/classNames";
 
 function CartProduct({
   data,
@@ -33,10 +34,14 @@ function CartProduct({
     <section className="flex flex-col my-6">
       <div className="flex justify-between">
         <input
+          disabled={stock === 0}
           onChange={(e) => handleSelectToPurchase(e.target.checked)}
           checked={isInPurchase(data)}
           type="checkbox"
-          className="furniture-checkbox "
+          className={classNames(
+            "furniture-checkbox",
+            stock === 0 ? "opacity-25 cursor-not-allowed" : ""
+          )}
         />
         <button
           onClick={() => removeFromCart(code)}
