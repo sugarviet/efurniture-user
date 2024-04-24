@@ -44,15 +44,14 @@ function OrderActionButton({ type, className, data }) {
 
   const { addAllToCart } = useUserCart();
 
-  console.log(data);
-
   const { toggleModalDelete, isModalDeleteOpen } = useCancelOrder();
 
-  const { go_to_payment, go_to_order_detail } = useNavigation();
+  const { go_to_order_detail } = useNavigation();
 
   const handleAction = (actionName) => {
     if (actionName === "payAgain") {
-      go_to_payment(data);
+      const pay_os_url = data.order_checkout.pay_os.checkoutUrl
+      window.location.href = pay_os_url
     }
     if (actionName === "cancelOrder") {
       toggleModalDelete();

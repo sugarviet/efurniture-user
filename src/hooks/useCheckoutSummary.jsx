@@ -16,7 +16,7 @@ export default function useCheckoutSummary() {
 
     const { accessToken } = useAuth();
 
-    const { go_to_payment, go_to_order_confirmation } = useNavigation();
+    const { go_to_payment, go_to_order_confirmation, go_to_pay_os } = useNavigation();
 
     const { cart, getTotalPrice } = accessToken ? useUserCart() : useGuestCart();
 
@@ -31,13 +31,13 @@ export default function useCheckoutSummary() {
         const isDeposit = metaData.order_checkout.paid.type === "Deposit"
         const isCod = metaData.payment_method === PAYMENT_METHOD.cod;
         if (isDeposit && isCod) {
-            go_to_payment(metaData);
+            window.location.href = metaData.order_checkout.pay_os.checkoutUrl
         }
         if (!isDeposit && isCod) {
             go_to_order_confirmation(metaData);
         }
         if (!isDeposit && !isCod) {
-            go_to_payment(metaData);
+            window.location.href = metaData.order_checkout.pay_os.checkoutUrl
         }
     };
 
@@ -55,7 +55,7 @@ export default function useCheckoutSummary() {
         checkout_with_user(),
         undefined,
         (data) => {
-            handlePaymentMethod(data.data.metaData)
+            handlePaymentMethod(data.data.metaData);
         },
         (error) => {
             message.error(error.response.data.error.message);

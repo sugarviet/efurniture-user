@@ -18,6 +18,7 @@ export default function CartSideBar({ cartData }) {
     removeFromPurchaseItems,
     purchaseItems,
     setPurchaseItems,
+    updatePurchaseItem,
   } = usePurchase();
 
   if (isLoading) return <LoadingSpinner />;
@@ -37,6 +38,7 @@ export default function CartSideBar({ cartData }) {
             {cart && cart?.length > 0 ? (
               cart.map((item) => (
                 <CartProduct
+                  updatePurchaseItem={updatePurchaseItem}
                   addToPurchaseItems={addToPurchaseItems}
                   removeFromPurchaseItems={removeFromPurchaseItems}
                   isInPurchase={isInPurchase}

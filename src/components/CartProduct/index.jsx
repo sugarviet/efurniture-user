@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ProductVariation from "../../pages/ProductDetail/components/ProductVariation";
 import FurnitureCard from "../FurnitureCard";
 import QuantityOption from "../QuantityOption";
@@ -8,6 +9,7 @@ function CartProduct({
   addToPurchaseItems,
   isInPurchase,
   removeFromPurchaseItems,
+  updatePurchaseItem,
 }) {
   const { code, quantity_in_cart, select_variation, variation } = data;
   const {
@@ -22,6 +24,10 @@ function CartProduct({
     if (!checked) removeFromPurchaseItems(data);
     if (checked) addToPurchaseItems(data);
   };
+
+  useEffect(() => {
+    updatePurchaseItem(data);
+  }, [data]);
 
   return (
     <section className="flex flex-col my-6">
@@ -65,13 +71,23 @@ function CartProduct({
               (i) => i.variation_id === _id
             );
 
-            const onUpdateVariation = (property_id) => {
+            const onUpdateVariation = (property) => {
+              const { _id: property_id, stock, sub_price } = property;
               const updated_select_variation = select_variation.map((obj) =>
                 Object.assign({}, obj)
               );
+
               updated_select_variation.find(
                 (i) => i.variation_id === _id
               ).property_id = property_id;
+
+              updated_select_variation.find(
+                (i) => i.variation_id === _id
+              ).sub_price = sub_price;
+
+              updated_select_variation.find(
+                (i) => i.variation_id === _id
+              ).stock = stock;
 
               updateVariation({
                 ...data,

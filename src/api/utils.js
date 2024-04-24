@@ -24,7 +24,12 @@ export const USER_API = axios.create({
 });
 
 export const BANKING_API = axios.create({
-    baseURL: BANKING_URL,
+    baseURL: BASE_URL,
+    headers: {
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': '*',
+    },
+    withCredentials: false,
 });
 
 const cookies = () => ({
@@ -134,7 +139,6 @@ USER_API.interceptors.response.use(
 
 BANKING_API.interceptors.request.use(
     (config) => {
-        config.headers["Authorization"] = `Apikey ${BANKING_API_KEY}`;
         return config;
     },
     (error) => {

@@ -8,6 +8,7 @@ import ProductOrderBriefInfo from "../ProductOrderBriefInfo";
 import OrderPaidMessage from "../../../../components/OrderPaidMessage";
 
 function OrderHistoryCard({ data }) {
+
   const { handleScrollToTop } = useScroll();
 
   const { go_to_order_detail } = useNavigation();

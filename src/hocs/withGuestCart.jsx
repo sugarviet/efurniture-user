@@ -1,9 +1,9 @@
 import useGuestCart from "../hooks/useGuestCart";
 
 export const withGuestCart = (WrappedComponent) => {
-  return () => {
+  return (props) => {
     const cart = useGuestCart();
 
-    return <WrappedComponent cartData={cart} />;
+    return <WrappedComponent {...props} cartData={cart} />;
   };
 };

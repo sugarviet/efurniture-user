@@ -23,8 +23,18 @@ function usePurchase() {
       return total + (item.sale_price + subPrice) * item.quantity_in_cart;
     }, 0);
   };
+
+  const updatePurchaseItem = (item) => {
+    const purchaseItemsClone = [...purchaseItems].filter(
+      (i) => i._id !== item._id
+    );
+
+    setPurchaseItems([...purchaseItemsClone, item]);
+  };
+
   return {
     purchaseItems,
+    updatePurchaseItem,
     getTotalPrice,
     setPurchaseItems,
     isInPurchase,
