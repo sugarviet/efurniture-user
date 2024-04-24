@@ -66,11 +66,9 @@ const refreshTokenAndRetry = async (config) => {
 
 const logoutUser = async () => {
     try {
-        const logoutResponse = await axios.post(get_auth_logout, {
-            access_token: cookies().accessToken.value,
-            refresh_token: cookies().refreshToken.value,
-            account_id: cookies().accountId.value
-        });
+        Cookies.remove('access_token')
+        Cookies.remove('refresh_token')
+        Cookies.remove('account_id')
         toast.error('Someone is logging into your account')
         await sleep(2000);
         window.location.replace("/login");
