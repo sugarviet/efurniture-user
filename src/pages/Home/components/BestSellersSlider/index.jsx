@@ -126,7 +126,6 @@ const bestsellers = [
 ];
 
 const BestSellersSlider = ({ data }) => {
-  console.log(data);
   const { accessToken } = useAuth();
   return (
     <div>

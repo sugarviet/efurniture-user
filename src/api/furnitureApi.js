@@ -8,6 +8,8 @@ export const get_furniture_by_type_api = (params, urlParam) => {
     return `${FURNITURE_URL}/${type}/${subtype}?page=${page}&limit=10`
 }
 
+export const get_furniture_info_api = () => FURNITURE_URL + '/info'
+
 export const get_furniture_detail_api = (params) => {
     const { slug } = params;
     return `${FURNITURE_URL}/detail/${slug}`
