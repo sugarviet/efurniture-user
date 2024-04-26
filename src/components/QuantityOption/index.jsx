@@ -15,6 +15,7 @@ function QuantityOption({
     setValue(quantity);
   }, [quantity]);
   const disableIncrease = quantity >= maxValue;
+  const disableDecrease = quantity <= minValue;
 
   return (
     <div className="flex flex-row items-center">
