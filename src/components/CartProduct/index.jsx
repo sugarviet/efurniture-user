@@ -34,13 +34,13 @@ function CartProduct({
     <section className="flex flex-col my-6">
       <div className="flex justify-between">
         <input
-          disabled={stock === 0}
+          disabled={quantity_in_cart > stock}
           onChange={(e) => handleSelectToPurchase(e.target.checked)}
           checked={isInPurchase(data)}
           type="checkbox"
           className={classNames(
             "furniture-checkbox",
-            stock === 0 ? "opacity-25 cursor-not-allowed" : ""
+            quantity_in_cart > stock ? "opacity-25 cursor-not-allowed" : ""
           )}
         />
         <button
@@ -64,6 +64,8 @@ function CartProduct({
           </div>
           <div>
             <QuantityOption
+              maxValue={stock}
+              minValue={1}
               handleIncrease={() => increaseQuantity(code)}
               handleDecrease={() => decreaseQuantity(code)}
               handleUpdate={(quantity) => updateQuantity(code, quantity)}
