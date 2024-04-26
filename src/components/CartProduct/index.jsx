@@ -27,6 +27,7 @@ function CartProduct({
   };
 
   useEffect(() => {
+    if (!isInPurchase(data)) return;
     updatePurchaseItem(data);
   }, [data]);
 
