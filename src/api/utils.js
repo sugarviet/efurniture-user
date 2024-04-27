@@ -99,14 +99,6 @@ const logoutUser = async () => {
 const errorHandler = async (error) => {
     if (error.response) {
         switch (error.response.status) {
-            case 401:
-                return refreshTokenAndRetry(error.config);
-            case 403:
-                console.error('Forbidden:', error.response.data);
-                break;
-            case 404:
-                toast.error('The requested does not exist');
-                break;
             case 409:
                 return logoutUser(error.config);
             case 500:
