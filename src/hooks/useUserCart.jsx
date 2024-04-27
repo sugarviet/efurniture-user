@@ -96,6 +96,8 @@ function useUserCart() {
     setCart(data.products);
   }, [data, isLoading]);
 
+  const getCart = () => cart || [];
+
   const addToCart = (item) => {
     const { _id, select_variation } = item;
 
@@ -165,6 +167,7 @@ function useUserCart() {
     addAllToCart,
     updateVariation,
     cart,
+    getCart,
     addToCart,
     decreaseQuantity,
     increaseQuantity,
