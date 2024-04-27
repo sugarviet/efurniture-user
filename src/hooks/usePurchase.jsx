@@ -25,6 +25,8 @@ function usePurchase() {
   };
 
   const updatePurchaseItem = (item) => {
+    if (item.stock <= 0) return;
+
     const purchaseItemsClone = [...purchaseItems].filter(
       (i) => i._id !== item._id
     );

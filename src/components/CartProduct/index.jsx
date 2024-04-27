@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import ProductVariation from "../../pages/ProductDetail/components/ProductVariation";
 import FurnitureCard from "../FurnitureCard";
 import QuantityOption from "../QuantityOption";
+import { classNames } from "../../utils/classNames";
 
 function CartProduct({
   data,
@@ -11,7 +12,7 @@ function CartProduct({
   removeFromPurchaseItems,
   updatePurchaseItem,
 }) {
-  const { code, quantity_in_cart, select_variation, variation } = data;
+  const { code, quantity_in_cart, select_variation, variation, stock } = data;
   const {
     increaseQuantity,
     decreaseQuantity,
@@ -26,6 +27,7 @@ function CartProduct({
   };
 
   useEffect(() => {
+    if (!isInPurchase(data)) return;
     updatePurchaseItem(data);
   }, [data]);
 
@@ -33,10 +35,14 @@ function CartProduct({
     <section className="flex flex-col my-6">
       <div className="flex justify-between">
         <input
+          disabled={quantity_in_cart > stock}
           onChange={(e) => handleSelectToPurchase(e.target.checked)}
           checked={isInPurchase(data)}
           type="checkbox"
-          className="furniture-checkbox "
+          className={classNames(
+            "furniture-checkbox",
+            quantity_in_cart > stock ? "opacity-25 cursor-not-allowed" : ""
+          )}
         />
         <button
           onClick={() => removeFromCart(code)}
@@ -57,12 +63,19 @@ function CartProduct({
           <div className="mb-4">
             <FurnitureCard.Attribute />
           </div>
-          <QuantityOption
-            handleIncrease={() => increaseQuantity(code)}
-            handleDecrease={() => decreaseQuantity(code)}
-            handleUpdate={(quantity) => updateQuantity(code, quantity)}
-            quantity={quantity_in_cart}
-          />
+          <div>
+            <QuantityOption
+              maxValue={stock}
+              minValue={1}
+              handleIncrease={() => increaseQuantity(code)}
+              handleDecrease={() => decreaseQuantity(code)}
+              handleUpdate={(quantity) => updateQuantity(code, quantity)}
+              quantity={quantity_in_cart}
+            />
+            <div className="text-center text-xs text-gray-500">
+              {stock} products in stock
+            </div>
+          </div>
         </section>
         <section className="mb-4">
           {variation.map((item, i) => {

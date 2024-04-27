@@ -8,6 +8,7 @@ const SECURE_API_DEVELOPMENT = "https://dream-editor.tech/api/v1"
 const API_URL_PRODUCTION = "http://34.126.181.161:4646/api/v1";
 import { toast } from "sonner";
 import { sleep } from "../utils/sleep";
+import { Modal } from "antd";
 const BANKING_URL_TEST = "https://oauth.casso.vn/v2";
 const BANKING_API_KEY = "AK_CS.2ca68e70f0d411ee97532f5af9784698.lb98a18NY0E4agIbxbZxHgZyLzA21E69pclqSgGix9Bpqtj2gQyf1aKTYs3kzyeHbt5c2q5H"
 
@@ -47,69 +48,27 @@ const cookies = () => ({
     },
 })
 
-const refreshTokenAndRetry = async (config) => {
-    try {
-        const refreshResponse = await axios.post(get_auth_refresh_token, {
-            refresh_token: cookies().refreshToken.value,
-            account_id: cookies().accountId.value
-        });
-        const accessTokenRes = refreshResponse.data.accessToken;
-        const refreshTokenRes = refreshResponse.data.refreshToken;
+// const refreshTokenAndRetry = async (config) => {
+//     try {
+//         const refreshResponse = await axios.post(get_auth_refresh_token, {
+//             refresh_token: cookies().refreshToken.value,
+//             account_id: cookies().accountId.value
+//         });
+//         const accessTokenRes = refreshResponse.data.accessToken;
+//         const refreshTokenRes = refreshResponse.data.refreshToken;
 
-        Cookies.set("access_token", accessTokenRes);
-        Cookies.set("refresh_token", refreshTokenRes);
+//         Cookies.set("access_token", accessTokenRes);
+//         Cookies.set("refresh_token", refreshTokenRes);
 
-        config.headers[cookies().accessToken.key] = accessTokenRes;
-        config.headers[cookies().refreshToken.key] = refreshTokenRes;
-        config.headers[cookies().accountId.key] = cookies().accountId.value;
+//         config.headers[cookies().accessToken.key] = accessTokenRes;
+//         config.headers[cookies().refreshToken.key] = refreshTokenRes;
+//         config.headers[cookies().accountId.key] = cookies().accountId.value;
 
-        return axios(config);
-    } catch (error) {
-        return Promise.reject(error);
-    }
-};
-
-const logoutUser = async () => {
-    try {
-        const logoutResponse = await axios.post(get_auth_logout, {
-            access_token: cookies().accessToken.value,
-            refresh_token: cookies().refreshToken.value,
-            account_id: cookies().accountId.value
-        });
-        toast.error('Someone is logging into your account')
-        await sleep(2000);
-        window.location.replace("/login");
-    } catch (error) {
-        return Promise.reject(error);
-    }
-}
-
-const errorHandler = async (error) => {
-    if (error.response) {
-        switch (error.response.status) {
-            case 401:
-                return refreshTokenAndRetry(error.config);
-            case 403:
-                console.error('Forbidden:', error.response.data);
-                break;
-            case 404:
-                toast.error('The requested does not exist');
-                break;
-            case 409:
-                return logoutUser(error.config);
-            case 500:
-                toast.error('Something went wrong');
-                break;
-            default:
-            // toast.error('Error:', error.response.data);
-        }
-    } else if (error.request) {
-        toast.error('Request made but no response received:', error.request);
-    } else {
-        toast.error('Error during request setup:', error.message);
-    }
-    return Promise.reject(error);
-};
+//         return axios(config);
+//     } catch (error) {
+//         return Promise.reject(error);
+//     }
+// };
 
 
 USER_API.interceptors.request.use(
@@ -129,14 +88,12 @@ API.interceptors.response.use(
     (response) => {
         return response
     },
-    errorHandler
 );
 
 USER_API.interceptors.response.use(
     (response) => {
         return response
     },
-    errorHandler
 );
 
 BANKING_API.interceptors.request.use(
