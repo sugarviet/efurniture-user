@@ -5,7 +5,7 @@ import { usePostAuth } from "../../hooks/api-hooks";
 import { get_feedback_api } from "../../api/feedbackApi";
 import useNotification from "../../hooks/useNotification";
 
-function FeedbackForm({ id, onCancel }) {
+function FeedbackForm({ id, onCancel, orderCode }) {
   const { success_message } = useNotification();
   const { mutate } = usePostAuth(get_feedback_api(), undefined, () => {
     success_message(null, null, "Your feedback has been recorded");
@@ -16,6 +16,7 @@ function FeedbackForm({ id, onCancel }) {
     const { content, rating } = value;
 
     const body = {
+      order_code: orderCode,
       product_id: id,
       content: content || "",
       rating: rating,

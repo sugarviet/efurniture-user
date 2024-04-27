@@ -4,11 +4,10 @@ import FeedbackForm from "../../../../components/FeedbackForm";
 import { useState } from "react";
 import ProductVariation from "../../../ProductDetail/components/ProductVariation";
 
-function ProductOrderBriefInfo({ product, state }) {
+function ProductOrderBriefInfo({ product, state, orderCode }) {
   const [modelOpened, setModalOpened] = useState(false);
-
-  const onSale =
-    product.product.regular_price - product.price > 0;
+  console.log(product);
+  const onSale = product.product.regular_price - product.price > 0;
 
   const subPrice = product.variation.reduce(
     (total, cur) => total + cur.sub_price,
@@ -66,7 +65,7 @@ function ProductOrderBriefInfo({ product, state }) {
             </div>
           </article>
         </div>
-        {state === "done" && (
+        {state === "done" && product.status === 1 && (
           <div className="self-center">
             <button
               type="button"
@@ -79,12 +78,15 @@ function ProductOrderBriefInfo({ product, state }) {
         )}
       </section>
 
-      <AppModal isOpen={modelOpened} onClose={() => setModalOpened(false)}>
-        <FeedbackForm
-          onCancel={() => setModalOpened(false)}
-          id={product.product_id._id}
-        />
-      </AppModal>
+      {product.status === 1 && (
+        <AppModal isOpen={modelOpened} onClose={() => setModalOpened(false)}>
+          <FeedbackForm
+            orderCode={orderCode}
+            onCancel={() => setModalOpened(false)}
+            id={product.product_id._id}
+          />
+        </AppModal>
+      )}
     </div>
   );
 }
