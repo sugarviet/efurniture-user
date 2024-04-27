@@ -11,12 +11,14 @@ import { useLocation } from "react-router-dom";
 import useSwitchTab from "../pages/Checkout/hooks/useSwitchTab";
 import { ErrorBoundary } from "react-error-boundary";
 import Error from "../pages/Error";
+import useSocket from "../hooks/useSocket";
 
 const GuestCartSideBar = withGuestCart(CartSideBar);
 const UserCartSideBar = withUserCart(CartSideBar);
 
 const RootLayout = () => {
   const { accessToken } = useAuth();
+  const { subcribeToLoginSocket } = useSocket();
 
   const { activeTab, handleChangeTab } = useSwitchTab();
 
@@ -26,7 +28,17 @@ const RootLayout = () => {
     if (pathname !== "/checkout") {
       handleChangeTab("billing");
     }
+ 
+    
   }, [activeTab]);
+  
+  useEffect(()=>{
+    if(accessToken){
+      console.log("Connect socket")
+      subcribeToLoginSocket();
+    }
+
+  }, [accessToken])
 
   return (
     <ErrorBoundary fallback={<Error />}>
