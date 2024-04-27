@@ -40,6 +40,7 @@ const ProductPrice = () => {
 };
 
 function ProductDetail({ data }) {
+  console.log(data)
   const { name, type } = data;
 
   return (
