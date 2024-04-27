@@ -61,7 +61,10 @@ export default function CartSideBar({ cartData }) {
                   <input
                     onChange={(e) => {
                       const checked = e.target.checked;
-                      if (checked) setPurchaseItems([...cart]);
+                      if (checked)
+                        setPurchaseItems(
+                          [...cart].filter((item) => item.stock > 0)
+                        );
                       if (!checked) setPurchaseItems([]);
                     }}
                     checked={purchaseItems.length === cart.length}

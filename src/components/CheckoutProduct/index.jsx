@@ -2,23 +2,8 @@ import FurnitureCard from "../FurnitureCard";
 import PropTypes from "prop-types";
 import formattedCurrency from "../../utils/formattedCurrency";
 import ProductVariation from "../../pages/ProductDetail/components/ProductVariation";
-import { useLocation } from "react-router-dom";
-function CheckoutProduct({ activeTab }) {
+function CheckoutProduct({ activeTab, purchaseItems = [], totalPrice }) {
   const discount = 0;
-
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-
-  const purchaseItems = JSON.parse(params.get("q"));
-
-  const getTotalPrice = () =>
-    purchaseItems.reduce((total, cur) => {
-      const subPrice = cur.select_variation.reduce(
-        (total, cur) => total + cur.sub_price,
-        0
-      );
-      return total + (cur.sale_price + subPrice) * cur.quantity_in_cart;
-    }, 0);
 
   return (
     <section className="px-5 pb-6 lg:px-[60px] lg:pb-0 xl:px-[80px] xl:pb-0 2xl:px-[128px]">
@@ -87,7 +72,7 @@ function CheckoutProduct({ activeTab }) {
         <ul className="pt-8 list-none">
           <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
             <span className="">Subtotal </span>
-            <span>{formattedCurrency(getTotalPrice())}</span>
+            <span>{formattedCurrency(totalPrice)}</span>
           </li>
           <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
             <span className="">Discount </span>
@@ -95,7 +80,7 @@ function CheckoutProduct({ activeTab }) {
           </li>
           <li className="flex flex-row justify-between items-center pt-8 text-[1rem] tracking-[0.08em] font-HelveticaBold">
             <span className="">QUOTATION TOTAL </span>
-            <span>{formattedCurrency(getTotalPrice() - discount)}</span>
+            <span>{formattedCurrency(totalPrice - discount)}</span>
           </li>
         </ul>
       )}

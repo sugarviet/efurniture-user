@@ -12,7 +12,7 @@ function BankAccount({ data }) {
         ))}
       </div>
       <div className="w-2/3 mt-6">
-        <BankAccountForm />;
+        <BankAccountForm />
       </div>
     </section>
   );

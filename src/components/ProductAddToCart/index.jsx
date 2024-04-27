@@ -16,10 +16,13 @@ import {
 } from "../../api/wishlistApi";
 import useNotification from "../../hooks/useNotification";
 import { ProductDetailContext } from "../../pages/ProductDetail/ProductDetailContext";
+import { classNames } from "../../utils/classNames";
 
 function ProductAddToCart() {
   const { go_to_store } = useNavigation();
   const { furniture } = useContext(ProductDetailContext);
+  const { _id, name, select_variation } = furniture;
+  const disablePurchase = select_variation[0].stock <= 0;
 
   const { accessToken } = useAuth();
   const { success_message, error_message } = useNotification();
@@ -29,10 +32,10 @@ function ProductAddToCart() {
   });
 
   const { mutate: onFavoredWithUser } = usePostAuth(
-    get_update_wishlist_api(furniture._id),
+    get_update_wishlist_api(_id),
     null,
     () => {
-      success_message(null, null, `Added ${furniture.name} to Favorites`);
+      success_message(null, null, `Added ${name} to Favorites`);
     },
     (error) => {
       error_message(null, null, error.message);
@@ -40,7 +43,7 @@ function ProductAddToCart() {
   );
 
   const { mutate: onUnFavoredWithUser } = useDeleteAuth(
-    get_update_wishlist_api(furniture._id)
+    get_update_wishlist_api(_id)
   );
 
   const { wishlist, onFavored, onUnFavored } = useGuestStore();
@@ -48,7 +51,7 @@ function ProductAddToCart() {
   const { addToCart: addToCartWithUser } = useUserCart();
 
   const [isFavored, setIsFavored] = useState(
-    wishlist.some((item) => item._id === furniture._id)
+    wishlist.some((item) => item._id === _id)
   );
 
   const handleOnFavored = () => {
@@ -60,7 +63,7 @@ function ProductAddToCart() {
     }
     if (isFavored) {
       if (accessToken) onUnFavoredWithUser(furniture);
-      if (!accessToken) onUnFavored(furniture._id);
+      if (!accessToken) onUnFavored(_id);
     }
   };
 
@@ -72,7 +75,7 @@ function ProductAddToCart() {
   useEffect(() => {
     if (!accessToken || isLoading || !data) return;
 
-    const isFavored = data.some((item) => item._id === furniture._id);
+    const isFavored = data.some((item) => item._id === _id);
     setIsFavored(isFavored);
   }, [data, isLoading]);
 
@@ -85,8 +88,12 @@ function ProductAddToCart() {
           </div>
 
           <button
+            disabled={disablePurchase}
             onClick={handleAddToCart}
-            className="furniture-button-black-hover w-full py-3 text-[11px]"
+            className={classNames(
+              disablePurchase && "opacity-20 hover:cursor-not-allowed",
+              "furniture-button-black-hover w-full py-3 text-[11px]"
+            )}
           >
             Add to cart
           </button>

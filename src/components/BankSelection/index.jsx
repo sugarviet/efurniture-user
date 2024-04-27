@@ -24,13 +24,18 @@ function BankSelection({ onChange }) {
     onChange(bank);
   };
 
+  const toggleModal = () => {
+    const openedModal = !modalOpen;
+    setModalOpen(openedModal);
+  };
+
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <section className="w-full">
+    <section className="w-full relative">
       <div className="font-semibold mb-2">Bank</div>
       <button
-        onClick={() => setModalOpen(true)}
+        onClick={() => toggleModal()}
         className="font-HelveticaRoman w-full px-4 outline-none border-[0.5px] border-[#191915] h-14 flex items-center justify-between"
       >
         {selectedBank ? (
@@ -41,13 +46,13 @@ function BankSelection({ onChange }) {
         <ArrowDownCircleIcon className="w-6 h-6" />
       </button>
 
-      <AppModal
-        className="h-[600px]"
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-      >
-        <BankOption onSelect={handleSelect} options={data} />
-      </AppModal>
+      {modalOpen && (
+        <BankOption
+          className="absolute left-0 right-0 bg-white border p-1 z-50 h-72 overflow-y-scroll"
+          onSelect={handleSelect}
+          options={data}
+        />
+      )}
     </section>
   );
 }

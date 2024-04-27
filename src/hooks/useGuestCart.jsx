@@ -2,11 +2,37 @@ import useCartStore from "../stores/useCartStore";
 import { useGuestStore } from "../stores/useGuestStore";
 import useNotification from "./useNotification";
 import { sha256 } from "js-sha256";
+import { useEffect } from "react";
+import { usePost } from "./api-hooks";
+import { get_furniture_info_api } from "../api/furnitureApi";
 
 function useGuestCart() {
   const { cart, setCart } = useGuestStore();
   const { success_message, error_message } = useNotification();
   const { toggleCart } = useCartStore();
+  const { mutate: getFurnitureInfo } = usePost(
+    get_furniture_info_api(),
+    undefined,
+    (data) => setCart(data.data.metaData),
+    (error) => alert(error)
+  );
+
+  useEffect(() => {
+    onCartChange();
+  }, []);
+
+  const onCartChange = () => {
+    const body = [...cart].map((furniture) => {
+      const { _id, select_variation, quantity_in_cart } = furniture;
+      return {
+        product_id: _id,
+        variation: select_variation,
+        quantity: quantity_in_cart,
+      };
+    });
+
+    getFurnitureInfo(body);
+  };
 
   const hashCodeItem = (item) => {
     const values = [
