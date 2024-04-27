@@ -48,80 +48,27 @@ const cookies = () => ({
     },
 })
 
-const refreshTokenAndRetry = async (config) => {
-    try {
-        const refreshResponse = await axios.post(get_auth_refresh_token, {
-            refresh_token: cookies().refreshToken.value,
-            account_id: cookies().accountId.value
-        });
-        const accessTokenRes = refreshResponse.data.accessToken;
-        const refreshTokenRes = refreshResponse.data.refreshToken;
+// const refreshTokenAndRetry = async (config) => {
+//     try {
+//         const refreshResponse = await axios.post(get_auth_refresh_token, {
+//             refresh_token: cookies().refreshToken.value,
+//             account_id: cookies().accountId.value
+//         });
+//         const accessTokenRes = refreshResponse.data.accessToken;
+//         const refreshTokenRes = refreshResponse.data.refreshToken;
 
-        Cookies.set("access_token", accessTokenRes);
-        Cookies.set("refresh_token", refreshTokenRes);
+//         Cookies.set("access_token", accessTokenRes);
+//         Cookies.set("refresh_token", refreshTokenRes);
 
-        config.headers[cookies().accessToken.key] = accessTokenRes;
-        config.headers[cookies().refreshToken.key] = refreshTokenRes;
-        config.headers[cookies().accountId.key] = cookies().accountId.value;
+//         config.headers[cookies().accessToken.key] = accessTokenRes;
+//         config.headers[cookies().refreshToken.key] = refreshTokenRes;
+//         config.headers[cookies().accountId.key] = cookies().accountId.value;
 
-        return axios(config);
-    } catch (error) {
-        return Promise.reject(error);
-    }
-};
-
-const logoutUser = async () => {
-    try {
-        // Cookies.remove('access_token')
-        // Cookies.remove('refresh_token')
-        // Cookies.remove('account_id')
-        // toast.error('Someone is logging into your account')
-        // await sleep(2000);
-        // window.location.replace("/login");
-        // Modal.confirm({
-        //     title: "Warning",
-        //     content: "Your account has been logged in from another location",
-        //     okButtonProps: { style: { backgroundColor: "black" } }, 
-        //     cancelButtonProps: { style: { display: "none" } }, 
-        //     onOk: () => {
-        //         Cookies.remove('access_token')
-        //         Cookies.remove('refresh_token')
-        //         Cookies.remove('account_id')
-        //       window.location.replace("/login");
-        //     },
-            
-        //   });
-    } catch (error) {
-        return Promise.reject(error);
-    }
-}
-
-const errorHandler = async (error) => {
-    if (error.response) {
-        switch (error.response.status) {
-            case 401:
-                return refreshTokenAndRetry(error.config);
-            case 403:
-                console.error('Forbidden:', error.response.data);
-                break;
-            case 404:
-                toast.error('The requested does not exist');
-                break;
-            case 409:
-                return logoutUser(error.config);
-            case 500:
-                toast.error('Something went wrong');
-                break;
-            default:
-            // toast.error('Error:', error.response.data);
-        }
-    } else if (error.request) {
-        toast.error('Request made but no response received:', error.request);
-    } else {
-        toast.error('Error during request setup:', error.message);
-    }
-    return Promise.reject(error);
-};
+//         return axios(config);
+//     } catch (error) {
+//         return Promise.reject(error);
+//     }
+// };
 
 
 USER_API.interceptors.request.use(
@@ -141,14 +88,12 @@ API.interceptors.response.use(
     (response) => {
         return response
     },
-    errorHandler
 );
 
 USER_API.interceptors.response.use(
     (response) => {
         return response
     },
-    errorHandler
 );
 
 BANKING_API.interceptors.request.use(
