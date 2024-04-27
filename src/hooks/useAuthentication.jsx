@@ -8,10 +8,11 @@ import { message } from "antd";
 import { useOrderStore } from "../stores/useGuestOrderStore";
 import useNavigation from "./useNavigation";
 import useNotification from "./useNotification";
+import useSocket from "./useSocket";
 
 export default function useAuthentication() {
   const { setTokens, clearTokens } = useAuth();
-
+  const {loginSocket} = useSocket();
   const { wishlist } = useGuestStore();
 
   const { reset } = useOrderStore();
@@ -30,6 +31,8 @@ export default function useAuthentication() {
       const decode = jwtDecode(access_token);
       setTokens(access_token, refresh_token, decode.account_id);
       addToWishlist(wishlist.map((item) => item._id));
+      loginSocket(decode.account_id)
+
     },
     (error) => {
       error_message(null, null, "Your username or password is incorrect. Please try again.");
