@@ -9,7 +9,6 @@ import useAuth from "@stores/useAuth";
 import formattedCurrency from "../../utils/formattedCurrency";
 import { withFetchData } from "../../hocs/withFetchData";
 import { get_room_detail } from "../../api/roomApi";
-import useGuestCart from "../../hooks/useGuestCart";
 import { withGuestCart } from "../../hocs/withGuestCart";
 import { withUserCart } from "../../hocs/withUserCart";
 

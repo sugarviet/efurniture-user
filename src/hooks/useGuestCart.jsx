@@ -3,36 +3,38 @@ import { useGuestStore } from "../stores/useGuestStore";
 import useNotification from "./useNotification";
 import { sha256 } from "js-sha256";
 import { useEffect } from "react";
-import { usePost } from "./api-hooks";
+import { useFetch } from "./api-hooks";
 import { get_furniture_info_api } from "../api/furnitureApi";
 
 function useGuestCart() {
   const { cart, setCart } = useGuestStore();
   const { success_message, error_message } = useNotification();
   const { toggleCart } = useCartStore();
-  const { mutate: getFurnitureInfo } = usePost(
-    get_furniture_info_api(),
-    undefined,
-    (data) => setCart(data.data.metaData),
-    (error) => alert(error)
-  );
 
-  useEffect(() => {
-    onCartChange();
-  }, []);
-
-  const onCartChange = () => {
+  const getJsonStringCart = () => {
     const body = [...cart].map((furniture) => {
       const { _id, select_variation, quantity_in_cart } = furniture;
       return {
+        variation: select_variation.map((variation) => {
+          const { variation_id, property_id } = variation;
+          return {
+            variation_id: variation_id,
+            property_id: property_id,
+          };
+        }),
         product_id: _id,
-        variation: select_variation,
         quantity: quantity_in_cart,
       };
     });
 
-    getFurnitureInfo(body);
+    return JSON.stringify(body);
   };
+
+  const { data, isLoading } = useFetch(
+    get_furniture_info_api(getJsonStringCart())
+  );
+
+  const getCart = () => data || [];
 
   const hashCodeItem = (item) => {
     const values = [
@@ -132,6 +134,7 @@ function useGuestCart() {
 
   return {
     cart,
+    getCart,
     addManyToCart,
     updateVariation,
     addToCart,
