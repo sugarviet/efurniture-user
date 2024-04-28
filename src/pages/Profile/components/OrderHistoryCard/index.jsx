@@ -8,7 +8,7 @@ import ProductOrderBriefInfo from "../ProductOrderBriefInfo";
 import OrderPaidMessage from "../../../../components/OrderPaidMessage";
 
 function OrderHistoryCard({ data }) {
-
+  console.log(data);
   const { handleScrollToTop } = useScroll();
 
   const { go_to_order_detail } = useNavigation();
@@ -77,6 +77,7 @@ function OrderHistoryCard({ data }) {
               key={index}
               product={product}
               state={data.current_order_tracking.name.toLowerCase()}
+              orderCode={data.order_code}
             />
           );
         })}
