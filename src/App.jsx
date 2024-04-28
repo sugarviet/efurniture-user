@@ -13,10 +13,12 @@ function App() {
   const { accessToken } = useAuth();
   const { subcribeToLoginSocket } = useSocket();
   useEffect(() => {
-    if (accessToken) {
-      subcribeToLoginSocket();
-    }
-  }, [accessToken, subcribeToLoginSocket]);
+   
+    // if(accessToken){
+    //   subcribeToLoginSocket();
+    // }
+  
+  }, [subcribeToLoginSocket, accessToken]);
   return (
     <>
       <ErrorBoundary fallback={<Error />}>
