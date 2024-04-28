@@ -8,11 +8,51 @@ const SECURE_API_DEVELOPMENT = "https://dream-editor.tech/api/v1"
 const API_URL_PRODUCTION = "http://34.126.181.161:4646/api/v1";
 import { toast } from "sonner";
 import { sleep } from "../utils/sleep";
+import { Modal, message } from "antd";
 const BANKING_URL_TEST = "https://oauth.casso.vn/v2";
 const BANKING_API_KEY = "AK_CS.2ca68e70f0d411ee97532f5af9784698.lb98a18NY0E4agIbxbZxHgZyLzA21E69pclqSgGix9Bpqtj2gQyf1aKTYs3kzyeHbt5c2q5H"
 
 const BASE_URL = SECURE_API_DEVELOPMENT;
 const BANKING_URL = BANKING_URL_TEST;
+
+
+const logoutUser = async () => {
+    try {
+      Modal.confirm({
+        title: "Warning",
+        content: "Your account has been logged in from another location",
+        okButtonProps: { style: { backgroundColor: "black" } },
+        cancelButtonProps: { style: { display: "none" } },
+        onOk: () => {
+            Cookies.remove('access_token')
+            Cookies.remove('refresh_token')
+            Cookies.remove('account_id')
+          window.location.replace("/login");
+        },
+      });
+    } catch (error) {
+        return Promise.reject(error);
+    }
+  }
+
+  const unauthorize = async () => {
+    try {
+      Modal.confirm({
+        title: "Error",
+        content: "Your account is unauthorized please log in and try again",
+        okButtonProps: { style: { backgroundColor: "black" } },
+        cancelButtonProps: { style: { display: "none" } },
+        onOk: () => {
+            Cookies.remove('access_token')
+            Cookies.remove('refresh_token')
+            Cookies.remove('account_id')
+          window.location.replace("/login");
+        },
+      });
+    } catch (error) {
+        return Promise.reject(error);
+    }
+  }
 
 
 export const API = axios.create({
@@ -46,6 +86,22 @@ const cookies = () => ({
         value: Cookies.get('account_id')
     },
 })
+
+const errorHandler = async (error) => {
+    if (error.response) {
+        switch (error.response.status) {
+            case 401:
+                return unauthorize(error.config);
+            case 409:
+                return logoutUser(error.config);
+            case 500:
+                message.error('Something went wrong');
+                break;
+            default:
+        }
+    } 
+    return Promise.reject(error);
+  };
 
 // const refreshTokenAndRetry = async (config) => {
 //     try {
@@ -87,12 +143,14 @@ API.interceptors.response.use(
     (response) => {
         return response
     },
+    errorHandler
 );
 
 USER_API.interceptors.response.use(
     (response) => {
         return response
     },
+    errorHandler
 );
 
 BANKING_API.interceptors.request.use(
