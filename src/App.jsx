@@ -5,8 +5,18 @@ import { routers } from "./router";
 import { Toaster } from "sonner";
 import Error from "./pages/Error";
 import { ErrorBoundary } from "react-error-boundary";
+import { useEffect } from "react";
+import useAuth from "./stores/useAuth";
+import useSocket from "./hooks/useSocket";
 
 function App() {
+  const { accessToken } = useAuth();
+  const { subcribeToLoginSocket } = useSocket();
+  useEffect(() => {
+    if (accessToken) {
+      subcribeToLoginSocket();
+    }
+  }, [accessToken, subcribeToLoginSocket]);
   return (
     <>
       <ErrorBoundary fallback={<Error />}>
