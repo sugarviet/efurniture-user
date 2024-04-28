@@ -12,7 +12,9 @@ function CartProduct({
   removeFromPurchaseItems,
   updatePurchaseItem,
 }) {
-  const { code, quantity_in_cart, select_variation, variation, stock } = data;
+  const { code, quantity_in_cart, select_variation, variation } = data;
+  const stock = select_variation[0].stock;
+
   const {
     increaseQuantity,
     decreaseQuantity,

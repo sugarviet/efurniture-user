@@ -7,50 +7,48 @@ import { message } from "antd";
 import { useEffect, useState } from "react";
 
 export default function useVoucher() {
+  const { accessToken } = useAuth();
 
-    const { accessToken } = useAuth();
+  const { cart } = accessToken ? useUserCart() : useGuestCart();
 
-    const { cart } = accessToken ? useUserCart() : useGuestCart();
+  const [dataAfterVoucher, setDataAfterVoucher] = useState();
 
-    const [dataAfterVoucher, setDataAfterVoucher] = useState();
+  const [isCouponOpen, setIsCouponOpen] = useState(false);
 
-    const [isCouponOpen, setIsCouponOpen] = useState(false);
+  const [isCouponForUser, setIsCouponForUser] = useState(false);
 
-    const [isCouponForUser, setIsCouponForUser] = useState(false);
+  const voucherInfo = cart?.map((item) => ({
+    product_id: item._id,
+    price: item.sale_price ? item.sale_price : item.regular_price,
+  }));
 
-    const voucherInfo = cart?.map((item) => ({
-        product_id: item._id,
-        price: item.sale_price ? item.sale_price : item.regular_price,
-    }));
-
-    const { mutate: getSpecificVoucher, data: couponList } = usePostAuth(
-        get_voucher_by_specified(),
-        undefined,
-        (data) => {
-
-        },
-        (error) => {
-            message.error(error.response.data.error.message);
-        }
-    );
-
-    const handleOpenCoupon = () => {
-        if (accessToken) {
-            setIsCouponOpen(!isCouponOpen);
-        }
-        setIsCouponForUser(!isCouponForUser)
+  const { mutate: getSpecificVoucher, data: couponList } = usePostAuth(
+    get_voucher_by_specified(),
+    undefined,
+    (data) => {},
+    (error) => {
+      message.error(error.response.data.error.message);
     }
+  );
 
-    useEffect(() => {
-        getSpecificVoucher(voucherInfo);
-    }, [])
+  const handleOpenCoupon = () => {
+    if (accessToken) {
+      setIsCouponOpen(!isCouponOpen);
+    }
+    setIsCouponForUser(!isCouponForUser);
+  };
 
-    return {
-        dataAfterVoucher,
-        setDataAfterVoucher,
-        couponList,
-        handleOpenCoupon,
-        isCouponOpen,
-        isCouponForUser
-    };
+  useEffect(() => {
+    if (!accessToken) return;
+    getSpecificVoucher(voucherInfo);
+  }, [accessToken]);
+
+  return {
+    dataAfterVoucher,
+    setDataAfterVoucher,
+    couponList,
+    handleOpenCoupon,
+    isCouponOpen,
+    isCouponForUser,
+  };
 }

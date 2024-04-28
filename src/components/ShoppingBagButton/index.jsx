@@ -2,8 +2,9 @@ import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import useCartStore from "../../stores/useCartStore";
 import Proptypes from "prop-types";
 
-function ShoppingBagButton({cartData}) {
+function ShoppingBagButton({ cartData }) {
   const { toggleCart } = useCartStore();
+  const { getCart } = cartData;
   return (
     <div className="relative">
       <ShoppingBagIcon
@@ -12,7 +13,7 @@ function ShoppingBagButton({cartData}) {
         aria-hidden="true"
       />
       <span className="absolute w-4 h-4 flex items-center justify-center text-[.75rem] -bottom-[25%] -right-[25%] rounded-full bg-[#e9dabf]">
-        {cartData.cart.length}
+        {getCart().length}
       </span>
     </div>
   );

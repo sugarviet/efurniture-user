@@ -8,7 +8,6 @@ const SECURE_API_DEVELOPMENT = "https://dream-editor.tech/api/v1"
 const API_URL_PRODUCTION = "http://34.126.181.161:4646/api/v1";
 import { toast } from "sonner";
 import { sleep } from "../utils/sleep";
-import { Modal } from "antd";
 const BANKING_URL_TEST = "https://oauth.casso.vn/v2";
 const BANKING_API_KEY = "AK_CS.2ca68e70f0d411ee97532f5af9784698.lb98a18NY0E4agIbxbZxHgZyLzA21E69pclqSgGix9Bpqtj2gQyf1aKTYs3kzyeHbt5c2q5H"
 
