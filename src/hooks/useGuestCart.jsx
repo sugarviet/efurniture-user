@@ -128,8 +128,9 @@ function useGuestCart() {
     toggleCart();
   };
 
-  const clearCart = () => {
-    setCart([]);
+  const removeManyFromCart = (codesToRemove) => {
+    const updatedCart = cart.filter((item) => !codesToRemove.includes(item.code));
+    setCart(updatedCart);
   };
 
   return {
@@ -142,7 +143,7 @@ function useGuestCart() {
     increaseQuantity,
     removeFromCart,
     updateQuantity,
-    clearCart,
+    removeManyFromCart,
     isLoading: false,
   };
 }

@@ -19,6 +19,7 @@ export default function useCheckoutSummary() {
   const { go_to_payment, go_to_order_confirmation, go_to_pay_os } =
     useNavigation();
   const { error_message } = useNotification();
+  const { removeManyFromCart } = useGuestCart();
 
   const { cart, getTotalPrice } = accessToken ? useUserCart() : useGuestCart();
 
@@ -28,14 +29,19 @@ export default function useCheckoutSummary() {
   const handlePaymentMethod = (metaData) => {
     const isDeposit = metaData.order_checkout.paid.type === "Deposit";
     const isCod = metaData.payment_method === PAYMENT_METHOD.cod;
+    const orderCodes = metaData.order_products.map(product => product.code);
+
     if (isDeposit && isCod) {
       window.location.href = metaData.order_checkout.pay_os.checkoutUrl;
+      removeManyFromCart(orderCodes);
     }
     if (!isDeposit && isCod) {
       go_to_order_confirmation(metaData);
+      removeManyFromCart(orderCodes);
     }
     if (!isDeposit && !isCod) {
       window.location.href = metaData.order_checkout.pay_os.checkoutUrl;
+      removeManyFromCart(orderCodes);
     }
   };
 
