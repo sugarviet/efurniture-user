@@ -26,18 +26,12 @@ function OrderConfirmation() {
   );
 
   const { go_to_home } = useNavigation();
-  const { clearCart } = useGuestCart();
 
   const orderConfirmationState = location.state || { orderConfirmationState: null };
-
-  console.log(orderConfirmationState);
 
   useEffect(() => {
     if (orderConfirmationState.orderConfirmationState === null && !orderConfirmationParams) {
       go_to_home();
-    }
-    if (orderConfirmationState.guest) {
-      clearCart();
     }
   }, [orderConfirmationParams, orderConfirmationState]);
 
