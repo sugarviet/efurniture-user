@@ -30,9 +30,6 @@ function OrderConfirmation() {
 
   const orderConfirmationState = location.state || { orderConfirmationState: null };
 
-  console.log(orderConfirmationState.orderConfirmationState === null);
-
-
   useEffect(() => {
     if (orderConfirmationState.orderConfirmationState === null && !orderConfirmationParams) {
       go_to_home();
