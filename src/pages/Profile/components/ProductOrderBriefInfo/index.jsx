@@ -5,11 +5,12 @@ import { useState } from "react";
 import ProductVariation from "../../../ProductDetail/components/ProductVariation";
 
 function ProductOrderBriefInfo({ product, state, orderCode }) {
+  console.log("ProductOrderBriefInfo",product);
   const [modelOpened, setModalOpened] = useState(false);
-  console.log(product);
+
   const onSale = product.product.regular_price - product.price > 0;
 
-  const subPrice = product.variation.reduce(
+  const subPrice = product.product.select_variation.reduce(
     (total, cur) => total + cur.sub_price,
     0
   );
@@ -35,13 +36,15 @@ function ProductOrderBriefInfo({ product, state, orderCode }) {
               <div>
                 {product.variation.map((item, i) => {
                   const { variation_id, property_id } = item;
-                  const currentVariation = product.product_id.variation.find(
+                  const currentVariation = product.product.variation.find(
                     (i) => i._id === variation_id
                   );
+                  console.log("current",currentVariation);
                   currentVariation.properties =
                     currentVariation.properties.filter(
                       (item) => item._id === property_id
                     );
+                    
                   return (
                     <ProductVariation
                       key={i}

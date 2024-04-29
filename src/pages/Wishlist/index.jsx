@@ -46,7 +46,7 @@ const Wishlist = () => {
         })}
       </div>
 
-      <WebServices />
+      {/* <WebServices /> */}
     </main>
   );
 };

@@ -6,9 +6,9 @@ import useNavigation from "../../../../hooks/useNavigation";
 import OrderActionButton from "../../../../components/OrderActionButton";
 import ProductOrderBriefInfo from "../ProductOrderBriefInfo";
 import OrderPaidMessage from "../../../../components/OrderPaidMessage";
+import OrderTrackingColor from "../../../../components/OrderTrackingColor";
 
 function OrderHistoryCard({ data }) {
-  console.log(data);
   const { handleScrollToTop } = useScroll();
 
   const { go_to_order_detail } = useNavigation();
@@ -61,9 +61,7 @@ function OrderHistoryCard({ data }) {
                   View order details
                 </p>
                 <p className="border-r-[1px] border-grey3 h-4 mt-1"></p>
-                <p className="font-HelveticaBold text-[16px] text-green-700 leading-[1.4] tracking-[0.04em] pl-2">
-                  {data.current_order_tracking.name}
-                </p>
+                <OrderTrackingColor type={data.current_order_tracking.name} />
               </div>
             </div>
           </div>

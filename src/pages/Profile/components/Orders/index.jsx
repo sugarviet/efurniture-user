@@ -27,6 +27,9 @@ const Orders = () => {
   const Refunded = withFetchDataWithHeaders(OrderHistory, () =>
     get_order_by_state(ORDER_STATE.refunded)
   );
+  const Failed = withFetchDataWithHeaders(OrderHistory, () =>
+    get_order_by_state(ORDER_STATE.failed)
+  );
 
   const TAB_ORDER = {
     all: {
@@ -56,6 +59,10 @@ const Orders = () => {
     refunded: {
       title: "Refunded",
       component: <Refunded />,
+    },
+    failed: {
+      title: "Failed",
+      component: <Failed />,
     },
   };
 
