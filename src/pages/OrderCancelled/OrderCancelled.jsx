@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import CheckoutFooter from "../../components/CheckoutFooter"
-import useNavigation from "../../hooks/useNavigation";
+import useAuth from '../../stores/useAuth';
 
 function OrderCancelled() {
 
-    const { go_to_or } = useNavigation();
+    const { accessToken } = useAuth();
 
     return (
         <section className="min-h-screen">
@@ -28,11 +28,12 @@ function OrderCancelled() {
                             Continue to shopping
                         </button>
                     </Link>
-                    <Link to="/profile?tab=orders">
-                        <button className="furniture-button-black-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-8">
-                            Tracking your order
-                        </button>
-                    </Link>
+                    {accessToken &&
+                        <Link to="/profile?tab=orders">
+                            <button className="furniture-button-black-hover w-full px-[25px] py-[14px] text-[0.6875rem] tracking-[0.125rem] mt-8">
+                                Tracking your order
+                            </button>
+                        </Link>}
                 </div>
             </main>
             <CheckoutFooter />

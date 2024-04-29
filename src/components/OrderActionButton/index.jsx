@@ -36,6 +36,11 @@ const TYPES = {
     bgColor: "furniture-button-black-hover",
     action: "repurchase",
   },
+  Refunded: {
+    name: "View details",
+    bgColor: "furniture-button-black-hover",
+    action: "viewDetail",
+  },
 };
 
 function OrderActionButton({ type, className, data }) {
