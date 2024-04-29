@@ -5,6 +5,8 @@ import ProductVariation from "../../pages/ProductDetail/components/ProductVariat
 function CheckoutProduct({ activeTab, purchaseItems = [], totalPrice }) {
   const discount = 0;
 
+  console.log(purchaseItems);
+
   return (
     <section className="px-5 pb-6 lg:px-[60px] lg:pb-0 xl:px-[80px] xl:pb-0 2xl:px-[128px]">
       {activeTab === "summary" && (

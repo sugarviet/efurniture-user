@@ -3,6 +3,7 @@ import formattedCurrency from "@utils/formattedCurrency";
 import formattedDate from "@utils/formattedDate";
 import { Link } from "react-router-dom";
 import DepositPrice from "../../components/DepositPrice";
+import ProductVariation from "../../pages/ProductDetail/components/ProductVariation";
 
 function OrderConfirmationDetail({ data }) {
 
@@ -172,7 +173,7 @@ function OrderConfirmationDetail({ data }) {
                       product.product.regular_price -
                       product.price >
                       0;
-                    const subPrice = product.variation.reduce(
+                    const subPrice = product.product.select_variation.reduce(
                       (total, cur) => total + cur.sub_price,
                       0
                     );
@@ -197,27 +198,27 @@ function OrderConfirmationDetail({ data }) {
                                 Qty: {product.quantity}
                               </p>
                             </div>
-                            {/* <div>
+                            <div>
                               {product.variation.map((item, i) => {
                                 const { variation_id, property_id } = item;
-                                const currentVariation =
-                                  product.product_id.variation.find(
-                                    (i) => i._id === variation_id
-                                  );
+                                const currentVariation = product.product.variation.find(
+                                  (i) => i._id === variation_id
+                                );
                                 currentVariation.properties =
                                   currentVariation.properties.filter(
                                     (item) => item._id === property_id
                                   );
+
                                 return (
                                   <ProductVariation
                                     key={i}
                                     currentVariation={currentVariation}
                                     variation={currentVariation}
-                                    className="text-[10px] w-6 h-6"
+                                    className="text-[10px] w-6 h-6 pt-2"
                                   />
                                 );
                               })}
-                            </div> */}
+                            </div>
                           </div>
                         </div>
                         <div className="flex flex-col">

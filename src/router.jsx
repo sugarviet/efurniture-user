@@ -24,6 +24,7 @@ const Checkout = lazy(() => import("@pages/Checkout"));
 const Search = lazy(() => import("@pages/Search"));
 const Cart = lazy(() => import("@pages/Cart"));
 const OrderConfirmation = lazy(() => import("@pages/OrderConfirmation"));
+import OrderCancelled from "./pages/OrderCancelled/OrderCancelled";
 
 export const PATH = {
   home: "/",
@@ -43,6 +44,7 @@ export const PATH = {
   search: "/search",
   bankingPayment: "/payment",
   orderConfirmation: "/order-confirmation",
+  orderCancelled: "/order-cancelled",
   logout: "/logout",
   notfound: "/notfound",
 };
@@ -135,5 +137,9 @@ export const routers = createBrowserRouter([
   {
     path: PATH.orderConfirmation,
     element: <OrderConfirmation />,
+  },
+  {
+    path: PATH.orderCancelled,
+    element: <OrderCancelled />,
   },
 ]);
