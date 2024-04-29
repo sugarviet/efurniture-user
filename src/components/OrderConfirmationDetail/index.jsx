@@ -4,10 +4,13 @@ import formattedDate from "@utils/formattedDate";
 import { Link } from "react-router-dom";
 import DepositPrice from "../../components/DepositPrice";
 import ProductVariation from "../../pages/ProductDetail/components/ProductVariation";
+import useGuestCart from "../../hooks/useGuestCart";
 
 function OrderConfirmationDetail({ data }) {
 
   const { accessToken } = useAuth();
+
+  const { clearCart } = useGuestCart();
 
   const isPaidDeposit = data.order_checkout.paid.type === "Deposit";
 
@@ -26,6 +29,12 @@ function OrderConfirmationDetail({ data }) {
       (data.order_checkout.voucher.value / 100) * totalPrice
     )
     : "0,00đ";
+
+  useEffect(() => {
+    if (data.guest) {
+      clearCart();
+    }
+  }, [data]);
 
   return (
     <section className="min-h-screen mb-12">
