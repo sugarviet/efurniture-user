@@ -10,7 +10,7 @@ function ProductOrderBriefInfo({ product, state, orderCode }) {
 
   const onSale = product.product.regular_price - product.price > 0;
 
-  const subPrice = product.variation.reduce(
+  const subPrice = product.product.select_variation.reduce(
     (total, cur) => total + cur.sub_price,
     0
   );
@@ -36,7 +36,7 @@ function ProductOrderBriefInfo({ product, state, orderCode }) {
               <div>
                 {product.variation.map((item, i) => {
                   const { variation_id, property_id } = item;
-                  const currentVariation = product.product_id.variation.find(
+                  const currentVariation = product.product.variation.find(
                     (i) => i._id === variation_id
                   );
                   console.log("current",currentVariation);
@@ -44,6 +44,7 @@ function ProductOrderBriefInfo({ product, state, orderCode }) {
                     currentVariation.properties.filter(
                       (item) => item._id === property_id
                     );
+                    
                   return (
                     <ProductVariation
                       key={i}
