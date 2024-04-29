@@ -5,8 +5,9 @@ import { useState } from "react";
 import ProductVariation from "../../../ProductDetail/components/ProductVariation";
 
 function ProductOrderBriefInfo({ product, state, orderCode }) {
+  console.log("ProductOrderBriefInfo",product);
   const [modelOpened, setModalOpened] = useState(false);
-  console.log(product);
+
   const onSale = product.product.regular_price - product.price > 0;
 
   const subPrice = product.variation.reduce(
@@ -38,6 +39,7 @@ function ProductOrderBriefInfo({ product, state, orderCode }) {
                   const currentVariation = product.product_id.variation.find(
                     (i) => i._id === variation_id
                   );
+                  console.log("current",currentVariation);
                   currentVariation.properties =
                     currentVariation.properties.filter(
                       (item) => item._id === property_id

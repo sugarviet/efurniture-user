@@ -1,8 +1,8 @@
 export default function formattedTime(value) {
     const time = new Date(value);
-    const hours = time.getUTCHours().toString().padStart(2, '0');
-    const minutes = time.getUTCMinutes().toString().padStart(2, '0');
-    const seconds = time.getUTCSeconds().toString().padStart(2, '0');
+    time.setHours(time.getUTCHours() + 7);
+    const hours = time.getHours().toString().padStart(2, '0');
+    const minutes = time.getMinutes().toString().padStart(2, '0');
+    const seconds = time.getSeconds().toString().padStart(2, '0');
     return `${hours}:${minutes}:${seconds}`;
-
 }
