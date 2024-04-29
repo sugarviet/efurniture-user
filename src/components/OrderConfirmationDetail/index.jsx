@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import DepositPrice from "../../components/DepositPrice";
 import ProductVariation from "../../pages/ProductDetail/components/ProductVariation";
 import useGuestCart from "../../hooks/useGuestCart";
+import { useEffect } from "react";
 
 function OrderConfirmationDetail({ data }) {
 
