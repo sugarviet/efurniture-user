@@ -23,7 +23,7 @@ function FurnitureModel({ children, className }) {
       )}
       title={name}
     >
-      <div className={classNames("h-72 p-4 flex justify-center items-center")}>
+      <div className={classNames("h-72 p-12 flex justify-center items-center")}>
         {dimension === MODEL_DIMENSION.two_dimension && (
           <img
             className={classNames("w-full h-full object-contain")}
