@@ -7,6 +7,7 @@ function ShowRoom3D({ className }) {
           className="w-full h-[40rem]"
           frameBorder="0"
         />
+        
         <div className="w-28 absolute bg-white top-0 bottom-0 right-0 items-center justify-center flex"></div>
       </div>
     </section>
