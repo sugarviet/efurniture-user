@@ -7,6 +7,7 @@ import ProductVariation from "../../pages/ProductDetail/components/ProductVariat
 import useGuestCart from "../../hooks/useGuestCart";
 
 function OrderConfirmationDetail({ data }) {
+  console.log(data);
 
   const { accessToken } = useAuth();
 
@@ -241,6 +242,12 @@ function OrderConfirmationDetail({ data }) {
                   })}
                 </div>
                 <div className="">
+                  <div className="furniture-divided-bottom py-2">
+                    <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
+                      <span className="">Note </span>
+                      <span>{formattedCurrency(orderCheckout.total)}</span>
+                    </li>
+                  </div>
                   <ul className="pt-4 list-none furniture-divided-bottom pb-4">
                     <li className="flex flex-row justify-between items-center flex-wrap pt-[0.25rem] pb-[0.25rem] text-sm tracking-[0.5px] leading-[23.3px]">
                       <span className="">Subtotal </span>
