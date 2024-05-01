@@ -15,15 +15,6 @@ const STORE_LOCATIONS = [
     longitude: 106.80988299437283,
     latitude: 10.841243500137622,
   },
-  {
-    id: "2",
-    name: "Nhà văn hóa Sinh viên TP.HCM",
-    street: "Lưu Hữu Phước, Đông Hoà,",
-    city: "Thành phố Dĩ An",
-    province: "Tỉnh Bình Dương",
-    longitude: 106.80064829252282,
-    latitude: 10.875271295361511,
-  },
 ];
 
 const LOGS = [

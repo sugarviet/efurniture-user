@@ -1,8 +1,13 @@
-import { get_furniture_subtype_detail_api } from "../../api/furnitureTypeApi";
+import { useParams } from "react-router-dom";
+import {
+  get_furniture_subtype_detail_api,
+  get_furniture_type_detail_api,
+} from "../../api/furnitureTypeApi";
 import FurnitureCatalog from "../../components/FurnitureCatalog";
 import HeroSection from "../../components/HeroSection";
 import { get_furniture_by_type_api } from "@api/furnitureApi";
 import { withFetchData } from "@hocs/withFetchData";
+import { useFetch } from "../../hooks/api-hooks";
 
 const FurnitureCatalogWithFetchData = withFetchData(
   FurnitureCatalog,
@@ -10,15 +15,24 @@ const FurnitureCatalogWithFetchData = withFetchData(
 );
 
 const SECTION_INTRO_OPTION = {
-  img_url:
-    "https://p3.aprimocdn.net/boconcept/1167e952-9f27-4bd6-bb63-ae75008651a3/AW22%20099_WEB-ImageCollageLarge-T-950x470.jpg",
-  title: "product",
   description:
-    "Shop designer sofas, crafted with quality materials and designed to enhance any living space to experience luxury and comfort. Pick your style to customise.",
+    "Shop furniture from the comfort of your couch! E-commerce furniture stores offer a wide selection of styles and pieces, allowing you to browse, compare, and purchase furniture online with convenient delivery options. Enjoy a hassle-free furniture shopping experience delivered straight to your door.",
 };
 
 const Products = ({ data }) => {
-  const { type, description, thumb } = data || {};
+  const params = useParams();
+
+  const { data: typeInfo, isLoading } = useFetch(
+    get_furniture_type_detail_api(params)
+  );
+
+  if (isLoading) return;
+
+  const { type, description, thumb } = data || {
+    type: typeInfo.name,
+    ...typeInfo,
+    ...SECTION_INTRO_OPTION,
+  };
   return (
     <>
       <HeroSection description={description} title={type} img_url={thumb} />
