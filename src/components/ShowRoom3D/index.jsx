@@ -1,5 +1,5 @@
 function ShowRoom3D({ className, model3D }) {
-  const id = model3D || "cf9t9tqvd2i2qpxo920no6etkp0am45";
+  const id = model3D || "ch7yye6xjw5s5ds1kojx4lwu3gp20nt";
   return (
     <section className="my-20 flex flex-row">
       <div className="w-full relative">
