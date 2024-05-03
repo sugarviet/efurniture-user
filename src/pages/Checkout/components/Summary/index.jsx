@@ -162,7 +162,7 @@ function Summary({ purchaseItems, totalPrice }) {
             </div>
             {dataAfterVoucher && (
               <p className="text-[13px] font-HelveticaBold">
-                {dataAfterVoucher.voucher.code}
+                {dataAfterVoucher.voucher.name}
               </p>
             )}
           </div>
