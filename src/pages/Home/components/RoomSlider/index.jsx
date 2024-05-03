@@ -50,7 +50,7 @@ const RoomSlider = ({ data }) => {
       <Sliders initialSlide={0} slideToScroll={1} slideToShow={slideToShow}>
         {data.map((room, index) => (
           <a className="pr-2" key={index} href={`/room/${data.slug}`}>
-            <img className='w-full h-full object-cover ' src={room.thumb} />
+            <img className='w-full h-[40rem] object-cover ' src={room.thumb} />
             <div className="flex flex-row justify-between">
               <p className='text-xs mt-4 text-blackPrimary tracking-[0.9px]'> {room.name}</p>
             </div>
